@@ -24,3 +24,10 @@ eclipse workspace/EJBProject/.project
 # deployed package files #
 
 *.DEPLOYED
+
+eclipse workspace/.metadata/
+eclipse workspace/RemoteSystemsTempFiles/.project
+
+management/~$dagboek.xlsx
+
+management/~$dagboek.xlsx
