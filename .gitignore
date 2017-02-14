@@ -120,3 +120,5 @@ eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/maven/be.kuleuve
 eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/application.xml
 
 eclipse workspace/DemoEAR/pom.xml
+
+eclipse workspace/EJBProject/pom.xml
