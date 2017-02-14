@@ -15,12 +15,15 @@ jboss/server/minimal/data/**/*
 jboss/server/minimal/work/**/*
 eclipse workspace/DemoEAR/.settings/*
 eclipse workspace/DemoEAR/.project
+eclipse workspace/DemoEAR/target
 eclipse workspace/DWPProject/.settings/*
 eclipse workspace/DWPProject/.classpath
 eclipse workspace/DWPProject/.project
+eclipse workspace/DWPProject/target
 eclipse workspace/EJBProject/.settings/*
 eclipse workspace/EJBProject/.classpath
 eclipse workspace/EJBProject/.project
+eclipse workspace/EJBProject/target
 # deployed package files #
 
 *.DEPLOYED
