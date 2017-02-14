@@ -13,7 +13,14 @@ jboss/server/minimal/log/*.log
 jboss/server/minimal/tmp/**/*
 jboss/server/minimal/data/**/*
 jboss/server/minimal/work/**/*
-
+eclipse workspace/DemoEAR/.settings/*
+eclipse workspace/DemoEAR/.project
+eclipse workspace/DWPProject/.settings/*
+eclipse workspace/DWPProject/.classpath
+eclipse workspace/DWPProject/.project
+eclipse workspace/EJBProject/.settings/*
+eclipse workspace/EJBProject/.classpath
+eclipse workspace/EJBProject/.project
 # deployed package files #
 
 *.DEPLOYED
