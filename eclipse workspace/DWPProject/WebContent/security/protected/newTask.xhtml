@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
+
+<ui:composition template="layout.xhtml">
+
+  <ui:define name="title">Create a new task</ui:define>
+
+  <ui:define name="content">
+
+    <h:form id="taskForm">
+
+      <h:panelGrid columns="2">
+        <h:outputLabel value="Patient : "/>
+        <h:inputText value="#{taskController.task.patient}"/>
+
+        <h:outputLabel value="Location : "/>
+        <h:inputText value="#{taskController.task.location}"/>
+
+        <h:outputLabel value="Description : "/>
+        <h:inputTextarea value="#{taskController.task.description}" cols="16" rows="3"/>
+
+        <h:outputLabel value="Date : "/>
+        <h:inputText value="#{taskController.task.date}">
+        	<f:convertDateTime pattern="yyyy-MM-dd"/>
+        </h:inputText>
+
+      </h:panelGrid>
+
+      <h:commandButton value="Create a task" action="#{taskController.doCreateTask}">
+        <f:ajax execute="@form" render=":tasklist :errors"/>
+      </h:commandButton>
+      
+      <p><h:button outcome="manager" value="Return to main page" /></p>
+
+    </h:form>
+    
+  </ui:define>
+
+</ui:composition>
+</html>

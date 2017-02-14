@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="layout.xhtml">
+
+	<ui:define name="title">Open tasks</ui:define>
+
+	<ui:define name="content">
+
+		<h1>List of tasks</h1>
+
+		<h:dataTable id="tasklist" value="#{taskController.findOpenTasks()}" var="tk"
+			border="1">
+
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Patient" />
+				</f:facet>
+				<h:link outcome="fileTaskReport.xhtml?id=#{tk.id}"
+					value="#{tk.patient}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Description" />
+				</f:facet>
+				<h:outputText value="#{tk.description}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Date" />
+				</f:facet>
+				<h:outputText value="#{tk.date}">
+					<f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+				</h:outputText>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Completed" />
+				</f:facet>
+				<h:outputText value="#{tk.completed}" />
+			</h:column>
+
+		</h:dataTable>
+
+	</ui:define>
+
+</ui:composition>
+</html>
