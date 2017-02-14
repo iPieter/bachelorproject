@@ -1,0 +1,10 @@
+#map
+{
+	height: 75vh;
+}
+
+#activities
+{
+	height: 75vh;
+	overflow: scroll;
+}

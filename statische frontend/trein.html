@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/extra_layout.css" rel="stylesheet">
+	<title>Train Manager</title>
+</head>
+<body>
+	<div class="container">
+        <div class="row">
+            <div class="col-sm-2 sidebar">
+                <form class="form-group" role="search">
+    				<div class="input-group">
+    					<input type="text" class="form-control" placeholder="Zoek treinen of plaatsen" name="search_input" id="search_input" autocomplete="off">
+    					<div class="input-group-btn">
+    						<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+    					</div>
+    				</div>
+    				<div class="dropdown">
+    					<a class="dropdown-toggle" data-toggle="dropdown" id="search_dropdown"></a>
+    					<ul class="dropdown-menu" id="search_dropdown_list" >
+    					</ul>
+    				</div>
+    			</form>
+                <div class="staanplaats">
+                    <h4>Staanplaats 1</h4>
+                    <div class="trein">
+                        <h4>Trein 1 </h4>
+                        <div class="trein_data">
+                            <h5>Issues <span class="badge">1</span></h5>
+                            <h5>Sensor</h5>
+                        </div>
+                    </div>
+                    <div class="trein">
+                        <h4>Trein 2 </h4>
+                        <div class="trein_data">
+                            <h5>Issues <span class="badge">3</span></h5>
+                            <h5>Sensor</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="staanplaats">
+                    <h4>Staanplaats 2</h4>
+                    <div class="trein">
+                        <h4>Trein 1 </h4>
+                        <div class="trein_data">
+                            <h5>Issues <span class="badge">1</span></h5>
+                            <h5>Sensor</h5>
+                        </div>
+                    </div>
+                    <div class="trein">
+                        <h4>Trein 2 </h4>
+                        <div class="trein_data">
+                            <h5>Issues <span class="badge">6</span></h5>
+                            <h5>Sensor</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-10 main_view">
+				<div class="row header">
+					<ol class="breadcrumb">
+						<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+						<li><a href="#">Staanplaats 1 </a></li>
+						<li><a href="#" class="active">Trein 1 </a></li>
+					</ol>
+				</div>
+                <div class="row">
+                    <div class="col-sm-5 mainview_panel" id="topleft">
+                    </div>
+                    <div class="col-sm-5 mainview_panel" id="topright">
+                        <img src="img/route.jpg" alt="" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-5 mainview_panel">
+                        <div class="mainview_issue row">
+                            <b class="col-sm-4">Onderhoudstechnicus 1 </b>
+                            <div class="col-sm-8">
+                                <p>
+                                    Sensor 1 toont een afwijking op z-as
+                                </p>
+                                <p>
+                                    <div class="progress">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+                                    aria-valuemin="0" aria-valuemax="100" style="width:40%">
+                                    40% Complete (success)
+                                    </div>
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mainview_issue row">
+                            <b class="col-sm-4">Onderhoudstechnicus 2 </b>
+                            <div class="col-sm-8">
+                                <p>
+                                    Sensor 3 toont een afwijking op x-as
+                                </p>
+                                <p>
+                                    <div class="progress">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+                                    aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                                    100% Complete (success)
+                                    </div>
+                                    </div>
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 mainview_panel">
+                        <h4>Algemene info Trein 1</h4>
+                        <hr>
+                        <div class="row">
+                            <h5 class="col-sm-6">Aangekocht:</h5>
+                            <h5 class="col-sm-6">2013</h5>
+                        </div>
+                        <div class="row">
+                            <h5 class="col-sm-6">Problemen:</h5>
+                            <h5 class="col-sm-6">2</h5>
+                        </div>
+                        <div class="row">
+                            <h5 class="col-sm-6">Totale afstand:</h5>
+                            <h5 class="col-sm-6">22000 km</h5>
+                        </div>
+                        <div class="row">
+                            <h5 class="col-sm-6">Fabrikant:</h5>
+                            <h5 class="col-sm-6">Bombardier</h5>
+                        </div>
+                        <div class="row">
+                            <h5 class="col-sm-6">Model:</h5>
+                            <h5 class="col-sm-6">Sprinter</h5>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" type="text/javascript"></script>
+	<script src="js/bootstrap.min.js" type="text/javascript" ></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
+	<script src="js/underscore-min.js" type="text/javascript"></script>
+    <script src="js/extra_javascript.js" type="text/javascript"></script>
+</body>
+</html>
