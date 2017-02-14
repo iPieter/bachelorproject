@@ -34,5 +34,97 @@ eclipse workspace/RemoteSystemsTempFiles/.project
 management/~$dagboek.xlsx
 
 management/~$dagboek.xlsx
+<<<<<<< HEAD
 eclipse workspace\DWPProject\pom.xml
 eclipse workspace\DemoEAR\pom.xml
+||||||| merged common ancestors
+=======
+
+*.xml
+
+*.xml
+
+*.xml
+
+eclipse workspace/EJBProject/bin/ejbModule/be/kuleuven/cs/gent/projectweek/logging/LoggingInterceptor.class
+
+eclipse workspace/EJBProject/bin/ejbModule/be/kuleuven/cs/gent/projectweek/logging/Loggable.class
+
+eclipse workspace/EJBProject/bin/ejbModule/be/kuleuven/cs/gent/projectweek/ejb/TaskEJBLocal.class
+
+eclipse workspace/EJBProject/bin/ejbModule/be/kuleuven/cs/gent/projectweek/ejb/TaskEJB.class
+
+eclipse workspace/EJBProject/bin/ejbModule/be/kuleuven/cs/gent/projectweek/data/UnfinishedTask.class
+
+eclipse workspace/EJBProject/bin/ejbModule/be/kuleuven/cs/gent/projectweek/data/Tasks.class
+
+eclipse workspace/EJBProject/bin/ejbModule/be/kuleuven/cs/gent/projectweek/data/TaskValidationException.class
+
+eclipse workspace/EJBProject/bin/ejbModule/META-INF/MANIFEST.MF
+
+eclipse workspace/EJBProject/target/classes/META-INF/MANIFEST.MF
+
+eclipse workspace/EJBProject/target/classes/META-INF/maven/cs.kuleuven.be.project/EJBProject/pom.properties
+
+eclipse workspace/EJBProject/target/classes/META-INF/MANIFEST.MF
+
+eclipse workspace/EJBProject/target/classes/META-INF/maven/cs.kuleuven.be.project/EJBProject/pom.properties
+
+eclipse workspace/EJBProject/bin/ejbModule/be/kuleuven/cs/gent/projectweek/data/Task.class
+
+eclipse workspace/EJBProject/bin/ejbModule/be/kuleuven/cs/gent/projectweek/data/FinishedTask.class
+
+eclipse workspace/EJBProject/bin/build/classes/META-INF/MANIFEST.MF
+
+eclipse workspace/EJBProject/bin/.settings/org.eclipse.jdt.core.prefs
+
+eclipse workspace/EJBProject/bin/.project
+
+eclipse workspace/EJBProject/bin/ejbModule/be/kuleuven/cs/gent/projectweek/data/StaticTaskRepository.class
+
+eclipse workspace/DWPProject/pom.xml
+
+eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/maven/be.kuleuven.cs.project/DemoEAR/pom.xml
+
+eclipse workspace/DemoEAR/pom.xml
+
+eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/application.xml
+
+eclipse workspace/DWPProject/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
+
+eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/MANIFEST.MF
+
+eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/maven/be.kuleuven.cs.project/DemoEAR/pom.properties
+
+eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/maven/be.kuleuven.cs.project/DemoEAR/pom.xml
+
+eclipse workspace/DWPProject/pom.xml
+
+eclipse workspace/EJBProject/target/classes/META-INF/MANIFEST.MF
+
+eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/MANIFEST.MF
+
+management/~$dagboek.xlsx
+
+eclipse workspace/EJBProject/target/classes/META-INF/maven/cs.kuleuven.be.project/EJBProject/pom.properties
+
+eclipse workspace/DWPProject/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
+
+eclipse workspace/EJBProject/target/classes/META-INF/MANIFEST.MF
+
+eclipse workspace/DWPProject/target/m2e-wtp/web-resources/META-INF/maven/cs.kuleuven.cs.project/DWPProject/pom.properties
+
+eclipse workspace/DWPProject/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
+
+eclipse workspace/DWPProject/pom.xml
+
+eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/maven/be.kuleuven.cs.project/DemoEAR/pom.xml
+
+eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/maven/be.kuleuven.cs.project/DemoEAR/pom.properties
+
+eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/application.xml
+
+eclipse workspace/DemoEAR/pom.xml
+
+eclipse workspace/EJBProject/pom.xml
+>>>>>>> a68739577cba501c50c102978cd404be487b956d
