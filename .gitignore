@@ -30,19 +30,9 @@ eclipse workspace/EJBProject/target
 
 eclipse workspace/.metadata/
 eclipse workspace/RemoteSystemsTempFiles/.project
-
 management/~$dagboek.xlsx
-
-management/~$dagboek.xlsx
-<<<<<<< HEAD
 eclipse workspace\DWPProject\pom.xml
 eclipse workspace\DemoEAR\pom.xml
-||||||| merged common ancestors
-=======
-
-*.xml
-
-*.xml
 
 *.xml
 
@@ -127,4 +117,3 @@ eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/application.xml
 eclipse workspace/DemoEAR/pom.xml
 
 eclipse workspace/EJBProject/pom.xml
->>>>>>> a68739577cba501c50c102978cd404be487b956d
