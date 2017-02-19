@@ -36,7 +36,8 @@ public class TaskController implements Serializable
 							"The task" + task.getDescription() + " has been created with id=" + task.getId() ) );
 			return "viewTasks.xhtml?faces-redirect=true";
 
-		} catch ( TaskValidationException e )
+		}
+		catch ( TaskValidationException e )
 		{
 			FacesContext.getCurrentInstance().addMessage( null, new FacesMessage( FacesMessage.SEVERITY_ERROR,
 					"Failed to create task.", "Please enter correct/complete task details." ) );
@@ -62,7 +63,8 @@ public class TaskController implements Serializable
 					"Task report filed", "The task report has been succesfully filed" ) );
 			return "viewOpenTasks.xhtml?faces-redirect=true";
 
-		} catch ( TaskValidationException e )
+		}
+		catch ( TaskValidationException e )
 		{
 			FacesContext.getCurrentInstance().addMessage( null, new FacesMessage( FacesMessage.SEVERITY_ERROR,
 					"Failed to file task report.", "Please enter correct/complete task details." ) );

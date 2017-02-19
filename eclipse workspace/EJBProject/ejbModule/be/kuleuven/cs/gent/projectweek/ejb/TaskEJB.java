@@ -20,79 +20,79 @@ import be.kuleuven.cs.gent.projectweek.data.TaskValidationException;
 import be.kuleuven.cs.gent.projectweek.data.UnfinishedTask;
 
 @Stateless
-@Local(TaskEJBLocal.class)
-public class TaskEJB implements TaskEJBLocal{
-	
+@Local( TaskEJBLocal.class )
+public class TaskEJB implements TaskEJBLocal
+{
+
 	@Resource
 	private SessionContext ctx;
-	
-	@Inject 
+
+	@Inject
 	private Validator validator;
-	
+
 	private StaticTaskRepository taskRepo = StaticTaskRepository.getInstance();
 
-	//@RolesAllowed({"manager"})
-	public void createTask(Task task) throws TaskValidationException
+	// @RolesAllowed({"manager"})
+	public void createTask( Task task ) throws TaskValidationException
 	{
-		Set<ConstraintViolation<Task>> violations = validator.validate(task, Default.class, UnfinishedTask.class);
-		for(ConstraintViolation<Task> violation : violations)
+		Set<ConstraintViolation<Task>> violations = validator.validate( task, Default.class, UnfinishedTask.class );
+		for ( ConstraintViolation<Task> violation : violations )
 		{
-			System.out.println("Task validation error: " + violation.getMessage());
+			System.out.println( "Task validation error: " + violation.getMessage() );
 		}
-		if(!violations.isEmpty())
-			throw new TaskValidationException();
-		
-		taskRepo.createTask(task);
+		if ( !violations.isEmpty() ) throw new TaskValidationException();
+
+		taskRepo.createTask( task );
 	}
-	
-	//@RolesAllowed({"manager"})
+
+	// @RolesAllowed({"manager"})
 	public List<Task> findAllTasks()
 	{
 		return taskRepo.getAllTasks();
 	}
-	
-	//@PermitAll
-	public Task findTaskById(Long id)
+
+	// @PermitAll
+	public Task findTaskById( Long id )
 	{
-		//employee can only view open tasks
-		Task task = taskRepo.find(id);
-		if(task.isCompleted() && ctx.isCallerInRole("employee"))
-			throw new SecurityException("Employees can only view open tasks.");
-		return taskRepo.find(id);
+		// employee can only view open tasks
+		Task task = taskRepo.find( id );
+		if ( task.isCompleted() && ctx.isCallerInRole( "employee" ) )
+			throw new SecurityException( "Employees can only view open tasks." );
+		return taskRepo.find( id );
 	}
-	
-	//@RolesAllowed({"employee"})
-	public void fileTaskReport(Task task) throws TaskValidationException
+
+	// @RolesAllowed({"employee"})
+	public void fileTaskReport( Task task ) throws TaskValidationException
 	{
 		String employee = ctx.getCallerPrincipal().getName();
-		System.out.println("employee: " + employee);
-		task.setCompletedBy(employee);
-		
-		Set<ConstraintViolation<Task>> violations = validator.validate(task, Default.class, FinishedTask.class);
-		for(ConstraintViolation<Task> violation : violations)
+		System.out.println( "employee: " + employee );
+		task.setCompletedBy( employee );
+
+		Set<ConstraintViolation<Task>> violations = validator.validate( task, Default.class, FinishedTask.class );
+		for ( ConstraintViolation<Task> violation : violations )
 		{
-			System.out.println("Task validation error: " + violation.getMessage());
+			System.out.println( "Task validation error: " + violation.getMessage() );
 		}
-		if(!violations.isEmpty())
-			throw new TaskValidationException();
-		
-		taskRepo.merge(task);
+		if ( !violations.isEmpty() ) throw new TaskValidationException();
+
+		taskRepo.merge( task );
 	}
-	
+
 	public List<Task> findOpenTasks()
 	{
-		List<Task> openTasks = new ArrayList<>(15);
+		List<Task> openTasks = new ArrayList<>( 15 );
 		List<Task> allTasks = taskRepo.getAllTasks();
-		for(Task task : allTasks){
-			if(!task.isCompleted())
-				openTasks.add(task);
+		for ( Task task : allTasks )
+		{
+			if ( !task.isCompleted() ) openTasks.add( task );
 		}
 		return openTasks;
-		
+
 	}
 
 	@Override
-	public void remove(Task task) {
-		taskRepo.remove(task);
+	public void remove( Task task )
+	{
+		taskRepo.remove( task );
 	}
 }
