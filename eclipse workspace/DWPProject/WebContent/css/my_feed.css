@@ -1,0 +1,54 @@
+#first_nav
+{
+    margin-bottom:0px;
+    z-index: 2;
+}
+
+#second_nav
+{
+    z-index: 1;
+}
+
+.sidebar
+{
+    border: 1px solid #D4D4D4;
+    border-radius: 5px;
+    padding-left: 1%;
+    margin-bottom: 5px;
+}
+
+.sidebar ul
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+.sidebar ul li
+{
+    list-style: none;
+    display: block;
+}
+
+.sidebar ul li a
+{
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover
+{
+}
+
+#add_status textarea
+{
+    margin-bottom: 1px;
+}
+
+#add_status
+{
+    margin-bottom: 10px;
+}
+
+.right
+{
+    float:right;
+}

@@ -1,0 +1,27 @@
+.rating span
+{
+    font-size: 16px;
+    background: #D4D4D4;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.review
+{
+    border: 1px solid #D4D4D4;
+    border-radius: 5px;
+    padding-left: 7px;
+    margin-bottom: 10px;
+}
+
+.review button
+{
+    margin-bottom: 5px;
+}
+
+#profile_picture
+{
+    width: 100px;
+    height:100px;
+    display: block;
+}
