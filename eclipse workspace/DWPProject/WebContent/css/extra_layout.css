@@ -96,6 +96,10 @@ body, html
 {
 }
 
+.padding-top{
+	padding-top: 65px;
+}
+
 .dont-break-out{
     overflow-wrap: break-word;
     word-wrap: break-word;
@@ -108,4 +112,10 @@ body, html
     -moz-hyphens: auto;
     -webkit-hyphens: auto;
     hyphens: auto;
+}
+
+.vertical-center{
+	display: inline-block;
+	vertical-align: middle;
+	float: none;
 }
