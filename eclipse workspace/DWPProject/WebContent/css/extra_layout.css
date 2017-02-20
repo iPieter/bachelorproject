@@ -9,30 +9,79 @@ body, html
     width: 100%;
 }
 
+.staanplaats_active
+{
+    background-color: #293A40;
+    padding: 2px;
+}
+
 .sidebar
 {
     border-right: 3px solid #2c3e50;
-    height: 100vh;
+    height: 100%;
     padding-top: 5px;
     background-color: #344951;
     color: #ecf0f1;
+    overflow:hidden;
 }
 
-.trein
+.breadcrumb a
 {
-    padding-left: 5px;
+    color: #344951;
+}
+
+.wagon
+{
+    padding-left: 15px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    border-left: 1px solid gray;
+    border-top: 1px solid #344951;
+    border-right: 1px solid #344951;
+    border-bottom: 1px solid #344951;
+}
+
+.wagon a
+{
+    text-decoration: none;
+    color: #ecf0f1;
+}
+
+.wagon_active
+{
+    background-color: #435D66;
+}
+
+.staanplaats_active .wagon
+{
+    padding-left: 15px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    border-left: 1px solid gray;
+    border-top: 1px solid #293A40;
+    border-right: 1px solid #293A40;
+    border-bottom: 1px solid #293A40;
+}
+
+.wagon_data
+{
+    padding-left: 15px;
     border-left: 1px solid gray;
 }
 
-.trein_data
+.wagon_data
 {
-    padding-left: 7px;
+    padding-left: 15px;
+    border-left: 1px solid gray;
 }
 
-.main_view
+.wagon_data h4
+{
+}
+
+.container
 {
     background-color: #ecf0f1;
-    height: 100vh;
 }
 
 .mainview_panel
@@ -70,16 +119,23 @@ body, html
 
 .mainview_issue
 {
+    border-bottom: 1px solid #2c3e50;
+    overflow-x: hidden;
 }
 
-.mainview_trein
+.mainview_wagon
 {
     border-bottom: 1px solid #2c3e50;
 }
 
-.mainview_trein_header
+.mainview_wagon_header
 {
     margin-top: 1vh;
+}
+
+.create_issue
+{
+    margin: 5px;
 }
 
 .status_bad
@@ -98,6 +154,30 @@ body, html
 
 .padding-top{
 	padding-top: 65px;
+}
+
+.topright
+{
+    padding: 0px;
+}
+
+#map
+{
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.issue_bar
+{
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.sensor_active
+{
+    background-color: #293A40;
+    padding: 2px;
 }
 
 .dont-break-out{
