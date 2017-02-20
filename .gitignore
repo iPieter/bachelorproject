@@ -19,6 +19,7 @@ eclipse workspace/DemoEAR/target
 eclipse workspace/DWPProject/.settings/*
 eclipse workspace/DWPProject/.classpath
 eclipse workspace/DWPProject/.project
+eclipse workspace/DWPProject/.tern-project
 eclipse workspace/DWPProject/target
 eclipse workspace/EJBProject/.settings/*
 eclipse workspace/EJBProject/.classpath
