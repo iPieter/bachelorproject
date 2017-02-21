@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import java.util.Date;
 
 
@@ -22,11 +24,16 @@ public class ProcessedSensorData implements Serializable {
 	private String location;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
 	private Date time;
 
 	@Lob
 	private String track;
 
+	@OneToOne(fetch = FetchType.LAZY)
+	@NotNull
+	private TrainCoach traincoach;
+	
 	public ProcessedSensorData() {
 	}
 

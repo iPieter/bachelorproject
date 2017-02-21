@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -21,9 +22,11 @@ public class TrainCoach implements Serializable {
 	private String conductor;
 
 	@Lob
+	@NotNull
 	private String name;
 
 	@Lob
+	@NotNull
 	private String type;
 
 	public TrainCoach() {

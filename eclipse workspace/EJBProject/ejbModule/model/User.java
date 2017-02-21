@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * The persistent class for the User database table.
@@ -18,15 +19,19 @@ public class User implements Serializable
 	private int id;
 
 	@Lob
+	@NotNull
 	private String name;
 
 	@Lob
+	@NotNull
 	private String pass;
 
 	@Lob
+	@NotNull
 	private String salt;
 
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private UserRole role;
 
 	public User()

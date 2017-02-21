@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -20,6 +21,7 @@ public class Workplace implements Serializable {
 	private int id;
 
 	@Lob
+	@NotNull
 	private String name;
 
 	@OneToMany(fetch = FetchType.LAZY)
