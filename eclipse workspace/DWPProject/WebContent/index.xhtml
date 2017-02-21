@@ -8,8 +8,20 @@
     xmlns:ui="http://java.sun.com/jsf/facelets">  
 
 <ui:composition template="templates/main_layout.xhtml">
-	<ui:define name="title">Nieuwe titel</ui:define>
-	<ui:define name="sidebar_content">Sidebar</ui:define>
+	<ui:define name="title">Index Development Pagina</ui:define>
+	<ui:define name="sidebar_content">
+		<div class="staanplaats staanplaats_active">
+             <h4><span class="glyphicon glyphicon-unchecked"></span> Links</h4>
+             <div class="wagon wagon_active">
+                 <h4><a href="authorisation.html">authorisation.html</a></h4>
+                 <h4><a href="staanplaats.xhtml">staanplaats.html</a></h4>
+                 <div class="wagon_data">
+                    <h4><a href="wagon.xhtml">wagon.html</a></h4>
+                 	<h4><a href="wagon_sensor.xhtml">wagon_sensor.html</a></h4>
+                 </div>
+             </div>
+       </div>
+	</ui:define>
 	<ui:define name="breadcrumb"></ui:define>
 	<ui:define name="mainview_content"></ui:define>	
 </ui:composition>
