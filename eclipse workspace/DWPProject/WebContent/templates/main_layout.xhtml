@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+<h:head>
+	<meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link href="css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="css/extra_layout.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="css/leaflet.css" />
+	<title><ui:insert name="title">Insert title here</ui:insert></title>
+</h:head>
+<h:body>
+<div class="container-fluid">
+	<div class="row">
+	
+		<!-- LEFT SIDEBAR -->
+		<div class="col-sm-2 sidebar">
+			
+			<!-- SEARCH INPUT -->
+            <form class="form-group" role="search">
+   				<div class="input-group">
+   					<input type="text" class="form-control" placeholder="Zoek wagons of plaatsen" name="search_input" id="search_input" autocomplete="off"/>
+   					<div class="input-group-btn">
+   						<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+   					</div>
+   				</div>
+   				<div class="dropdown">
+   					<a class="dropdown-toggle" data-toggle="dropdown" id="search_dropdown"></a>
+   					<ul class="dropdown-menu" id="search_dropdown_list" >
+   					</ul>
+   				</div>
+   			</form> <!-- END SEARCH INPUT -->
+   			
+   			<!-- SIDEBAR CONTENT -->
+   			<ui:insert name="sidebar_content"> <!-- INSERT -->
+   				<!-- Default Example -->
+                <div class="staanplaats staanplaats_active">
+                    <h4><span class="glyphicon glyphicon-unchecked"></span> Staanplaats Example</h4>
+                    <div class="wagon wagon_active">
+                        <h4><span class="glyphicon glyphicon-phone"></span> Wagon Example </h4>
+                        <div class="wagon_data">
+                            <h4><span class="glyphicon glyphicon-alert"></span> Problemen <span class="badge">1</span></h4>
+							<h4><span class="glyphicon glyphicon-dashboard"></span> <a href="wagon_sensor.html">Sensors</a></h4>
+                        </div>
+                    </div>
+                </div>
+			</ui:insert> <!-- END SIDEBAR CONTENT -->
+		</div> <!-- END LEFT SIDEBAR -->
+
+                
+            <!-- MAIN VIEW --> 
+            <div class="col-sm-10 main_view">
+            
+            	<!-- NAVIGATION -->
+				<div class="row header">
+					<ui:insert name="breadcrumb"> <!-- INSERT -->
+						<!-- Default Example -->
+						<ol class="breadcrumb breadcrumb_extra">
+							<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+							<li><a href="#">Staanplaats 1 </a></li>
+							<li><a href="#" class="active">wagon 1 </a></li>
+						</ol>
+					</ui:insert>
+				</div> <!-- END NAVIGATION -->
+				
+				<!-- MAIN VIEW PANELS -->
+                <ui:insert name="mainview_content"> 
+                </ui:insert> <!-- END MAIN VIEW PANELS -->
+         </div><!-- END MAIN VIEW -->
+         
+      </div> <!-- END MASTER ROW -->
+	</div> <!-- END MASTER CONTAINER -->
+</h:body>
+</html>
