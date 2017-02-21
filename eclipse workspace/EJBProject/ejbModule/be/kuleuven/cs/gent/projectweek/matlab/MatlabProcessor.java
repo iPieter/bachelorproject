@@ -1,5 +1,10 @@
 package be.kuleuven.cs.gent.projectweek.matlab;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -13,8 +18,10 @@ import matlabcontrol.MatlabProxyFactory;
 @Startup
 public class MatlabProcessor
 {
+	String script = "";
+	
 	@PostConstruct
-	public void init() throws MatlabConnectionException, MatlabInvocationException
+	public void init() throws MatlabConnectionException, MatlabInvocationException, IOException
 	{
 		MatlabProxyFactory factory = new MatlabProxyFactory(); 
 		MatlabProxy proxy = factory.getProxy();
