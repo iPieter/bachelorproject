@@ -26,6 +26,7 @@ public class User implements Serializable
 	@Lob
 	private String salt;
 
+	@Enumerated(EnumType.STRING)
 	private UserRole role;
 
 	public User()

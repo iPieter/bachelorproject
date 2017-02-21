@@ -1,6 +1,8 @@
 package model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -20,6 +22,9 @@ public class Workplace implements Serializable {
 	@Lob
 	private String name;
 
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<TrainCoach> traincoaches;
+	
 	public Workplace() {
 	}
 

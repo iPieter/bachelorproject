@@ -1,6 +1,8 @@
 package model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -23,6 +25,15 @@ public class Issue implements Serializable {
 	@Lob
 	private String status;
 
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<IssueAsset> assets;
+	
+	@OneToOne
+	private User mechanic;
+	
+	@OneToOne
+	private User Operator;
+	
 	public Issue() {
 	}
 
