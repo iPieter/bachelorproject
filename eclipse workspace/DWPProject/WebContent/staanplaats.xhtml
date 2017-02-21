@@ -7,8 +7,12 @@
 
 	<ui:define name="title">Train Manager</ui:define>
 	
+	<!-- SIDEBAR CONTENT -->
 	<ui:define name="sidebar_content">
 		<div class="staanplaats staanplaats_active">
+		
+		<!-- TODO: CONTROLLER QUERY Staanplaatsen en bijhorende wagonnen met per wagon Problemen/sensors-->
+			<!-- static example -->
              <div class="staanplaats staanplaats_active">
                     <h4><span class="glyphicon glyphicon-unchecked"></span> Staanplaats 1</h4>
                     <div class="wagon">
@@ -29,10 +33,11 @@
        </div>
 	</ui:define>
 	
+	<!-- BREADCRUMB -->
 	<ui:define name="breadcrumb">
 		<ol class="breadcrumb breadcrumb_extra">
 			<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
-			<li><a href="#" class="active">Staanplaats 1 </a></li>
+			<li><a href="#" class="active">Staanplaats 1 </a></li><!-- TODO: CONTROLLER QUERY huidige staanplaats-->
 		</ol>
 	</ui:define>
 	
