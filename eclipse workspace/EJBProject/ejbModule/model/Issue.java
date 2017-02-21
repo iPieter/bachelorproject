@@ -22,17 +22,20 @@ public class Issue implements Serializable {
 	@Lob
 	private String descr;
 
-	@Lob
-	private String status;
+	@Enumerated(EnumType.STRING)
+	private IssueStatus status;
 
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<IssueAsset> assets;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private User mechanic;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private User Operator;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	private ProcessedSensorData data;
 	
 	public Issue() {
 	}
@@ -53,11 +56,11 @@ public class Issue implements Serializable {
 		this.descr = desc;
 	}
 
-	public String getStatus() {
+	public IssueStatus getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(IssueStatus status) {
 		this.status = status;
 	}
 

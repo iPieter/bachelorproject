@@ -25,6 +25,9 @@ public class Workplace implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<TrainCoach> traincoaches;
 	
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<User> mechanics;
+	
 	public Workplace() {
 	}
 
