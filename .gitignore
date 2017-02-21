@@ -120,3 +120,25 @@ eclipse workspace/DemoEAR/pom.xml
 eclipse workspace/EJBProject/pom.xml
 
 eclipse workspace/EJBProject/login.properties
+
+*.fdt
+
+eclipse workspace/.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/_0.fdx
+
+*.fnm
+
+eclipse workspace/.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/_0.frq
+
+eclipse workspace/.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/_0.nrm
+
+eclipse workspace/.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/_0.prx
+
+eclipse workspace/.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/_0.tii
+
+eclipse workspace/.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/_0.tis
+
+eclipse workspace/.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/segments_1
+
+eclipse workspace/.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/segments.gen
+
+eclipse workspace/.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/write.lock
