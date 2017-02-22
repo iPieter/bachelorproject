@@ -1,8 +1,13 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
 
 /**
  * The persistent class for the User database table.
@@ -24,12 +29,22 @@ public class User implements Serializable
 
 	@Lob
 	@NotNull
-	private String pass;
+	@Email
+	private String email;
+	
+	@Lob
+	@NotNull
+	@Size(max = 96)
+	private byte[] pass;
 
 	@Lob
 	@NotNull
-	private String salt;
+	@Size(max = 32)
+	private byte[] salt;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastLogin;
+	
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	private UserRole role;
@@ -58,22 +73,32 @@ public class User implements Serializable
 		this.name = name;
 	}
 
-	public String getPass()
+	public String getEmail()
+	{
+		return this.email;
+	}
+
+	public void setEmail(String email)
+	{
+		this.email = email;
+	}	
+	
+	public byte[] getPass()
 	{
 		return this.pass;
 	}
 
-	public void setPass(String pass)
+	public void setPass(byte[] pass)
 	{
 		this.pass = pass;
 	}
 
-	public String getSalt()
+	public byte[] getSalt()
 	{
 		return this.salt;
 	}
 
-	public void setSalt(String salt)
+	public void setSalt(byte[] salt)
 	{
 		this.salt = salt;
 	}
@@ -88,4 +113,13 @@ public class User implements Serializable
 		this.role = role;
 	}
 
+	public Date getLastLogin()
+	{
+		return this.lastLogin;
+	}
+	
+	public void setLastLogin(Date lastLogin)
+	{
+		this.lastLogin = lastLogin;
+	}
 }
