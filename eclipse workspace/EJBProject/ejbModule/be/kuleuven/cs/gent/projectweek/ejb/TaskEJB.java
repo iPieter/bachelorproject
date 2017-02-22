@@ -35,6 +35,7 @@ public class TaskEJB implements TaskEJBLocal
 	// @RolesAllowed({"manager"})
 	public void createTask( Task task ) throws TaskValidationException
 	{
+		
 		Set<ConstraintViolation<Task>> violations = validator.validate( task, Default.class, UnfinishedTask.class );
 		for ( ConstraintViolation<Task> violation : violations )
 		{

@@ -30,7 +30,7 @@ body, html
     color: #344951;
 }
 
-.wagon
+.traincoach
 {
     padding-left: 15px;
     margin-bottom: 0px;
@@ -41,18 +41,18 @@ body, html
     border-bottom: 1px solid #344951;
 }
 
-.wagon a
+.traincoach a
 {
     text-decoration: none;
     color: #ecf0f1;
 }
 
-.wagon_active
+.traincoach_active
 {
     background-color: #435D66;
 }
 
-.staanplaats_active .wagon
+.traincoach_depot_active .traincoach
 {
     padding-left: 15px;
     margin-bottom: 0px;
@@ -63,19 +63,19 @@ body, html
     border-bottom: 1px solid #293A40;
 }
 
-.wagon_data
+.traincoach_data
 {
     padding-left: 15px;
     border-left: 1px solid gray;
 }
 
-.wagon_data
+.traincoach_data
 {
     padding-left: 15px;
     border-left: 1px solid gray;
 }
 
-.wagon_data h4
+.traincoach_data h4
 {
 }
 
@@ -123,12 +123,12 @@ body, html
     overflow-x: hidden;
 }
 
-.mainview_wagon
+.mainview_traincoach
 {
     border-bottom: 1px solid #2c3e50;
 }
 
-.mainview_wagon_header
+.mainview_traincoach_header
 {
     margin-top: 1vh;
 }
