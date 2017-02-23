@@ -1,19 +1,22 @@
 package controllers;
 
-import javax.ejb.EJB;
+import java.util.List;
+
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+
+import model.Workplace;
+import service.InternalDatafetchService;
 
 @Named
 @RequestScoped
 public class TraincoachDepotController {
 	
-	 //@EJB
-	 //private InternalDataFetchEJB;
-	//private Traincoach traincoach;
-	
+	 @Inject
+	 private InternalDatafetchService internalDatafetchService;	
 	 
-	void getAllTraincoachDepots(){
-		
+	public List<Workplace> getAllTraincoachDepots(){
+		return internalDatafetchService.getAllTraincoachDepots();
 	}
 }
