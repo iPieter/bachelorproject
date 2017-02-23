@@ -7,8 +7,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class UserService
 {
-
-	@PersistenceContext
-	private EntityManager em;
+	//@PersistenceContext
+	//private EntityManager em;
 	
 }
