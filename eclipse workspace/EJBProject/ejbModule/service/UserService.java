@@ -7,8 +7,6 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class UserService
 {
-
-	@PersistenceContext
+	@PersistenceContext(unitName="EJBProject")
 	private EntityManager em;
-	
 }
