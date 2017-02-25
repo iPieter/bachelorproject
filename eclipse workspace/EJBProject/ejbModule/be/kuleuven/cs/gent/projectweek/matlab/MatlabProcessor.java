@@ -10,6 +10,7 @@ import java.net.URL;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.ejb.Stateless;
 
 import matlabcontrol.MatlabConnectionException;
 import matlabcontrol.MatlabInvocationException;
@@ -46,11 +47,12 @@ public class MatlabProcessor
 		MatlabProxy proxy = factory.getProxy();
 
 		URL url = getClass().getResource( "test03_track16_speed40_radius125.mat" );
-		String path = url.toString().replaceAll( "vfs:/", "" );
+		String path = url.toString().replaceAll( "vfs:", "" );
 
 		proxy.eval( "load('" + path + "')" );
 		proxy.eval( script );
 
+		
 		MatlabTypeConverter processor = new MatlabTypeConverter( proxy );
 		MatlabNumericArray yaw_out = processor.getNumericArray( "yaw_out" );
 		MatlabNumericArray roll_out = processor.getNumericArray( "roll_out" );
