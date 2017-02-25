@@ -1,0 +1,33 @@
+data_width  = 100;
+input       = imu.gyro.yaw;
+time        = imu.gyro.timestamp;
+steps       = 1:data_width:length( input );
+ni          = length( steps );
+yaw_out     = zeros( ni, 2 );
+for j = 1:ni
+    i    = steps( j );
+    left = data_width;
+    if( i + left > length( input ) )
+       left = length( input )-i; 
+    end
+    [~,index]    = max( abs( input( i:i+left ) ) );
+    yaw_out(j,1) = input( i + index );
+    yaw_out(j,2) = time( i + index );
+end
+
+data_width  = 100;
+input       = imu.gyro.roll;
+time        = imu.gyro.timestamp;
+steps       = 1:data_width:length( input );
+ni          = length( steps );
+roll_out     = zeros( ni, 2 );
+for j = 1:ni
+    i    = steps( j );
+    left = data_width;
+    if( i + left > length( input ) )
+       left = length( input )-i; 
+    end
+    [~,index]     = max( abs( input( i:i+left ) ) );
+    roll_out(j,1) = input( i + index );
+    roll_out(j,2) = time( i + index );
+end
