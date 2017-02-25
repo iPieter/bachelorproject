@@ -15,6 +15,7 @@ jboss/server/minimal/data/**/*
 jboss/server/minimal/work/**/*
 eclipse workspace/DemoEAR/.settings/*
 eclipse workspace/DemoEAR/.project
+eclipse workspace/DemoEAR/target
 eclipse workspace/DWPProject/.settings/*
 eclipse workspace/DWPProject/.classpath
 eclipse workspace/DWPProject/.project
@@ -24,7 +25,6 @@ eclipse workspace/EJBProject/.settings/*
 eclipse workspace/EJBProject/.classpath
 eclipse workspace/EJBProject/.project
 eclipse workspace/EJBProject/target
-eclipse workspace\EJBProject\ejbModule\be\kuleuven\cs\gent\projectweek\matlab\test03_track16_speed40_radius125.mat
 # deployed package files #
 
 *.DEPLOYED
@@ -75,11 +75,25 @@ eclipse workspace/EJBProject/bin/ejbModule/be/kuleuven/cs/gent/projectweek/data/
 
 eclipse workspace/DWPProject/pom.xml
 
+eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/maven/be.kuleuven.cs.project/DemoEAR/pom.xml
+
+eclipse workspace/DemoEAR/pom.xml
+
+eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/application.xml
+
 eclipse workspace/DWPProject/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
+
+eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/MANIFEST.MF
+
+eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/maven/be.kuleuven.cs.project/DemoEAR/pom.properties
+
+eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/maven/be.kuleuven.cs.project/DemoEAR/pom.xml
 
 eclipse workspace/DWPProject/pom.xml
 
 eclipse workspace/EJBProject/target/classes/META-INF/MANIFEST.MF
+
+eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/MANIFEST.MF
 
 management/~$dagboek.xlsx
 
@@ -94,6 +108,12 @@ eclipse workspace/DWPProject/target/m2e-wtp/web-resources/META-INF/maven/cs.kule
 eclipse workspace/DWPProject/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
 
 eclipse workspace/DWPProject/pom.xml
+
+eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/maven/be.kuleuven.cs.project/DemoEAR/pom.xml
+
+eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/maven/be.kuleuven.cs.project/DemoEAR/pom.properties
+
+eclipse workspace/DemoEAR/target/m2e-wtp/ear-resources/META-INF/application.xml
 
 eclipse workspace/DemoEAR/pom.xml
 
