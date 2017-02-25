@@ -25,6 +25,7 @@ eclipse workspace/EJBProject/.settings/*
 eclipse workspace/EJBProject/.classpath
 eclipse workspace/EJBProject/.project
 eclipse workspace/EJBProject/target
+eclipse workspace\EJBProject\ejbModule\be\kuleuven\cs\gent\projectweek\matlab\test03_track16_speed40_radius125.mat
 # deployed package files #
 
 *.DEPLOYED
