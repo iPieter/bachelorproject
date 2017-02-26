@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -15,25 +16,61 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
+import be.kuleuven.cs.gent.projectweek.model.ProcessedSensorData;
+import be.kuleuven.cs.gent.projectweek.model.TrainCoach;
 import matlabcontrol.MatlabConnectionException;
 import matlabcontrol.MatlabInvocationException;
 import matlabcontrol.MatlabProxy;
 import matlabcontrol.MatlabProxyFactory;
 import matlabcontrol.extensions.MatlabNumericArray;
 import matlabcontrol.extensions.MatlabTypeConverter;
-import be.kuleuven.cs.gent.projectweek.model.ProcessedSensorData;
-import be.kuleuven.cs.gent.projectweek.model.TrainCoach;
 
 @Singleton
 //@Startup
 public class MatlabProcessor
 {
 	String script = "";
-
+	//@PostConstruct
 	public void init() throws MatlabConnectionException, MatlabInvocationException, IOException
+		{
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
+		EntityManager em = emf.createEntityManager();
+		
+		List<ProcessedSensorData> result = null;
+		
+		try
+		{
+			TypedQuery<ProcessedSensorData> query = em.createNamedQuery( "ProcessedSensorData.findAll", ProcessedSensorData.class );			
+			result = query.getResultList();
+		}
+		catch( Exception e )
+		{
+			System.out.println( "ERROR IN MATLABPROCESSOR(query):" + e.getLocalizedMessage() );
+		}
+		
+		if( result == null || result.size() == 0 )
+		{
+			loadScript();
+			try
+			{
+				analyseFile( "test03_track16_speed40_radius125.mat", em );				
+			}
+			catch( Exception e )
+			{
+				System.out.println( "ERROR IN MATLABPROCESSOR(analysis): " + e.getLocalizedMessage() );
+			}
+
+		}
+		
+		em.close();
+		emf.close();
+	}
+	
+	private void loadScript( )
+>>>>>>> origin/master
 	{
-		String script = "";
 		try
 		{
 			URL url = getClass().getResource( "script.txt" );
@@ -47,7 +84,10 @@ public class MatlabProcessor
 		{
 			System.out.println( e.getMessage() );
 		}
-
+	}
+	
+	private void analyseFile( String name, EntityManager em ) throws MatlabConnectionException, MatlabInvocationException, IOException
+	{
 		MatlabProxyFactory factory = new MatlabProxyFactory();
 		MatlabProxy proxy = factory.getProxy();
 
@@ -81,7 +121,6 @@ public class MatlabProcessor
 		double minute = time_out.getRealValue( 4 );
 		double second = time_out.getRealValue( 5 );
 
-		System.out.println( System.getProperty( "user.home" ) );
 		try
 		{
 			BufferedWriter writer = new BufferedWriter(
@@ -107,7 +146,6 @@ public class MatlabProcessor
 			writer.flush();
 			writer.close();
 
-			
 			TrainCoach trainCoach = new TrainCoach();
 			trainCoach.setConductor( "test" );
 			trainCoach.setName( "test" );
@@ -118,10 +156,6 @@ public class MatlabProcessor
 			data.setTrack( "test" );
 			data.setTrainCoach( trainCoach );
 			
-			
-			EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-			EntityManager em = emf.createEntityManager();
-			
 			EntityTransaction tx = em.getTransaction();
 			
 			tx.begin();
@@ -129,9 +163,6 @@ public class MatlabProcessor
 			em.flush();
 			em.persist( data );
 			tx.commit();
-		
-			em.close();
-			emf.close();
 		}
 		
 		catch ( IOException io )
