@@ -4,7 +4,8 @@
 <html lang="eng"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="templates/main_layout.xhtml">
 
@@ -14,10 +15,14 @@
 	<ui:define name="sidebar_content">
 		<div class="traincoach_depot traincoach_depot_active">
 		
-		
+		<h:form>
+			<h3>AutoResize</h3>
+	    	<p:inputTextarea rows="6" cols="33" />
+    	</h:form>
+    	
 		<!-- TODO: CONTROLLER QUERY Staanplaatsen en bijhorende wagonnen met per wagon Problemen/sensors-->
-		
-		<!--<h:dataTable id="traincoach_depot_list" value="#{traincoachDepotController.findAllTraincoachDepots()" var="traincoach_depot">
+		<!-- 
+		<h:dataTable id="traincoach_depot_list" value="#{traincoachDepotController.getAllTraincoachDepots()}" var="traincoach_depot">
 			<h:column>
 				<h:link outcome="traincoach_depot.xhtml?id=#{traincoach_depot.id}" value="#{traincoach_depot.id}"/>
 				<h:dataTable var="traincoach">
@@ -27,30 +32,7 @@
 				</h:dataTable>
 			</h:column>
 		</h:dataTable>-->
-		
-		
-		
-		
-			
-			<!-- static example -->
-             <div class="staanplaats staanplaats_active">
-                    <h4><span class="glyphicon glyphicon-unchecked"></span> Staanplaats 1</h4>
-                    <div class="wagon">
-                        <h4><span class="glyphicon glyphicon-phone"></span> <a href="traincoach.xhtml">Wagon 1</a></h4>
-                        <div class="wagon_data">
-                            <h4><span class="glyphicon glyphicon-alert"></span> Problemen <span class="badge">1</span></h4>
-                            <h4><span class="glyphicon glyphicon-dashboard"></span> Sensors</h4>
-                        </div>
-                    </div>
-					<div class="wagon">
-                        <h4><span class="glyphicon glyphicon-phone"></span> Wagon 2 </h4>
-                        <div class="wagon_data">
-                            <h4><span class="glyphicon glyphicon-alert"></span> Problemen <span class="badge">3</span></h4>
-                            <h4><span class="glyphicon glyphicon-dashboard"></span> Sensors</h4>
-                        </div>
-                    </div>
-                </div>
-       </div>
+		</div>
 	</ui:define>
 	
 	<!-- BREADCRUMB -->

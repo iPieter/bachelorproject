@@ -1,4 +1,4 @@
-package be.kuleuven.cs.gent.projectweek.matlab;
+/*package be.kuleuven.cs.gent.projectweek.matlab;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -68,4 +68,4 @@ public class MatlabProcessor
 		
 		proxy.disconnect();
 	}
-}
+}*/
