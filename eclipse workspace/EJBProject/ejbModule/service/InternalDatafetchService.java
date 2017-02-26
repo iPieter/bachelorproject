@@ -21,4 +21,5 @@ public class InternalDatafetchService {
 		TypedQuery<Workplace> query= em.createNamedQuery("findAll", Workplace.class);
 		return query.getResultList();	
 	}
+	
 }
