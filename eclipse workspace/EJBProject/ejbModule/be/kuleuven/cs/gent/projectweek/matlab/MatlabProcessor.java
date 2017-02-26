@@ -22,8 +22,8 @@ import matlabcontrol.MatlabProxy;
 import matlabcontrol.MatlabProxyFactory;
 import matlabcontrol.extensions.MatlabNumericArray;
 import matlabcontrol.extensions.MatlabTypeConverter;
-import model.ProcessedSensorData;
-import model.TrainCoach;
+import be.kuleuven.cs.gent.projectweek.model.ProcessedSensorData;
+import be.kuleuven.cs.gent.projectweek.model.TrainCoach;
 
 @Singleton
 @Startup
