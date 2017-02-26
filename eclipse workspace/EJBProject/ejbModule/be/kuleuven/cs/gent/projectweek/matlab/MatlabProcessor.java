@@ -111,7 +111,7 @@ public class MatlabProcessor
 			writer.flush();
 			writer.close();
 
-			/*
+			
 			TrainCoach trainCoach = new TrainCoach();
 			trainCoach.setConductor( "test" );
 			trainCoach.setName( "test" );
@@ -121,8 +121,8 @@ public class MatlabProcessor
 			data.setTime( new Date() );
 			data.setTrack( "test" );
 			data.setTrainCoach( trainCoach );
-			*/
-			/*
+			
+			
 			EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
 			EntityManager em = emf.createEntityManager();
 			
@@ -134,9 +134,8 @@ public class MatlabProcessor
 			em.persist( data );
 			tx.commit();
 		
-			emf.close();
 			em.close();
-			*/
+			emf.close();
 		}
 		
 		catch ( IOException io )
