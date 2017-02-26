@@ -26,13 +26,11 @@ import be.kuleuven.cs.gent.projectweek.model.ProcessedSensorData;
 import be.kuleuven.cs.gent.projectweek.model.TrainCoach;
 
 @Singleton
-@Startup
+//@Startup
 public class MatlabProcessor
 {
 	String script = "";
 
-
-	@PostConstruct
 	public void init() throws MatlabConnectionException, MatlabInvocationException, IOException
 	{
 		String script = "";

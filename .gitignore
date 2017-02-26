@@ -122,4 +122,11 @@ eclipse workspace/.recommenders/index/http___download_eclipse_org_recommenders_m
 eclipse workspace/.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/segments.gen
 
 eclipse workspace/.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/write.lock
+<<<<<<< Updated upstream
 eclipse workspace/.recommenders/*
+=======
+
+eclipse workspace/.idea/eclipse workspace.iml
+>>>>>>> Stashed changes
+
+eclipse workspace/EJBProject/.externalToolBuilders/org.hibernate.eclipse.console.hibernateBuilder.launch
