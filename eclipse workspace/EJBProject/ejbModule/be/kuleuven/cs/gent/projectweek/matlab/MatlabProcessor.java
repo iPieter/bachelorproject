@@ -28,11 +28,11 @@ import matlabcontrol.extensions.MatlabNumericArray;
 import matlabcontrol.extensions.MatlabTypeConverter;
 
 @Singleton
-//@Startup
+@Startup
 public class MatlabProcessor
 {
 	String script = "";
-	//@PostConstruct
+	@PostConstruct
 	public void init() throws MatlabConnectionException, MatlabInvocationException, IOException
 		{
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
