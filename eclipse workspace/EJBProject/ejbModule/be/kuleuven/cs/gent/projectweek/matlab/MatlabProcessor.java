@@ -33,7 +33,7 @@ public class MatlabProcessor
 {
 	String script = "";
 	@PostConstruct
-	public void init() throws MatlabConnectionException, MatlabInvocationException, IOException
+	public void init()
 		{
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
 		EntityManager em = emf.createEntityManager();
