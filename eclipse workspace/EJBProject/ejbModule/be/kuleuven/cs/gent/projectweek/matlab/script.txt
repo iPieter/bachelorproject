@@ -31,3 +31,13 @@ for j = 1:ni
     roll_out(j,1) = input( i + index );
     roll_out(j,2) = time( i + index );
 end
+
+time_out(1) = gps.gps_time.year(1);
+time_out(2) = gps.gps_time.month(1);
+time_out(3) = gps.gps_time.day(1);
+time_out(4) = gps.gps_time.hour(1);
+time_out(5) = gps.gps_time.minute(1);
+time_out(6) = gps.gps_time.second(1);
+
+lat_out     = gps.gps_lat.latitude;
+lng_out     = gps.gps_lon.longitude;

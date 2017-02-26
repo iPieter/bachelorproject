@@ -20,7 +20,8 @@ public class InternalDatafetchService {
 	public List<Workplace> getAllTraincoachDepots(){
 		//TypedQuery<Workplace> query= em.createNamedQuery("findAll", Workplace.class);
 		//return query.getResultList();	
-		
+
 		return null;
 	}
+	
 }
