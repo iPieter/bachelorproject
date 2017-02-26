@@ -25,7 +25,7 @@ public class MatlabProcessor
 {
 	String script = "";
 
-	@PostConstruct
+	//@PostConstruct
 	public void init() throws MatlabConnectionException, MatlabInvocationException, IOException
 	{
 		String script = "";
