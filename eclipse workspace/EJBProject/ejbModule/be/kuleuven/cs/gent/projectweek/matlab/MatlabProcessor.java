@@ -69,7 +69,6 @@ public class MatlabProcessor
 	}
 	
 	private void loadScript( )
->>>>>>> origin/master
 	{
 		try
 		{
