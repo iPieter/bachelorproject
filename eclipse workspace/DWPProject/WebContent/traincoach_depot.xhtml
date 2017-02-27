@@ -13,13 +13,17 @@
 	
 	<!-- SIDEBAR CONTENT -->
 	<ui:define name="sidebar_content">
-		<div class="traincoach_depot traincoach_depot_active">
-		
+		<!--  <div class="traincoach_depot traincoach_depot_active">-->
+		<!--  
 		<h:form>
-			<h3>AutoResize</h3>
-	    	<p:inputTextarea rows="6" cols="33" />
-    	</h:form>
-    	
+		    <p:growl id="messages" showDetail="true"/>
+		 
+		    <h3>Programmatic Menu</h3>
+    		<p:menu model="#{menuView.model}" />
+    		
+		</h:form>
+    	-->
+    	<p>Test</p>
 		<!-- TODO: CONTROLLER QUERY Staanplaatsen en bijhorende wagonnen met per wagon Problemen/sensors-->
 		<!-- 
 		<h:dataTable id="traincoach_depot_list" value="#{traincoachDepotController.getAllTraincoachDepots()}" var="traincoach_depot">
@@ -32,7 +36,7 @@
 				</h:dataTable>
 			</h:column>
 		</h:dataTable>-->
-		</div>
+		<!-- </div>-->
 	</ui:define>
 	
 	<!-- BREADCRUMB -->
@@ -45,7 +49,7 @@
 	
 	<!-- MAINVIEW CONTENT -->
 	<ui:define name="mainview_content">
-		<div class="row">
+		<!-- <div class="row">
                     <div class="col-sm-6 mainview_panel_large">
                         <div class="row mainview_wagon">
 							<div class="col-sm-4 mainview_wagon_header">
@@ -151,191 +155,9 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>-->
 	</ui:define>	
 </ui:composition>
-
-<!-- 
-
-<head>
-	<meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-	<link href="css/bootstrap.min.css" rel="stylesheet"/>
-	<link href="css/extra_layout.css" rel="stylesheet"/>
-	<link rel="stylesheet" href="css/leaflet.css" />
-	<title>Train Manager</title>
-</head>
-<body>
-	<div class="container">
-        <div class="row">
-            <div class="col-sm-2 sidebar">
-                <form class="form-group" role="search">
-    				<div class="input-group">
-    					<input type="text" class="form-control" placeholder="Zoek wagons of plaatsen" name="search_input" id="search_input" autocomplete="off"/>
-    					<div class="input-group-btn">
-    						<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
-    					</div>
-    				</div>
-    				<div class="dropdown">
-    					<a class="dropdown-toggle" data-toggle="dropdown" id="search_dropdown"></a>
-    					<ul class="dropdown-menu" id="search_dropdown_list" >
-    					</ul>
-    				</div>
-    			</form>
-                <div class="staanplaats staanplaats_active">
-                    <h4><span class="glyphicon glyphicon-unchecked"></span> Staanplaats 1</h4>
-                    <div class="wagon">
-                        <h4><span class="glyphicon glyphicon-phone"></span> <a href="traincoach.xhtml">Wagon 1</a></h4>
-                        <div class="wagon_data">
-                            <h4><span class="glyphicon glyphicon-alert"></span> Problemen <span class="badge">1</span></h4>
-                            <h4><span class="glyphicon glyphicon-dashboard"></span> Sensors</h4>
-                        </div>
-                    </div>
-					<div class="wagon">
-                        <h4><span class="glyphicon glyphicon-phone"></span> Wagon 2 </h4>
-                        <div class="wagon_data">
-                            <h4><span class="glyphicon glyphicon-alert"></span> Problemen <span class="badge">3</span></h4>
-                            <h4><span class="glyphicon glyphicon-dashboard"></span> Sensors</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="staanplaats">
-					<h4><span class="glyphicon glyphicon-unchecked"></span> Staanplaats 2</h4>
-                    <div class="wagon">
-                        <h4><span class="glyphicon glyphicon-phone"></span> Wagon 1 </h4>
-                        <div class="wagon_data">
-                            <h4><span class="glyphicon glyphicon-alert"></span> Problemen <span class="badge">5</span></h4>
-                            <h4><span class="glyphicon glyphicon-dashboard"></span> Sensors</h4>
-                        </div>
-                    </div>
-					<div class="wagon">
-                        <h4><span class="glyphicon glyphicon-phone"></span> Wagon 2 </h4>
-                        <div class="wagon_data">
-                            <h4><span class="glyphicon glyphicon-alert"></span> Problemen <span class="badge">6</span></h4>
-                            <h4><span class="glyphicon glyphicon-dashboard"></span> Sensors</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-10 main_view">
-				<div class="row header">
-					<ol class="breadcrumb breadcrumb_extra">
-						<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
-						<li><a href="#" class="active">Staanplaats 1 </a></li>
-					</ol>
-				</div>
-                <div class="row">
-                    <div class="col-sm-6 mainview_panel_large">
-                        <div class="row mainview_wagon">
-							<div class="col-sm-4 mainview_wagon_header">
-								<b>Wagon 1</b>
-							</div>
-							<div class="col-sm-8">
-								<h4>Actieve problemen</h4>
-								<ul>
-									<li>Afwijking accelerometer x-as</li>
-								</ul>
-								<h4>Afgewerkte problemen</h4>
-								<ul>
-									<li>Afwijking accelerometer z-as</li>
-								</ul>
-							</div>
-                        </div>
-						<div class="row mainview_wagon">
-							<div class="col-sm-4 mainview_wagon_header">
-								<b>Wagon 2</b>
-							</div>
-							<div class="col-sm-8">
-								<h4>Actieve problemen</h4>
-								<ul>
-									<li>Afwijking gyroscoop yaw </li>
-								</ul>
-								<h4>Afgewerkte problemen</h4>
-								<ul>
-								</ul>
-							</div>
-                        </div>
-						<div class="row mainview_wagon">
-							<div class="col-sm-4 mainview_wagon_header">
-								<b>Wagon 3</b>
-							</div>
-							<div class="col-sm-8">
-								<h4>Actieve problemen</h4>
-								<ul>
-									<li>Afwijking gyroscoop yaw en roll </li>
-								</ul>
-								<h4>Afgewerkte problemen</h4>
-								<ul>
-									<li>Afwijking GPS lat</li>
-									<li>Afwijking GPS long</li>
-								</ul>
-							</div>
-                        </div>
-						<div class="row mainview_wagon">
-							<div class="col-sm-4 mainview_wagon_header">
-								<b>Wagon 4</b>
-							</div>
-							<div class="col-sm-8">
-								<h4>Actieve problemen</h4>
-								<ul>
-									<li>Afwijking accelerometer</li>
-								</ul>
-								<h4>Afgewerkte problemen</h4>
-								<ul>
-								</ul>
-							</div>
-                        </div>
-                    </div>
-                    <div class="col-sm-5">
-                        <div class="row">
-							<div class="col-sm-12 mainview_panel">
-								<div id="map">
-								</div>
-							</div>
-							<div class="col-sm-12 mainview_panel">
-								<div class="mainview_issue row">
-									<div class="col-sm-4 dont-break-out">
-										<b>Onderhoudstechnicus 1 </b>
-									</div>
-		                            <div class="col-sm-8">
-		                                <p>
-											Onderhoud: wagon 1
-		                                </p>
-		                            </div>
-		                        </div>
-		                        <div class="mainview_issue row">
-		                            <b class="col-sm-4 dont-break-out">Onderhoudstechnicus 2 </b>
-		                            <div class="col-sm-8">
-		                                <p>
-											Onderhoud: wagon 3
-		                                </p>
-		                            </div>
-		                        </div>
-								<div class="mainview_issue row">
-		                            <b class="col-sm-4 dont-break-out">Onderhoudstechnicus 3 </b>
-		                            <div class="col-sm-8">
-		                                <p>
-											Onderhoud: wagon 2
-		                                </p>
-		                            </div>
-		                        </div>
-								<div class="mainview_issue row">
-		                            <b class="col-sm-4 dont-break-out">Onderhoudstechnicus 4 </b>
-		                            <div class="col-sm-8">
-		                                <p>
-											<em>Geen toegewezen taken</em>
-		                                </p>
-		                            </div>
-		                        </div>
-							</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" type="text/javascript"></script>
 	<script src="js/bootstrap.min.js" type="text/javascript" ></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -343,6 +165,5 @@
     <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
 	<script src="js/underscore-min.js" type="text/javascript"></script>
     <script src="js/extra_javascript2.js" type="text/javascript"></script>
-    
-</body>-->
+   
 </html>
