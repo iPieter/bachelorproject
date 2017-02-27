@@ -22,13 +22,28 @@ public class InternalDatafetchService {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		
-		TypedQuery<Workplace> query= em.createNamedQuery("findAll", Workplace.class);
+		TypedQuery<Workplace> query= em.createNamedQuery("Workplace.findAll", Workplace.class);
+		List<Workplace> result = query.getResultList();
 		
 		em.getTransaction().commit();
 		em.close();
 		emf.close();
 		
-		return query.getResultList();	
+		return result;	
 	}
 	
+	public List<TrainCoach> getAllTraincoaches(){	
+		EntityManagerFactory emf =  Persistence.createEntityManagerFactory("EJBProject");
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		
+		TypedQuery<TrainCoach> query= em.createNamedQuery("TrainCoach.findAll", TrainCoach.class);
+		List<TrainCoach> result = query.getResultList();
+		
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
+		
+		return result;	
+	}	
 }
