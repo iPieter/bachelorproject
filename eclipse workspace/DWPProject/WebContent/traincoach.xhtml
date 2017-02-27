@@ -1,7 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html lang="eng">
+<html lang="eng" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
 <head>
 	<meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -72,8 +75,14 @@
 					</ol>
 				</div>
                 <div class="row">
-                    <div class="col-sm-10 mainview_panel" id="topleft">
-						<h1>Data wordt geladen...</h1>
+                    <div class="col-sm-10 mainview_panel">
+                    	<div id="graph_options">
+                   			<label class="radio-inline"><input type="radio" name="optradio" id="radio_yaw" />Yaw</label>
+							<label class="radio-inline"><input type="radio" name="optradio" id="radio_roll" />Roll</label>
+                    	</div>
+                    	<div class="" id="topleft">
+	                    	<h1>Data wordt geladen...</h1>
+                    	</div>
                     </div>
                 </div>
                 <div class="row">
