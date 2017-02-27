@@ -6,8 +6,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import model.Workplace;
-import service.InternalDatafetchService;
+import be.kuleuven.cs.gent.projectweek.model.Workplace;
+import be.kuleuven.cs.gent.projectweek.services.InternalDatafetchService;
 
 @Named
 @RequestScoped

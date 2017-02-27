@@ -1,4 +1,4 @@
-package model;
+package be.kuleuven.cs.gent.projectweek.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -17,7 +17,7 @@ public class ProcessedSensorData implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
 	@Lob
@@ -69,4 +69,8 @@ public class ProcessedSensorData implements Serializable {
 		this.track = track;
 	}
 
+	public void setTrainCoach( TrainCoach t )
+	{
+		this.traincoach = t;
+	}
 }

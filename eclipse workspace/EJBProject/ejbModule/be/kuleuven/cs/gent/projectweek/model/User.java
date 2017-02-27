@@ -1,4 +1,4 @@
-package model;
+package be.kuleuven.cs.gent.projectweek.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -121,5 +121,11 @@ public class User implements Serializable
 	public void setLastLogin(Date lastLogin)
 	{
 		this.lastLogin = lastLogin;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return this.name + " email: " + this.email;
 	}
 }

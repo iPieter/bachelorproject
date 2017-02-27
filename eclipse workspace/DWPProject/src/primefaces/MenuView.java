@@ -1,8 +1,5 @@
 package primefaces;
  
-import controllers.*;
-import model.Workplace;
-
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,6 +12,9 @@ import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuModel;
+
+import be.kuleuven.cs.gent.projectweek.model.Workplace;
+import controllers.TraincoachDepotController;
  
 @ManagedBean
 public class MenuView {

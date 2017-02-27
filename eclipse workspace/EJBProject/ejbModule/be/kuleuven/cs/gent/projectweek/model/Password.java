@@ -1,4 +1,4 @@
-package model;
+package be.kuleuven.cs.gent.projectweek.model;
 
 import java.lang.annotation.*;
 
