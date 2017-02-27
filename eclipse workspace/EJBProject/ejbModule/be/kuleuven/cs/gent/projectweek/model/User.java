@@ -20,7 +20,7 @@ public class User implements Serializable
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Lob
@@ -34,12 +34,12 @@ public class User implements Serializable
 	
 	@Lob
 	@NotNull
-	@Size(max = 96)
+	@Column(length = User.PASS_HASH_LENGTH)
 	private byte[] pass;
 
 	@Lob
 	@NotNull
-	@Size(max = 32)
+	@Column(length = User.SALT_LENGTH)
 	private byte[] salt;
 
 	@Temporal(TemporalType.TIMESTAMP)
