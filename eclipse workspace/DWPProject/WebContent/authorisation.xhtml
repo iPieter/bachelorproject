@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 
-<html
-	xmlns:h="http://java.sun.com/jsf/html">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
 	
 <h:head>
 	<meta charset="utf-8"/>
@@ -41,19 +43,19 @@
 		<div class="row ">
 			<div class="col-sm-4 col-sm-offset-4">
 			<div class="row ">
-		      <form class="form-signin">
+		      <h:form class="form-signin">
 		        <h2 class="form-signin-heading">Please sign in</h2>
 		        <label for="inputEmail" class="sr-only">Email address</label>
-		        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+		        <h:inputText type="email" id="inputEmail" class="form-control" placeholder="Email address" />
 		        <label for="inputPassword" class="sr-only">Password</label>
-		        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+		        <h:inputText type="password" id="inputPassword" class="form-control" placeholder="Password"/>
 		        <div class="checkbox">
 		          <label>
-		            <input type="checkbox" value="remember-me"> Remember me
+		            <h:selectBooleanCheckbox type="checkbox" value="remember-me"/> Remember me
 		          </label>
 		        </div>	
-		        <button class="btn btn-lg btn-primary col-sm-4 col-sm-offset-4" type="submit">Sign in</button>  
-		      </form>
+		        <h:commandButton class="btn btn-lg btn-primary col-sm-4 col-sm-offset-4" action="#{authenticationController.doLogin}" ajax="false" type="submit" value="Sign In"/>
+		      </h:form>
 		      </div>
 	      </div>
 		</div>

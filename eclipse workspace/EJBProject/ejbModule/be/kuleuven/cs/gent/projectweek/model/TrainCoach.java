@@ -19,7 +19,7 @@ public class TrainCoach implements Serializable {
 	private int id;
 
 	@Lob
-	private String conductor;
+	private String constructor;
 
 	@Lob
 	@NotNull
@@ -41,11 +41,11 @@ public class TrainCoach implements Serializable {
 	}
 
 	public String getConductor() {
-		return this.conductor;
+		return this.constructor;
 	}
 
 	public void setConductor(String conductor) {
-		this.conductor = conductor;
+		this.constructor = conductor;
 	}
 
 	public String getName() {
