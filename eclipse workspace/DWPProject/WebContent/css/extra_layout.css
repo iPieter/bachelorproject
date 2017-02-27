@@ -201,3 +201,13 @@ body, html
 	vertical-align: middle;
 	float: none;
 }
+
+#topleft
+{
+	height:90%;
+}
+
+#graph_options
+{
+	height:10%;
+}
