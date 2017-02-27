@@ -5,17 +5,25 @@
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="templates/main_layout.xhtml">
 
 	<ui:define name="title">Traincoach Manager</ui:define>
 	
+	<f:metadata>
+		<f:viewParam name="id" value="#{traincoachDepotController.getCurrentTrainCoachDepot().id}"/>
+		<f:viewAction action="#{traincoachDepotController.doFindTrainCoachDepotById()}"/>
+	</f:metadata>
+	
 	<!-- BREADCRUMB -->
 	<ui:define name="breadcrumb">
 		<ol class="breadcrumb breadcrumb_extra">
-			<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
-			<li><a href="#" class="active">Staanplaats 1 </a></li><!-- TODO: CONTROLLER QUERY huidige staanplaats-->
+			<li><h:link	outcome="index.xhtml"><span class="glyphicon glyphicon-home"></span></h:link></li>
+			<li>
+				<h:link class="active" value="#{traincoachDepotController.getCurrentTrainCoachDepot().getName()}" 
+					outcome="traincoach_depot.xhtml?id=#{traincoachDepotController.getCurrentTrainCoachDepot().getId()}"/>
+			</li>
 		</ol>
 	</ui:define>
 	

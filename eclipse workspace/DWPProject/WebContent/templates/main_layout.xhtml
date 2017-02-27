@@ -39,9 +39,10 @@
    			</form> <!-- END SEARCH INPUT -->
    			
    			<!-- SIDEBAR CONTENT --> 	
-   			<div class="traincoach_depot traincoach_depot_active">		
+   			<div class="traincoach_depot traincoach_depot_active">	
+   			
+   			<!-- STAANPLAATSEN -->	
 			<c:forEach var="workplace" items="#{traincoachDepotController.getAllTraincoachDepots()}">
-				<!-- STAANPLAATSEN -->
                 <h4>
                 	<span class="glyphicon glyphicon-unchecked"></span>
                 	<h:link value="#{workplace.getName()}" outcome="traincoach_depot.xhtml?id=#{workplace.getId()}"/>
