@@ -10,10 +10,27 @@ body, html
     background-color: #ecf0f1;
 }
 
-.staanplaats_active
+.traincoach_depot_active .traincoach_depot
+{
+    padding-left: 15px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    border-left: 1px solid gray;
+    border-top: 1px solid #293A40;
+    border-right: 1px solid #293A40;
+    border-bottom: 1px solid #293A40;
+}
+
+.traincoach_depot_active
 {
     background-color: #293A40;
     padding: 2px;
+}
+
+.traincoach_depot a
+{
+    color: #FFFFFF;
+    text-decoration: none;
 }
 
 .sidebar
@@ -51,17 +68,6 @@ body, html
 .traincoach_active
 {
     background-color: #435D66;
-}
-
-.traincoach_depot_active .traincoach
-{
-    padding-left: 15px;
-    margin-bottom: 0px;
-    padding-bottom: 0px;
-    border-left: 1px solid gray;
-    border-top: 1px solid #293A40;
-    border-right: 1px solid #293A40;
-    border-bottom: 1px solid #293A40;
 }
 
 .traincoach_data

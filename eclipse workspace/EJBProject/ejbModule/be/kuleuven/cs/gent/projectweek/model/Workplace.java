@@ -33,6 +33,7 @@ public class Workplace implements Serializable {
 	public Workplace() {
 	}
 
+	//GETTERS & SETTTERS
 	public int getId() {
 		return this.id;
 	}
@@ -48,5 +49,14 @@ public class Workplace implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public List<TrainCoach> getTraincoaches() {
+		return this.traincoaches;
+	}
 
+	public void setTraincoaches(List<TrainCoach> traincoaches) {
+		this.traincoaches = traincoaches;
+	}
+	
+	
 }

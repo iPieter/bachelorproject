@@ -4,7 +4,8 @@
 <html 
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 	
 <h:head>
 	<meta charset="utf-8"/>
@@ -37,21 +38,32 @@
    				</div>
    			</form> <!-- END SEARCH INPUT -->
    			
-   			<!-- SIDEBAR CONTENT -->
-   			<ui:insert name="sidebar_content"> <!-- INSERT -->
-   				<!-- Default Example -->
-                <div class="traincoach_depot traincoach_depot_active">
-                    <h4><span class="glyphicon glyphicon-unchecked"></span> Staanplaats Example</h4>
-                    <div class="traincoach traincoach_active">
-                        <h4><span class="glyphicon glyphicon-phone"></span> Wagon Example </h4>
-                        <div class="traincoach_data">
-                            <h4><span class="glyphicon glyphicon-alert"></span> Problemen <span class="badge">1</span></h4>
-							<h4><span class="glyphicon glyphicon-dashboard"></span> <a href="wagon_sensor.html">Sensors</a></h4>
-                        </div>
-                    </div>
-                </div>
-			</ui:insert> <!-- END SIDEBAR CONTENT -->
-		</div> <!-- END LEFT SIDEBAR -->
+   			<!-- SIDEBAR CONTENT --> 	
+   			<div class="traincoach_depot traincoach_depot_active">		
+			<c:forEach var="workplace" items="#{traincoachDepotController.getAllTraincoachDepots()}">
+				<!-- STAANPLAATSEN -->
+                <h4>
+                	<span class="glyphicon glyphicon-unchecked"></span>
+                	<h:link value="#{workplace.getName()}" outcome="traincoach_depot.xhtml?id=#{workplace.getId()}"/>
+                </h4>
+                	<!-- WAGONS PER STAANPLAATS -->
+                	<c:forEach var="traincoach" items="#{workplace.getTraincoaches()}">
+	                    <div class="traincoach traincoach_active">
+	                        <h4>
+	                        	<span class="glyphicon glyphicon-phone"></span>
+	                        	<h:link value="#{traincoach.getName()}" outcome="traincoach.xhtml?id=#{traincoach.getId()}"/>
+	                        </h4>
+	                        <!-- METADATA PER WAGON -->
+	                        <div class="traincoach_data">
+	                            <h4><span class="glyphicon glyphicon-alert"></span> Problemen <span class="badge">1</span></h4>
+	                            <h4 class="Sensors_active"><span class="glyphicon glyphicon-dashboard"></span> Sensors</h4>
+	                        </div>
+	                    </div>
+                    </c:forEach>
+
+   			</c:forEach><!-- END SIDEBAR CONTENT -->
+   			</div>	
+   		</div> <!-- END LEFT SIDEBAR -->
 
                 
             <!-- MAIN VIEW --> 
