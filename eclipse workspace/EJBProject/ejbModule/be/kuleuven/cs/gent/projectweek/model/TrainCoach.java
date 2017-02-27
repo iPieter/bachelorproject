@@ -40,11 +40,11 @@ public class TrainCoach implements Serializable {
 		this.id = id;
 	}
 
-	public String getConductor() {
+	public String getConstructor() {
 		return this.constructor;
 	}
 
-	public void setConductor(String conductor) {
+	public void setConstructor(String conductor) {
 		this.constructor = conductor;
 	}
 

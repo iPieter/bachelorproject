@@ -18,7 +18,7 @@ public class AuthenticationController implements Serializable
 	public void doLogin()
 	{
 		
-		System.out.println("-------- DO LOGIN --------");
+		System.out.println("-------- DO FUCKING LOGIN --------");
 		
 	}
 	

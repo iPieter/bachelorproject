@@ -146,7 +146,7 @@ public class MatlabProcessor
 			writer.close();
 
 			TrainCoach trainCoach = new TrainCoach();
-			trainCoach.setConductor( "test" );
+			trainCoach.setConstructor( "test" );
 			trainCoach.setName( "test" );
 			trainCoach.setType( "test" );
 			ProcessedSensorData data = new ProcessedSensorData();
