@@ -4,7 +4,8 @@
 <html lang="eng" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 <ui:composition template="templates/main_layout.xhtml">
 
@@ -63,8 +64,9 @@
 							data-target="#assignModal">Nieuwe herstelling</button>
 					</div>
 				</div>
+				<c:forEach var="mechanic" items="#{traincoachController.getMechanics()}">
 				<div class="mainview_issue row">
-					<b class="col-sm-4 dont-break-out">Onderhoudstechnicus 1 </b>
+					<b class="col-sm-4 dont-break-out">#{mechanic.getName()}</b>
 					<div class="col-sm-8">
 						<p>Sensors 1 toont een afwijking op z-as</p>
 						<p>
@@ -76,20 +78,7 @@
 						</p>
 					</div>
 				</div>
-				<div class="mainview_issue row">
-					<b class="col-sm-4 dont-break-out">Onderhoudstechnicus 2 </b>
-					<div class="col-sm-8">
-						<p>Sensors 3 toont een afwijking op x-as</p>
-						<p>
-							<div class="progress">
-								<div class="progress-bar progress-bar-success"
-									role="progressbar" aria-valuenow="40" aria-valuemin="0"
-									aria-valuemax="100" style="width: 100%">100% Complete</div>
-							</div>
-
-						</p>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 			<div class="col-sm-5 mainview_panel">
 				<div id="map"></div>
@@ -111,36 +100,23 @@
 							<label for="list_empl">Kies een onderhoudstechnicus:</label> <br />
 							<br />
 							<div class="container">
-								<div class="mainview_issue row">
-									<div class="col-sm-1">
-										<div class="checkbox">
-											<label><input type="checkbox" value="" /></label>
+								<c:forEach var="mechanic" items="#{traincoachController.getMechanics()}">
+									<div class="mainview_issue row">
+										<div class="col-sm-1">
+											<div class="checkbox">
+												<label><input type="checkbox" value="" /></label>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<b>#{mechanic.getName()}</b>
+										</div>
+										<div class="col-sm-6">
+											<p>
+												Huidige taak: <em>Inspecteer onderstel vooraan</em>
+											</p>
 										</div>
 									</div>
-									<div class="col-sm-3">
-										<b>Onderhoudstechnicus 1</b>
-									</div>
-									<div class="col-sm-6">
-										<p>
-											Huidige taak: <em>Inspecteer onderstel vooraan</em>
-										</p>
-									</div>
-								</div>
-								<div class="mainview_issue row">
-									<div class="col-sm-1">
-										<div class="checkbox">
-											<label><input type="checkbox" value="" /></label>
-										</div>
-									</div>
-									<div class="col-sm-3">
-										<b>Onderhoudstechnicus 2</b>
-									</div>
-									<div class="col-sm-6">
-										<p>
-											Huidige taak: <em>Geen toegewezen taak</em>
-										</p>
-									</div>
-								</div>
+								</c:forEach>
 							</div>
 							<button type="button" name="button" class="btn btn-default">Submit</button>
 						</form>

@@ -7,7 +7,6 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import be.kuleuven.cs.gent.projectweek.model.*;
@@ -88,6 +87,23 @@ public class InternalDatafetchService
 		TypedQuery<Workplace> query = em.createNamedQuery( "Workplace.findWorkplaceByTraincoachID", Workplace.class );
 		query.setParameter( "id", id );
 		List<Workplace> result = query.getResultList();
+		
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
+
+		return result;
+	}
+	
+	public List<User> getWorkplaceMechanics( int id )
+	{
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+
+		TypedQuery<User> query = em.createNamedQuery( "Workplace.findWorkers", User.class );
+		query.setParameter( "id", id );
+		List<User> result = query.getResultList();
 		
 		em.getTransaction().commit();
 		em.close();
