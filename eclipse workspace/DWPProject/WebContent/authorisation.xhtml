@@ -46,15 +46,17 @@
 		      <h:form class="form-signin">
 		        <h2 class="form-signin-heading">Please sign in</h2>
 		        <label for="inputEmail" class="sr-only">Email address</label>
-		        <h:inputText type="email" id="inputEmail" class="form-control" placeholder="Email address" />
+		        <h:inputText type="email" id="inputEmail" class="form-control" placeholder="Email address" value="#{authenticationController.email}"/>
 		        <label for="inputPassword" class="sr-only">Password</label>
-		        <h:inputText type="password" id="inputPassword" class="form-control" placeholder="Password"/>
+		        <h:inputText type="password" id="inputPassword" class="form-control" placeholder="Password" value="#{authenticationController.password}"/>
 		        <div class="checkbox">
 		          <label>
 		            <h:selectBooleanCheckbox type="checkbox" value="remember-me"/> Remember me
 		          </label>
 		        </div>	
-		        <h:commandButton class="btn btn-lg btn-primary col-sm-4 col-sm-offset-4" action="#{authenticationController.doLogin}" ajax="false" type="submit" value="Sign In"/>
+		        <h:commandButton class="btn btn-lg btn-primary col-sm-4 col-sm-offset-4" action="#{authenticationController.doLogin}" type="submit" value="Sign In">
+		                <f:ajax execute="@form" render=":errors"/>
+		        </h:commandButton>
 		      </h:form>
 		      </div>
 	      </div>

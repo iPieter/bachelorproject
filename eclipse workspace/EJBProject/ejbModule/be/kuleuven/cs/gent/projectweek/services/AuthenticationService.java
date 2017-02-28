@@ -1,6 +1,9 @@
 package be.kuleuven.cs.gent.projectweek.services;
 
 import javax.enterprise.context.ConversationScoped;
+
+import be.kuleuven.cs.gent.projectweek.model.User;
+
 import java.io.Serializable;
 
 @ConversationScoped
@@ -20,5 +23,9 @@ public class AuthenticationService implements Serializable
 	
 	private static final long serialVersionUID = 3713738638802589887L;
 
-	
+	public boolean login(String email, String password)
+	{
+		
+		return false;
+	}
 }
