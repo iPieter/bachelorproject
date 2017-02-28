@@ -79,10 +79,6 @@ function setView( input )
                 point: {
                     events: {
                         mouseOver: function (e) {
-	                       //console.log( this.x );
-	                       //console.log( this.x / this.series.data.length );
-	                       //console.log( (this.x / this.series.data.length) * latlngs.length );
-	                       console.log( Math.round( (this.x / this.series.data.length) * latlngs.length ) );
 	                       if( marker != null )
 	                    	   map.removeLayer( marker );
 	                       
