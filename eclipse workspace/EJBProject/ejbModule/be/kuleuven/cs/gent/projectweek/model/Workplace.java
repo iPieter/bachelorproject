@@ -12,7 +12,11 @@ import javax.validation.constraints.NotNull;
  * 
  */
 @Entity
-@NamedQuery(name="Workplace.findAll", query="SELECT w FROM Workplace w")
+@NamedQueries(
+{
+	@NamedQuery(name="Workplace.findAll", query="SELECT w FROM Workplace w"),
+	@NamedQuery(name="Workplace.findWorkplaceByTraincoachID", query= "SELECT w FROM Workplace w JOIN w.traincoaches t WHERE t.id = :id" )
+})
 public class Workplace implements Serializable {
 	private static final long serialVersionUID = 1L;
 

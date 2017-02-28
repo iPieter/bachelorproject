@@ -78,4 +78,21 @@ public class InternalDatafetchService
 
 		return result;
 	}
+	
+	public List<Workplace> findWorkplaceByTraincoachID( int id )
+	{
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+
+		TypedQuery<Workplace> query = em.createNamedQuery( "Workplace.findWorkplaceByTraincoachID", Workplace.class );
+		query.setParameter( "id", id );
+		List<Workplace> result = query.getResultList();
+		
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
+
+		return result;
+	}
 }
