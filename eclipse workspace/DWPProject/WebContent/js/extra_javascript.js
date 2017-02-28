@@ -1,4 +1,7 @@
 var SENSOR_DATA = null;
+var map = null;
+var marker = null;
+var latlngs = null;
 
 $.get( "rest/processed_data", function( data )
 {
@@ -9,7 +12,7 @@ $.get( "rest/processed_data", function( data )
 	console.log( radiobtn );
 	radiobtn.checked = true;
 
-    var map = L.map( "map" ).setView( [51.0499582, 3.7270672], 10 );
+    map = L.map( "map" ).setView( [51.0499582, 3.7270672], 10 );
 	L.tileLayer( 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
 	{
 		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -18,20 +21,9 @@ $.get( "rest/processed_data", function( data )
 		accessToken: 'pk.eyJ1IjoiYW50b25kIiwiYSI6ImNpbXRkM2wwNDAwNmd2d20xNDJnN3RwYjMifQ.PtxXr8pyGM4qccCXDecL2A'
 	} ).addTo( map );
 
-	map.locate(
-	{
-		setView: true,
-		maxZoom: 8,
-		maximumAge: 10000,
-		timeout: 20000,
-		enableHighAccuracy: false
-	} );
-
-    //var marker = L.marker([51.00, 3.73]).addTo(map);
-    //marker.bindPopup("<b>Trein 1: Sensor 1</b><br>Afwijkende waarde x-as").openPopup();
-	var latlngs = [];
+	latlngs = [];
 	for( var i = 0; i < data.lat.length; i++ )
-		latlngs.push( [data.lat[i] + data.lat_off,data.lng[i]  + data.lng_off ] );
+		latlngs.push( [ (data.lat[i] + data.lat_off * 0 ) * 180.0 / Math.PI , (data.lng[i]  + data.lng_off * 0)  * 180.0 / Math.PI ] );
 
 	var polyline = L.polyline(latlngs, {color: 'black', smoothFactor:10}).addTo(map);
     map.fitBounds(polyline.getBounds());
@@ -80,6 +72,34 @@ function setView( input )
         },
         legend: {
             enabled: false
+        },
+        plotOptions: {
+            series: {
+                cursor: 'pointer',
+                point: {
+                    events: {
+                        mouseOver: function (e) {
+	                       //console.log( this.x );
+	                       //console.log( this.x / this.series.data.length );
+	                       //console.log( (this.x / this.series.data.length) * latlngs.length );
+	                       console.log( Math.round( (this.x / this.series.data.length) * latlngs.length ) );
+	                       if( marker != null )
+	                    	   map.removeLayer( marker );
+	                       
+	                       var index = Math.round( (this.x / this.series.data.length) * latlngs.length );
+	                       marker = L.circle( latlngs[ index ], 
+	                       { color: 'red',
+                	    	 fillColor: '#f03',
+                	    	 fillOpacity: 0.5,
+                	    	 radius: 5
+                		   } ).addTo(map);
+                        }
+                    }
+                },
+                marker: {
+                    lineWidth: 1
+                }
+            }
         },
         series: [{
             name: 'Afwijking(°)',
