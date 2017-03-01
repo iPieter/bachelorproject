@@ -1,6 +1,7 @@
 package be.kuleuven.cs.gent.projectweek.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -16,7 +17,8 @@ import javax.validation.constraints.NotNull;
 {
 	@NamedQuery(name="Workplace.findAll", query="SELECT w FROM Workplace w"),
 	@NamedQuery(name="Workplace.findWorkplaceByTraincoachID", query= "SELECT w FROM Workplace w JOIN w.traincoaches t WHERE t.id = :id" ),
-	@NamedQuery(name="Workplace.findWorkers", query = "SELECT m FROM Workplace w JOIN w.mechanics m WHERE w.id = :id")
+	@NamedQuery(name="Workplace.findWorkers", query = "SELECT m FROM Workplace w JOIN w.mechanics m WHERE w.id = :id"),
+	@NamedQuery(name="Workplace.findByData", query = "SELECT w FROM Workplace w WHERE w.name = :name" )
 })
 public class Workplace implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -30,7 +32,7 @@ public class Workplace implements Serializable {
 	private String name;
 
 	@OneToMany(fetch = FetchType.LAZY)
-	private List<TrainCoach> traincoaches;
+	private List<TrainCoach> traincoaches = new ArrayList<TrainCoach>();
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<User> mechanics;

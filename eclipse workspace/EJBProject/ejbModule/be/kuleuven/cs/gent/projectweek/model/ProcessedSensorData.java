@@ -12,7 +12,12 @@ import java.util.Date;
  * 
  */
 @Entity
-@NamedQuery(name="ProcessedSensorData.findAll", query="SELECT p FROM ProcessedSensorData p")
+@NamedQueries(
+{
+	@NamedQuery(name="ProcessedSensorData.findAll", query="SELECT p FROM ProcessedSensorData p"),
+	@NamedQuery(name="ProcessedSensorData.findByID", query="SELECT p FROM ProcessedSensorData p WHERE p.id = :id" )
+})
+
 public class ProcessedSensorData implements Serializable {
 	private static final long serialVersionUID = 1L;
 
