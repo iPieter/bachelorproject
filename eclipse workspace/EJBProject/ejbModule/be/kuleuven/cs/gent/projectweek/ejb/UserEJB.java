@@ -7,6 +7,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
@@ -31,6 +32,11 @@ public class UserEJB
 		emf.close();
 	}
 	
+	
+	/*
+	 * This function finds the user by it's email adress and returns it as a 
+	 * User object. If no user is found, it will return null.
+	 */
 	public User findUserByEmail(String email)
 	{
 		
@@ -42,7 +48,19 @@ public class UserEJB
 		TypedQuery<User> q = em.createNamedQuery(User.FIND_BY_EMAIL, User.class);
 		q.setParameter("email", email);
 		
-		User result = q.getSingleResult();
+		
+		User result;
+		try
+		{
+			result = q.getSingleResult();
+			
+		} catch (NoResultException e)
+		{
+			em.close();
+			emf.close();
+			
+			return null;
+		}
 		
 		em.close();
 		emf.close();

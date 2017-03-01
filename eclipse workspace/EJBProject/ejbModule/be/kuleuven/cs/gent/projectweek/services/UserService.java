@@ -3,6 +3,7 @@ package be.kuleuven.cs.gent.projectweek.services;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
@@ -16,6 +17,7 @@ import be.kuleuven.cs.gent.projectweek.ejb.UserEJB;
 import be.kuleuven.cs.gent.projectweek.model.User;
 import be.kuleuven.cs.gent.projectweek.model.UserRole;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 
 @SessionScoped
 public class UserService implements Serializable
@@ -50,7 +52,7 @@ public class UserService implements Serializable
 		{
 			u.setPass(generateHash("password123", u.getSalt()));
 			System.out.println("pass hash: " + u.getPass().toString());
-		} catch (NoSuchAlgorithmException e)
+		} catch (Exception e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -77,13 +79,26 @@ public class UserService implements Serializable
 		{
 			try
 			{
-				return u.getPass().equals(generateHash(password, u.getSalt()));
-			} catch (NoSuchAlgorithmException e)
+				if (Arrays.equals(u.getPass(),(generateHash(password, u.getSalt()))))
+				{
+					this.user = u;
+					return true;
+					
+				} else {
+					
+					return false;
+				}
+				
+			} catch (UnsupportedEncodingException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				
 				return false;
+			} catch (NoSuchAlgorithmException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		
@@ -96,10 +111,12 @@ public class UserService implements Serializable
 	 * 
 	 * This function is intended to be used internally, not by other services.
 	 */
-	private byte[] generateHash(String password, byte[] salt) throws NoSuchAlgorithmException
+	private byte[] generateHash(String password, byte[] salt) throws NoSuchAlgorithmException, UnsupportedEncodingException
 	{
 		MessageDigest sha = MessageDigest.getInstance(UserService.HASHING_METHOD);
-		return sha.digest((password + salt.toString()).getBytes()); 
+		sha.reset();
+		sha.update(salt);
+		return sha.digest(password.getBytes("UTF-8")); 
 	}
 	
 	
@@ -113,5 +130,17 @@ public class UserService implements Serializable
 		
 		return salt;
 		
+	}
+	
+	public String bytesToString(byte[] bs)
+	{
+		StringBuilder s = new StringBuilder();
+		
+		for (byte b : bs)
+		{
+			s.append(b);
+		}
+		
+		return s.toString();
 	}
 }

@@ -31,11 +31,21 @@ public class AuthenticationController implements Serializable
 	@NotNull @Password
 	private String password;
 	
-	public void doLogin()
+	public String doLogin()
 	{
-		System.out.println(authService.login(email, password));
-		
+		//TODO: this is only for testing!!!!
 		System.out.println(email + " and pass='" + password + "'");
+
+		// ---------------- REMOVE IT WHEN DONE WITH TESTING THIS CODE  ---------------- 
+		
+		if (authService.login(email, password))
+		{
+			return "index.xhtml";
+		} else 
+		{
+			return null;
+		}
+		
 		
 	}
 	
