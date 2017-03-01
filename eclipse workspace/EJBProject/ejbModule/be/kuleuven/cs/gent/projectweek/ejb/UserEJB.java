@@ -1,5 +1,6 @@
 package be.kuleuven.cs.gent.projectweek.ejb;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 import javax.ejb.Local;
@@ -17,9 +18,17 @@ import be.kuleuven.cs.gent.projectweek.model.UserRole;
 public class UserEJB
 {
 	
-	public void createUser(User user)
+	public void createUser(User u)
 	{
+		EntityManagerFactory emf =  Persistence.createEntityManagerFactory("EJBProject");
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
 		
+		em.persist(u);
+		
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
 	}
 	
 	public User findUserByEmail(String email)

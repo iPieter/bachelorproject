@@ -40,19 +40,16 @@ public class UserService implements Serializable
 	@PostConstruct
 	public void init()
 	{
-		EntityManagerFactory emf =  Persistence.createEntityManagerFactory("EJBProject");
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		//create a test user
 		User u = new User();
 		
 		u.setName("John Doe");
-		u.setEmail("john@test.be");
+		u.setEmail("john" + (int) (Math.random()*100) + "@test.be");
 		u.setLastLogin(new Date());
 		u.setSalt(salt(User.SALT_LENGTH));
 		try
 		{
-			u.setPass(generateHash("pass", u.getSalt()));
+			u.setPass(generateHash("password123", u.getSalt()));
+			System.out.println("pass hash: " + u.getPass().toString());
 		} catch (NoSuchAlgorithmException e)
 		{
 			// TODO Auto-generated catch block
@@ -60,10 +57,7 @@ public class UserService implements Serializable
 		}
 		u.setRole(UserRole.OPERATOR);
 		
-		em.persist(u);
-		em.getTransaction().commit();
-		em.close();
-		emf.close();
+		userEJB.createUser(u);
 		
 		System.out.println("Saved user ..." + u.getEmail());
 	}
