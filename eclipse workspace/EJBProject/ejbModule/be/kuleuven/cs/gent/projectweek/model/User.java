@@ -59,7 +59,7 @@ public class User implements Serializable
 
 	//Used constants
 	public static final int SALT_LENGTH = 32;
-	public static final int PASS_HASH_LENGTH = 96;
+	public static final int PASS_HASH_LENGTH = 256;
 	
 	public User()
 	{

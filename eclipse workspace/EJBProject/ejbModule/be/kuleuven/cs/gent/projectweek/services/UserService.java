@@ -49,8 +49,15 @@ public class UserService implements Serializable
 		u.setName("John Doe");
 		u.setEmail("john@test.be");
 		u.setLastLogin(new Date());
-		u.setPass("pass".getBytes());
 		u.setSalt(salt(User.SALT_LENGTH));
+		try
+		{
+			u.setPass(generateHash("pass", u.getSalt()));
+		} catch (NoSuchAlgorithmException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		u.setRole(UserRole.OPERATOR);
 		
 		em.persist(u);
@@ -58,16 +65,33 @@ public class UserService implements Serializable
 		em.close();
 		emf.close();
 		
-		System.out.println("Saved user ..." + u);
+		System.out.println("Saved user ..." + u.getEmail());
 	}
 	
 	/*
 	 * The verification of a login consists of two steps:
 	 * 1. finding the appropriate user object
-	 * 2. generating the same 
+	 * 2. generating the digest based on password and salt
+	 * 
+	 * Note that timing attacks are still an issue in this implementation.
 	 */
 	public boolean verificateLogin(String email, String password)
 	{
+		User u = userEJB.findUserByEmail(email);
+		
+		if (u != null)
+		{
+			try
+			{
+				return u.getPass().equals(generateHash(password, u.getSalt()));
+			} catch (NoSuchAlgorithmException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				
+				return false;
+			}
+		}
 		
 		return false;
 	}

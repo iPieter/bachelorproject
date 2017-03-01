@@ -33,7 +33,7 @@ public class AuthenticationController implements Serializable
 	
 	public void doLogin()
 	{
-		authService.login(email, password);
+		System.out.println(authService.login(email, password));
 		
 		System.out.println(email + " and pass='" + password + "'");
 		

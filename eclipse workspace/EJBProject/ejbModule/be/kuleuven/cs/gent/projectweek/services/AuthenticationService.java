@@ -30,8 +30,8 @@ public class AuthenticationService implements Serializable
 	
 	public boolean login(String email, String password)
 	{
-		
-		
-		return false;
+		System.out.println("Auth Service");
+
+		return us.verificateLogin(email, password);
 	}
 }

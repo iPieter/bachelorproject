@@ -24,6 +24,9 @@ public class UserEJB
 	
 	public User findUserByEmail(String email)
 	{
+		
+		System.out.println("Finding email: " + email);
+
 		EntityManagerFactory emf =  Persistence.createEntityManagerFactory("EJBProject");
 		EntityManager em = emf.createEntityManager();
 		
