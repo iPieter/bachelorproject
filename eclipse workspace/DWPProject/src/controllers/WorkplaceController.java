@@ -11,31 +11,30 @@ import be.kuleuven.cs.gent.projectweek.services.InternalDatafetchService;
 import java.io.Serializable;
 
 @Named
-//@RequestScoped
 @SessionScoped
-public class TraincoachDepotController implements Serializable
+public class WorkplaceController implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
 	private InternalDatafetchService internalDatafetchService;
 
-	private Workplace currentTrainCoachDepot = new Workplace();
+	private Workplace currentWorkplace = new Workplace();
 
-	public List<Workplace> getAllTraincoachDepots()
+	public List<Workplace> getAllWorkplaces()
 	{
-		return internalDatafetchService.getAllTraincoachDepots();
+		return internalDatafetchService.getAllWorkplaces();
 	}
 
-	public void doFindTrainCoachDepotById()
+	public void doFindWorkplaceById()
 	{
-		currentTrainCoachDepot = internalDatafetchService.doFindTrainCoachDepotById( currentTrainCoachDepot.getId() );
+		currentWorkplace = internalDatafetchService.doFindWorkplaceById( currentWorkplace.getId() );
 	}
 
 	// GETTERS & SETTERS
-	public Workplace getCurrentTrainCoachDepot()
+	public Workplace getCurrentWorkplace()
 	{
-		return currentTrainCoachDepot;
+		return currentWorkplace;
 	}
 
 }

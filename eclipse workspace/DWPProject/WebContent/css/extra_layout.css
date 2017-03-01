@@ -10,7 +10,7 @@ body, html
     background-color: #ecf0f1;
 }
 
-.traincoach_depot_active .traincoach_depot
+.workplace_active .workplace
 {
     padding-left: 15px;
     margin-bottom: 0px;
@@ -21,13 +21,13 @@ body, html
     border-bottom: 1px solid #293A40;
 }
 
-.traincoach_depot_active
+.workplace_active
 {
     background-color: #293A40;
     padding: 2px;
 }
 
-.traincoach_depot a
+.workplace a
 {
     color: #FFFFFF;
     text-decoration: none;

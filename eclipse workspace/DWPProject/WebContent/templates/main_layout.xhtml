@@ -39,13 +39,13 @@
    			</form> <!-- END SEARCH INPUT -->
    			
    			<!-- SIDEBAR CONTENT --> 	
-   			<div class="traincoach_depot traincoach_depot_active">	
+   			<div class="workplace workplace_active">	
    			
    			<!-- STAANPLAATSEN -->	
-			<c:forEach var="workplace" items="#{traincoachDepotController.getAllTraincoachDepots()}">
+			<c:forEach var="workplace" items="#{workplaceController.getAllWorkplaces()}">
                 <h4>
                 	<span class="glyphicon glyphicon-unchecked"></span>
-                	<h:link value="#{workplace.getName()}" outcome="traincoach_depot.xhtml?id=#{workplace.getId()}"/>
+                	<h:link value="#{workplace.getName()}" outcome="workplace.xhtml?id=#{workplace.getId()}"/>
                 </h4>
                 	<!-- WAGONS PER STAANPLAATS -->
                 	<c:forEach var="traincoach" items="#{workplace.getTraincoaches()}">

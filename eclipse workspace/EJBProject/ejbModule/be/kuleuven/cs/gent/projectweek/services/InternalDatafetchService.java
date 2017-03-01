@@ -16,7 +16,7 @@ import be.kuleuven.cs.gent.projectweek.model.*;
 public class InternalDatafetchService
 {
 
-	public List<Workplace> getAllTraincoachDepots()
+	public List<Workplace> getAllWorkplaces()
 	{
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
 		EntityManager em = emf.createEntityManager();
@@ -48,7 +48,7 @@ public class InternalDatafetchService
 		return result;
 	}
 
-	public Workplace doFindTrainCoachDepotById( int id )
+	public Workplace doFindWorkplaceById( int id )
 	{
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
 		EntityManager em = emf.createEntityManager();

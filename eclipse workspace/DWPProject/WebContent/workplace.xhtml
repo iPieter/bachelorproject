@@ -12,8 +12,8 @@
 	<ui:define name="title">Traincoach Manager</ui:define>
 	
 	<f:metadata>
-		<f:viewParam name="id" value="#{traincoachDepotController.getCurrentTrainCoachDepot().id}"/>
-		<f:viewAction action="#{traincoachDepotController.doFindTrainCoachDepotById()}"/>
+		<f:viewParam name="id" value="#{workplaceController.getCurrentWorkplace().id}"/>
+		<f:viewAction action="#{workplaceController.doFindWorkplaceById()}"/>
 	</f:metadata>
 	
 	<!-- BREADCRUMB -->
@@ -21,8 +21,8 @@
 		<ol class="breadcrumb breadcrumb_extra">
 			<li><h:link	outcome="index.xhtml"><span class="glyphicon glyphicon-home"></span></h:link></li>
 			<li>
-				<h:link class="active" value="#{traincoachDepotController.getCurrentTrainCoachDepot().getName()}" 
-					outcome="traincoach_depot.xhtml?id=#{traincoachDepotController.getCurrentTrainCoachDepot().getId()}"/>
+				<h:link class="active" value="#{workplaceController.getCurrentWorkplace().getName()}" 
+					outcome="workplace.xhtml?id=#{workplaceController.getCurrentWorkplace().getId()}"/>
 			</li>
 		</ol>
 	</ui:define>

@@ -14,7 +14,6 @@ import be.kuleuven.cs.gent.projectweek.model.Workplace;
 import be.kuleuven.cs.gent.projectweek.services.InternalDatafetchService;
 
 @Named
-//@RequestScoped
 @SessionScoped
 public class TraincoachController implements Serializable
 {

@@ -8,21 +8,20 @@
     xmlns:ui="http://java.sun.com/jsf/facelets">  
 
 <ui:composition template="templates/main_layout.xhtml">
-	<ui:define name="title">Index Development Pagina</ui:define>
-	<ui:define name="sidebar_content">
-		<div class="traincoach_depot traincoach_depot_active">
-             <h4><span class="glyphicon glyphicon-unchecked"></span> Links</h4>
-             <div class="traincoach traincoach">
-                 <h4><a href="authorisation.html">authorisation.html</a></h4>
-                 <h4><a href="traincoach_depot.xhtml">traincoach_depot.html</a></h4>
-                 <div class="traincoach_data">
-                    <h4><a href="traincoach.xhtml">traincoach.html</a></h4>
-                 	<h4><a href="traincoach_sensor.xhtml">traincoach_sensor.html</a></h4>
-                 </div>
-             </div>
-       </div>
-	</ui:define>
+
+	<!-- TITLE -->
+	<ui:define name="title">Televic Managment Home</ui:define>
+	
+	<!-- BREADCRUMB -->
 	<ui:define name="breadcrumb"></ui:define>
-	<ui:define name="mainview_content"></ui:define>	
+	
+	<!-- MAINVIEW CONTENT -->
+	<ui:define name="mainview_content">
+		<div class="jumbotron">
+		  <h1>Hello, User.naam!</h1>
+		  <p>Dag pieter, hoe graag ik aan de huidige actieve user?</p>
+		  <p><a class="btn btn-primary btn-lg" href="#" role="button">I am a pointless button</a></p>
+		</div>
+	</ui:define>
 </ui:composition>
 </html>	

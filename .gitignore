@@ -28,7 +28,7 @@ eclipse workspace/EJBProject/ejbModule/be/kuleuven/cs/gent/projectweek/matlab/te
 # deployed package files #
 
 *.DEPLOYED
-
+eclipse workspace/.recommenders
 eclipse workspace/.metadata/
 eclipse workspace/RemoteSystemsTempFiles/.project
 management/~$dagboek.xlsx
