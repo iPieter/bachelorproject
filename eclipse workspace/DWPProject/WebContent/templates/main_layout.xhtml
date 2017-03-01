@@ -44,20 +44,20 @@
    			<!-- STAANPLAATSEN -->	
 			<c:forEach var="workplace" items="#{workplaceController.getAllWorkplaces()}">
                 <h4>
-                	<span class="glyphicon glyphicon-unchecked"></span>
+                	<span class="glyphicon glyphicon-unchecked sidebar_icon"></span>
                 	<h:link value="#{workplace.getName()}" outcome="workplace.xhtml?id=#{workplace.getId()}"/>
                 </h4>
                 	<!-- WAGONS PER STAANPLAATS -->
                 	<c:forEach var="traincoach" items="#{workplace.getTraincoaches()}">
 	                    <div class="traincoach traincoach_active">
 	                        <h4>
-	                        	<span class="glyphicon glyphicon-phone"></span>
+	                        	<span class="glyphicon glyphicon-unchecked sidebar_icon_traincoach"></span>
 	                        	<h:link value="#{traincoach.getName()}" outcome="traincoach.xhtml?id=#{traincoach.getId()}"/>
 	                        </h4>
 	                        <!-- METADATA PER WAGON -->
 	                        <div class="traincoach_data">
-	                            <h4><span class="glyphicon glyphicon-alert"></span> Problemen <span class="badge">1</span></h4>
-	                            <h4 class="Sensors_active"><span class="glyphicon glyphicon-dashboard"></span> Sensors</h4>
+	                            <h5><span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span> Problemen <span class="badge">1</span></h5>
+	                            <h5><span class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span> Sensoren</h5>
 	                        </div>
 	                    </div>
                     </c:forEach>

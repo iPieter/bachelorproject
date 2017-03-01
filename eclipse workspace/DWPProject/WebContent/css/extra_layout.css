@@ -128,6 +128,7 @@ body, html
 .mainview_traincoach
 {
     border-bottom: 1px solid #2c3e50;
+    overflow: hidden;
 }
 
 .mainview_traincoach_header
@@ -180,6 +181,22 @@ body, html
 {
     background-color: #293A40;
     padding: 2px;
+}
+
+.sidebar_icon{
+	margin-left: 3px;
+	margin-right: 4px;
+}
+
+.sidebar_icon_traincoach{
+	margin-right: 4px;
+	font-size: 14px;
+}
+
+.sidebar_icon_metadata{
+	margin-left: 4px;
+	margin-right: 1px;
+	font-size: 12px;
 }
 
 .dont-break-out{
