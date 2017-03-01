@@ -29,68 +29,28 @@
 	
 	<!-- MAINVIEW CONTENT -->
 	<ui:define name="mainview_content">
+		<!--MAIN ROW -->
 		<div class="row">
-                    <div class="col-sm-6 mainview_panel_large">
-                        <div class="row mainview_wagon">
-							<div class="col-sm-4 mainview_wagon_header">
-								<b>Wagon 1</b>
-							</div>
-							<div class="col-sm-8">
-								<h4>Actieve problemen</h4>
-								<ul>
-									<li>Afwijking accelerometer x-as</li>
-								</ul>
-								<h4>Afgewerkte problemen</h4>
-								<ul>
-									<li>Afwijking accelerometer z-as</li>
-								</ul>
-							</div>
-                        </div>
-						<div class="row mainview_wagon">
-							<div class="col-sm-4 mainview_wagon_header">
-								<b>Wagon 2</b>
-							</div>
-							<div class="col-sm-8">
-								<h4>Actieve problemen</h4>
-								<ul>
-									<li>Afwijking gyroscoop yaw </li>
-								</ul>
-								<h4>Afgewerkte problemen</h4>
-								<ul>
-								</ul>
-							</div>
-                        </div>
-						<div class="row mainview_wagon">
-							<div class="col-sm-4 mainview_wagon_header">
-								<b>Wagon 3</b>
-							</div>
-							<div class="col-sm-8">
-								<h4>Actieve problemen</h4>
-								<ul>
-									<li>Afwijking gyroscoop yaw en roll </li>
-								</ul>
-								<h4>Afgewerkte problemen</h4>
-								<ul>
-									<li>Afwijking GPS lat</li>
-									<li>Afwijking GPS long</li>
-								</ul>
-							</div>
-                        </div>
-						<div class="row mainview_wagon">
-							<div class="col-sm-4 mainview_wagon_header">
-								<b>Wagon 4</b>
-							</div>
-							<div class="col-sm-8">
-								<h4>Actieve problemen</h4>
-								<ul>
-									<li>Afwijking accelerometer</li>
-								</ul>
-								<h4>Afgewerkte problemen</h4>
-								<ul>
-								</ul>
-							</div>
-                        </div>
-                    </div>
+			<!-- MAIN PANEL-LARGE-LEFT (descr=oplijsten wagons, incl. Actieve & afgewerkte problemen -->
+			<div class="col-sm-6 mainview_panel_large">
+				<div class="row mainview_traincoach">
+					<div class="col-sm-4 mainview_wagon_header">
+						<b>Wagon 1</b>
+					</div>
+					<div class="col-sm-8">
+						<h4>Actieve problemen</h4>
+						<ul>
+							<li>Afwijking accelerometer x-as</li>
+						</ul>
+						<h4>Afgewerkte problemen</h4>
+						<ul>
+							<li>Afwijking accelerometer z-as</li>
+						</ul>
+					</div>
+			    </div>
+			    
+				</div> <!-- END MAIN PANEL-LARGE-LEFT -->
+                    
                     <div class="col-sm-5">
                         <div class="row">
 							<div class="col-sm-12 mainview_panel">
@@ -135,7 +95,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> <!-- END MAIN ROW -->
 	</ui:define>	
 </ui:composition>
 
