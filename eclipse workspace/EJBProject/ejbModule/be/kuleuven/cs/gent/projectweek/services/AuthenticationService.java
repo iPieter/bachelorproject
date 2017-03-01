@@ -1,6 +1,8 @@
 package be.kuleuven.cs.gent.projectweek.services;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
 
 import be.kuleuven.cs.gent.projectweek.model.User;
 
@@ -23,8 +25,12 @@ public class AuthenticationService implements Serializable
 	
 	private static final long serialVersionUID = 3713738638802589887L;
 
+	@Inject
+	private UserService us;
+	
 	public boolean login(String email, String password)
 	{
+		
 		
 		return false;
 	}

@@ -5,6 +5,9 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
+
+import be.kuleuven.cs.gent.projectweek.model.Password;
 import be.kuleuven.cs.gent.projectweek.model.User;
 import be.kuleuven.cs.gent.projectweek.services.AuthenticationService;
 
@@ -22,7 +25,10 @@ public class AuthenticationController implements Serializable
 	@Inject
 	private AuthenticationService authService; 
 	
+	@NotNull
 	private String email;
+	
+	@NotNull @Password
 	private String password;
 	
 	public void doLogin()
