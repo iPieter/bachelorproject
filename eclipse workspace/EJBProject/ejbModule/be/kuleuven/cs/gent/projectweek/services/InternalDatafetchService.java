@@ -111,4 +111,22 @@ public class InternalDatafetchService
 
 		return result;
 	}
+
+	public ProcessedSensorData getProcessedSensorDataByID( int id )
+	{
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+
+		TypedQuery<ProcessedSensorData> query = em.createNamedQuery( "ProcessedSensorData.findByID", ProcessedSensorData.class );
+		query.setParameter( "id", id );
+		
+		ProcessedSensorData data = query.getSingleResult();
+		
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
+
+		return data;
+	}
 }

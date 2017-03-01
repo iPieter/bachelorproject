@@ -3,7 +3,9 @@ var map = null;
 var marker = null;
 var latlngs = null;
 
-$.get( "rest/processed_data", function( data )
+var id = $("#current_traincoach").val();
+
+$.get( "rest/processed_data/" + id, function( data )
 {
 	SENSOR_DATA = data;
 	setView( "radio_yaw" );

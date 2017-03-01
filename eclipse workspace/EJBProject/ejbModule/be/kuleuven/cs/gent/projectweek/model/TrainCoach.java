@@ -10,7 +10,12 @@ import javax.validation.constraints.NotNull;
  * 
  */
 @Entity
-@NamedQuery(name="TrainCoach.findAll", query="SELECT t FROM TrainCoach t")
+@NamedQueries(
+{
+	@NamedQuery(name="TrainCoach.findAll", query="SELECT t FROM TrainCoach t"),
+	@NamedQuery(name="TrainCoach.findByData", query = "SELECT t FROM TrainCoach t WHERE t.name = :name AND t.type = :type AND t.conductor = :constructor ")
+})
+
 public class TrainCoach implements Serializable {
 	private static final long serialVersionUID = 1L;
 
