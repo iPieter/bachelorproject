@@ -48,7 +48,7 @@ public class InternalDatafetchService
 		return result;
 	}
 
-	public Workplace doFindWorkplaceById( int id )
+	public Workplace findWorkplaceByWorkplaceId( int id )
 	{
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
 		EntityManager em = emf.createEntityManager();
@@ -63,7 +63,7 @@ public class InternalDatafetchService
 		return result;
 	}
 
-	public TrainCoach doFindTrainCoachById( int id )
+	public TrainCoach findTrainCoachByTraincoachId( int id )
 	{
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
 		EntityManager em = emf.createEntityManager();

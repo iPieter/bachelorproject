@@ -5,8 +5,9 @@
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-	
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
 <h:head>
 	<meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -17,6 +18,12 @@
 	<title><ui:insert name="title">Insert title here</ui:insert></title>
 </h:head>
 <h:body>
+
+<f:metadata>
+	<f:viewParam name="workplace_id" value="#{workplaceController.getCurrentWorkplace().id}"/>
+	<f:viewAction action="#{workplaceController.findWorkplaceByWorkplaceId()}"/>
+</f:metadata>
+
 <div class="container-fluid">
 	<div class="row">
 	
@@ -26,7 +33,7 @@
 			<!-- SEARCH INPUT -->
             <form class="form-group" role="search">
    				<div class="input-group">
-   					<input type="text" class="form-control" placeholder="Zoek wagons of plaatsen" name="search_input" id="search_input" autocomplete="off"/>
+   					<input type="text" class="form-control" placeholder="Zoek wagons" name="search_input" id="search_input" autocomplete="off"/>
    					<div class="input-group-btn">
    						<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
    					</div>
@@ -41,29 +48,29 @@
    			<!-- SIDEBAR CONTENT --> 	
    			<div class="workplace workplace_active">	
    			
-   			<!-- STAANPLAATSEN -->	
-			<c:forEach var="workplace" items="#{workplaceController.getAllWorkplaces()}">
-                <h4>
-                	<span class="glyphicon glyphicon-unchecked sidebar_icon"></span>
-                	<h:link value="#{workplace.getName()}" outcome="workplace.xhtml?id=#{workplace.getId()}"/>
-                </h4>
-                	<!-- WAGONS PER STAANPLAATS -->
-                	<c:forEach var="traincoach" items="#{workplace.getTraincoaches()}">
-	                    <div class="traincoach traincoach_active">
-	                        <h4>
-	                        	<span class="glyphicon glyphicon-unchecked sidebar_icon_traincoach"></span>
-	                        	<h:link value="#{traincoach.getName()}" outcome="traincoach.xhtml?id=#{traincoach.getId()}"/>
-	                        </h4>
-	                        <!-- METADATA PER WAGON -->
-	                        <div class="traincoach_data">
-	                            <h5><span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span> Problemen <span class="badge">1</span></h5>
-	                            <h5><span class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span> Sensoren</h5>
-	                        </div>
-	                    </div>
-                    </c:forEach>
-
-   			</c:forEach><!-- END SIDEBAR CONTENT -->
-   			</div>	
+   			<!-- GESELECTEERDE STAANPLAATS -->	
+   			<c:set var="workplace" value="#{workplaceController.getCurrentWorkplace()}"/>
+            <h4>
+            	<span class="glyphicon glyphicon-unchecked sidebar_icon"></span>
+            	<h:link value="#{workplace.getName()}" 
+            			outcome="workplace.xhtml?id=#{workplace.getId()}"/>
+            </h4>
+            
+	       	<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
+	       	<c:forEach var="traincoach" items="#{workplace.getTraincoaches()}">
+	            <div class="traincoach traincoach_active">
+	                <h4 class="sidebar_text_traincoach">
+	                	<span class="glyphicon glyphicon-unchecked sidebar_icon_traincoach"></span>
+	                	<h:link value="#{traincoach.getType()} - #{traincoach.getName()}" outcome="traincoach.xhtml?id=#{traincoach.getId()}"/>
+	                </h4>
+	                <!-- METADATA PER WAGON -->
+	                <div class="traincoach_data">
+	                    <h5><span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span> Problemen <span class="badge">1</span></h5>
+	                    <h5><span class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span> Sensoren</h5>
+	                </div>
+	            </div>
+	           </c:forEach>
+   			</div> <!-- END SIDEBAR CONTENT -->
    		</div> <!-- END LEFT SIDEBAR -->
 
                 

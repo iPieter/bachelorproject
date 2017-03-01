@@ -26,9 +26,10 @@ public class WorkplaceController implements Serializable
 		return internalDatafetchService.getAllWorkplaces();
 	}
 
-	public void doFindWorkplaceById()
+	public void findWorkplaceByWorkplaceId()
 	{
-		currentWorkplace = internalDatafetchService.doFindWorkplaceById( currentWorkplace.getId() );
+		currentWorkplace = internalDatafetchService.findWorkplaceByWorkplaceId( currentWorkplace.getId() );
+		System.out.println("ID:"+currentWorkplace.getId());
 	}
 
 	// GETTERS & SETTERS

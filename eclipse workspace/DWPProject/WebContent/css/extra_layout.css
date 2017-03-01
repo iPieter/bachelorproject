@@ -191,12 +191,17 @@ body, html
 .sidebar_icon_traincoach{
 	margin-right: 4px;
 	font-size: 14px;
+	top: -1px;
 }
 
 .sidebar_icon_metadata{
 	margin-left: 4px;
 	margin-right: 1px;
 	font-size: 12px;
+}
+
+.sidebar_text_traincoach{
+	font-size: 100%;
 }
 
 .dont-break-out{

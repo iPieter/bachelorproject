@@ -33,7 +33,7 @@ public class TraincoachController implements Serializable
 
 	public void doFindTrainCoachById()
 	{
-		currentTrainCoach = internalDatafetchService.doFindTrainCoachById( currentTrainCoach.getId() );
+		currentTrainCoach = internalDatafetchService.findTrainCoachByTraincoachId( currentTrainCoach.getId() );
 		List<Workplace> result = internalDatafetchService.findWorkplaceByTraincoachID( currentTrainCoach.getId() );
 		if( result.size() > 0 )
 		{
