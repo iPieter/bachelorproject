@@ -28,6 +28,7 @@ import matlabcontrol.MatlabConnectionException;
 import matlabcontrol.MatlabInvocationException;
 import matlabcontrol.MatlabProxy;
 import matlabcontrol.MatlabProxyFactory;
+import matlabcontrol.MatlabProxyFactoryOptions;
 import matlabcontrol.extensions.MatlabNumericArray;
 import matlabcontrol.extensions.MatlabTypeConverter;
 
@@ -125,7 +126,8 @@ public class MatlabProcessor
 	private void analyseFile( String name, EntityManager em )
 			throws MatlabConnectionException, MatlabInvocationException, IOException
 	{
-		MatlabProxyFactory factory = new MatlabProxyFactory();
+		MatlabProxyFactoryOptions options = new MatlabProxyFactoryOptions.Builder().setHidden( true ).build();
+		MatlabProxyFactory factory = new MatlabProxyFactory( options );
 		MatlabProxy proxy = factory.getProxy();
 
 		String path = matlabDirectory + "/" + name;
@@ -184,7 +186,7 @@ public class MatlabProcessor
 		{
 			io.printStackTrace();
 		}
-		proxy.disconnect();
+		proxy.exit();
 	}
 	
 	private void writeToDatabase( String fileName, EntityManager em  )
