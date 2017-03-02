@@ -24,8 +24,12 @@ public class UserService implements Serializable
 {	
 	/*
 	 * The purpose of the UserService is to provide a User object for the
-	 * duration of the session. This will be provided mainly for the 
-	 * AuthenticationService.
+	 * duration of the session. The service will also provide:
+	 * 
+	 * - Login with credential checks
+	 * - Logout
+	 * - Verifying the permissions of the user for the current page
+	 * 
 	 * When initialized, there'll be no User associated with this service, 
 	 * but after login it'll be provided by the AuthenticationService.
 	 * 
@@ -62,6 +66,17 @@ public class UserService implements Serializable
 		userEJB.createUser(u);
 		
 		System.out.println("Saved user ..." + u.getEmail());
+	}
+	
+	public boolean hasCurrentUserRequiredRole(UserRole ur)
+	{
+		if (user == null)
+		{
+			return false;
+		}
+		
+		return user.getRole().equals(ur);
+		
 	}
 	
 	/*

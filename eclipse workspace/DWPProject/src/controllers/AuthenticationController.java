@@ -8,8 +8,8 @@ import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
 import be.kuleuven.cs.gent.projectweek.model.Password;
-import be.kuleuven.cs.gent.projectweek.model.User;
-import be.kuleuven.cs.gent.projectweek.services.AuthenticationService;
+import be.kuleuven.cs.gent.projectweek.model.UserRole;
+import be.kuleuven.cs.gent.projectweek.services.UserService;
 
 @ManagedBean
 @RequestScoped
@@ -23,7 +23,7 @@ public class AuthenticationController implements Serializable
 	private static final long serialVersionUID = -8396156684143995442L;
 	
 	@Inject
-	private AuthenticationService authService; 
+	private UserService userService; 
 	
 	@NotNull
 	private String email;
@@ -33,20 +33,33 @@ public class AuthenticationController implements Serializable
 	
 	public String doLogin()
 	{
-		//TODO: this is only for testing!!!!
-		System.out.println(email + " and pass='" + password + "'");
-
-		// ---------------- REMOVE IT WHEN DONE WITH TESTING THIS CODE  ---------------- 
-		
-		if (authService.login(email, password))
+		if (userService.verificateLogin(email, password))
 		{
 			return "index.xhtml";
 		} else 
 		{
 			return null;
 		}
-		
-		
+	}
+	
+	public boolean hasAccess(UserRole ur)
+	{
+		return userService.hasCurrentUserRequiredRole(ur);
+	}
+	
+	public boolean hasOperatorAccess()
+	{
+		return hasAccess(UserRole.OPERATOR);
+	}
+	
+	public boolean hasMechanicAccess()
+	{
+		return hasAccess(UserRole.MECHANIC);
+	}
+	
+	public boolean hasAdminAccess()
+	{
+		return hasAccess(UserRole.ADMIN);
 	}
 	
 	public void setEmail(String email)
