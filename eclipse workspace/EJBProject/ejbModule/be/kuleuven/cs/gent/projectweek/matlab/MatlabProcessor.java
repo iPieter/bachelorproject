@@ -203,7 +203,7 @@ public class MatlabProcessor
 
 		try
 		{
-			TypedQuery<TrainCoach> query = em.createNamedQuery( "TrainCoach.findByData", TrainCoach.class );
+			TypedQuery<TrainCoach> query = em.createNamedQuery( TrainCoach.FIND_BY_DATA, TrainCoach.class );
 			query.setParameter( "name", nameSplit[1] );
 			query.setParameter( "type", nameSplit[2] );
 			query.setParameter( "constructor", nameSplit[3] );
