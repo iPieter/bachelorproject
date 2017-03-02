@@ -38,7 +38,7 @@ public class InternalDatafetchService
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 
-		TypedQuery<TrainCoach> query = em.createNamedQuery( "TrainCoach.findAll", TrainCoach.class );
+		TypedQuery<TrainCoach> query = em.createNamedQuery( TrainCoach.FIND_ALL, TrainCoach.class );
 		List<TrainCoach> result = query.getResultList();
 
 		em.getTransaction().commit();
