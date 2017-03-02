@@ -125,3 +125,5 @@ eclipse workspace/.recommenders/index/http___download_eclipse_org_recommenders_m
 eclipse workspace/.recommenders/*
 
 eclipse workspace/EJBProject/.externalToolBuilders/org.hibernate.eclipse.console.hibernateBuilder.launch
+
+eclipse workspace/.idea/eclipse workspace.iml

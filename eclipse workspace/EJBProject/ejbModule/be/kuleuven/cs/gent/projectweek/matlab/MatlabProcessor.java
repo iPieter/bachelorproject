@@ -225,7 +225,7 @@ public class MatlabProcessor
 		if( traincoachResult.size() == 0)
 		{
 			trainCoach = new TrainCoach();
-			trainCoach.setConductor( nameSplit[1] );
+			trainCoach.setConstructor( nameSplit[1] );
 			trainCoach.setType( nameSplit[2] );
 			trainCoach.setName( nameSplit[3] );
 		}

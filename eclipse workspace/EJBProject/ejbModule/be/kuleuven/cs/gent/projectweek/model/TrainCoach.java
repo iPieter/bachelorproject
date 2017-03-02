@@ -12,11 +12,15 @@ import javax.validation.constraints.NotNull;
 @Entity
 @NamedQueries(
 {
-	@NamedQuery(name="TrainCoach.findAll", query="SELECT t FROM TrainCoach t"),
-	@NamedQuery(name="TrainCoach.findByData", query = "SELECT t FROM TrainCoach t WHERE t.name = :name AND t.type = :type AND t.conductor = :constructor ")
+	@NamedQuery(name=TrainCoach.FIND_ALL, query="SELECT t FROM TrainCoach t"),
+	@NamedQuery(name=TrainCoach.FIND_BY_DATA, query = "SELECT t FROM TrainCoach t WHERE t.name = :name AND t.type = :type AND t.constructor = :constructor ")
 })
 
 public class TrainCoach implements Serializable {
+	
+	public static final String FIND_ALL = "TrainCoach.findAll";
+	public static final String FIND_BY_DATA = "TrainCoach.findByData";
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -49,8 +53,8 @@ public class TrainCoach implements Serializable {
 		return this.constructor;
 	}
 
-	public void setConstructor(String conductor) {
-		this.constructor = conductor;
+	public void setConstructor(String constructor) {
+		this.constructor = constructor;
 	}
 
 	public String getName() {

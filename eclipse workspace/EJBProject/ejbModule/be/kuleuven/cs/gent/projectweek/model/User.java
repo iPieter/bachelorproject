@@ -21,8 +21,8 @@ import org.hibernate.validator.constraints.Email;
 public class User implements Serializable
 {
 	//Named queries
-	public static final String FIND_ALL = "findAll";
-	public static final String FIND_BY_EMAIL = "findByEmail";
+	public static final String FIND_ALL = "User.findAll";
+	public static final String FIND_BY_EMAIL = "User.findByEmail";
 	
 	//Private vars
 	private static final long serialVersionUID = 1L;
