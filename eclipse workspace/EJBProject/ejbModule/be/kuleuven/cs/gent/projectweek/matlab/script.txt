@@ -7,12 +7,12 @@ yaw_out     = zeros( ni, 2 );
 for j = 1:ni
     i    = steps( j );
     left = data_width;
-    if( i + left > length( input ) )
+    if( i + left >= length( input ) )
        left = length( input )-i; 
     end
     [~,index]    = max( abs( input( i:i+left ) ) );
-    yaw_out(j,1) = input( i + index );
-    yaw_out(j,2) = time( i + index );
+    yaw_out(j,1) = input( i + index - 1 );
+    yaw_out(j,2) = time( i + index - 1  );
 end
 
 data_width  = 100;
@@ -24,12 +24,12 @@ roll_out     = zeros( ni, 2 );
 for j = 1:ni
     i    = steps( j );
     left = data_width;
-    if( i + left > length( input ) )
+    if( i + left >= length( input ) )
        left = length( input )-i; 
     end
     [~,index]     = max( abs( input( i:i+left ) ) );
-    roll_out(j,1) = input( i + index );
-    roll_out(j,2) = time( i + index );
+    roll_out(j,1) = input( i + index - 1 );
+    roll_out(j,2) = time( i + index - 1 );
 end
 
 time_out(1) = gps.gps_time.year(1);
