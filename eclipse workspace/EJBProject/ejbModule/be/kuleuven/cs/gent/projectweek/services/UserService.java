@@ -1,40 +1,161 @@
 package be.kuleuven.cs.gent.projectweek.services;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Arrays;
+import java.util.Date;
+
 import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
+import javax.ejb.EJB;
+import javax.enterprise.context.*;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import be.kuleuven.cs.gent.projectweek.ejb.UserEJB;
 import be.kuleuven.cs.gent.projectweek.model.User;
 import be.kuleuven.cs.gent.projectweek.model.UserRole;
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 
-@Singleton
-@Startup
-public class UserService
+@SessionScoped
+public class UserService implements Serializable
 {	
+	/*
+	 * The purpose of the UserService is to provide a User object for the
+	 * duration of the session. The service will also provide:
+	 * 
+	 * - Login with credential checks
+	 * - Logout
+	 * - Verifying the permissions of the user for the current page
+	 * 
+	 * When initialized, there'll be no User associated with this service, 
+	 * but after login it'll be provided by the AuthenticationService.
+	 * 
+	 */
+	private static final long serialVersionUID = -6239216717833742873L;
+
+	public static final String HASHING_METHOD = "SHA-256";
+
+	@EJB
+	private UserEJB userEJB;
+	
+	private User user;
+	
 	@PostConstruct
 	public void init()
 	{
-		EntityManagerFactory emf =  Persistence.createEntityManagerFactory("EJBProject");
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		//create a test user
 		User u = new User();
 		
 		u.setName("John Doe");
-		u.setEmail("john@test.be");
-		u.setPass("pass".getBytes());
-		u.setSalt("salt".getBytes());
+		u.setEmail("john" + (int) (Math.random()*100) + "@test.be");
+		u.setLastLogin(new Date());
+		u.setSalt(salt(User.SALT_LENGTH));
+		try
+		{
+			u.setPass(generateHash("password123", u.getSalt()));
+			System.out.println("pass hash: " + u.getPass().toString());
+		} catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		u.setRole(UserRole.OPERATOR);
 		
-		em.persist(u);
-		em.getTransaction().commit();
-		em.close();
-		emf.close();
+		userEJB.createUser(u);
 		
-		System.out.println("Saved user ..." + u);
+		System.out.println("Saved user ..." + u.getEmail());
 	}
 	
+	public boolean hasCurrentUserRequiredRole(UserRole ur)
+	{
+		if (user == null)
+		{
+			return false;
+		}
+		
+		return user.getRole().equals(ur);
+		
+	}
+	
+	/*
+	 * The verification of a login consists of two steps:
+	 * 1. finding the appropriate user object
+	 * 2. generating the digest based on password and salt
+	 * 
+	 * Note that timing attacks are still an issue in this implementation.
+	 */
+	public boolean verificateLogin(String email, String password)
+	{
+		User u = userEJB.findUserByEmail(email);
+		
+		if (u != null)
+		{
+			try
+			{
+				if (Arrays.equals(u.getPass(),(generateHash(password, u.getSalt()))))
+				{
+					this.user = u;
+					return true;
+					
+				} else {
+					
+					return false;
+				}
+				
+			} catch (UnsupportedEncodingException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				
+				return false;
+			} catch (NoSuchAlgorithmException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return false;
+	}
+	
+	/*
+	 * The generateHash method takes a salt, likely provided by the User object, and a 
+	 * password string and generates the hash described by the defined method. 
+	 * 
+	 * This function is intended to be used internally, not by other services.
+	 */
+	private byte[] generateHash(String password, byte[] salt) throws NoSuchAlgorithmException, UnsupportedEncodingException
+	{
+		MessageDigest sha = MessageDigest.getInstance(UserService.HASHING_METHOD);
+		sha.reset();
+		sha.update(salt);
+		return sha.digest(password.getBytes("UTF-8")); 
+	}
+	
+	
+	private byte[] salt(int length)
+	{
+	
+		SecureRandom sRnd = new SecureRandom();
+		byte[] salt = new byte[length];
+		
+		sRnd.nextBytes(salt);
+		
+		return salt;
+		
+	}
+	
+	public String bytesToString(byte[] bs)
+	{
+		StringBuilder s = new StringBuilder();
+		
+		for (byte b : bs)
+		{
+			s.append(b);
+		}
+		
+		return s.toString();
+	}
 }

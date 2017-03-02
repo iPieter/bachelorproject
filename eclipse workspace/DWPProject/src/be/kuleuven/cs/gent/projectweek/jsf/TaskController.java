@@ -22,6 +22,7 @@ public class TaskController implements Serializable
 
 	@EJB
 	private TaskEJBLocal taskEJB;
+	
 	private Task task = new Task();
 
 	@Loggable

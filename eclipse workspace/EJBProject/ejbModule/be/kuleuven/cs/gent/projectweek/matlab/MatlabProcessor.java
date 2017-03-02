@@ -177,8 +177,7 @@ public class MatlabProcessor
 			writeLine( "}", false, writer );
 
 			writer.flush();
-			writer.close();
-		
+			writer.close();		
 			writeToDatabase( name, em );
 		}
 		catch ( IOException io )

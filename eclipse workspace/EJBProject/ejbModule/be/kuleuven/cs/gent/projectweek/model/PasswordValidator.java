@@ -1,5 +1,7 @@
 package be.kuleuven.cs.gent.projectweek.model;
 
+import java.security.SecureRandom;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 

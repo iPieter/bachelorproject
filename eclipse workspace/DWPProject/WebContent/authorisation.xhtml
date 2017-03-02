@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 
-<html
-	xmlns:h="http://java.sun.com/jsf/html">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
 	
 <h:head>
+    <f:facet name="first" rendered="#{authenticationController.email}">
+		<meta http-equiv="refresh" content="0; url=http://example.com/" />
+	</f:facet>
+	
 	<meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<link href="css/bootstrap.min.css" rel="stylesheet"/>
-	<link href="css/extra_layout.css" rel="stylesheet"/>
-	<link rel="stylesheet" href="css/leaflet.css" />
+	<link href="css/login.css" rel="stylesheet"/>
 	<title>Manager Log In</title>
 </h:head>
 <h:body>
@@ -23,7 +28,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Televic Managment</a>
+          <!--<a class="navbar-brand" href="#">Televic Managment</a>-->
+          <a class="navbar-brand" href="#"><img src="http://rve2013.onyxrail.co.uk/img/televic_logo.png"/></a>
+          
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -40,19 +47,20 @@
 		<div class="row ">
 			<div class="col-sm-4 col-sm-offset-4">
 			<div class="row ">
-		      <form class="form-signin">
+		      <h:form class="form-signin">
 		        <h2 class="form-signin-heading">Please sign in</h2>
 		        <label for="inputEmail" class="sr-only">Email address</label>
-		        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+		        <h:inputText type="email" id="inputEmail" class="form-control" placeholder="Email address" value="#{authenticationController.email}"/>
 		        <label for="inputPassword" class="sr-only">Password</label>
-		        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+		        <h:inputSecret type="password" id="inputPassword" class="form-control" placeholder="Password" value="#{authenticationController.password}"/>
 		        <div class="checkbox">
 		          <label>
-		            <input type="checkbox" value="remember-me"> Remember me
+		            <h:selectBooleanCheckbox type="checkbox" value="remember-me"/> Remember me
 		          </label>
 		        </div>	
-		        <button class="btn btn-lg btn-primary col-sm-4 col-sm-offset-4" type="submit">Sign in</button>  
-		      </form>
+		        <h:commandButton class="btn btn-lg btn-primary col-sm-4 col-sm-offset-4" action="#{authenticationController.doLogin()}" type="submit" value="Sign In">
+		        </h:commandButton>
+		      </h:form>
 		      </div>
 	      </div>
 		</div>
