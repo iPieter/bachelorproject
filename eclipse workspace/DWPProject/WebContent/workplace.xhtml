@@ -9,11 +9,11 @@
 
 <ui:composition template="templates/main_layout.xhtml">
 
-	<ui:define name="title">Traincoach Manager</ui:define>
+	<ui:define name="title">Workplace Manager</ui:define>
 	
 	<f:metadata>
-		<f:viewParam name="workplace_id" value="#{workplaceController.getCurrentWorkplace().id}"/>
-		<f:viewAction action="#{workplaceController.findWorkplaceByWorkplaceId()}"/>
+		<f:viewParam name="workplace_id" value="#{workplaceController.workplaceId}"/>
+		<f:viewAction action="#{workplaceController.initialiseWorkplace}"/>
 	</f:metadata>
 
 	<!-- BREADCRUMB -->
@@ -21,8 +21,8 @@
 		<ol class="breadcrumb breadcrumb_extra">
 			<li><h:link	outcome="index.xhtml"><span class="glyphicon glyphicon-home"></span></h:link></li>
 			<li>
-				<h:link class="active" value="#{workplaceController.getCurrentWorkplace().getName()}" 
-					outcome="workplace.xhtml?id=#{workplaceController.getCurrentWorkplace().getId()}"/>
+				<h:link class="active" value="#{workplaceController.currentWorkplace.name}" 
+					outcome="workplace.xhtml?id=#{workplaceController.currentWorkplace.id}"/>
 			</li>
 		</ol>
 	</ui:define>

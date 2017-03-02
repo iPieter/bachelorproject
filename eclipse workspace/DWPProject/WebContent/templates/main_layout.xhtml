@@ -44,19 +44,19 @@
    			<div class="workplace workplace_active">	
    			
    			<!-- GESELECTEERDE STAANPLAATS -->	
-   			<c:set var="workplace" value="#{workplaceController.getCurrentWorkplace()}"/>
+   			<c:set var="workplace" value="#{workplaceController.currentWorkplace}"/>
             <h4>
             	<span class="glyphicon glyphicon-unchecked sidebar_icon"></span>
-            	<h:link value="#{workplace.getName()}" 
-            			outcome="workplace.xhtml?id=#{workplace.getId()}"/>
+            	<h:link value="#{workplace.name}" 
+            			outcome="workplace.xhtml?workplace_id=#{workplace.id}"/>
             </h4>
             
 	       	<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
-	       	<c:forEach var="traincoach" items="#{workplace.getTraincoaches()}">
+	       	<c:forEach var="traincoach" items="#{workplace.traincoaches}">
 	            <div class="traincoach traincoach_active">
 	                <h4 class="sidebar_text_traincoach">
 	                	<span class="glyphicon glyphicon-unchecked sidebar_icon_traincoach"></span>
-	                	<h:link value="#{traincoach.getType()} - #{traincoach.getName()}" outcome="traincoach.xhtml?id=#{traincoach.getId()}"/>
+	                	<h:link value="#{traincoach.type} - #{traincoach.name}" outcome="traincoach.xhtml?id=#{traincoach.getId()}"/>
 	                </h4>
 	                <!-- METADATA PER WAGON -->
 	                <div class="traincoach_data">

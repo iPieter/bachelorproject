@@ -31,7 +31,7 @@ public class Workplace implements Serializable {
 	@NotNull
 	private String name;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<TrainCoach> traincoaches = new ArrayList<TrainCoach>();
 	
 	@OneToMany(fetch = FetchType.LAZY)
