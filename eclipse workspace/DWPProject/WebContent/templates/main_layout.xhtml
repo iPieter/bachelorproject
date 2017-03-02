@@ -4,8 +4,10 @@
 <html 
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
 <h:head>
 	<meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -16,6 +18,12 @@
 	<title><ui:insert name="title">Insert title here</ui:insert></title>
 </h:head>
 <h:body>
+
+<f:metadata>
+	<f:viewParam name="workplace_id" value="#{workplaceController.getCurrentWorkplace().id}"/>
+	<f:viewAction action="#{workplaceController.findWorkplaceByWorkplaceId()}"/>
+</f:metadata>
+
 <div class="container-fluid">
 	<div class="row">
 	
@@ -25,7 +33,7 @@
 			<!-- SEARCH INPUT -->
             <form class="form-group" role="search">
    				<div class="input-group">
-   					<input type="text" class="form-control" placeholder="Zoek wagons of plaatsen" name="search_input" id="search_input" autocomplete="off"/>
+   					<input type="text" class="form-control" placeholder="Zoek wagons" name="search_input" id="search_input" autocomplete="off"/>
    					<div class="input-group-btn">
    						<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
    					</div>
@@ -37,21 +45,33 @@
    				</div>
    			</form> <!-- END SEARCH INPUT -->
    			
-   			<!-- SIDEBAR CONTENT -->
-   			<ui:insert name="sidebar_content"> <!-- INSERT -->
-   				<!-- Default Example -->
-                <div class="traincoach_depot traincoach_depot_active">
-                    <h4><span class="glyphicon glyphicon-unchecked"></span> Staanplaats Example</h4>
-                    <div class="traincoach traincoach_active">
-                        <h4><span class="glyphicon glyphicon-phone"></span> Wagon Example </h4>
-                        <div class="traincoach_data">
-                            <h4><span class="glyphicon glyphicon-alert"></span> Problemen <span class="badge">1</span></h4>
-							<h4><span class="glyphicon glyphicon-dashboard"></span> <a href="wagon_sensor.html">Sensors</a></h4>
-                        </div>
-                    </div>
-                </div>
-			</ui:insert> <!-- END SIDEBAR CONTENT -->
-		</div> <!-- END LEFT SIDEBAR -->
+   			<!-- SIDEBAR CONTENT --> 	
+   			<div class="workplace workplace_active">	
+   			
+   			<!-- GESELECTEERDE STAANPLAATS -->	
+   			<c:set var="workplace" value="#{workplaceController.getCurrentWorkplace()}"/>
+            <h4>
+            	<span class="glyphicon glyphicon-unchecked sidebar_icon"></span>
+            	<h:link value="#{workplace.getName()}" 
+            			outcome="workplace.xhtml?id=#{workplace.getId()}"/>
+            </h4>
+            
+	       	<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
+	       	<c:forEach var="traincoach" items="#{workplace.getTraincoaches()}">
+	            <div class="traincoach traincoach_active">
+	                <h4 class="sidebar_text_traincoach">
+	                	<span class="glyphicon glyphicon-unchecked sidebar_icon_traincoach"></span>
+	                	<h:link value="#{traincoach.getType()} - #{traincoach.getName()}" outcome="traincoach.xhtml?id=#{traincoach.getId()}"/>
+	                </h4>
+	                <!-- METADATA PER WAGON -->
+	                <div class="traincoach_data">
+	                    <h5><span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span> Problemen <span class="badge">1</span></h5>
+	                    <h5><span class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span> Sensoren</h5>
+	                </div>
+	            </div>
+	           </c:forEach>
+   			</div> <!-- END SIDEBAR CONTENT -->
+   		</div> <!-- END LEFT SIDEBAR -->
 
                 
             <!-- MAIN VIEW --> 
@@ -70,7 +90,7 @@
 				</div> <!-- END NAVIGATION -->
 				
 				<!-- MAIN VIEW PANELS -->
-                <ui:insert name="mainview_content"> 
+                <ui:insert name="mainview_content"> <!-- INSERT -->
                 </ui:insert> <!-- END MAIN VIEW PANELS -->
          </div><!-- END MAIN VIEW -->
          

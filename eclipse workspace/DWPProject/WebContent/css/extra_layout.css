@@ -3,23 +3,40 @@ body, html
     height: 100% !important;
 }
 
-.container
+.container-fluid
 {
     margin-left: 0px;
     width: 100%;
     background-color: #ecf0f1;
 }
 
-.staanplaats_active
+.workplace_active .workplace
+{
+    padding-left: 15px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    border-left: 1px solid gray;
+    border-top: 1px solid #293A40;
+    border-right: 1px solid #293A40;
+    border-bottom: 1px solid #293A40;
+}
+
+.workplace_active
 {
     background-color: #293A40;
     padding: 2px;
 }
 
+.workplace a
+{
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
 .sidebar
 {
     border-right: 3px solid #2c3e50;
-    height: 100%;
+    height: 100vh;
     padding-top: 5px;
     background-color: #344951;
     color: #ecf0f1;
@@ -51,17 +68,6 @@ body, html
 .traincoach_active
 {
     background-color: #435D66;
-}
-
-.traincoach_depot_active .traincoach
-{
-    padding-left: 15px;
-    margin-bottom: 0px;
-    padding-bottom: 0px;
-    border-left: 1px solid gray;
-    border-top: 1px solid #293A40;
-    border-right: 1px solid #293A40;
-    border-bottom: 1px solid #293A40;
 }
 
 .traincoach_data
@@ -122,6 +128,7 @@ body, html
 .mainview_traincoach
 {
     border-bottom: 1px solid #2c3e50;
+    overflow: hidden;
 }
 
 .mainview_traincoach_header
@@ -176,6 +183,27 @@ body, html
     padding: 2px;
 }
 
+.sidebar_icon{
+	margin-left: 3px;
+	margin-right: 4px;
+}
+
+.sidebar_icon_traincoach{
+	margin-right: 4px;
+	font-size: 14px;
+	top: -1px;
+}
+
+.sidebar_icon_metadata{
+	margin-left: 4px;
+	margin-right: 1px;
+	font-size: 12px;
+}
+
+.sidebar_text_traincoach{
+	font-size: 100%;
+}
+
 .dont-break-out{
     overflow-wrap: break-word;
     word-wrap: break-word;
@@ -194,4 +222,14 @@ body, html
 	display: inline-block;
 	vertical-align: middle;
 	float: none;
+}
+
+#topleft
+{
+	height:90%;
+}
+
+#graph_options
+{
+	height:10%;
 }

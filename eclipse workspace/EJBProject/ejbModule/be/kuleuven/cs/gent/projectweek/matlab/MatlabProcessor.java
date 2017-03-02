@@ -2,14 +2,17 @@ package be.kuleuven.cs.gent.projectweek.matlab;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
@@ -20,6 +23,7 @@ import javax.persistence.TypedQuery;
 
 import be.kuleuven.cs.gent.projectweek.model.ProcessedSensorData;
 import be.kuleuven.cs.gent.projectweek.model.TrainCoach;
+import be.kuleuven.cs.gent.projectweek.model.Workplace;
 import matlabcontrol.MatlabConnectionException;
 import matlabcontrol.MatlabInvocationException;
 import matlabcontrol.MatlabProxy;
@@ -32,43 +36,76 @@ import matlabcontrol.extensions.MatlabTypeConverter;
 public class MatlabProcessor
 {
 	String script = "";
+	File matlabDirectory = new File( System.getProperty( "user.home" ) + "/project_televic/matlab_files" );
+
 	@PostConstruct
 	public void init()
-		{
+	{
+		loadScript();
+		testFolderAndDatabase();
+	}
+
+	@Schedule( hour = "*", minute = "*/5" )
+	public void testFolderAndDatabase()
+	{
+		System.out.println( "MATLABPROCESSOR: SCANNING FOR NEW FILES" );
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
 		EntityManager em = emf.createEntityManager();
-		
-		List<ProcessedSensorData> result = null;
-		
+
+		List<ProcessedSensorData> result = new ArrayList<>();
+
 		try
 		{
-			TypedQuery<ProcessedSensorData> query = em.createNamedQuery( "ProcessedSensorData.findAll", ProcessedSensorData.class );			
+			TypedQuery<ProcessedSensorData> query = em.createNamedQuery( "ProcessedSensorData.findAll",
+					ProcessedSensorData.class );
 			result = query.getResultList();
 		}
-		catch( Exception e )
+		catch ( Exception e )
 		{
 			System.out.println( "ERROR IN MATLABPROCESSOR(query):" + e.getLocalizedMessage() );
 		}
-		
-		if( result == null || result.size() == 0 )
+
+		ArrayList<String> filesToBeAdded = new ArrayList<>();
+
+		for ( File f : matlabDirectory.listFiles() )
 		{
-			loadScript();
+			if ( !f.isDirectory() )
+			{
+				String fileName = f.getName();
+				String split[] = fileName.split( "\\." );
+				if ( split.length == 2 && split[1].equals( "mat" ) )
+				{
+					boolean exists = false;
+					for ( ProcessedSensorData data : result )
+					{
+						if ( data.getLocation().contains( split[0] ) )
+						{
+							exists = true;
+							break;
+						}
+					}
+					if ( !exists ) filesToBeAdded.add( fileName );
+				}
+			}
+		}
+
+		for ( String s : filesToBeAdded )
+		{
 			try
 			{
-				analyseFile( "test03_track16_speed40_radius125.mat", em );				
+				analyseFile( s, em );
 			}
-			catch( Exception e )
+			catch ( IOException | MatlabConnectionException | MatlabInvocationException e )
 			{
 				System.out.println( "ERROR IN MATLABPROCESSOR(analysis): " + e.getLocalizedMessage() );
 			}
-
 		}
-		
+
 		em.close();
 		emf.close();
 	}
-	
-	private void loadScript( )
+
+	private void loadScript()
 	{
 		try
 		{
@@ -84,19 +121,15 @@ public class MatlabProcessor
 			System.out.println( e.getMessage() );
 		}
 	}
-	
-	private void analyseFile( String name, EntityManager em ) throws MatlabConnectionException, MatlabInvocationException, IOException
+
+	private void analyseFile( String name, EntityManager em )
+			throws MatlabConnectionException, MatlabInvocationException, IOException
 	{
 		MatlabProxyFactory factory = new MatlabProxyFactory();
 		MatlabProxy proxy = factory.getProxy();
 
-		URL url = getClass().getResource( "test03_track16_speed40_radius125.mat" );
-		String path = url.toString().replaceAll( "vfs:", "" );
-		// Linux heeft een path nodig dat begint met een /, windows niet dus dit
-		// is een idiote hack
-		// om het op beide platformen werkend te krijgen
-		if ( System.getProperty( "os.name" ).toLowerCase().contains( "win" ) )
-			path = path.substring( 1, path.length() );
+		String path = matlabDirectory + "/" + name;
+		//System.out.println( path );
 
 		proxy.eval( "load('" + path + "')" );
 		proxy.eval( script );
@@ -122,8 +155,9 @@ public class MatlabProcessor
 
 		try
 		{
-			BufferedWriter writer = new BufferedWriter(
-					new FileWriter( System.getProperty( "user.home" ) + "/test03_track16_speed40_radius125.json" ) );
+			String outputPath = matlabDirectory + "/" + name.split( "\\." )[0] + ".json";
+			
+			BufferedWriter writer = new BufferedWriter( new FileWriter( outputPath ) );
 			writeLine( "{", false, writer );
 			writeLine( writeValue( "year", year ), true, writer );
 			writeLine( writeValue( "month", month ), true, writer );
@@ -143,32 +177,86 @@ public class MatlabProcessor
 			writeLine( "}", false, writer );
 
 			writer.flush();
-			writer.close();
-
-			TrainCoach trainCoach = new TrainCoach();
-			trainCoach.setConstructor( "test" );
-			trainCoach.setName( "test" );
-			trainCoach.setType( "test" );
-			ProcessedSensorData data = new ProcessedSensorData();
-			data.setLocation( System.getProperty( "user.home" ) + "/test03_track16_speed40_radius125.json" );
-			data.setTime( new Date() );
-			data.setTrack( "test" );
-			data.setTrainCoach( trainCoach );
-			
-			EntityTransaction tx = em.getTransaction();
-			
-			tx.begin();
-			em.persist( trainCoach );
-			em.flush();
-			em.persist( data );
-			tx.commit();
+			writer.close();		
+			writeToDatabase( name, em );
 		}
-		
 		catch ( IOException io )
 		{
 			io.printStackTrace();
 		}
 		proxy.disconnect();
+	}
+	
+	private void writeToDatabase( String fileName, EntityManager em  )
+	{
+		//System.out.println( "WRITING TO DB" );
+		String split[] = fileName.split( "\\." );
+		String outputPath = matlabDirectory + "/" + split[0] + ".json";
+		
+		String nameSplit[] = split[0].split( "_" );
+		
+		//for( String s : nameSplit )
+		//	System.out.println( s );
+		
+		List<TrainCoach> traincoachResult = new ArrayList<>();
+		List<Workplace> workplaceResult = new ArrayList<>();
+
+		try
+		{
+			TypedQuery<TrainCoach> query = em.createNamedQuery( "TrainCoach.findByData", TrainCoach.class );
+			query.setParameter( "name", nameSplit[1] );
+			query.setParameter( "type", nameSplit[2] );
+			query.setParameter( "constructor", nameSplit[3] );
+			traincoachResult = query.getResultList();
+			
+			TypedQuery<Workplace> workplaceQuery = em.createNamedQuery( "Workplace.findByData", Workplace.class );
+			workplaceQuery.setParameter( "name", nameSplit[0] );
+			workplaceResult = workplaceQuery.getResultList();
+		}
+		catch ( Exception e )
+		{
+			System.out.println( "ERROR IN MATLABPROCESSOR(query traincoach):" + e.getLocalizedMessage() );
+		}
+		
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		
+		TrainCoach trainCoach;
+		if( traincoachResult.size() == 0)
+		{
+			trainCoach = new TrainCoach();
+			trainCoach.setConductor( nameSplit[1] );
+			trainCoach.setType( nameSplit[2] );
+			trainCoach.setName( nameSplit[3] );
+		}
+		else
+			trainCoach = traincoachResult.get( 0 );
+		
+		Workplace workplace;
+		if( workplaceResult.size() == 0 )
+		{
+			workplace = new Workplace();
+			workplace.setName( nameSplit[0] );
+		}
+		else
+			workplace = workplaceResult.get( 0 );
+		
+		if( workplace.getTraincoaches() != null && !workplace.getTraincoaches().contains( trainCoach ) )
+		{
+			if( workplace.getTraincoaches() != null )
+				workplace.getTraincoaches().add( trainCoach );
+		}
+		
+		ProcessedSensorData data = new ProcessedSensorData();
+		data.setLocation( outputPath );
+		data.setTime( new Date() );
+		data.setTrack( nameSplit[4] );
+		data.setTrainCoach( trainCoach );
+
+		em.persist( trainCoach );
+		em.persist( data );
+		em.persist( workplace );
+		tx.commit();
 	}
 
 	private void writeLine( String line, boolean comma, BufferedWriter writer ) throws IOException

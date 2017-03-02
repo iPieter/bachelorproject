@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="eng"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="templates/main_layout.xhtml">
+
+	<ui:define name="title">Traincoach Manager</ui:define>
+	
+	<f:metadata>
+		<f:viewParam name="workplace_id" value="#{workplaceController.getCurrentWorkplace().id}"/>
+		<f:viewAction action="#{workplaceController.findWorkplaceByWorkplaceId()}"/>
+	</f:metadata>
+
+	<!-- BREADCRUMB -->
+	<ui:define name="breadcrumb">
+		<ol class="breadcrumb breadcrumb_extra">
+			<li><h:link	outcome="index.xhtml"><span class="glyphicon glyphicon-home"></span></h:link></li>
+			<li>
+				<h:link class="active" value="#{workplaceController.getCurrentWorkplace().getName()}" 
+					outcome="workplace.xhtml?id=#{workplaceController.getCurrentWorkplace().getId()}"/>
+			</li>
+		</ol>
+	</ui:define>
+	
+	<!-- MAINVIEW CONTENT -->
+	<ui:define name="mainview_content">
+		<!--MAIN ROW -->
+		<div class="row">
+			<!-- MAIN PANEL-LARGE-LEFT (descr=oplijsten wagons, incl. Actieve & afgewerkte problemen -->
+			<div class="col-sm-6 mainview_panel_large">
+				<div class="row mainview_traincoach">
+					<div class="col-sm-4 mainview_wagon_header">
+						<b>Wagon 1</b>
+					</div>
+					<div class="col-sm-8">
+						<h4>Actieve problemen</h4>
+						<ul>
+							<li>Afwijking accelerometer x-as</li>
+						</ul>
+						<h4>Afgewerkte problemen</h4>
+						<ul>
+							<li>Afwijking accelerometer z-as</li>
+						</ul>
+					</div>
+			    </div>
+			    
+				</div> <!-- END MAIN PANEL-LARGE-LEFT -->
+                    
+                    <div class="col-sm-5">
+                        <div class="row">
+							<div class="col-sm-12 mainview_panel">
+								<div id="map">
+								</div>
+							</div>
+							<div class="col-sm-12 mainview_panel">
+								<div class="mainview_issue row">
+									<div class="col-sm-4 dont-break-out">
+										<b>Onderhoudstechnicus 1 </b>
+									</div>
+		                            <div class="col-sm-8">
+		                                <p>
+											Onderhoud: wagon 1
+		                                </p>
+		                            </div>
+		                        </div>
+		                        <div class="mainview_issue row">
+		                            <b class="col-sm-4 dont-break-out">Onderhoudstechnicus 2 </b>
+		                            <div class="col-sm-8">
+		                                <p>
+											Onderhoud: wagon 3
+		                                </p>
+		                            </div>
+		                        </div>
+								<div class="mainview_issue row">
+		                            <b class="col-sm-4 dont-break-out">Onderhoudstechnicus 3 </b>
+		                            <div class="col-sm-8">
+		                                <p>
+											Onderhoud: wagon 2
+		                                </p>
+		                            </div>
+		                        </div>
+								<div class="mainview_issue row">
+		                            <b class="col-sm-4 dont-break-out">Onderhoudstechnicus 4 </b>
+		                            <div class="col-sm-8">
+		                                <p>
+											<em>Geen toegewezen taken</em>
+		                                </p>
+		                            </div>
+		                        </div>
+							</div>
+						</div>
+					</div>
+				</div> <!-- END MAIN ROW -->
+	
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" type="text/javascript"></script>
+		<script src="js/bootstrap.min.js" type="text/javascript" ></script>
+	    <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
+		<script src="js/underscore-min.js" type="text/javascript"></script>
+	    <script src="js/extra_javascript2.js" type="text/javascript"></script>
+	</ui:define>	
+</ui:composition>
+</html>

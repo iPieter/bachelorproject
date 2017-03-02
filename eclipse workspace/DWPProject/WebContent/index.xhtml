@@ -1,28 +1,66 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html
+<html 
 	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"  
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ui="http://java.sun.com/jsf/facelets">  
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	
+<h:head>
+	<meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link href="css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="css/extra_layout.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="css/leaflet.css" />
+	<title>Televic Managment Home</title>
+</h:head>
+<h:body>
+<div class="container-fluid">
+	<div class="row">
+	
+		<!-- LEFT SIDEBAR -->
+		<div class="col-sm-2 sidebar">
+			
+			<!-- SEARCH INPUT -->
+            <form class="form-group" role="search">
+   				<div class="input-group">
+   					<input type="text" class="form-control" placeholder="Zoek staanplaatsen" name="search_input" id="search_input" autocomplete="off"/>
+   					<div class="input-group-btn">
+   						<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+   					</div>
+   				</div>
+   				<div class="dropdown">
+   					<a class="dropdown-toggle" data-toggle="dropdown" id="search_dropdown"></a>
+   					<ul class="dropdown-menu" id="search_dropdown_list" >
+   					</ul>
+   				</div>
+   			</form> <!-- END SEARCH INPUT -->
+   			
+   			<!-- SIDEBAR CONTENT --> 	
+   			<div class="workplace workplace_active">	
+   			
+   			<!-- STAANPLAATSEN -->	
+			<c:forEach var="workplace" items="#{workplaceController.getAllWorkplaces()}">
+                <h4>
+                	<span class="glyphicon glyphicon-unchecked sidebar_icon"></span>
+                	<h:link value="#{workplace.getName()}" outcome="workplace.xhtml?workplace_id=#{workplace.getId()}"/>
+                </h4>
+   			</c:forEach>
+   			</div> <!-- END SIDEBAR CONTENT -->
+   		</div> <!-- END LEFT SIDEBAR -->
+	
+	<!-- BREADCRUMB -->
+	
+	<!-- MAINVIEW CONTENT -->
+		<div class="jumbotron">
+		  <h1>Hello, User.naam!</h1>
+		  <p>Dag pieter, hoe graag ik aan de huidige actieve user?</p>
+		  <p><a class="btn btn-primary btn-lg" href="#" role="button">I am a pointless button</a></p>
+		</div>
 
-<ui:composition template="templates/main_layout.xhtml">
-	<ui:define name="title">Index Development Pagina</ui:define>
-	<ui:define name="sidebar_content">
-		<div class="traincoach_depot traincoach_depot_active">
-             <h4><span class="glyphicon glyphicon-unchecked"></span> Links</h4>
-             <div class="traincoach traincoach">
-                 <h4><a href="authorisation.xhtml">authorisation.html</a></h4>
-                 <h4><a href="traincoach_depot.xhtml">traincoach_depot.html</a></h4>
-                 <div class="traincoach_data">
-                    <h4><a href="traincoach.xhtml">traincoach.html</a></h4>
-                 	<h4><a href="traincoach_sensor.xhtml">traincoach_sensor.html</a></h4>
-                 </div>
-             </div>
-       </div>
-	</ui:define>
-	<ui:define name="breadcrumb"></ui:define>
-	<ui:define name="mainview_content"></ui:define>	
-</ui:composition>
+	</div> <!-- END MASTER ROW -->
+</div> <!-- END MASTER CONTAINER -->
+</h:body>
 </html>	

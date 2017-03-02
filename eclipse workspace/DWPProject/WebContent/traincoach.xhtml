@@ -1,194 +1,143 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html lang="eng">
-<head>
-	<meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-	<link href="css/bootstrap.min.css" rel="stylesheet"/>
-	<link href="css/extra_layout.css" rel="stylesheet"/>
-	<link rel="stylesheet" href="css/leaflet.css" />
-	<title>Train Manager</title>
-</head>
-<body>
-	<div class="container">
-        <div class="row">
-			<div class="col-sm-2 sidebar">
-                <form class="form-group" role="search">
-    				<div class="input-group">
-    					<input type="text" class="form-control" placeholder="Zoek wagons of plaatsen" name="search_input" id="search_input" autocomplete="off"/>
-    					<div class="input-group-btn">
-    						<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
-    					</div>
-    				</div>
-    				<div class="dropdown">
-    					<a class="dropdown-toggle" data-toggle="dropdown" id="search_dropdown"></a>
-    					<ul class="dropdown-menu" id="search_dropdown_list" >
-    					</ul>
-    				</div>
-    			</form>
-                <div class="staanplaats staanplaats_active">
-                    <h4><span class="glyphicon glyphicon-unchecked"></span> Staanplaats 1</h4>
-                    <div class="wagon wagon_active">
-                        <h4><span class="glyphicon glyphicon-phone"></span> Wagon 1 </h4>
-                        <div class="wagon_data">
-                            <h4><span class="glyphicon glyphicon-alert"></span> Problemen <span class="badge">1</span></h4>
-							<h4><span class="glyphicon glyphicon-dashboard"></span> <a href="traincoach_sensor.xhtml">Sensors</a></h4>
-                        </div>
-                    </div>
-					<div class="wagon">
-                        <h4><span class="glyphicon glyphicon-phone"></span> Wagon 2 </h4>
-                        <div class="wagon_data">
-                            <h4><span class="glyphicon glyphicon-alert"></span> Problemen <span class="badge">3</span></h4>
-                            <h4><span class="glyphicon glyphicon-dashboard"></span> Sensors</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="staanplaats">
-					<h4><span class="glyphicon glyphicon-unchecked"></span> Staanplaats 2</h4>
-                    <div class="wagon">
-                        <h4><span class="glyphicon glyphicon-phone"></span> Wagon 1 </h4>
-                        <div class="wagon_data">
-                            <h4><span class="glyphicon glyphicon-alert"></span> Problemen <span class="badge">5</span></h4>
-                            <h4><span class="glyphicon glyphicon-dashboard"></span> Sensors</h4>
-                        </div>
-                    </div>
-					<div class="wagon">
-                        <h4><span class="glyphicon glyphicon-phone"></span> Wagon 2 </h4>
-                        <div class="wagon_data">
-                            <h4><span class="glyphicon glyphicon-alert"></span> Problemen <span class="badge">6</span></h4>
-                            <h4><span class="glyphicon glyphicon-dashboard"></span> Sensors</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-10 main_view">
-				<div class="row header">
-					<ol class="breadcrumb breadcrumb_extra">
-						<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
-						<li><a href="#">Staanplaats 1 </a></li>
-						<li><a href="#" class="active">wagon 1 </a></li>
-					</ol>
+<html lang="eng" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+<ui:composition template="templates/main_layout.xhtml">
+
+	<ui:define name="title">Traincoach Manager</ui:define>
+
+	<f:metadata>
+		<f:viewParam name="id"
+			value="#{traincoachController.getCurrentTrainCoach().id}" />
+		<f:viewAction action="#{traincoachController.doFindTrainCoachById()}" />
+	</f:metadata>
+
+	<!-- BREADCRUMB -->
+	<ui:define name="breadcrumb">
+		<ol class="breadcrumb breadcrumb_extra">
+			<li>
+				<h:link outcome="index.xhtml">
+					<span class="glyphicon glyphicon-home"></span>
+				</h:link>
+			</li>
+			<li>
+			<h:link class="active"
+					value="#{traincoachController.currentWorkplace.getName()}"
+					outcome="workplace.xhtml?id=#{traincoachController.currentWorkplace.getId()}" />
+			</li>
+			<li>
+			<h:link class="active"
+					value="#{traincoachController.getCurrentTrainCoach().getName()}"
+					outcome="traincoach.xhtml?id=#{traincoachController.getCurrentTrainCoach().getId()}" />
+			</li>
+		</ol>
+	</ui:define>
+
+	<!-- MAINVIEW CONTENT -->
+	<ui:define name="mainview_content">
+		
+		<input type="hidden"
+			value="#{traincoachController.getCurrentTrainCoach().id}"
+			id="current_traincoach" />
+		<div class="row">
+			<div class="col-sm-10 mainview_panel">
+				<div id="graph_options"> 
+					<label class="radio-inline"><input type="radio" name="optradio" id="radio_yaw" />Yaw</label> 
+					<label class="radio-inline"><input type="radio" name="optradio" id="radio_roll" />Roll</label>
 				</div>
-                <div class="row">
-                    <div class="col-sm-10 mainview_panel" id="topleft">
-						<h1>Data wordt geladen...</h1>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-5 mainview_panel">
-						<div class="mainview_issue row">
-							<div class="col-sm-12 text-center issue_bar">
-								<button type="button" name="button" class="btn btn-danger btn-large" data-toggle="modal" data-target="#assignModal">Nieuwe herstelling</button>
-							</div>
-						</div>
-                        <div class="mainview_issue row">
-                            <b class="col-sm-4 dont-break-out">Onderhoudstechnicus 1 </b>
-                            <div class="col-sm-8">
-                                <p>
-                                    Sensors 1 toont een afwijking op z-as
-                                </p>
-                                <p>
-                                    <div class="progress">
-                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
-                                    aria-valuemin="0" aria-valuemax="100" style="width:40%">
-                                    40% Complete
-                                    </div>
-                                    </div>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="mainview_issue row">
-                            <b class="col-sm-4 dont-break-out">Onderhoudstechnicus 2 </b>
-                            <div class="col-sm-8">
-                                <p>
-                                    Sensors 3 toont een afwijking op x-as
-                                </p>
-                                <p>
-                                    <div class="progress">
-                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
-                                    aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                                    100% Complete
-                                    </div>
-                                    </div>
-
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-5 mainview_panel">
-						<div id="map">
-						</div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-	<div id="assignModal" class="modal fade" role="dialog" tabindex="10">
-	  <div class="modal-dialog modal-lg">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        <h4 class="modal-title">Nieuwe herstelling</h4>
-	      </div>
-	      <div class="modal-body">
-	        <form class="form-group" action="/" method="post">
-				<label for="description">Omschrijving probleem:</label>
-				<br/>
-				<textarea name="description" rows="8" cols="40" class="form-control"></textarea>
-				<label for="list_empl">Kies een onderhoudstechnicus:</label>
-				<br/>
-				<br/>
-				<div class="container">
-					<div class="mainview_issue row">
-						<div class="col-sm-1">
-							<div class="checkbox">
-								<label><input type="checkbox" value=""/></label>
-							</div>
-						</div>
-						<div class="col-sm-3">
-						  <b>Onderhoudstechnicus 1</b>
-						</div>
-						<div class="col-sm-6">
-							<p> Huidige taak: <em>Inspecteer onderstel vooraan</em>
-							</p>
-						</div>
-					</div>
-					<div class="mainview_issue row">
-						<div class="col-sm-1">
-							<div class="checkbox">
-								<label><input type="checkbox" value=""/></label>
-							</div>
-						</div>
-						<div class="col-sm-3">
-						  <b>Onderhoudstechnicus 2</b>
-						</div>
-						<div class="col-sm-6">
-							<p> Huidige taak: <em>Geen toegewezen taak</em>
-							</p>
-						</div>
+				<div class="" id="topleft">
+					<h1>Data wordt geladen...</h1>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-5 mainview_panel">
+				<div class="mainview_issue row">
+					<div class="col-sm-12 text-center issue_bar">
+						<button type="button" name="button"
+							class="btn btn-danger btn-large" data-toggle="modal"
+							data-target="#assignModal">Nieuwe herstelling</button>
 					</div>
 				</div>
-				<button type="button" name="button" class="btn btn-default">Submit</button>
-	        </form>
-      	</div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Sluit</button>
-	      </div>
-	    </div>
+				<c:forEach var="mechanic" items="#{traincoachController.getMechanics()}">
+				<div class="mainview_issue row">
+					<b class="col-sm-4 dont-break-out">#{mechanic.getName()}</b>
+					<div class="col-sm-8">
+						<p>Sensors 1 toont een afwijking op z-as</p>
+						<p>
+							<div class="progress">
+								<div class="progress-bar progress-bar-success"
+									role="progressbar" aria-valuenow="40" aria-valuemin="0"
+									aria-valuemax="100" style="width: 40%">40% Complete</div>
+							</div>
+						</p>
+					</div>
+				</div>
+				</c:forEach>
+			</div>
+			<div class="col-sm-5 mainview_panel">
+				<div id="map"></div>
+			</div>
+		</div>
 
-	  </div>
-	</div>
+		<div id="assignModal" class="modal fade" role="dialog" tabindex="10">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Nieuwe herstelling</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-group" action="/" method="post">
+							<label for="description">Omschrijving probleem:</label> <br />
+							<textarea name="description" rows="8" cols="40"
+								class="form-control"></textarea>
+							<label for="list_empl">Kies een onderhoudstechnicus:</label> <br />
+							<br />
+							<div class="container">
+								<c:forEach var="mechanic" items="#{traincoachController.getMechanics()}">
+									<div class="mainview_issue row">
+										<div class="col-sm-1">
+											<div class="checkbox">
+												<label><input type="checkbox" value="" /></label>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<b>#{mechanic.getName()}</b>
+										</div>
+										<div class="col-sm-6">
+											<p>
+												Huidige taak: <em>Inspecteer onderstel vooraan</em>
+											</p>
+										</div>
+									</div>
+								</c:forEach>
+							</div>
+							<button type="button" name="button" class="btn btn-default">Submit</button>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Sluit</button>
+					</div>
+				</div>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" type="text/javascript"></script>
-	<script src="js/bootstrap.min.js" type="text/javascript" ></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
-	<script src="js/underscore-min.js" type="text/javascript"></script>
-    <script src="js/extra_javascript.js" type="text/javascript"></script>
-</body>
+			</div>
+		</div>
+
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"
+			type="text/javascript"></script>
+		<script src="js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="https://code.highcharts.com/highcharts.js"></script>
+		<script src="https://code.highcharts.com/modules/exporting.js"></script>
+		<script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
+		<script src="js/underscore-min.js" type="text/javascript"></script>
+		<script src="js/extra_javascript.js" type="text/javascript"></script>
+	</ui:define>
+</ui:composition>
 </html>

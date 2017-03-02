@@ -28,7 +28,7 @@ eclipse workspace/EJBProject/ejbModule/be/kuleuven/cs/gent/projectweek/matlab/te
 # deployed package files #
 
 *.DEPLOYED
-
+eclipse workspace/.recommenders
 eclipse workspace/.metadata/
 eclipse workspace/RemoteSystemsTempFiles/.project
 management/~$dagboek.xlsx
@@ -122,11 +122,6 @@ eclipse workspace/.recommenders/index/http___download_eclipse_org_recommenders_m
 eclipse workspace/.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/segments.gen
 
 eclipse workspace/.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/write.lock
-<<<<<<< Updated upstream
 eclipse workspace/.recommenders/*
-=======
-
-eclipse workspace/.idea/eclipse workspace.iml
->>>>>>> Stashed changes
 
 eclipse workspace/EJBProject/.externalToolBuilders/org.hibernate.eclipse.console.hibernateBuilder.launch
