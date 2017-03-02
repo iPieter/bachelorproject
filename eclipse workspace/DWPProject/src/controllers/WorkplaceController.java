@@ -1,8 +1,7 @@
 package controllers;
 
 import java.util.List;
-
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -11,7 +10,7 @@ import be.kuleuven.cs.gent.projectweek.services.InternalDatafetchService;
 import java.io.Serializable;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class WorkplaceController implements Serializable
 {
 	private static final long serialVersionUID = 1L;
