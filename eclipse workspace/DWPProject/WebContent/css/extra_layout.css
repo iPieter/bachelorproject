@@ -131,6 +131,20 @@ body, html
     overflow: hidden;
 }
 
+.mainview_traincoach_panelheader
+{
+    margin-top:auto;
+    margin-bottom:auto;    
+    border-bottom: 2px solid #2c3e50;
+    border-top: 1px solid #2c3e50;
+    background-color: #344951;
+    color: #ecf0f1;
+}
+
+.mainview_traincoach_panelheader h4
+{
+	margin-left: 30px;
+}
 .mainview_traincoach_header
 {
     margin-top: 1vh;

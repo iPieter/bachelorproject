@@ -11,8 +11,8 @@
 
 	<f:metadata>
 		<f:viewParam name="id"
-			value="#{traincoachController.currentTrainCoach.id}" />
-		<f:viewAction action="#{traincoachController.findTrainCoachById()}" />
+			value="#{workplaceController.currentTrainCoach.id}" />
+		<f:viewAction action="#{workplaceController.findTrainCoachByTraincoachId()}" />
 	</f:metadata>
 	
 	<ui:define name="title">Traincoach Manager</ui:define>
@@ -27,51 +27,22 @@
 			</li>
 			<li>
 			<h:link class="active"
-					value="#{traincoachController.currentWorkplace.name}"
-					outcome="workplace.xhtml?workplace_id=#{traincoachController.currentWorkplace.id}" />
+					value="#{workplaceController.currentWorkplace.name}"
+					outcome="workplace.xhtml?workplace_id=#{workplaceController.currentWorkplace.id}" />
 			</li>
 			<li>
 			<h:link class="active"
-					value="#{traincoachController.getCurrentTrainCoach().name}"
-					outcome="traincoach.xhtml?id=#{traincoachController.currentTrainCoach.id}" />
+					value="#{workplaceController.currentTrainCoach.name}"
+					outcome="traincoach.xhtml?id=#{workplaceController.currentTrainCoach.id}" />
 			</li>
 		</ol>
-	</ui:define>
-	
-	<!-- SIDEBAR CONTENT -->
-	<ui:define name="sidebar_content">
-		<div class="workplace workplace_active">	
-   			
-   			<!-- GESELECTEERDE STAANPLAATS -->	
-   			<c:set var="workplace" value="#{traincoachController.currentWorkplace}"/>
-            <h4>
-            	<span class="glyphicon glyphicon-unchecked sidebar_icon"></span>
-            	<h:link value="#{workplace.name}" 
-            			outcome="workplace.xhtml?workplace_id=#{workplace.id}"/>
-            </h4>
-            
-	       	<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
-	       	<c:forEach var="traincoach" items="#{workplace.traincoaches}">
-	            <div class="traincoach traincoach_active">
-	                <h4 class="sidebar_text_traincoach">
-	                	<span class="glyphicon glyphicon-unchecked sidebar_icon_traincoach"></span>
-	                	<h:link value="#{traincoach.type} - #{traincoach.name}" outcome="traincoach.xhtml?id=#{traincoach.getId()}"/>
-	                </h4>
-	                <!-- METADATA PER WAGON -->
-	                <div class="traincoach_data">
-	                    <h5><span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span> Problemen <span class="badge">1</span></h5>
-	                    <h5><span class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span> Sensoren</h5>
-	                </div>
-	            </div>
-			</c:forEach>
-		</div>
 	</ui:define>
 
 	<!-- MAINVIEW CONTENT -->
 	<ui:define name="mainview_content">
 		
 		<input type="hidden"
-			value="#{traincoachController.getCurrentTrainCoach().id}"
+			value="#{workplaceController.currentTrainCoach.id}"
 			id="current_traincoach" />
 		<div class="row">
 			<div class="col-sm-10 mainview_panel">
@@ -93,9 +64,9 @@
 							data-target="#assignModal">Nieuwe herstelling</button>
 					</div>
 				</div>
-				<c:forEach var="mechanic" items="#{traincoachController.getMechanics()}">
+				<c:forEach var="mechanic" items="#{workplaceController.getMechanics()}">
 				<div class="mainview_issue row">
-					<b class="col-sm-4 dont-break-out">#{mechanic.getName()}</b>
+					<b class="col-sm-4 dont-break-out">#{mechanic.name}</b>
 					<div class="col-sm-8">
 						<p>Sensors 1 toont een afwijking op z-as</p>
 						<p>
@@ -129,7 +100,7 @@
 							<label for="list_empl">Kies een onderhoudstechnicus:</label> <br />
 							<br />
 							<div class="container">
-								<c:forEach var="mechanic" items="#{traincoachController.getMechanics()}">
+								<c:forEach var="mechanic" items="#{workplaceController.mechanics}">
 									<div class="mainview_issue row">
 										<div class="col-sm-1">
 											<div class="checkbox">
@@ -137,7 +108,7 @@
 											</div>
 										</div>
 										<div class="col-sm-3">
-											<b>#{mechanic.getName()}</b>
+											<b>#{mechanic.name}</b>
 										</div>
 										<div class="col-sm-6">
 											<p>

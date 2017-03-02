@@ -28,56 +28,49 @@
 		</ol>
 	</ui:define>
 	
-	<!-- SIDEBAR CONTENT -->
-	<ui:define name="sidebar_content">
-		<div class="workplace workplace_active">	
-   			
-   			<!-- GESELECTEERDE STAANPLAATS -->	
-   			<c:set var="workplace" value="#{workplaceController.currentWorkplace}"/>
-            <h4>
-            	<span class="glyphicon glyphicon-unchecked sidebar_icon"></span>
-            	<h:link value="#{workplace.name}" 
-            			outcome="workplace.xhtml?workplace_id=#{workplace.id}"/>
-            </h4>
-            
-	       	<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
-	       	<c:forEach var="traincoach" items="#{workplace.traincoaches}">
-	            <div class="traincoach traincoach_active">
-	                <h4 class="sidebar_text_traincoach">
-	                	<span class="glyphicon glyphicon-unchecked sidebar_icon_traincoach"></span>
-	                	<h:link value="#{traincoach.type} - #{traincoach.name}" outcome="traincoach.xhtml?id=#{traincoach.getId()}"/>
-	                </h4>
-	                <!-- METADATA PER WAGON -->
-	                <div class="traincoach_data">
-	                    <h5><span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span> Problemen <span class="badge">1</span></h5>
-	                    <h5><span class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span> Sensoren</h5>
-	                </div>
-	            </div>
-			</c:forEach>
-		</div>
-	</ui:define>
-	
 	<!-- MAINVIEW CONTENT -->
 	<ui:define name="mainview_content">
 		<!--MAIN ROW -->
 		<div class="row">
 			<!-- MAIN PANEL-LARGE-LEFT (descr=oplijsten wagons, incl. Actieve & afgewerkte problemen -->
 			<div class="col-sm-6 mainview_panel_large">
+				
+				<!-- WAGONS OVERZICHT HEADER -->
 				<div class="row mainview_traincoach">
-					<div class="col-sm-4 mainview_wagon_header">
-						<b>Wagon 1</b>
+					<div class="row mainview_traincoach_panelheader">
+						 <h4>Actieve Wagons</h4>
 					</div>
-					<div class="col-sm-8">
-						<h4>Actieve problemen</h4>
-						<ul>
-							<li>Afwijking accelerometer x-as</li>
-						</ul>
-						<h4>Afgewerkte problemen</h4>
-						<ul>
-							<li>Afwijking accelerometer z-as</li>
-						</ul>
-					</div>
-			    </div>
+				</div>
+				
+				<!-- WAGONS OVERZICHT -->
+				<c:set var="workplace" value="#{workplaceController.currentWorkplace}"/>
+				<c:forEach var="traincoach" items="#{workplace.traincoaches}">
+					<!-- WAGON OVERZICHT -->
+					<div class="row mainview_traincoach">
+						<div class="col-sm-4 mainview_wagon_header">
+							<h3>
+								<h:link value="#{traincoach.type} - #{traincoach.name}" 
+										outcome="traincoach.xhtml?id=#{traincoach.getId()}"/>
+							</h3>
+						</div>
+						<div class="col-sm-8">
+							<h4>Actieve problemen</h4>
+							<ul>
+								<c:forEach var="problem" 
+										   items="#{workplaceController.findActiveTraincoachProblemsById(traincoach.id)}">
+									<li><h:outputText value="#{problem}"></h:outputText></li>
+								</c:forEach>
+							</ul>
+							<h4>Afgewerkte problemen</h4>
+							<ul>
+								<c:forEach var="problem" 
+										   items="#{workplaceController.findSolvedTraincoachProblemsById(traincoach.id)}">
+									<li><h:outputText value="#{problem}"></h:outputText></li>
+								</c:forEach>
+							</ul>
+						</div>
+				    </div> <!-- END WAGON OVERZICHT -->
+			    </c:forEach> <!-- END WAGONS OVERZICHT -->
 			    
 				</div> <!-- END MAIN PANEL-LARGE-LEFT -->
                     
