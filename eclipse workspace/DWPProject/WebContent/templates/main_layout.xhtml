@@ -17,8 +17,8 @@
 	<link rel="stylesheet" href="css/leaflet.css" />
 	<title><ui:insert name="title">Insert title here</ui:insert></title>
 </h:head>
-<h:body>
 
+<h:body>	
 <div class="container-fluid">
 	<div class="row">
 	
@@ -41,31 +41,8 @@
    			</form> <!-- END SEARCH INPUT -->
    			
    			<!-- SIDEBAR CONTENT --> 	
-   			<div class="workplace workplace_active">	
-   			
-   			<!-- GESELECTEERDE STAANPLAATS -->	
-   			<c:set var="workplace" value="#{workplaceController.currentWorkplace}"/>
-            <h4>
-            	<span class="glyphicon glyphicon-unchecked sidebar_icon"></span>
-            	<h:link value="#{workplace.name}" 
-            			outcome="workplace.xhtml?workplace_id=#{workplace.id}"/>
-            </h4>
-            
-	       	<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
-	       	<c:forEach var="traincoach" items="#{workplace.traincoaches}">
-	            <div class="traincoach traincoach_active">
-	                <h4 class="sidebar_text_traincoach">
-	                	<span class="glyphicon glyphicon-unchecked sidebar_icon_traincoach"></span>
-	                	<h:link value="#{traincoach.type} - #{traincoach.name}" outcome="traincoach.xhtml?id=#{traincoach.getId()}"/>
-	                </h4>
-	                <!-- METADATA PER WAGON -->
-	                <div class="traincoach_data">
-	                    <h5><span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span> Problemen <span class="badge">1</span></h5>
-	                    <h5><span class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span> Sensoren</h5>
-	                </div>
-	            </div>
-	           </c:forEach>
-   			</div> <!-- END SIDEBAR CONTENT -->
+   			<ui:insert name="sidebar_content">	
+   			</ui:insert> 
    		</div> <!-- END LEFT SIDEBAR -->
 
                 

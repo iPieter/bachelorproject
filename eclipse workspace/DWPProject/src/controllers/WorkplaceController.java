@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -12,7 +13,7 @@ import be.kuleuven.cs.gent.projectweek.services.InternalDatafetchService;
 import java.io.Serializable;
 
 @Named
-@ConversationScoped
+@RequestScoped
 public class WorkplaceController implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -22,35 +23,10 @@ public class WorkplaceController implements Serializable
 
 	private Workplace currentWorkplace = new Workplace();
 	
-	private int workplaceId = -1;
-	
-	public List<Workplace> getAllWorkplaces()
+	public void findWorkplaceByWorkplaceId()
 	{
-		return internalDatafetchService.getAllWorkplaces();
-	}
-	
-	@PostConstruct
-	public void initialiseWorkplace()
-	{
-		if (this.workplaceId >= 0)
-		{
-			this.currentWorkplace = internalDatafetchService.findWorkplaceByWorkplaceId(workplaceId);
-			
-			System.out.println(currentWorkplace.getName());
-		}
-		
-		//currentWorkplace = internalDatafetchService.findWorkplaceByWorkplaceId( currentWorkplace.getId() );
-		//System.out.println("ID:"+currentWorkplace.getId());
-	}
-	
-	public int getWorkplaceId()
-	{
-		return this.workplaceId;
-	}
-	
-	public void setWorkplaceId(int workplaceId)
-	{
-		this.workplaceId = workplaceId;
+		currentWorkplace = internalDatafetchService.findWorkplaceByWorkplaceId( currentWorkplace.getId() );
+		System.out.println("ID:"+currentWorkplace.getId());
 	}
 
 	// GETTERS & SETTERS
@@ -58,5 +34,9 @@ public class WorkplaceController implements Serializable
 	{
 		return currentWorkplace;
 	}
-
+	
+	public List<Workplace> getAllWorkplaces()
+	{
+		return internalDatafetchService.getAllWorkplaces();
+	}
 }

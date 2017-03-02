@@ -22,6 +22,7 @@ public class TraincoachController implements Serializable
 
 	@Inject
 	private InternalDatafetchService internalDatafetchService;
+	
 	private TrainCoach currentTrainCoach = new TrainCoach();
 	private Workplace currentWorkplace = new Workplace();
 	private List<User> mechanics = new ArrayList<User>();
@@ -31,7 +32,7 @@ public class TraincoachController implements Serializable
 		return internalDatafetchService.getAllTraincoaches();
 	}
 
-	public void doFindTrainCoachById()
+	public void findTrainCoachById()
 	{
 		currentTrainCoach = internalDatafetchService.findTrainCoachByTraincoachId( currentTrainCoach.getId() );
 		List<Workplace> result = internalDatafetchService.findWorkplaceByTraincoachID( currentTrainCoach.getId() );

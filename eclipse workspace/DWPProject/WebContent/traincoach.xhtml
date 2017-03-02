@@ -9,13 +9,13 @@
 
 <ui:composition template="templates/main_layout.xhtml">
 
-	<ui:define name="title">Traincoach Manager</ui:define>
-
 	<f:metadata>
 		<f:viewParam name="id"
-			value="#{traincoachController.getCurrentTrainCoach().id}" />
-		<f:viewAction action="#{traincoachController.doFindTrainCoachById()}" />
+			value="#{traincoachController.currentTrainCoach.id}" />
+		<f:viewAction action="#{traincoachController.findTrainCoachById()}" />
 	</f:metadata>
+	
+	<ui:define name="title">Traincoach Manager</ui:define>
 
 	<!-- BREADCRUMB -->
 	<ui:define name="breadcrumb">
@@ -27,15 +27,44 @@
 			</li>
 			<li>
 			<h:link class="active"
-					value="#{traincoachController.currentWorkplace.getName()}"
-					outcome="workplace.xhtml?id=#{traincoachController.currentWorkplace.getId()}" />
+					value="#{traincoachController.currentWorkplace.name}"
+					outcome="workplace.xhtml?workplace_id=#{traincoachController.currentWorkplace.id}" />
 			</li>
 			<li>
 			<h:link class="active"
-					value="#{traincoachController.getCurrentTrainCoach().getName()}"
-					outcome="traincoach.xhtml?id=#{traincoachController.getCurrentTrainCoach().getId()}" />
+					value="#{traincoachController.getCurrentTrainCoach().name}"
+					outcome="traincoach.xhtml?id=#{traincoachController.currentTrainCoach.id}" />
 			</li>
 		</ol>
+	</ui:define>
+	
+	<!-- SIDEBAR CONTENT -->
+	<ui:define name="sidebar_content">
+		<div class="workplace workplace_active">	
+   			
+   			<!-- GESELECTEERDE STAANPLAATS -->	
+   			<c:set var="workplace" value="#{traincoachController.currentWorkplace}"/>
+            <h4>
+            	<span class="glyphicon glyphicon-unchecked sidebar_icon"></span>
+            	<h:link value="#{workplace.name}" 
+            			outcome="workplace.xhtml?workplace_id=#{workplace.id}"/>
+            </h4>
+            
+	       	<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
+	       	<c:forEach var="traincoach" items="#{workplace.traincoaches}">
+	            <div class="traincoach traincoach_active">
+	                <h4 class="sidebar_text_traincoach">
+	                	<span class="glyphicon glyphicon-unchecked sidebar_icon_traincoach"></span>
+	                	<h:link value="#{traincoach.type} - #{traincoach.name}" outcome="traincoach.xhtml?id=#{traincoach.getId()}"/>
+	                </h4>
+	                <!-- METADATA PER WAGON -->
+	                <div class="traincoach_data">
+	                    <h5><span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span> Problemen <span class="badge">1</span></h5>
+	                    <h5><span class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span> Sensoren</h5>
+	                </div>
+	            </div>
+			</c:forEach>
+		</div>
 	</ui:define>
 
 	<!-- MAINVIEW CONTENT -->

@@ -45,7 +45,7 @@
 			<c:forEach var="workplace" items="#{workplaceController.getAllWorkplaces()}">
                 <h4>
                 	<span class="glyphicon glyphicon-unchecked sidebar_icon"></span>
-                	<h:link value="#{workplace.getName()}" outcome="workplace.xhtml?workplace_id=#{workplace.getId()}"/>
+                	<h:link value="#{workplace.name}" outcome="workplace.xhtml?workplace_id=#{workplace.id}"/>
                 </h4>
    			</c:forEach>
    			</div> <!-- END SIDEBAR CONTENT -->
