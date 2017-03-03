@@ -3,7 +3,7 @@ package controllers;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -12,7 +12,7 @@ import be.kuleuven.cs.gent.projectweek.model.UserRole;
 import be.kuleuven.cs.gent.projectweek.services.UserService;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class AuthenticationController implements Serializable
 {
 
@@ -26,10 +26,10 @@ public class AuthenticationController implements Serializable
 	private UserService userService; 
 	
 	@NotNull
-	private String email;
+	private String email = "";
 	
 	@NotNull @Password
-	private String password;
+	private String password = "";
 	
 	public String doLogin()
 	{
@@ -44,12 +44,20 @@ public class AuthenticationController implements Serializable
 	
 	public boolean hasAccess(UserRole ur)
 	{
+
 		return userService.hasCurrentUserRequiredRole(ur);
 	}
 	
 	public boolean hasOperatorAccess()
 	{
+		System.out.println("op.access: " + UserRole.OPERATOR);
 		return hasAccess(UserRole.OPERATOR);
+	}
+
+	public boolean hasNoOperatorAccess()
+	{
+		System.out.println("!op.access: " + UserRole.OPERATOR);
+		return !hasAccess(UserRole.OPERATOR);
 	}
 	
 	public boolean hasMechanicAccess()
