@@ -64,11 +64,11 @@
 							data-target="#assignModal">Nieuwe herstelling</button>
 					</div>
 				</div>
-				<c:forEach var="mechanic" items="#{workplaceController.getMechanics()}">
+				<c:forEach var="mechanic" items="#{workplaceController.mechanics}">
 				<div class="mainview_issue row">
 					<b class="col-sm-4 dont-break-out">#{mechanic.name}</b>
 					<div class="col-sm-8">
-						<p>Sensors 1 toont een afwijking op z-as</p>
+						<h:outputText value="#{workplaceController.findActiveIssuesByMechanicId(mechanic.id)}"></h:outputText>
 						<p>
 							<div class="progress">
 								<div class="progress-bar progress-bar-success"

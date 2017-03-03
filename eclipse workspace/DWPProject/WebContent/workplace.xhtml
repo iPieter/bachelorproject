@@ -72,50 +72,31 @@
 				    </div> <!-- END WAGON OVERZICHT -->
 			    </c:forEach> <!-- END WAGONS OVERZICHT -->
 			    
-				</div> <!-- END MAIN PANEL-LARGE-LEFT -->
+			</div> <!-- END MAIN PANEL-LARGE-LEFT -->
                     
-                    <div class="col-sm-5">
+                    <div class="col-sm-5"> <!-- TODO -->
                         <div class="row">
 							<div class="col-sm-12 mainview_panel">
 								<div id="map">
 								</div>
 							</div>
+							
+							<!-- OVERZICHT TECHNICI -->
 							<div class="col-sm-12 mainview_panel">
+								<c:forEach var="mechanic" items="#{workplaceController.mechanics}">
+								<!-- TECHNICUS -->
 								<div class="mainview_issue row">
 									<div class="col-sm-4 dont-break-out">
-										<b>Onderhoudstechnicus 1 </b>
+										<b>#{mechanic.name}</b>
 									</div>
 		                            <div class="col-sm-8">
 		                                <p>
 											Onderhoud: wagon 1
 		                                </p>
 		                            </div>
-		                        </div>
-		                        <div class="mainview_issue row">
-		                            <b class="col-sm-4 dont-break-out">Onderhoudstechnicus 2 </b>
-		                            <div class="col-sm-8">
-		                                <p>
-											Onderhoud: wagon 3
-		                                </p>
-		                            </div>
-		                        </div>
-								<div class="mainview_issue row">
-		                            <b class="col-sm-4 dont-break-out">Onderhoudstechnicus 3 </b>
-		                            <div class="col-sm-8">
-		                                <p>
-											Onderhoud: wagon 2
-		                                </p>
-		                            </div>
-		                        </div>
-								<div class="mainview_issue row">
-		                            <b class="col-sm-4 dont-break-out">Onderhoudstechnicus 4 </b>
-		                            <div class="col-sm-8">
-		                                <p>
-											<em>Geen toegewezen taken</em>
-		                                </p>
-		                            </div>
-		                        </div>
-							</div>
+		                        </div> <!-- END TECHNICUS -->
+		                        </c:forEach>
+							</div> <!-- END OVERZICHT TECHNICI -->
 						</div>
 					</div>
 				</div> <!-- END MAIN ROW -->

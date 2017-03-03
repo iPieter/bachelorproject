@@ -8,6 +8,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import be.kuleuven.cs.gent.projectweek.model.Issue;
 import be.kuleuven.cs.gent.projectweek.model.TrainCoach;
 import be.kuleuven.cs.gent.projectweek.model.User;
 import be.kuleuven.cs.gent.projectweek.model.Workplace;
@@ -53,6 +54,13 @@ public class WorkplaceController implements Serializable
 	}
 	
 	public List<String> findSolvedTraincoachProblemsById( int traincoachId){
+		//TODO EJB model side!
+		List<String> result=new ArrayList<>();
+		result.add("Solved Problemmethod TODO in model");
+		return result;
+	}
+	
+	public List<String> findActiveIssuesByMechanicId(int mechanicId){
 		//TODO EJB model side!
 		List<String> result=new ArrayList<>();
 		result.add("Solved Problemmethod TODO in model");
