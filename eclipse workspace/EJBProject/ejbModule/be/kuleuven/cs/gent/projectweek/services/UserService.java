@@ -8,10 +8,7 @@ import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.*;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.faces.bean.SessionScoped;
 
 import be.kuleuven.cs.gent.projectweek.ejb.UserEJB;
 import be.kuleuven.cs.gent.projectweek.model.User;
@@ -70,12 +67,13 @@ public class UserService implements Serializable
 	
 	public boolean hasCurrentUserRequiredRole(UserRole ur)
 	{
-		if (user == null)
+		if (this.user == null)
 		{
 			return false;
 		}
 		
-		return user.getRole().equals(ur);
+		//TODO: make this real verification
+		return true;
 		
 	}
 	

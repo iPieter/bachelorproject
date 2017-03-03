@@ -10,6 +10,13 @@
 
 <h:head>
 	<meta charset="utf-8"/>
+	
+	<ui:define name="description">
+    	<ui:fragment rendered="#{!authenticationController.hasOperatorAccess()}">
+			<meta http-equiv="refresh" content="1; url=login.xhtml"/>
+    	</ui:fragment>
+	</ui:define>
+	
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<link href="css/bootstrap.min.css" rel="stylesheet"/>
@@ -18,7 +25,7 @@
 	<title><ui:insert name="title">Insert title here</ui:insert></title>
 </h:head>
 
-<h:body>	
+<h:body rendered="#{authenticationController.hasOperatorAccess()}">	
 <div class="container-fluid">
 	<div class="row">
 	
