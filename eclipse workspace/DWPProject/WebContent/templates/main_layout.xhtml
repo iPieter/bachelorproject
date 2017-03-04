@@ -11,11 +11,9 @@
 <h:head>
 	<meta charset="utf-8"/>
 	
-	<ui:define name="description">
     	<ui:fragment rendered="#{!authenticationController.hasOperatorAccess()}">
 			<meta http-equiv="refresh" content="1; url=login.xhtml"/>
     	</ui:fragment>
-	</ui:define>
 	
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -98,5 +96,16 @@
          
       </div> <!-- END MASTER ROW -->
 	</div> <!-- END MASTER CONTAINER -->
+</h:body>
+
+<h:body rendered="#{!authenticationController.hasOperatorAccess()}">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-10 col-sm-offset-1">
+				<h1>You're not authorized for this page!</h1>
+				<h2>Maybe you could use the <a href="login.xhtml">login page</a>.</h2>
+			</div>
+		</div>
+	</div>
 </h:body>
 </html>
