@@ -43,25 +43,34 @@ public class UserService implements Serializable
 	@PostConstruct
 	public void init()
 	{
-		User u = new User();
 		
-		u.setName("John Doe");
-		u.setEmail("john" + (int) (Math.random()*100) + "@test.be");
-		u.setLastLogin(new Date());
-		u.setSalt(salt(User.SALT_LENGTH));
-		try
-		{
-			u.setPass(generateHash("password123", u.getSalt()));
-		} catch (Exception e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		//TODO: generate a bunch of users
+		if (userEJB.findAllUsers().size() == 0) {
+			for (int i = 0; i < 10; i++)
+			{
+				User u = new User();
+				
+				u.setName("John Doe");
+				u.setEmail("john" + (int) (Math.random()*100) + "@test.be");
+				u.setLastLogin(new Date());
+				u.setSalt(salt(User.SALT_LENGTH));
+				try
+				{
+					u.setPass(generateHash("password123", u.getSalt()));
+				} catch (Exception e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				u.setRole(Math.random() > 0.75 ? UserRole.OPERATOR : UserRole.MECHANIC);
+				
+				userEJB.createUser(u);
+				
+				System.out.println("Saved user ..." + u.getEmail());
+			}
+			
 		}
-		u.setRole(UserRole.OPERATOR);
 		
-		userEJB.createUser(u);
-		
-		System.out.println("Saved user ..." + u.getEmail());
 	}
 	
 	public boolean hasCurrentUserRequiredRole(UserRole ur)

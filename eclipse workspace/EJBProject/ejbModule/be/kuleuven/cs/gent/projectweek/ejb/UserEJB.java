@@ -2,6 +2,7 @@ package be.kuleuven.cs.gent.projectweek.ejb;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -32,16 +33,35 @@ public class UserEJB
 		emf.close();
 	}
 	
+	/*
+	 * This function returns all users in the database. If there are none, 
+	 * an empty List object is returned.
+	 * To provide at least some security, the results are limited to 20.
+	 */
+	public List<User> findAllUsers()
+	{
+		EntityManagerFactory emf =  Persistence.createEntityManagerFactory("EJBProject");
+		EntityManager em = emf.createEntityManager();
+		
+		TypedQuery<User> q = em.createNamedQuery(User.FIND_ALL, User.class);
+				
+		q.setMaxResults(20);
+		
+		List<User> results = q.getResultList();
+		
+		em.close();
+		emf.close();
+		
+		return results;
+	}
 	
 	/*
-	 * This function finds the user by it's email adress and returns it as a 
+	 * This function finds the user by it's email address and returns it as a 
 	 * User object. If no user is found, it will return null.
 	 */
 	public User findUserByEmail(String email)
 	{
 		
-		System.out.println("Finding email: " + email);
-
 		EntityManagerFactory emf =  Persistence.createEntityManagerFactory("EJBProject");
 		EntityManager em = emf.createEntityManager();
 		
