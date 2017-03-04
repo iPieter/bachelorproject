@@ -11,6 +11,7 @@
 <h:head>
 	<meta charset="utf-8"/>
 	
+		<!-- LOGIN REDIRECT -->
     	<ui:fragment rendered="#{!authenticationController.hasOperatorAccess()}">
 			<meta http-equiv="refresh" content="1; url=login.xhtml"/>
     	</ui:fragment>
@@ -23,6 +24,7 @@
 	<title><ui:insert name="title">Insert title here</ui:insert></title>
 </h:head>
 
+<!-- Renders when logged in -->
 <h:body rendered="#{authenticationController.hasOperatorAccess()}">	
 <div class="container-fluid">
 	<div class="row">
@@ -98,6 +100,7 @@
 	</div> <!-- END MASTER CONTAINER -->
 </h:body>
 
+<!-- Renders when not logged in and redirect doesnt' work -->
 <h:body rendered="#{!authenticationController.hasOperatorAccess()}">
 	<div class="container-fluid">
 		<div class="row">
