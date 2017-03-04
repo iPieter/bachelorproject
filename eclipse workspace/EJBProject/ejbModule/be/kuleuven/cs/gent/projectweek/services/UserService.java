@@ -52,7 +52,6 @@ public class UserService implements Serializable
 		try
 		{
 			u.setPass(generateHash("password123", u.getSalt()));
-			System.out.println("pass hash: " + u.getPass().toString());
 		} catch (Exception e)
 		{
 			// TODO Auto-generated catch block
@@ -116,6 +115,14 @@ public class UserService implements Serializable
 		}
 		
 		return false;
+	}
+	
+	/*
+	 * Simple method to remove the user object, if there's one. This will result in a logout.
+	 */
+	public void tryLogout()
+	{
+		this.user = null;
 	}
 	
 	/*

@@ -70,6 +70,11 @@ public class AuthenticationController implements Serializable
 		return hasAccess(UserRole.ADMIN);
 	}
 	
+	public void logout()
+	{
+		userService.tryLogout();
+	}
+	
 	public void setEmail(String email)
 	{
 		this.email = email;

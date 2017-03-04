@@ -29,11 +29,13 @@
           
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Login</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Help</a></li>
-          </ul>
+        	<h:form>
+          		<ul class="nav navbar-nav">
+            		<li class="active"><a href="#">Login</a></li>
+            		<li><h:commandLink action="#{authenticationController.logout()}">Log out</h:commandLink></li>
+            		<li><a href="#contact">Help</a></li>
+                </ul>
+            </h:form>
         </div><!--/.nav-collapse -->
       </div>
     </nav> <!-- END FIXED NAVBAR TOP -->
