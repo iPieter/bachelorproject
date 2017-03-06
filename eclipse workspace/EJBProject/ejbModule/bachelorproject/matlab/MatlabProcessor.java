@@ -38,7 +38,7 @@ import matlabcontrol.extensions.MatlabTypeConverter;
  *  <p> 
  * 	We assume that the .mat files dropped in the above specified folder have a certain filestructure and name.
  *  The name should follow the following format: 
- *  <code><name workplace>_<name constructor>_<name type>_<name>_<name track>.mat</code>
+ *  <code>*name workplace*_*name constructor*_*name type*_*name*_*name track*.mat</code><br>
  *	Where:
  * <ul>
  *		<li>Name workplace: the current position of the traincoach where it needs to be inspected</li>
@@ -47,7 +47,7 @@ import matlabcontrol.extensions.MatlabTypeConverter;
  *	 	<li>Name: A unique identifier for this specific traincoach</li>
  *	 	<li>Name track: the start and destination of the ride, seperated by a "-" </li>
  *	</ul>
- *  Concrete example: GENTSP_BOMBARDIER_M7_78558_Oostende-GentSP.mat
+ *  Concrete example: GENTSP_BOMBARDIER_M7_78558_Oostende-GentSP.mat<br>
  *  After the data is processed this class will produce a file with the following data:
  *  <ul>
  *  	<li>The time(yy-mm-dd:hh-mm) of the trip</li>
