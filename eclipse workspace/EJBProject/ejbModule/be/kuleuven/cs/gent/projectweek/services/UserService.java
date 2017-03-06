@@ -73,6 +73,11 @@ public class UserService implements Serializable
 		
 	}
 	
+	/*
+	 * If the user that's currently logged in has the right UserRole, this 
+	 * function will return true. False otherwise.
+	 * If no user is logged in, this function will also return false.
+	 */
 	public boolean hasCurrentUserRequiredRole(UserRole ur)
 	{
 		if (this.user == null)
@@ -80,8 +85,7 @@ public class UserService implements Serializable
 			return false;
 		}
 		
-		//TODO: make this real verification
-		return true;
+		return this.user.getRole().equals(ur);
 		
 	}
 	
