@@ -22,6 +22,6 @@ Aangezien het login-systeem ongeveer werkt zal er moeten ingelogt worden. Indien
 password123
 ```
 
-## 2 Mechanic Issue States
-Issue kan 3 staten bevatten: Assigned, In Progress, Solved
+## 3 Mechanic Issue States
+Issue kan 3 staten bevatten: "Assigned", "In Progress", "Solved".
 "Active" wordt gebruikt voor de verzameling van "Assigned" en "In Progress" issues.
