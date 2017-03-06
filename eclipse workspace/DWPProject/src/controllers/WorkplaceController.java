@@ -8,8 +8,10 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import bachelorproject.ejb.IssueEJB;
 import bachelorproject.ejb.TrainCoachEJB;
 import bachelorproject.ejb.WorkplaceEJB;
+import bachelorproject.model.Issue;
 import bachelorproject.model.TrainCoach;
 import bachelorproject.model.User;
 import bachelorproject.model.Workplace;
@@ -24,6 +26,8 @@ public class WorkplaceController implements Serializable
 	private WorkplaceEJB workplaceEJB;
 	@Inject
 	private TrainCoachEJB traincoachEJB;
+	@Inject
+	private IssueEJB issueEJB;
 
 	private TrainCoach currentTrainCoach = new TrainCoach();
 	private Workplace currentWorkplace = new Workplace();
@@ -38,7 +42,7 @@ public class WorkplaceController implements Serializable
 			currentWorkplace = result.get( 0 );
 		}
 		mechanics.clear();
-		for ( User u : workplaceEJB.getWorkplaceMechanics( currentWorkplace.getId() ) )
+		for ( User u : workplaceEJB.findMechanicsByWorkplaceId( currentWorkplace.getId() ) )
 			mechanics.add( u );
 	}
 
@@ -48,7 +52,18 @@ public class WorkplaceController implements Serializable
 		System.out.println( "ID:" + currentWorkplace.getId() );
 	}
 
-	public List<String> findActiveTraincoachProblemsById( int traincoachId )
+	/**
+	 * Returns a List of Issue objects, for a given traincoachId.
+	 * Herefore it calls the TraincoachEJB
+	 *
+	 * @author Matthias De Lange
+	 * @version 0.0.1
+	 * @param traincoachId
+	 * @return List of Issue objects
+	 * @exception NullPointerException
+	 * @see Issue
+	 */
+	public List<String> findActiveIssuesByTraincoachId( int traincoachId )
 	{
 		// TODO EJB model side!
 		List<String> result = new ArrayList<>();
@@ -56,7 +71,7 @@ public class WorkplaceController implements Serializable
 		return result;
 	}
 
-	public List<String> findSolvedTraincoachProblemsById( int traincoachId )
+	public List<String> findSolvedIssuesByTraincoachId( int traincoachId )
 	{
 		// TODO EJB model side!
 		List<String> result = new ArrayList<>();
@@ -64,12 +79,25 @@ public class WorkplaceController implements Serializable
 		return result;
 	}
 
-	public List<String> findActiveIssuesByMechanicId( int mechanicId )
+	public List<Issue> findActiveIssuesByMechanicId( int mechanicId )
 	{
-		// TODO EJB model side!
-		List<String> result = new ArrayList<>();
-		result.add( "Solved Problemmethod TODO in model" );
+		// TODO ERRORCHECKING
+		List<Issue> result = new ArrayList();
+		result.addAll(findInProgressIssuesByMechanicId(mechanicId));
+		result.addAll(findAssignedIssuesByMechanicId(mechanicId));
 		return result;
+	}
+	
+	public List<Issue> findInProgressIssuesByMechanicId( int mechanicId ){
+		return issueEJB.findInProgressIssuesByMechanicId(mechanicId);
+	}
+	
+	public List<Issue> findAssignedIssuesByMechanicId( int mechanicId ){
+		return issueEJB.findAssignedIssuesByMechanicId(mechanicId);
+	}
+	
+	public List<User> findMechanicsOfCurrentWorkplace(){
+		return workplaceEJB.findMechanicsByWorkplaceId(currentWorkplace.getId());
 	}
 
 	public List<TrainCoach> getAllTraincoaches()

@@ -57,14 +57,14 @@
 							<h4>Actieve problemen</h4>
 							<ul>
 								<c:forEach var="problem" 
-										   items="#{workplaceController.findActiveTraincoachProblemsById(traincoach.id)}">
+										   items="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id)}">
 									<li><h:outputText value="#{problem}"></h:outputText></li>
 								</c:forEach>
 							</ul>
 							<h4>Afgewerkte problemen</h4>
 							<ul>
 								<c:forEach var="problem" 
-										   items="#{workplaceController.findSolvedTraincoachProblemsById(traincoach.id)}">
+										   items="#{workplaceController.findSolvedIssuesByTraincoachId(traincoach.id)}">
 									<li><h:outputText value="#{problem}"></h:outputText></li>
 								</c:forEach>
 							</ul>
@@ -83,16 +83,18 @@
 							
 							<!-- OVERZICHT TECHNICI -->
 							<div class="col-sm-12 mainview_panel">
-								<c:forEach var="mechanic" items="#{workplaceController.mechanics}">
+								<c:forEach var="mechanic" items="#{workplaceController.findMechanicsOfCurrentWorkplace()}">
 								<!-- TECHNICUS -->
 								<div class="mainview_issue row">
 									<div class="col-sm-4 dont-break-out">
 										<b>#{mechanic.name}</b>
 									</div>
 		                            <div class="col-sm-8">
-		                                <p>
-											Onderhoud: wagon 1
-		                                </p>
+		                            	<c:forEach var="activeIssue" items="#{workplaceController.findActiveIssuesByMechanicId(mechanic.id)}">
+		                            		<li>
+		                            			<h:outputText value="activeIssue.status: activeIssue.descr" />
+		                            		</li>
+		                            	</c:forEach>
 		                            </div>
 		                        </div> <!-- END TECHNICUS -->
 		                        </c:forEach>

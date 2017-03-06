@@ -1,14 +1,18 @@
 package bachelorproject.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -17,8 +21,9 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @NamedQueries(
-{ @NamedQuery( name = TrainCoach.FIND_ALL, query = "SELECT t FROM TrainCoach t" ),
-		@NamedQuery( name = TrainCoach.FIND_BY_DATA, query = "SELECT t FROM TrainCoach t WHERE t.name = :name AND t.type = :type AND t.constructor = :constructor " ) } )
+{	@NamedQuery( name = TrainCoach.FIND_ALL, query = "SELECT t FROM TrainCoach t" ),
+	@NamedQuery( name = TrainCoach.FIND_BY_DATA, query = "SELECT t FROM TrainCoach t WHERE t.name = :name AND t.type = :type AND t.constructor = :constructor " ) 
+} )
 
 public class TrainCoach implements Serializable
 {
@@ -31,6 +36,9 @@ public class TrainCoach implements Serializable
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private int id;
+	
+	@OneToMany( fetch = FetchType.EAGER )
+	private List<Issue> issues = new ArrayList<Issue>();
 
 	@Lob
 	private String constructor;
@@ -47,6 +55,7 @@ public class TrainCoach implements Serializable
 	{
 	}
 
+	// GETTERS & SETTERS
 	public int getId()
 	{
 		return this.id;
@@ -87,4 +96,11 @@ public class TrainCoach implements Serializable
 		this.type = type;
 	}
 
+	public List<Issue> getIssues() {
+		return issues;
+	}
+
+	public void setIssues(List<Issue> issues) {
+		this.issues = issues;
+	}
 }

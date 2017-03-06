@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -20,10 +21,17 @@ import javax.persistence.OneToOne;
  * 
  */
 @Entity
-@NamedQuery( name = "Issue.findAll", query = "SELECT i FROM Issue i" )
+@NamedQueries(
+{
+	@NamedQuery( name = Issue.FIND_ALL, query = "SELECT i FROM Issue i" ),
+	@NamedQuery( name = Issue.FIND_BY_MECHANIC_ID, query = "SELECT i FROM Issue i WHERE i.status = :status AND i.mechanic.id = :mechanic_id" ) 
+} )
 public class Issue implements Serializable
 {
 	private static final long serialVersionUID = 1L;
+	
+	public static final String FIND_ALL = "Issue.findAll";
+	public static final String FIND_BY_MECHANIC_ID = "Issue.findByMechanicId";
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
