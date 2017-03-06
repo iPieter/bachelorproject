@@ -11,8 +11,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
-import be.kuleuven.cs.gent.projectweek.model.ProcessedSensorData;
-import be.kuleuven.cs.gent.projectweek.services.InternalDatafetchService;
+import bachelorproject.model.ProcessedSensorData;
+import bachelorproject.services.InternalDatafetchService;
 
 @Path( "/processed_data" )
 public class ProcessedSensorDataRestService

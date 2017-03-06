@@ -8,11 +8,11 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import be.kuleuven.cs.gent.projectweek.model.Issue;
-import be.kuleuven.cs.gent.projectweek.model.TrainCoach;
-import be.kuleuven.cs.gent.projectweek.model.User;
-import be.kuleuven.cs.gent.projectweek.model.Workplace;
-import be.kuleuven.cs.gent.projectweek.services.InternalDatafetchService;
+import bachelorproject.model.Issue;
+import bachelorproject.model.TrainCoach;
+import bachelorproject.model.User;
+import bachelorproject.model.Workplace;
+import bachelorproject.services.InternalDatafetchService;
 
 @Named
 @RequestScoped

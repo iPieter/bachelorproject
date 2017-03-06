@@ -7,9 +7,9 @@ import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
-import be.kuleuven.cs.gent.projectweek.model.Password;
-import be.kuleuven.cs.gent.projectweek.model.UserRole;
-import be.kuleuven.cs.gent.projectweek.services.UserService;
+import bachelorproject.model.Password;
+import bachelorproject.model.UserRole;
+import bachelorproject.services.UserService;
 
 @ManagedBean
 @SessionScoped
