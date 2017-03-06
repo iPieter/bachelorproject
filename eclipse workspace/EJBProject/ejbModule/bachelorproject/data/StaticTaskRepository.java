@@ -26,7 +26,8 @@ public class StaticTaskRepository
 			tasks.add( new Task( (long) 2, "Jos", "Waregem", "boodschappen doen", formatter.parse( "07/6/2016" ) ) );
 			tasks.add( new Task( (long) 3, "Dirk", "Nieuwpoort", "koken", formatter.parse( "07/6/2016" ) ) );
 
-		} catch ( ParseException pe )
+		}
+		catch ( ParseException pe )
 		{
 			pe.printStackTrace();
 			System.out.println( "Invalid static input data error." );
@@ -35,8 +36,7 @@ public class StaticTaskRepository
 
 	public static StaticTaskRepository getInstance()
 	{
-		if ( taskRepo == null )
-			taskRepo = new StaticTaskRepository();
+		if ( taskRepo == null ) taskRepo = new StaticTaskRepository();
 		return taskRepo;
 	}
 
@@ -45,8 +45,7 @@ public class StaticTaskRepository
 		Task task = null;
 		for ( Task taskIt : tasks )
 		{
-			if ( taskIt.getId().equals( id ) )
-				task = taskIt;
+			if ( taskIt.getId().equals( id ) ) task = taskIt;
 		}
 		return new Task( task );
 	}
@@ -80,8 +79,7 @@ public class StaticTaskRepository
 	{
 		for ( Task taskIt : tasks )
 		{
-			if ( taskIt.getId().equals( task.getId() ) )
-				tasks.remove( taskIt );
+			if ( taskIt.getId().equals( task.getId() ) ) tasks.remove( taskIt );
 		}
 	}
 

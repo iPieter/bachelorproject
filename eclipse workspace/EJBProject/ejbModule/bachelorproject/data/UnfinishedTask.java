@@ -1,5 +1,6 @@
 package bachelorproject.data;
 
-public interface UnfinishedTask {
+public interface UnfinishedTask
+{
 
 }

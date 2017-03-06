@@ -1,20 +1,26 @@
 package bachelorproject.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
 
 /**
  * The persistent class for the IssueAssets database table.
  * 
  */
 @Entity
-@NamedQuery(name="IssueAsset.findAll", query="SELECT i FROM IssueAsset i")
-public class IssueAsset implements Serializable {
+@NamedQuery( name = "IssueAsset.findAll", query = "SELECT i FROM IssueAsset i" )
+public class IssueAsset implements Serializable
+{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private int id;
 
 	private int descr;
@@ -22,30 +28,37 @@ public class IssueAsset implements Serializable {
 	@Lob
 	private String location;
 
-	public IssueAsset() {
+	public IssueAsset()
+	{
 	}
 
-	public int getId() {
+	public int getId()
+	{
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId( int id )
+	{
 		this.id = id;
 	}
 
-	public int getDesc() {
+	public int getDesc()
+	{
 		return this.descr;
 	}
 
-	public void setDesc(int desc) {
+	public void setDesc( int desc )
+	{
 		this.descr = desc;
 	}
 
-	public String getLocation() {
+	public String getLocation()
+	{
 		return this.location;
 	}
 
-	public void setLocation(String location) {
+	public void setLocation( String location )
+	{
 		this.location = location;
 	}
 

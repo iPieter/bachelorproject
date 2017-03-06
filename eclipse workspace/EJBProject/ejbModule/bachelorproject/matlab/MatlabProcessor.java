@@ -131,7 +131,7 @@ public class MatlabProcessor
 		MatlabProxy proxy = factory.getProxy();
 
 		String path = matlabDirectory + "/" + name;
-		//System.out.println( path );
+		// System.out.println( path );
 
 		proxy.eval( "load('" + path + "')" );
 		proxy.eval( script );
@@ -158,7 +158,7 @@ public class MatlabProcessor
 		try
 		{
 			String outputPath = matlabDirectory + "/" + name.split( "\\." )[0] + ".json";
-			
+
 			BufferedWriter writer = new BufferedWriter( new FileWriter( outputPath ) );
 			writeLine( "{", false, writer );
 			writeLine( writeValue( "year", year ), true, writer );
@@ -179,7 +179,7 @@ public class MatlabProcessor
 			writeLine( "}", false, writer );
 
 			writer.flush();
-			writer.close();		
+			writer.close();
 			writeToDatabase( name, em );
 		}
 		catch ( IOException io )
@@ -188,18 +188,18 @@ public class MatlabProcessor
 		}
 		proxy.exit();
 	}
-	
-	private void writeToDatabase( String fileName, EntityManager em  )
+
+	private void writeToDatabase( String fileName, EntityManager em )
 	{
-		//System.out.println( "WRITING TO DB" );
+		// System.out.println( "WRITING TO DB" );
 		String split[] = fileName.split( "\\." );
 		String outputPath = matlabDirectory + "/" + split[0] + ".json";
-		
+
 		String nameSplit[] = split[0].split( "_" );
-		
-		//for( String s : nameSplit )
-		//	System.out.println( s );
-		
+
+		// for( String s : nameSplit )
+		// System.out.println( s );
+
 		List<TrainCoach> traincoachResult = new ArrayList<>();
 		List<Workplace> workplaceResult = new ArrayList<>();
 
@@ -210,7 +210,7 @@ public class MatlabProcessor
 			query.setParameter( "type", nameSplit[2] );
 			query.setParameter( "constructor", nameSplit[3] );
 			traincoachResult = query.getResultList();
-			
+
 			TypedQuery<Workplace> workplaceQuery = em.createNamedQuery( "Workplace.findByData", Workplace.class );
 			workplaceQuery.setParameter( "name", nameSplit[0] );
 			workplaceResult = workplaceQuery.getResultList();
@@ -219,36 +219,33 @@ public class MatlabProcessor
 		{
 			System.out.println( "ERROR IN MATLABPROCESSOR(query traincoach):" + e.getLocalizedMessage() );
 		}
-		
+
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		
+
 		TrainCoach trainCoach;
-		if( traincoachResult.size() == 0)
+		if ( traincoachResult.size() == 0 )
 		{
 			trainCoach = new TrainCoach();
 			trainCoach.setConstructor( nameSplit[1] );
 			trainCoach.setType( nameSplit[2] );
 			trainCoach.setName( nameSplit[3] );
 		}
-		else
-			trainCoach = traincoachResult.get( 0 );
-		
+		else trainCoach = traincoachResult.get( 0 );
+
 		Workplace workplace;
-		if( workplaceResult.size() == 0 )
+		if ( workplaceResult.size() == 0 )
 		{
 			workplace = new Workplace();
 			workplace.setName( nameSplit[0] );
 		}
-		else
-			workplace = workplaceResult.get( 0 );
-		
-		if( workplace.getTraincoaches() != null && !workplace.getTraincoaches().contains( trainCoach ) )
+		else workplace = workplaceResult.get( 0 );
+
+		if ( workplace.getTraincoaches() != null && !workplace.getTraincoaches().contains( trainCoach ) )
 		{
-			if( workplace.getTraincoaches() != null )
-				workplace.getTraincoaches().add( trainCoach );
+			if ( workplace.getTraincoaches() != null ) workplace.getTraincoaches().add( trainCoach );
 		}
-		
+
 		ProcessedSensorData data = new ProcessedSensorData();
 		data.setLocation( outputPath );
 		data.setTime( new Date() );

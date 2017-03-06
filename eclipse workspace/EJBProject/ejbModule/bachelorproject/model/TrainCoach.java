@@ -1,9 +1,15 @@
 package bachelorproject.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.validation.constraints.NotNull;
 
 /**
  * The persistent class for the TrainCoach database table.
@@ -11,20 +17,19 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @NamedQueries(
-{
-	@NamedQuery(name=TrainCoach.FIND_ALL, query="SELECT t FROM TrainCoach t"),
-	@NamedQuery(name=TrainCoach.FIND_BY_DATA, query = "SELECT t FROM TrainCoach t WHERE t.name = :name AND t.type = :type AND t.constructor = :constructor ")
-})
+{ @NamedQuery( name = TrainCoach.FIND_ALL, query = "SELECT t FROM TrainCoach t" ),
+		@NamedQuery( name = TrainCoach.FIND_BY_DATA, query = "SELECT t FROM TrainCoach t WHERE t.name = :name AND t.type = :type AND t.constructor = :constructor " ) } )
 
-public class TrainCoach implements Serializable {
-	
+public class TrainCoach implements Serializable
+{
+
 	public static final String FIND_ALL = "TrainCoach.findAll";
 	public static final String FIND_BY_DATA = "TrainCoach.findByData";
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private int id;
 
 	@Lob
@@ -38,38 +43,47 @@ public class TrainCoach implements Serializable {
 	@NotNull
 	private String type;
 
-	public TrainCoach() {
+	public TrainCoach()
+	{
 	}
 
-	public int getId() {
+	public int getId()
+	{
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId( int id )
+	{
 		this.id = id;
 	}
 
-	public String getConstructor() {
+	public String getConstructor()
+	{
 		return this.constructor;
 	}
 
-	public void setConstructor(String constructor) {
+	public void setConstructor( String constructor )
+	{
 		this.constructor = constructor;
 	}
 
-	public String getName() {
+	public String getName()
+	{
 		return this.name;
 	}
 
-	public void setName(String name) {
+	public void setName( String name )
+	{
 		this.name = name;
 	}
 
-	public String getType() {
+	public String getType()
+	{
 		return this.type;
 	}
 
-	public void setType(String type) {
+	public void setType( String type )
+	{
 		this.type = type;
 	}
 

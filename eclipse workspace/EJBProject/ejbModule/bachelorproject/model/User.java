@@ -3,9 +3,19 @@ package bachelorproject.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -14,21 +24,20 @@ import org.hibernate.validator.constraints.Email;
  * 
  */
 @Entity
-@NamedQueries({
-	@NamedQuery(name = User.FIND_ALL, query = "SELECT u FROM User u"),
-	@NamedQuery(name = User.FIND_BY_EMAIL, query = "SELECT u FROM User u WHERE u.email = :email"),
-})
+@NamedQueries(
+{ @NamedQuery( name = User.FIND_ALL, query = "SELECT u FROM User u" ),
+		@NamedQuery( name = User.FIND_BY_EMAIL, query = "SELECT u FROM User u WHERE u.email = :email" ), } )
 public class User implements Serializable
 {
-	//Named queries
+	// Named queries
 	public static final String FIND_ALL = "User.findAll";
 	public static final String FIND_BY_EMAIL = "User.findByEmail";
-	
-	//Private vars
+
+	// Private vars
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue( strategy = GenerationType.AUTO )
 	private int id;
 
 	@Lob
@@ -39,28 +48,28 @@ public class User implements Serializable
 	@NotNull
 	@Email
 	private String email;
-	
+
 	@Lob
 	@NotNull
-	@Column(length = User.PASS_HASH_LENGTH)
+	@Column( length = User.PASS_HASH_LENGTH )
 	private byte[] pass;
 
 	@Lob
 	@NotNull
-	@Column(length = User.SALT_LENGTH)
+	@Column( length = User.SALT_LENGTH )
 	private byte[] salt;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal( TemporalType.TIMESTAMP )
 	private Date lastLogin;
-	
-	@Enumerated(EnumType.STRING)
+
+	@Enumerated( EnumType.STRING )
 	@NotNull
 	private UserRole role;
 
-	//Used constants
+	// Used constants
 	public static final int SALT_LENGTH = 32;
-	public static final int PASS_HASH_LENGTH = 256/8;
-	
+	public static final int PASS_HASH_LENGTH = 256 / 8;
+
 	public User()
 	{
 	}
@@ -70,7 +79,7 @@ public class User implements Serializable
 		return this.id;
 	}
 
-	public void setId(int id)
+	public void setId( int id )
 	{
 		this.id = id;
 	}
@@ -80,7 +89,7 @@ public class User implements Serializable
 		return this.name;
 	}
 
-	public void setName(String name)
+	public void setName( String name )
 	{
 		this.name = name;
 	}
@@ -90,17 +99,17 @@ public class User implements Serializable
 		return this.email;
 	}
 
-	public void setEmail(String email)
+	public void setEmail( String email )
 	{
 		this.email = email;
-	}	
-	
+	}
+
 	public byte[] getPass()
 	{
 		return this.pass;
 	}
 
-	public void setPass(byte[] pass)
+	public void setPass( byte[] pass )
 	{
 		this.pass = pass;
 	}
@@ -110,7 +119,7 @@ public class User implements Serializable
 		return this.salt;
 	}
 
-	public void setSalt(byte[] salt)
+	public void setSalt( byte[] salt )
 	{
 		this.salt = salt;
 	}
@@ -120,7 +129,7 @@ public class User implements Serializable
 		return this.role;
 	}
 
-	public void setRole(UserRole role)
+	public void setRole( UserRole role )
 	{
 		this.role = role;
 	}
@@ -129,12 +138,12 @@ public class User implements Serializable
 	{
 		return this.lastLogin;
 	}
-	
-	public void setLastLogin(Date lastLogin)
+
+	public void setLastLogin( Date lastLogin )
 	{
 		this.lastLogin = lastLogin;
 	}
-	
+
 	@Override
 	public String toString()
 	{

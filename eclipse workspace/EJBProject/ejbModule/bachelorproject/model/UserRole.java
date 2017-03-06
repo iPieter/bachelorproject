@@ -1,5 +1,6 @@
 package bachelorproject.model;
 
-public enum UserRole {
+public enum UserRole
+{
 	ADMIN, MECHANIC, OPERATOR;
 }
