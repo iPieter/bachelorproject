@@ -9,6 +9,12 @@
 	
 <h:head>
 	<meta charset="utf-8"/>
+	
+	<!-- LOGIN REDIRECT -->
+    <ui:fragment rendered="#{!authenticationController.hasOperatorAccess()}">
+		<meta http-equiv="refresh" content="0; url=login.xhtml"/>
+    </ui:fragment>
+	
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<link href="css/bootstrap.min.css" rel="stylesheet"/>
@@ -16,7 +22,9 @@
 	<link rel="stylesheet" href="css/leaflet.css" />
 	<title>Televic Managment Home</title>
 </h:head>
-<h:body>
+
+<!-- Renders when logged in -->
+<h:body rendered="#{authenticationController.hasOperatorAccess()}">	
 <div class="container-fluid">
 	<div class="row">
 	
@@ -62,5 +70,17 @@
 
 	</div> <!-- END MASTER ROW -->
 </div> <!-- END MASTER CONTAINER -->
+</h:body>
+
+<!-- Renders when not logged in and redirect doesnt' work -->
+<h:body rendered="#{!authenticationController.hasOperatorAccess()}">
+	<div class="container-fluid main_view">
+		<div class="row">
+			<div class="col-sm-10 col-sm-offset-1">
+				<h1>You're not authorized for this page!</h1>
+				<h2>It seems like we failed to redirect you to the <a href="login.xhtml">login page</a>.</h2>
+			</div>
+		</div>
+	</div>
 </h:body>
 </html>	
