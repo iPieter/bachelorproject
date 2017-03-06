@@ -8,11 +8,11 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import be.kuleuven.cs.gent.projectweek.model.Issue;
-import be.kuleuven.cs.gent.projectweek.model.TrainCoach;
-import be.kuleuven.cs.gent.projectweek.model.User;
-import be.kuleuven.cs.gent.projectweek.model.Workplace;
-import be.kuleuven.cs.gent.projectweek.services.InternalDatafetchService;
+import bachelorproject.ejb.TrainCoachEJB;
+import bachelorproject.ejb.WorkplaceEJB;
+import bachelorproject.model.TrainCoach;
+import bachelorproject.model.User;
+import bachelorproject.model.Workplace;
 
 @Named
 @RequestScoped
@@ -21,7 +21,9 @@ public class WorkplaceController implements Serializable
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private InternalDatafetchService internalDatafetchService;
+	private WorkplaceEJB workplaceEJB;
+	@Inject
+	private TrainCoachEJB traincoachEJB;
 
 	private TrainCoach currentTrainCoach = new TrainCoach();
 	private Workplace currentWorkplace = new Workplace();
@@ -29,47 +31,50 @@ public class WorkplaceController implements Serializable
 
 	public void findTrainCoachByTraincoachId()
 	{
-		currentTrainCoach = internalDatafetchService.findTrainCoachByTraincoachId( currentTrainCoach.getId() );
-		List<Workplace> result = internalDatafetchService.findWorkplaceByTraincoachID( currentTrainCoach.getId() );
-		if( result.size() > 0 )
+		currentTrainCoach = traincoachEJB.findTrainCoachByTraincoachId( currentTrainCoach.getId() );
+		List<Workplace> result = workplaceEJB.findWorkplaceByTraincoachID( currentTrainCoach.getId() );
+		if ( result.size() > 0 )
 		{
 			currentWorkplace = result.get( 0 );
 		}
 		mechanics.clear();
-		for( User u : internalDatafetchService.getWorkplaceMechanics( currentWorkplace.getId() ) )
+		for ( User u : workplaceEJB.getWorkplaceMechanics( currentWorkplace.getId() ) )
 			mechanics.add( u );
 	}
-	
+
 	public void findWorkplaceByWorkplaceId()
 	{
-		currentWorkplace = internalDatafetchService.findWorkplaceByWorkplaceId( currentWorkplace.getId() );
-		System.out.println("ID:"+currentWorkplace.getId());
+		currentWorkplace = workplaceEJB.findWorkplaceByWorkplaceId( currentWorkplace.getId() );
+		System.out.println( "ID:" + currentWorkplace.getId() );
 	}
-	
-	public List<String> findActiveTraincoachProblemsById( int traincoachId){
-		//TODO EJB model side!
-		List<String> result=new ArrayList<>();
-		result.add("Active Problemmethod TODO in model");
+
+	public List<String> findActiveTraincoachProblemsById( int traincoachId )
+	{
+		// TODO EJB model side!
+		List<String> result = new ArrayList<>();
+		result.add( "Active Problemmethod TODO in model" );
 		return result;
 	}
-	
-	public List<String> findSolvedTraincoachProblemsById( int traincoachId){
-		//TODO EJB model side!
-		List<String> result=new ArrayList<>();
-		result.add("Solved Problemmethod TODO in model");
+
+	public List<String> findSolvedTraincoachProblemsById( int traincoachId )
+	{
+		// TODO EJB model side!
+		List<String> result = new ArrayList<>();
+		result.add( "Solved Problemmethod TODO in model" );
 		return result;
 	}
-	
-	public List<String> findActiveIssuesByMechanicId(int mechanicId){
-		//TODO EJB model side!
-		List<String> result=new ArrayList<>();
-		result.add("Solved Problemmethod TODO in model");
+
+	public List<String> findActiveIssuesByMechanicId( int mechanicId )
+	{
+		// TODO EJB model side!
+		List<String> result = new ArrayList<>();
+		result.add( "Solved Problemmethod TODO in model" );
 		return result;
 	}
-	
+
 	public List<TrainCoach> getAllTraincoaches()
 	{
-		return internalDatafetchService.getAllTraincoaches();
+		return traincoachEJB.getAllTraincoaches();
 	}
 
 	// GETTERS & SETTERS
@@ -77,12 +82,12 @@ public class WorkplaceController implements Serializable
 	{
 		return currentWorkplace;
 	}
-	
+
 	public List<Workplace> getAllWorkplaces()
 	{
-		return internalDatafetchService.getAllWorkplaces();
+		return workplaceEJB.getAllWorkplaces();
 	}
-	
+
 	public TrainCoach getCurrentTrainCoach()
 	{
 		return currentTrainCoach;

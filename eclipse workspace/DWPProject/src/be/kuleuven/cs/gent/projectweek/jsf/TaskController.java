@@ -9,10 +9,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import be.kuleuven.cs.gent.projectweek.data.Task;
-import be.kuleuven.cs.gent.projectweek.data.TaskValidationException;
-import be.kuleuven.cs.gent.projectweek.ejb.TaskEJBLocal;
-import be.kuleuven.cs.gent.projectweek.logging.Loggable;
+import bachelorproject.data.Task;
+import bachelorproject.data.TaskValidationException;
+import bachelorproject.ejb.TaskEJBLocal;
+import bachelorproject.logging.Loggable;
 
 @Named
 @ViewScoped
@@ -22,7 +22,7 @@ public class TaskController implements Serializable
 
 	@EJB
 	private TaskEJBLocal taskEJB;
-	
+
 	private Task task = new Task();
 
 	@Loggable

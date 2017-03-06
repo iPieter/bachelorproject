@@ -15,3 +15,9 @@ Deze klasse vormt de verbinding tussen de xhtml pagina's en de tasks. De klasse 
 
 ### 4 Opmerkingen tov de koppeling van de layers
 Ondanks dat we alles van elkaar hebben gescheiden in het boek, is er toch veel overlap tussen de verschillende layers. Het is daarom misschien beter dan niet iedereen met een bepaalde layer bezig is, maar dat iedereen per feature werkt.
+
+## 2 Voorlopige Users
+Aangezien het login-systeem ongeveer werkt zal er moeten ingelogt worden. Indien er geen gebruikers in de `USER`-tabel te vinden zijn, dan zal de UserService bij de eerste startup een tiental gebruikers genereren als `OPERATOR` en `MECHANIC`. Het standaardwachtwoord van al deze gebruikers is:
+```
+password123
+```
