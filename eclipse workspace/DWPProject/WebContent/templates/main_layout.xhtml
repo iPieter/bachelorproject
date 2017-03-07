@@ -11,10 +11,10 @@
 <h:head>
 	<meta charset="utf-8"/>
 	
-		<!-- LOGIN REDIRECT -->
-    	<ui:fragment rendered="#{!authenticationController.hasOperatorAccess()}">
-			<meta http-equiv="refresh" content="0; url=login.xhtml"/>
-    	</ui:fragment>
+	<!-- LOGIN REDIRECT -->
+    <ui:fragment rendered="#{!authenticationController.hasOperatorAccess()}">
+		<meta http-equiv="refresh" content="0; url=login.xhtml"/>
+    </ui:fragment>
 	
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>

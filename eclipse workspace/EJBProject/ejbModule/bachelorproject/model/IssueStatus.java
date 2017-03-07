@@ -2,5 +2,5 @@ package bachelorproject.model;
 
 public enum IssueStatus
 {
-	ASSIGNED, IN_PROCESS, CLOSED;
+	ASSIGNED, IN_PROGRESS, CLOSED;
 }

@@ -28,7 +28,7 @@ public class TrainCoachEJB
 	 *  @return A List of TrainCoach objects
 	 *  @see List
 	 *  @see TrainCoach
-	 * */
+	 * */	
 	public List<TrainCoach> getAllTraincoaches()
 	{
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
