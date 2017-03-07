@@ -56,16 +56,16 @@
 						<div class="col-sm-8">
 							<h4>Actieve problemen</h4>
 							<ul>
-								<c:forEach var="problem" 
+								<c:forEach var="issue" 
 										   items="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id)}">
-									<li><h:outputText value="#{problem}"></h:outputText></li>
+									<li><h:outputText value="#{issue.descr}"></h:outputText></li>
 								</c:forEach>
 							</ul>
 							<h4>Afgewerkte problemen</h4>
 							<ul>
-								<c:forEach var="problem" 
+								<c:forEach var="issue" 
 										   items="#{workplaceController.findClosedIssuesByTraincoachId(traincoach.id)}">
-									<li><h:outputText value="#{problem}"></h:outputText></li>
+									<li><h:outputText value="#{issue.descr}"></h:outputText></li>
 								</c:forEach>
 							</ul>
 						</div>

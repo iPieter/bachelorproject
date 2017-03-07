@@ -11,7 +11,6 @@ import javax.persistence.TypedQuery;
 
 import bachelorproject.model.Issue;
 import bachelorproject.model.IssueStatus;
-import bachelorproject.model.TrainCoach;
 
 @Named
 @Stateless
