@@ -28,7 +28,7 @@ public class ProjectInitializer
 
 	}
 	/*
-	 INSERT INTO ISSUE VALUES(1,"Ik ben een INPROGRESS probleem uit de database","INPROGRESS",1,1,1);
+	 INSERT INTO ISSUE VALUES(1,"Ik ben een IN_PROGRESS probleem uit de database","IN_PROCESS",1,1,1);
 	 INSERT INTO ISSUE VALUES(2,"Ik ben een ASSIGNED probleem uit de database","ASSIGNED",1,1,2);
 
 	*/

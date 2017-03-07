@@ -23,7 +23,7 @@ public class IssueEJB
 		em.getTransaction().begin();
 		
 		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_MECHANIC_ID, Issue.class )
-									.setParameter("status", "INPROGRESS")
+									.setParameter("status", "IN_PROGRESS")
 									.setParameter("mechanicId", mechanicId);
 		List<Issue> result = query.getResultList();
 		

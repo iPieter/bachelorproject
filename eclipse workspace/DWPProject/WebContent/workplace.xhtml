@@ -64,7 +64,7 @@
 							<h4>Afgewerkte problemen</h4>
 							<ul>
 								<c:forEach var="problem" 
-										   items="#{workplaceController.findSolvedIssuesByTraincoachId(traincoach.id)}">
+										   items="#{workplaceController.findClosedIssuesByTraincoachId(traincoach.id)}">
 									<li><h:outputText value="#{problem}"></h:outputText></li>
 								</c:forEach>
 							</ul>

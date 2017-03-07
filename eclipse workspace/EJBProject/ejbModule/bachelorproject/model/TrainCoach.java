@@ -36,9 +36,6 @@ public class TrainCoach implements Serializable
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private int id;
-	
-	@OneToMany( fetch = FetchType.EAGER )
-	private List<Issue> issues = new ArrayList<Issue>();
 
 	@Lob
 	private String constructor;
@@ -94,13 +91,5 @@ public class TrainCoach implements Serializable
 	public void setType( String type )
 	{
 		this.type = type;
-	}
-
-	public List<Issue> getIssues() {
-		return issues;
-	}
-
-	public void setIssues(List<Issue> issues) {
-		this.issues = issues;
 	}
 }

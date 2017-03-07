@@ -71,7 +71,7 @@ public class WorkplaceController implements Serializable
 		return result;
 	}
 
-	public List<String> findSolvedIssuesByTraincoachId( int traincoachId )
+	public List<String> findClosedIssuesByTraincoachId( int traincoachId )
 	{
 		// TODO EJB model side!
 		List<String> result = new ArrayList<>();
