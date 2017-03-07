@@ -45,7 +45,7 @@ public class IssueEJB
 		List<Issue> result = query.getResultList();
 		
 		for(Issue i:result){
-			System.out.println(i.getDesc());
+			System.out.println(i.getDescr());
 		}
 		
 		em.getTransaction().commit();
@@ -66,7 +66,7 @@ public class IssueEJB
 		List<Issue> result = query.getResultList();
 		
 		for(Issue i:result){
-			System.out.println(i.getDesc());
+			System.out.println(i.getDescr());
 		}
 		
 		em.getTransaction().commit();
@@ -87,7 +87,7 @@ public class IssueEJB
 		List<Issue> result = query.getResultList();
 		
 		for(Issue i:result){
-			System.out.println(i.getDesc());
+			System.out.println(i.getDescr());
 		}
 		
 		em.getTransaction().commit();
@@ -108,7 +108,7 @@ public class IssueEJB
 		List<Issue> result = query.getResultList();
 		
 		for(Issue i:result){
-			System.out.println(i.getDesc());
+			System.out.println(i.getDescr());
 		}
 		
 		em.getTransaction().commit();
