@@ -27,13 +27,12 @@ public class AdminController implements Serializable
 	private UserEJB userEJB;
 
 	private List<User> users;
+	private User workingUser;
 	
 	@PostConstruct
 	public void init()
 	{
 		users = userEJB.findAllUsers();
-		System.out.println("Set users: " + users.get(0));
-
 	}
 	
 	/*
@@ -46,6 +45,29 @@ public class AdminController implements Serializable
 	public void deleteUser(int userId)
 	{
 		userEJB.deleteUserById(userId);
+	}
+	
+	/*
+	 * When the admin wants to edit a user, a modal view is loaded. To save those 
+	 * parameters, we need to set the workingUser variable to the current user
+	 * the admin will edit.
+	 * <p>
+	 * If the id is zero, a new user object will be created for edit. 
+	 * 
+	 * @param userId The id of the user that will be set to workingUser
+	 */
+	public void updateWorkingUser(int userId)
+	{
+		if (userId == 0)
+		{
+			this.workingUser = new User();
+			
+		} else 
+		{
+			
+			this.workingUser = userEJB.findUserById(userId);
+			
+		}
 	}
 	
 	public List<User> getUsers()

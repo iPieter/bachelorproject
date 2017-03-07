@@ -115,4 +115,22 @@ public class UserEJB
 		emf.close();
 	}
 
+	/*
+	 * Searches for the user by an id. If no user is found, null is returned.
+	 * 
+	 * @param userId The id of the user the function is to return
+	 * @return An User object or null if not found
+	 */
+	public User findUserById(int userId)
+	{
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
+		EntityManager em = emf.createEntityManager();
+		User u = em.find(User.class, userId);
+	
+		em.close();
+		emf.close();
+		
+		return u;
+	}
+	
 }
