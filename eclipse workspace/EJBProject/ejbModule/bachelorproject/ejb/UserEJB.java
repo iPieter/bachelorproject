@@ -132,4 +132,28 @@ public class UserEJB
 		
 		return u;
 	}
+	
+	/*
+	 * Finds the user provided by it's id and update the other field if needed.
+	 * 
+	 * @param user The User object to be updated in persistence.
+	 */
+	public void updateUser(User user)
+	{
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+
+		//User u = em.find(User.class, user.getId());
+		
+		//If the above find function returns a valid user (not null), we will remove (detach) it.
+		//if (u != null)
+		//{
+			em.merge(user);
+		//}
+		
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
+	}
 }

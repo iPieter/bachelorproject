@@ -5,20 +5,20 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.inject.Inject;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+
 import bachelorproject.model.User;
+import bachelorproject.model.UserRole;
 import bachelorproject.ejb.UserEJB;
-import bachelorproject.services.UserService;
 
 /*
  * The AdminController is intended for the admin.xhtml page, where 
  * users can be added, modified or deleted. 
  */
 
-@ManagedBean
-@RequestScoped
+@Named
+@SessionScoped
 public class AdminController implements Serializable
 {
 	private static final long serialVersionUID = -8396156684143995442L;
@@ -58,6 +58,7 @@ public class AdminController implements Serializable
 	 */
 	public void updateWorkingUser(int userId)
 	{
+		System.out.println("updated user " + userId);
 		if (userId == 0)
 		{
 			this.workingUser = new User();
@@ -70,6 +71,27 @@ public class AdminController implements Serializable
 		}
 	}
 	
+	/*
+	 * Function called by JSF to update the user save in the workingUser variable
+	 * to persistence. The List <code>users</code> is also updated 
+	 * Takes no inputs and returns nothing.
+	 */
+	public void updateUser()
+	{
+		userEJB.updateUser(this.workingUser);
+		this.users = userEJB.findAllUsers();
+	}
+	
+	public User getWorkingUser()
+	{
+		return workingUser;
+	}
+
+	public void setWorkingUser(User workingUser)
+	{
+		this.workingUser = workingUser;
+	}
+
 	public List<User> getUsers()
 	{
 		return users;
@@ -78,5 +100,15 @@ public class AdminController implements Serializable
 	public void setUsers(List<User> users)
 	{
 		this.users = users;
+	}
+
+	/*
+	 * Provides a getter for a non-exisisting parameter. Intended for 
+	 * listing all the roles.
+	 * @return Array with all the values the UserRole enum can have.
+	 */
+	public UserRole[] getUserRoles()
+	{
+		return UserRole.values();
 	}
 }
