@@ -31,14 +31,20 @@ import javax.validation.constraints.NotNull;
 @Entity
 @NamedQueries(
 { 
-	@NamedQuery( name = "ProcessedSensorData.findAll", query = "SELECT p FROM ProcessedSensorData p" ),
-	@NamedQuery( name = "ProcessedSensorData.findByID", query = "SELECT p FROM ProcessedSensorData p WHERE p.id = :id" ) 
+	@NamedQuery( name = ProcessedSensorData.FIND_ALL, query = "SELECT p FROM ProcessedSensorData p" ),
+	@NamedQuery( name = ProcessedSensorData.FIND_BY_ID, query = "SELECT p FROM ProcessedSensorData p WHERE p.id = :id" ),
+	@NamedQuery( name = ProcessedSensorData.FIND_BY_TRAINCOACH_ID, query = "SELECT p FROM ProcessedSensorData p WHERE p.traincoach.id = :id ORDER BY p.time DESC" )
 })
 
 public class ProcessedSensorData implements Serializable
 {
 	/** Unique ID for Serializable */
 	private static final long serialVersionUID = 1L;
+	
+	public static final String FIND_ALL = "ProcessedSensorData.findAll";
+	public static final String FIND_BY_ID = "ProcessedSensorData.findByID";
+	public static final String FIND_BY_TRAINCOACH_ID = "ProcessedSensorData.findByTrainCoachID";
+	
 
 	/** A unique ID. */
 	@Id

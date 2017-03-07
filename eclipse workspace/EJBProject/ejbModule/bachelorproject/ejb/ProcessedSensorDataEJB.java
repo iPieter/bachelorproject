@@ -35,9 +35,37 @@ public class ProcessedSensorDataEJB
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 
-		TypedQuery<ProcessedSensorData> query = em.createNamedQuery( "ProcessedSensorData.findByID",
+		TypedQuery<ProcessedSensorData> query = em.createNamedQuery( ProcessedSensorData.FIND_BY_ID,
 				ProcessedSensorData.class );
 		query.setParameter( "id", id );
+
+		ProcessedSensorData data = query.getSingleResult();
+
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
+
+		return data;
+	}
+	
+	/**
+	 * 	Gets the latest processed sensordata for the traincoach.
+	 *  <p>
+	 *  Based on the ID parameter, this method searches and returns the 
+	 *  latest processedsensordata.
+	 *  @param id The ID of the TrainCoach.
+	 *  @return The ProcessedSensorData
+	 * */
+	public ProcessedSensorData getProcessedSensorDataByTrainCoachID( int id )
+	{
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+
+		TypedQuery<ProcessedSensorData> query = em.createNamedQuery( ProcessedSensorData.FIND_BY_TRAINCOACH_ID,
+				ProcessedSensorData.class );
+		query.setParameter( "id", id );
+		query.setMaxResults( 1 );
 
 		ProcessedSensorData data = query.getSingleResult();
 

@@ -100,7 +100,7 @@ public class MatlabProcessor
 
 		try
 		{
-			TypedQuery<ProcessedSensorData> query = em.createNamedQuery( "ProcessedSensorData.findAll",
+			TypedQuery<ProcessedSensorData> query = em.createNamedQuery( ProcessedSensorData.FIND_ALL,
 					ProcessedSensorData.class );
 			result = query.getResultList();
 		}

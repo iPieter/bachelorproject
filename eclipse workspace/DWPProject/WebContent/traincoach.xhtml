@@ -42,7 +42,7 @@
 	<ui:define name="mainview_content">
 		
 		<input type="hidden"
-			value="#{workplaceController.currentTrainCoach.id}"
+			value="#{workplaceController.currentSensorData.id}"
 			id="current_traincoach" />
 		<div class="row">
 			<div class="col-sm-10 mainview_panel">
@@ -59,10 +59,10 @@
 			<div class="col-sm-5 mainview_panel">
 				<div class="mainview_issue row">
 					<div class="col-sm-12 issue_bar">
+						<h:form class="issue_bar">
 						<button type="button" name="button" class="btn btn-danger btn-large" data-toggle="modal"
 							data-target="#assignModal">Nieuwe herstelling</button>
-						<h:form>
-						<h:commandButton name="button" class="btn btn-success btn-large" 
+						<h:commandButton name="buttonApprove" class="btn btn-success btn-large" 
 								action="#{workplaceController.setTrainCoachReviewed()}" type="submit" value="Goedkeuren"></h:commandButton>
 						</h:form>
 					</div>
@@ -91,42 +91,39 @@
 		<div id="assignModal" class="modal fade" role="dialog" tabindex="10">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Nieuwe herstelling</h4>
-					</div>
-					<div class="modal-body">
-						<form class="form-group" action="/" method="post">
-							<label for="description">Omschrijving probleem:</label> <br />
-							<textarea name="description" rows="8" cols="40"
-								class="form-control"></textarea>
-							<label for="list_empl">Kies een onderhoudstechnicus:</label> <br />
-							<br />
-							<div class="container">
-								<c:forEach var="mechanic" items="#{workplaceController.mechanics}">
-									<div class="mainview_issue row">
-										<div class="col-sm-1">
-											<div class="checkbox">
-												<label><input type="checkbox" value="" /></label>
-											</div>
-										</div>
-										<div class="col-sm-3">
-											<b>#{mechanic.name}</b>
-										</div>
-										<div class="col-sm-6">
-											<p>
-												Huidige taak: <em>TODO</em>
-											</p>
-										</div>
-									</div>
-								</c:forEach>
-							</div>
-							<button type="button" name="button" class="btn btn-default">Submit</button>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Sluit</button>
-					</div>
+					<h:form class="form-group">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Nieuwe herstelling</h4>
+						</div>
+						<div class="modal-body">
+							
+								 
+								<label for="description">Omschrijving probleem:</label> <br />
+								<h:inputTextarea name="description" rows="8" cols="40"
+									class="form-control" value="#{workplaceController.description}"></h:inputTextarea>
+								<label for="list_empl">Kies een onderhoudstechnicus:</label> <br />
+								<br />
+								
+								  
+								<div class="container">
+								
+								<h:selectOneMenu value="#{workplaceController.mechanicID}" class="form-group">
+									
+									<f:selectItems value="#{workplaceController.mechanics}" var="mechanic" itemValue="#{mechanic.id}" itemLabel="#{mechanic.name}" />
+									
+								</h:selectOneMenu>
+								
+								</div>
+								
+								
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Sluit</button>
+							<h:commandButton class="btn btn-default btn-large" 
+									action="#{workplaceController.createIssue()}" type="submit" value="Verstuur"></h:commandButton>
+						</div>
+					</h:form>
 				</div>
 
 			</div>

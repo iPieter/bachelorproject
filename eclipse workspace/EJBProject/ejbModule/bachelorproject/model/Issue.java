@@ -61,16 +61,6 @@ public class Issue implements Serializable
 		this.id = id;
 	}
 
-	public String getDesc()
-	{
-		return this.descr;
-	}
-
-	public void setDesc( String desc )
-	{
-		this.descr = desc;
-	}
-
 	public IssueStatus getStatus()
 	{
 		return this.status;
