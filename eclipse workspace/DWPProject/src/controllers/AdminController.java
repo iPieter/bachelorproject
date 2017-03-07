@@ -9,6 +9,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import bachelorproject.model.User;
+import bachelorproject.model.UserRole;
 import bachelorproject.ejb.UserEJB;
 
 /*
@@ -99,5 +100,15 @@ public class AdminController implements Serializable
 	public void setUsers(List<User> users)
 	{
 		this.users = users;
+	}
+
+	/*
+	 * Provides a getter for a non-exisisting parameter. Intended for 
+	 * listing all the roles.
+	 * @return Array with all the values the UserRole enum can have.
+	 */
+	public UserRole[] getUserRoles()
+	{
+		return UserRole.values();
 	}
 }
