@@ -27,6 +27,8 @@ public class IssueEJB
 {
 	/**
 	 * Creates a correct Issue object and persists it to the database
+	 * @author Anton
+	 * @param issue The Issue object that should be persisted to the database.
 	 */
 	public void createIssue( Issue issue )
 	{
