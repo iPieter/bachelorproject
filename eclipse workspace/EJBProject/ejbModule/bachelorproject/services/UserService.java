@@ -39,6 +39,13 @@ public class UserService implements Serializable
 
 	private User user;
 
+	/**
+	 * Generate some fake users when none are present. 
+	 * <p>
+	 * This is only ment for debugging.
+	 * @author Pieter Delobelle
+	 * @version 0.0.1
+	 */
 	@PostConstruct
 	public void init()
 	{
@@ -74,10 +81,14 @@ public class UserService implements Serializable
 
 	}
 
-	/*
+	/**
 	 * If the user that's currently logged in has the right UserRole, this
 	 * function will return true. False otherwise. If no user is logged in, this
 	 * function will also return false.
+	 * @author Pieter Delobelle
+	 * @version 0.1.0
+	 * @param ur UserRole to check.
+	 * @return True if the user has the required role, false otherwise.
 	 */
 	public boolean hasCurrentUserRequiredRole( UserRole ur )
 	{
@@ -91,11 +102,23 @@ public class UserService implements Serializable
 	}
 
 	/*
+
+	 */
+	
+	/**
 	 * The verification of a login consists of two steps: 1. finding the
 	 * appropriate user object 2. generating the digest based on password and
 	 * salt
-	 * 
+	 * <p>
 	 * Note that timing attacks are still an issue in this implementation.
+	 * <p>
+	 * Note we do not provide feedback about the existence of either the email
+	 * nor the password (obviously). This is to prevent automated guessing and stuff.
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param email A string with the email address used as login credential
+	 * @param password A string with the password used as login credential
+	 * @return True if the user has correct credentials, false otherwise.
 	 */
 	public boolean verificateLogin( String email, String password )
 	{
@@ -135,7 +158,7 @@ public class UserService implements Serializable
 		return false;
 	}
 
-	/*
+	/**
 	 * Simple method to remove the user object, if there's one. This will result
 	 * in a logout.
 	 */
@@ -144,12 +167,20 @@ public class UserService implements Serializable
 		this.user = null;
 	}
 
-	/*
+	/**
 	 * The generateHash method takes a salt, likely provided by the User object,
 	 * and a password string and generates the hash described by the defined
 	 * method.
 	 * 
 	 * This function is intended to be used internally, not by other services.
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param password A String with the password to generate a hash.
+	 * @param salt For added security, we combine this hash with a salt.
+	 * @return A hash of the password with salt by the specified hashing mechanism.
+	 * @throws NoSuchAlgorithmException
+	 * @throws UnsupportedEncodingException
+	 * @see MesageDigest
 	 */
 	private byte[] generateHash( String password, byte[] salt )
 			throws NoSuchAlgorithmException, UnsupportedEncodingException
@@ -160,6 +191,14 @@ public class UserService implements Serializable
 		return sha.digest( password.getBytes( "UTF-8" ) );
 	}
 
+	/**
+	 * Generates a salt of a provided length in bytes using SecureRandom.
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param length The desired length in bytes
+	 * @return A byte array with random bytes.
+	 * @see SecureRandom
+	 */
 	private byte[] salt( int length )
 	{
 
@@ -172,6 +211,13 @@ public class UserService implements Serializable
 
 	}
 
+	/**
+	 * Convert a byte array to an ASCII string.
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param bs The byte array to be converted to a string.
+	 * @return A string representing the byte array as ASCII.
+	 */
 	public String bytesToString( byte[] bs )
 	{
 		StringBuilder s = new StringBuilder();
