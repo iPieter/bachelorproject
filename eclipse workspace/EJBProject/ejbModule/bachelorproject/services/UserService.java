@@ -10,7 +10,8 @@ import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.SessionScoped;
+//import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 
 import bachelorproject.ejb.UserEJB;
 import bachelorproject.model.User;
@@ -183,4 +184,16 @@ public class UserService implements Serializable
 
 		return s.toString();
 	}
+
+	public User getUser()
+	{
+		return user;
+	}
+
+	public void setUser( User user )
+	{
+		this.user = user;
+	}
+	
+	
 }
