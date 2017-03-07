@@ -35,7 +35,19 @@ public class AdminController implements Serializable
 		System.out.println("Set users: " + users.get(0));
 
 	}
-
+	
+	/*
+	 * Deletes the user from the database by the provided id. Note that 
+	 * a user is not really deleted, but detached. This means it will still
+	 * exist in the heap, but not on the persistence.
+	 * 
+	 * @param userId The id of the user to be deleted.
+	 */
+	public void deleteUser(int userId)
+	{
+		userEJB.deleteUserById(userId);
+	}
+	
 	public List<User> getUsers()
 	{
 		return users;
