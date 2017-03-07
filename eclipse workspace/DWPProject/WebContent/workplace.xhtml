@@ -44,7 +44,7 @@
 				
 				<!-- WAGONS OVERZICHT -->
 				<c:set var="workplace" value="#{workplaceController.currentWorkplace}"/>
-				<c:forEach var="traincoach" items="#{workplace.traincoaches}">
+				<c:forEach var="traincoach" items="#{workplaceController.findActiveTrainCoaches()}">
 					<!-- WAGON OVERZICHT -->
 					<div class="row mainview_traincoach">
 						<div class="col-sm-4 mainview_wagon_header">

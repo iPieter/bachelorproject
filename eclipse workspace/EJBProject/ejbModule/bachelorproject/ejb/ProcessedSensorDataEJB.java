@@ -14,7 +14,8 @@ import bachelorproject.model.ProcessedSensorData;
  *  <p>
  *  This class allows for the controller to manipulate and fetch specific
  *  ProcessedSensorData instances. It validates new objects and handles 
- *  errors when, for example, no entries in the databse exist.
+ *  errors when, for example, no entries in the database exist.
+ *  
  * */
 @Named
 @Stateless

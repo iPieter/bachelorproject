@@ -47,6 +47,29 @@ public class WorkplaceController implements Serializable
 		currentWorkplace = workplaceEJB.findWorkplaceByWorkplaceId( currentWorkplace.getId() );
 		System.out.println( "ID:" + currentWorkplace.getId() );
 	}
+	
+	/**
+	 * 	Calls into the TrainCoachEJB object to set this TrainCoach as reviewed.
+	 *  @return If this method succeeds, it will redirect to index
+	 * */
+	public String setTrainCoachReviewed()
+	{
+		if( currentTrainCoach != null)
+		{
+			traincoachEJB.setTrainCoachReviewed( currentTrainCoach.getId() );
+			return "index.xhtml";
+		}
+		return null;
+	}
+	
+	/**
+	 * 	Returns a list of all the current active TrainCoaches of the currentWorkplace object.
+	 * 	@return A List of TrainCoach objects stored in the currentWorkplace.
+	 * */
+	public List<TrainCoach> findActiveTrainCoaches( )
+	{
+		return traincoachEJB.getAllTraincoachesNeedReview( currentWorkplace.getId() );
+	}
 
 	public List<String> findActiveTraincoachProblemsById( int traincoachId )
 	{
@@ -74,7 +97,7 @@ public class WorkplaceController implements Serializable
 
 	public List<TrainCoach> getAllTraincoaches()
 	{
-		return traincoachEJB.getAllTraincoaches();
+		return traincoachEJB.getAllTraincoachesNeedReview( currentWorkplace.getId() );
 	}
 
 	// GETTERS & SETTERS

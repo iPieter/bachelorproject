@@ -58,10 +58,13 @@
 		<div class="row">
 			<div class="col-sm-5 mainview_panel">
 				<div class="mainview_issue row">
-					<div class="col-sm-12 text-center issue_bar">
-						<button type="button" name="button"
-							class="btn btn-danger btn-large" data-toggle="modal"
+					<div class="col-sm-12 issue_bar">
+						<button type="button" name="button" class="btn btn-danger btn-large" data-toggle="modal"
 							data-target="#assignModal">Nieuwe herstelling</button>
+						<h:form>
+						<h:commandButton name="button" class="btn btn-success btn-large" 
+								action="#{workplaceController.setTrainCoachReviewed()}" type="submit" value="Goedkeuren"></h:commandButton>
+						</h:form>
 					</div>
 				</div>
 				<c:forEach var="mechanic" items="#{workplaceController.mechanics}">
@@ -112,7 +115,7 @@
 										</div>
 										<div class="col-sm-6">
 											<p>
-												Huidige taak: <em>Inspecteer onderstel vooraan</em>
+												Huidige taak: <em>TODO</em>
 											</p>
 										</div>
 									</div>

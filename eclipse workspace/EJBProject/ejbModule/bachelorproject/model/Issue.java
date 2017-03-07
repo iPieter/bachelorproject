@@ -81,4 +81,53 @@ public class Issue implements Serializable
 		this.status = status;
 	}
 
+	public String getDescr()
+	{
+		return descr;
+	}
+
+	public void setDescr( String descr )
+	{
+		this.descr = descr;
+	}
+
+	public List<IssueAsset> getAssets()
+	{
+		return assets;
+	}
+
+	public void setAssets( List<IssueAsset> assets )
+	{
+		this.assets = assets;
+	}
+
+	public User getMechanic()
+	{
+		return mechanic;
+	}
+
+	public void setMechanic( User mechanic )
+	{
+		this.mechanic = mechanic;
+	}
+
+	public User getOperator()
+	{
+		return Operator;
+	}
+
+	public void setOperator( User operator )
+	{
+		Operator = operator;
+	}
+
+	public ProcessedSensorData getData()
+	{
+		return data;
+	}
+
+	public void setData( ProcessedSensorData data )
+	{
+		this.data = data;
+	}
 }

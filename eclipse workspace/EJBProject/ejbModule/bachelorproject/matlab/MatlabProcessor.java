@@ -21,6 +21,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
+import bachelorproject.model.Issue;
+import bachelorproject.model.IssueStatus;
 import bachelorproject.model.ProcessedSensorData;
 import bachelorproject.model.TrainCoach;
 import bachelorproject.model.Workplace;
@@ -296,6 +298,8 @@ public class MatlabProcessor
 			trainCoach.setName( nameSplit[3] );
 		}
 		else trainCoach = traincoachResult.get( 0 );
+		
+		trainCoach.setNeedsReview( true );
 
 		Workplace workplace;
 		if ( workplaceResult.size() == 0 )
@@ -315,7 +319,7 @@ public class MatlabProcessor
 		data.setTime( new Date() );
 		data.setTrack( nameSplit[4] );
 		data.setTrainCoach( trainCoach );
-
+		
 		em.persist( trainCoach );
 		em.persist( data );
 		em.persist( workplace );

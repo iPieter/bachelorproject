@@ -17,15 +17,19 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @NamedQueries(
-{ @NamedQuery( name = TrainCoach.FIND_ALL, query = "SELECT t FROM TrainCoach t" ),
-		@NamedQuery( name = TrainCoach.FIND_BY_DATA, query = "SELECT t FROM TrainCoach t WHERE t.name = :name AND t.type = :type AND t.constructor = :constructor " ) } )
+{ 	@NamedQuery( name = TrainCoach.FIND_ALL, query = "SELECT t FROM TrainCoach t" ),
+	@NamedQuery( name = TrainCoach.FIND_ALL_NEEDS_REVIEW, 
+				query = "SELECT t FROM Workplace w JOIN w.traincoaches t WHERE t.needsReview = true AND w.id = :id" ),
+	@NamedQuery( name = TrainCoach.FIND_BY_DATA, query = "SELECT t FROM TrainCoach t WHERE t.name = :name AND t.type = :type AND t.constructor = :constructor " ) 
+} )
 
 public class TrainCoach implements Serializable
 {
 
 	public static final String FIND_ALL = "TrainCoach.findAll";
 	public static final String FIND_BY_DATA = "TrainCoach.findByData";
-
+	public static final String FIND_ALL_NEEDS_REVIEW = "TrainCoach.findAllNeedsReview";
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -42,6 +46,9 @@ public class TrainCoach implements Serializable
 	@Lob
 	@NotNull
 	private String type;
+	
+	@NotNull
+	private boolean needsReview;
 
 	public TrainCoach()
 	{
@@ -87,4 +94,13 @@ public class TrainCoach implements Serializable
 		this.type = type;
 	}
 
+	public void setNeedsReview( boolean b )
+	{
+		needsReview = b;
+	}
+
+	public boolean getNeedsReview()
+	{
+		return true;
+	}
 }
