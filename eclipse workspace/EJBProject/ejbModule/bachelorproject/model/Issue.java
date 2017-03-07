@@ -74,14 +74,14 @@ public class Issue implements Serializable
 		this.id = id;
 	}
 
-	public String getDesc()
+	public String getDescr()
 	{
 		return this.descr;
 	}
 
-	public void setDesc( String desc )
+	public void setDescr( String descr )
 	{
-		this.descr = desc;
+		this.descr = descr;
 	}
 
 	public IssueStatus getStatus()
