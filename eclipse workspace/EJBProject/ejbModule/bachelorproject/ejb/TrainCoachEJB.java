@@ -15,22 +15,6 @@ import bachelorproject.model.TrainCoach;
 @Stateless
 public class TrainCoachEJB
 {
-	public List<TrainCoach> getAllTraincoaches()
-	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-
-		TypedQuery<TrainCoach> query = em.createNamedQuery( TrainCoach.FIND_ALL, TrainCoach.class );
-		List<TrainCoach> result = query.getResultList();
-
-		em.getTransaction().commit();
-		em.close();
-		emf.close();
-
-		return result;
-	}
-
 	public TrainCoach findTrainCoachByTraincoachId( int id )
 	{
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );

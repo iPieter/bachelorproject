@@ -70,7 +70,7 @@ public class WorkplaceEJB
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 
-		TypedQuery<User> query = em.createNamedQuery( "Workplace.findWorkers", User.class );
+		TypedQuery<User> query = em.createNamedQuery( Workplace.FIND_BY_WORKPLACE_ID, User.class );
 		query.setParameter( "id", workplaceId );
 		List<User> result = query.getResultList();
 
