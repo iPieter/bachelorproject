@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -20,10 +21,22 @@ import javax.persistence.OneToOne;
  * 
  */
 @Entity
-@NamedQuery( name = "Issue.findAll", query = "SELECT i FROM Issue i" )
+@NamedQueries(
+{
+	@NamedQuery( name = Issue.FIND_ALL, query = "SELECT i FROM Issue i" ),
+	@NamedQuery( name = Issue.FIND_BY_MECHANIC_ID, query = "SELECT i FROM Issue i WHERE i.status = :status AND i.mechanic.id = :mechanic_id" ), 
+	@NamedQuery( name = Issue.FIND_BY_TRAINCOACH_ID, 
+				query = "SELECT i FROM Issue i WHERE EXISTS (SELECT d FROM ProcessedSensorData d WHERE d.traincoach.id = :traincoachId AND i.status = :status)")
+				//"SELECT i FROM Issue i, (SELECT d FROM ProcessedSensorData d WHERE d.traincoach.id = :traincoachId) d WHERE i.data.id = d.id AND i.status = :status") 
+} )
 public class Issue implements Serializable
 {
 	private static final long serialVersionUID = 1L;
+	
+	public static final String FIND_ALL = "Issue.findAll";
+	public static final String FIND_BY_MECHANIC_ID = "Issue.findByMechanicId";
+	public static final String FIND_BY_TRAINCOACH_ID = "Issue.findByTraincoachId";
+	
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
@@ -61,14 +74,14 @@ public class Issue implements Serializable
 		this.id = id;
 	}
 
-	public String getDesc()
+	public String getDescr()
 	{
 		return this.descr;
 	}
 
-	public void setDesc( String desc )
+	public void setDescr( String descr )
 	{
-		this.descr = desc;
+		this.descr = descr;
 	}
 
 	public IssueStatus getStatus()

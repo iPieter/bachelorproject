@@ -1,14 +1,18 @@
 package bachelorproject.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -17,9 +21,11 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @NamedQueries(
-{ 	@NamedQuery( name = TrainCoach.FIND_ALL, query = "SELECT t FROM TrainCoach t" ),
+{ 	
+  @NamedQuery( name = TrainCoach.FIND_ALL, query = "SELECT t FROM TrainCoach t" ),
 	@NamedQuery( name = TrainCoach.FIND_ALL_NEEDS_REVIEW, 
 				query = "SELECT t FROM Workplace w JOIN w.traincoaches t WHERE t.needsReview = true AND w.id = :id" ),
+  @NamedQuery( name = TrainCoach.FIND_ALL, query = "SELECT t FROM TrainCoach t" ),
 	@NamedQuery( name = TrainCoach.FIND_BY_DATA, query = "SELECT t FROM TrainCoach t WHERE t.name = :name AND t.type = :type AND t.constructor = :constructor " ) 
 } )
 
@@ -54,6 +60,7 @@ public class TrainCoach implements Serializable
 	{
 	}
 
+	// GETTERS & SETTERS
 	public int getId()
 	{
 		return this.id;

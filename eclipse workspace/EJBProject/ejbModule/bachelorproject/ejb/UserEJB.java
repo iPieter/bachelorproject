@@ -55,6 +55,9 @@ public class UserEJB
 	/*
 	 * This function finds the user by it's email address and returns it as a
 	 * User object. If no user is found, it will return null.
+	 * 
+	 * @param email A string with the email address of the user.
+	 * @return User object if the user is found, null otherwise
 	 */
 	public User findUserByEmail( String email )
 	{
@@ -84,5 +87,49 @@ public class UserEJB
 
 		return result;
 	}
+	
+	/*
+	 * Deletes the user from the database by the provided id. Note that 
+	 * a user is not really deleted, but detached. This means it will still
+	 * exist in the heap, but not on the persistence.
+	 * 
+	 * @param userId The id of the user to be deleted.
+	 */
+	public void deleteUserById(int userId)
+	{
 
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+
+		User u = em.find(User.class, userId);
+		
+		//If the above find function returns a valid user (not null), we will remove (detach) it.
+		if (u != null)
+		{
+			em.remove(u);
+		}
+		
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
+	}
+
+	/*
+	 * Searches for the user by an id. If no user is found, null is returned.
+	 * 
+	 * @param userId The id of the user the function is to return
+	 * @return An User object or null if not found
+	 */
+	public User findUserById(int userId)
+	{
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
+		EntityManager em = emf.createEntityManager();
+		User u = em.find(User.class, userId);
+	
+		em.close();
+		emf.close();
+		
+		return u;
+	}
 }

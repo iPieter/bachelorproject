@@ -25,8 +25,10 @@ import org.hibernate.validator.constraints.Email;
  */
 @Entity
 @NamedQueries(
-{ @NamedQuery( name = User.FIND_ALL, query = "SELECT u FROM User u" ),
-		@NamedQuery( name = User.FIND_BY_EMAIL, query = "SELECT u FROM User u WHERE u.email = :email" ), } )
+{ 
+	@NamedQuery( name = User.FIND_ALL, query = "SELECT u FROM User u" ),
+	@NamedQuery( name = User.FIND_BY_EMAIL, query = "SELECT u FROM User u WHERE u.email = :email" ), 
+	} )
 public class User implements Serializable
 {
 	// Named queries
