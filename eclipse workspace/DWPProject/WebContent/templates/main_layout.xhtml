@@ -59,7 +59,7 @@
             </h4>
             
 	       	<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
-	       	<c:forEach var="traincoach" items="#{workplace.traincoaches}">
+	       	<c:forEach var="traincoach" items="#{workplaceController.findActiveTrainCoaches()}">
 	            <div class="traincoach traincoach_active">
 	                <h4 class="sidebar_text_traincoach">
 	                	<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
