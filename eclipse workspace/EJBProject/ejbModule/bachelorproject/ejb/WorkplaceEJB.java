@@ -64,14 +64,14 @@ public class WorkplaceEJB
 		return result;
 	}
 
-	public List<User> getWorkplaceMechanics( int id )
+	public List<User> findMechanicsByWorkplaceId( int workplaceId )
 	{
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 
-		TypedQuery<User> query = em.createNamedQuery( "Workplace.findWorkers", User.class );
-		query.setParameter( "id", id );
+		TypedQuery<User> query = em.createNamedQuery( Workplace.FIND_BY_WORKPLACE_ID, User.class );
+		query.setParameter( "id", workplaceId );
 		List<User> result = query.getResultList();
 
 		em.getTransaction().commit();

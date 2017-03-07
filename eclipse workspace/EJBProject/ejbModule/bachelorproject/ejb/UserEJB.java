@@ -132,5 +132,4 @@ public class UserEJB
 		
 		return u;
 	}
-	
 }
