@@ -126,13 +126,6 @@ public class WorkplaceController implements Serializable
 		return "index.html";
 	}
 
-	public List<String> findActiveTraincoachProblemsById( int traincoachId )
-	{
-		// TODO EJB model side!
-		List<String> result = new ArrayList<>();
-		result.add( "Active Problemmethod TODO in model" );
-		return result;
-  }
 	//MECHANICS OF CURRENT WORKPLACE
 	/**
 	 * Returns a List of User objects(UserRole=MECHANIC) for the current Workplace.
@@ -159,7 +152,6 @@ public class WorkplaceController implements Serializable
 	 */
 	public List<Issue> findActiveIssuesByTraincoachId( int traincoachId )
 	{
-		// TODO ERROR CHECKING
 		List<Issue> result = new ArrayList<>();
 		result.addAll( findInProgressIssuesByTraincoachId( traincoachId ));
 		result.addAll( findAssignedIssuesByTraincoachId( traincoachId ));
