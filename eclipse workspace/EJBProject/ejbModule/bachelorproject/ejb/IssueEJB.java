@@ -79,6 +79,7 @@ public class IssueEJB
 		for ( Issue i : result )
 		{
 			System.out.println( i.getDescr() );
+
 		}
 
 		em.getTransaction().commit();
@@ -101,6 +102,7 @@ public class IssueEJB
 		for ( Issue i : result )
 		{
 			System.out.println( i.getDescr() );
+
 		}
 
 		em.getTransaction().commit();
@@ -119,7 +121,7 @@ public class IssueEJB
 		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_TRAINCOACH_ID, Issue.class )
 				.setParameter( "status", IssueStatus.ASSIGNED ).setParameter( "traincoachId", traincoachId );
 		List<Issue> result = query.getResultList();
-
+		
 		for ( Issue i : result )
 		{
 			System.out.println( i.getDescr() );

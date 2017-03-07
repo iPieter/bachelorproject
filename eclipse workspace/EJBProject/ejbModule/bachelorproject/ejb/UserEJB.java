@@ -30,7 +30,7 @@ public class UserEJB
 		emf.close();
 	}
 
-	/*
+	/**
 	 * This function returns all users in the database. If there are none, an
 	 * empty List object is returned. To provide at least some security, the
 	 * results are limited to 20.
@@ -52,7 +52,7 @@ public class UserEJB
 		return results;
 	}
 
-	/*
+	/**
 	 * This function finds the user by it's email address and returns it as a
 	 * User object. If no user is found, it will return null.
 	 * 
@@ -88,7 +88,7 @@ public class UserEJB
 		return result;
 	}
 	
-	/*
+	/**
 	 * Deletes the user from the database by the provided id. Note that 
 	 * a user is not really deleted, but detached. This means it will still
 	 * exist in the heap, but not on the persistence.
@@ -115,7 +115,7 @@ public class UserEJB
 		emf.close();
 	}
 
-	/*
+	/**
 	 * Searches for the user by an id. If no user is found, null is returned.
 	 * 
 	 * @param userId The id of the user the function is to return
@@ -131,5 +131,29 @@ public class UserEJB
 		emf.close();
 		
 		return u;
+	}
+	
+	/**
+	 * Finds the user provided by it's id and update the other field if needed.
+	 * 
+	 * @param user The User object to be updated in persistence.
+	 */
+	public void updateUser(User user)
+	{
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+
+		//User u = em.find(User.class, user.getId());
+		
+		//If the above find function returns a valid user (not null), we will remove (detach) it.
+		//if (u != null)
+		//{
+			em.merge(user);
+		//}
+		
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
 	}
 }
