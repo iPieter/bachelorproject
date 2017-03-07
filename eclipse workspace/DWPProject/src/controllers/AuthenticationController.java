@@ -36,7 +36,7 @@ public class AuthenticationController implements Serializable
 	{
 		if ( userService.verificateLogin( email, password ) )
 		{
-			return userService.hasCurrentUserRequiredRole(UserRole.ADMIN)? "admin.xhtml" : "index.xhtml";
+			return userService.hasCurrentUserRequiredRole(UserRole.ADMIN)? "admin.xhtml?faces-redirect=true" : "index.xhtml?faces-redirect=true";
 		}
 		else
 		{
