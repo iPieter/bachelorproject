@@ -22,8 +22,10 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @NamedQueries(
-{ @NamedQuery( name = "ProcessedSensorData.findAll", query = "SELECT p FROM ProcessedSensorData p" ),
-		@NamedQuery( name = "ProcessedSensorData.findByID", query = "SELECT p FROM ProcessedSensorData p WHERE p.id = :id" ) } )
+{ 
+	@NamedQuery( name = "ProcessedSensorData.findAll", query = "SELECT p FROM ProcessedSensorData p" ),
+	@NamedQuery( name = "ProcessedSensorData.findByID", query = "SELECT p FROM ProcessedSensorData p WHERE p.id = :id" ) 
+} )
 
 public class ProcessedSensorData implements Serializable
 {

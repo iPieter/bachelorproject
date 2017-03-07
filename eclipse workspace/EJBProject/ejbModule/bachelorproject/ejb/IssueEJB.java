@@ -10,6 +10,7 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import bachelorproject.model.Issue;
+import bachelorproject.model.IssueStatus;
 import bachelorproject.model.TrainCoach;
 
 @Named
@@ -23,7 +24,7 @@ public class IssueEJB
 		em.getTransaction().begin();
 		
 		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_MECHANIC_ID, Issue.class )
-									.setParameter("status", "IN_PROGRESS")
+									.setParameter("status", IssueStatus.IN_PROGRESS)
 									.setParameter("mechanicId", mechanicId);
 		List<Issue> result = query.getResultList();
 		
@@ -40,8 +41,71 @@ public class IssueEJB
 		em.getTransaction().begin();
 		
 		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_MECHANIC_ID, Issue.class )
-									.setParameter("status", "ASSIGNED")
+									.setParameter("status", IssueStatus.ASSIGNED)
 									.setParameter("mechanicId", mechanicId);
+		List<Issue> result = query.getResultList();
+		
+		for(Issue i:result){
+			System.out.println(i.getDesc());
+		}
+		
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
+
+		return result;
+	}
+	
+	public List<Issue> findInProgressIssuesByTraincoachId(int traincoachId){
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		
+		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_TRAINCOACH_ID, Issue.class )
+									.setParameter("status", IssueStatus.IN_PROGRESS)
+									.setParameter("traincoachId", traincoachId);
+		List<Issue> result = query.getResultList();
+		
+		for(Issue i:result){
+			System.out.println(i.getDesc());
+		}
+		
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
+
+		return result;
+	}
+	
+	public List<Issue> findAssignedIssuesByTraincoachId(int traincoachId){
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		
+		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_TRAINCOACH_ID, Issue.class )
+									.setParameter("status", IssueStatus.ASSIGNED)
+									.setParameter("traincoachId", traincoachId);
+		List<Issue> result = query.getResultList();
+		
+		for(Issue i:result){
+			System.out.println(i.getDesc());
+		}
+		
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
+
+		return result;
+	}
+	
+	public List<Issue> findClosedIssuesByTraincoachId(int traincoachId){
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		
+		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_TRAINCOACH_ID, Issue.class )
+									.setParameter("status", IssueStatus.CLOSED)
+									.setParameter("traincoachId", traincoachId);
 		List<Issue> result = query.getResultList();
 		
 		for(Issue i:result){

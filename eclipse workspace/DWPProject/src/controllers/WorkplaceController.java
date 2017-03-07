@@ -63,20 +63,25 @@ public class WorkplaceController implements Serializable
 	 * @exception NullPointerException
 	 * @see Issue
 	 */
-	public List<String> findActiveIssuesByTraincoachId( int traincoachId )
+	public List<Issue> findActiveIssuesByTraincoachId( int traincoachId )
 	{
-		// TODO EJB model side!
-		List<String> result = new ArrayList<>();
-		result.add( "Active Problemmethod TODO in model" );
+		// TODO ERROR CHECKING
+		List<Issue> result = new ArrayList<>();
+		result.addAll( findInProgressIssuesByTraincoachId( traincoachId ));
+		result.addAll( findAssignedIssuesByTraincoachId( traincoachId ));
 		return result;
 	}
-
-	public List<String> findClosedIssuesByTraincoachId( int traincoachId )
-	{
-		// TODO EJB model side!
-		List<String> result = new ArrayList<>();
-		result.add( "Solved Problemmethod TODO in model" );
-		return result;
+	
+	public List<Issue> findInProgressIssuesByTraincoachId( int traincoachId ){
+		return issueEJB.findInProgressIssuesByTraincoachId(traincoachId);
+	}
+	
+	public List<Issue> findAssignedIssuesByTraincoachId( int traincoachId ){
+		return issueEJB.findAssignedIssuesByTraincoachId(traincoachId);
+	}
+	
+	public List<Issue> findClosedIssuesByTraincoachId( int traincoachId ){
+		return issueEJB.findClosedIssuesByTraincoachId(traincoachId);
 	}
 
 	public List<Issue> findActiveIssuesByMechanicId( int mechanicId )

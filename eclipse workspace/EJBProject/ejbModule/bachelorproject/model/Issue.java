@@ -24,7 +24,10 @@ import javax.persistence.OneToOne;
 @NamedQueries(
 {
 	@NamedQuery( name = Issue.FIND_ALL, query = "SELECT i FROM Issue i" ),
-	@NamedQuery( name = Issue.FIND_BY_MECHANIC_ID, query = "SELECT i FROM Issue i WHERE i.status = :status AND i.mechanic.id = :mechanic_id" ) 
+	@NamedQuery( name = Issue.FIND_BY_MECHANIC_ID, query = "SELECT i FROM Issue i WHERE i.status = :status AND i.mechanic.id = :mechanic_id" ), 
+	@NamedQuery( name = Issue.FIND_BY_TRAINCOACH_ID, 
+				query = "SELECT i FROM Issue i WHERE EXISTS (SELECT d FROM ProcessedSensorData d WHERE d.traincoach.id = :traincoachId AND i.status = :status)")
+				//"SELECT i FROM Issue i, (SELECT d FROM ProcessedSensorData d WHERE d.traincoach.id = :traincoachId) d WHERE i.data.id = d.id AND i.status = :status") 
 } )
 public class Issue implements Serializable
 {
@@ -32,6 +35,8 @@ public class Issue implements Serializable
 	
 	public static final String FIND_ALL = "Issue.findAll";
 	public static final String FIND_BY_MECHANIC_ID = "Issue.findByMechanicId";
+	public static final String FIND_BY_TRAINCOACH_ID = "Issue.findByTraincoachId";
+	
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
