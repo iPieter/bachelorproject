@@ -67,7 +67,11 @@
 	                </h4>
 	                <!-- METADATA PER WAGON -->
 	                <div class="traincoach_data">
-	                    <h5><span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span> Problemen <span class="badge">1</span></h5>
+	                    <h5>
+	                    	<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
+	                    	<h:link value="Problemen" outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"/>
+	                    	<span class="badge"></span>
+	                    </h5>
 	                    <h5><span class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span> Sensoren</h5>
 	                </div>
 	            </div>
