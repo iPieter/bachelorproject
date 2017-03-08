@@ -10,7 +10,6 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import bachelorproject.model.Issue;
-import bachelorproject.model.TrainCoach;
 import bachelorproject.model.IssueStatus;
 
 /**
