@@ -25,6 +25,10 @@
 
 <!-- Renders when logged in -->
 <h:body rendered="#{authenticationController.hasOperatorAccess()}">	
+<input 	type="hidden"
+		value="#{workplaceController.currentSensorData.id}"
+		id="current_traincoach" />
+			
 <div class="container-fluid">
 	<div class="row">
 	
