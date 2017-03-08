@@ -77,6 +77,9 @@
 										    <div id="issue_asset_#{issueAsset.id}" class="panel-collapse collapse">
 										      <div class="panel-body">
 										      	<h:outputText value="#{issueAsset.descr}"></h:outputText>
+										      	<c:if test="#{issueAsset.location != ''}" >
+										      		<img src="rest/issue_asset/#{issueAsset.id}" class="asset_image"/>
+										      	</c:if>
 										      </div>
 										    </div>
 										  </div>
@@ -102,6 +105,7 @@
 			type="text/javascript"></script>
 		<script src="js/bootstrap.min.js" type="text/javascript"></script>
 		<script src="js/underscore-min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="js/traincoach_issues.js"></script>
 	</ui:define>
 </ui:composition>
 </html>

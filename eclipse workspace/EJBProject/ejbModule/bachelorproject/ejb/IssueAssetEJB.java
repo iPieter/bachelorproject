@@ -30,6 +30,7 @@ public class IssueAssetEJB
 	 * 	Retrieves all the issue asset objects from the database
 	 *  that are connected to the issue specified with issueID
 	 *  @param issueID The associated Issue.
+	 *  @return A list of issue assets.
 	 * */
 	public List<IssueAsset> getAllIssueAssetsByIssueID( int issueID )
 	{
@@ -47,5 +48,31 @@ public class IssueAssetEJB
 		emf.close();
 		
 		return result;
+	}
+	
+	
+	/**
+	 * 	Retrieves an issueAsset from the database.
+	 *  @param issueAssetID The ID of the IssueAsset thats needed.
+	 *  @return The IssueAsset if found, null otherwise.
+	 * */
+	public IssueAsset getIssueAssetByID( int issueAssetID )
+	{
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		
+		TypedQuery<IssueAsset> query = em.createNamedQuery( IssueAsset.FIND_BY_ID, IssueAsset.class );
+		query.setParameter( "id", issueAssetID );
+		
+		List<IssueAsset> result = query.getResultList();
+
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
+		
+		if( result.size() == 0 )
+			return null;
+		return result.get( 0 );
 	}
 }

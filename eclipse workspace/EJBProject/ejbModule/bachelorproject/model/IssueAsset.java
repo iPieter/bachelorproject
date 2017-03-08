@@ -22,6 +22,7 @@ import javax.validation.constraints.NotNull;
 @NamedQueries(
 {
 	@NamedQuery( name = IssueAsset.FIND_ALL, query = "SELECT i FROM IssueAsset i" ),
+	@NamedQuery( name = IssueAsset.FIND_BY_ID, query = "SELECT i FROM IssueAsset i WHERE i.id = :id" ),
 	@NamedQuery( name = IssueAsset.FIND_BY_ISSUE_ID, query = "SELECT ia FROM Issue i JOIN i.assets ia WHERE i.id = :id ORDER BY ia.time DESC" )
 })
 
@@ -30,6 +31,7 @@ public class IssueAsset implements Serializable
 	private static final long serialVersionUID = 1L;
 	
 	public static final String FIND_ALL = "IssueAsset.findAll";
+	public static final String FIND_BY_ID = "IssueAsset.findByID";
 	public static final String FIND_BY_ISSUE_ID = "IssueAsset.findByIssueID";
 
 	@Id
@@ -131,5 +133,14 @@ public class IssueAsset implements Serializable
 	public void setUser( User user )
 	{
 		this.user = user;
+	}
+
+	/**
+	 * 	Returns a String representation of this object
+	 *  @return The String representation	 
+	 * */
+	public String toString()
+	{
+		return descr + ":" + location;
 	}
 }
