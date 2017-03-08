@@ -2,16 +2,19 @@ package controllers;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import bachelorproject.ejb.IssueAssetEJB;
 import bachelorproject.ejb.IssueEJB;
 import bachelorproject.ejb.TrainCoachEJB;
 import bachelorproject.ejb.WorkplaceEJB;
 import bachelorproject.model.Issue;
+import bachelorproject.model.IssueAsset;
 import bachelorproject.model.TrainCoach;
 import bachelorproject.model.Workplace;
 
@@ -43,11 +46,14 @@ public class TrainCoachIssuesController implements Serializable
 	private TrainCoachEJB traincoachEJB;
 	@Inject
 	private IssueEJB issueEJB;
+	@Inject
+	private IssueAssetEJB issueAssetEJB;
 	
 	private Workplace currentWorkplace = new Workplace();
 	private TrainCoach currentTrainCoach = new TrainCoach();
 	private List<Issue> currentActiveIssues = new ArrayList<Issue>();
 	private List<Issue> currentCompletedIssues = new ArrayList<>();
+	private HashMap<Integer,List<IssueAsset>> currentIssueAssets = new HashMap<Integer, List<IssueAsset>>();
 	
 	private int currentTraincoachID = -1;
 	
@@ -71,6 +77,28 @@ public class TrainCoachIssuesController implements Serializable
 		currentActiveIssues.addAll( issueEJB.findInProgressIssuesByTraincoachId( currentTraincoachID ) );
 		
 		currentCompletedIssues.addAll( issueEJB.findClosedIssuesByTraincoachId( currentTraincoachID ) );
+		
+		currentIssueAssets.clear();
+		
+		for( Issue i : currentActiveIssues )
+			currentIssueAssets.put( i.getId(), issueAssetEJB.getAllIssueAssetsByIssueID( i.getId() ) );
+		for( Issue i : currentCompletedIssues )
+			currentIssueAssets.put( i.getId(), issueAssetEJB.getAllIssueAssetsByIssueID( i.getId() ) );
+	}
+	
+	/**
+	 * 	Returns a list of an issue's assets.
+	 *  <p>
+	 *  Looks up the HashMap to find an issue's assets. If found, it will return the list, else and empty one
+	 *  @param issueID The ID of the Issue who's assets are needed.
+	 *  @return A list with the issue's assets.
+	 * */
+	public List<IssueAsset> getIssueAssets( int issueID )
+	{
+		if( !currentIssueAssets.containsKey( issueID ) )
+			return new ArrayList<IssueAsset>();
+		
+		return currentIssueAssets.get( issueID );
 	}
 
 	/**
@@ -151,5 +179,21 @@ public class TrainCoachIssuesController implements Serializable
 	public void setCurrentWorkplace( Workplace currentWorkplace )
 	{
 		this.currentWorkplace = currentWorkplace;
+	}
+
+	/**
+	 * @return the currentIssueAssets
+	 */
+	public HashMap<Integer, List<IssueAsset>> getCurrentIssueAssets()
+	{
+		return currentIssueAssets;
+	}
+
+	/**
+	 * @param currentIssueAssets the currentIssueAssets to set
+	 */
+	public void setCurrentIssueAssets( HashMap<Integer, List<IssueAsset>> currentIssueAssets )
+	{
+		this.currentIssueAssets = currentIssueAssets;
 	}
 }

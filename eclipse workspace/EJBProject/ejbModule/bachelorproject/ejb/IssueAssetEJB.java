@@ -38,7 +38,8 @@ public class IssueAssetEJB
 		em.getTransaction().begin();
 		
 		TypedQuery<IssueAsset> query = em.createNamedQuery( IssueAsset.FIND_BY_ISSUE_ID, IssueAsset.class );
-
+		query.setParameter( "id", issueID );
+		
 		List<IssueAsset> result = query.getResultList();
 
 		em.getTransaction().commit();

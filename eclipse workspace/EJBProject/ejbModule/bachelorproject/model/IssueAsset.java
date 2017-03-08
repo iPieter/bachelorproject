@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 @NamedQueries(
 {
 	@NamedQuery( name = IssueAsset.FIND_ALL, query = "SELECT i FROM IssueAsset i" ),
-	@NamedQuery( name = IssueAsset.FIND_BY_ISSUE_ID, query = "SELECT ia FROM Issue i JOIN i.assets ia WHERE i.id = :id" )
+	@NamedQuery( name = IssueAsset.FIND_BY_ISSUE_ID, query = "SELECT ia FROM Issue i JOIN i.assets ia WHERE i.id = :id ORDER BY ia.time DESC" )
 })
 
 public class IssueAsset implements Serializable
@@ -42,7 +42,7 @@ public class IssueAsset implements Serializable
 	@Temporal( TemporalType.TIMESTAMP )
 	@NotNull
 	private Date time;
-
+	
 	@Lob
 	private String location;
 
