@@ -50,9 +50,19 @@
 				<div class="row mainview_traincoach_panelheader">
 					<h4>Actieve problemen</h4>
 				</div>
+				<ul>
+					<c:forEach var="issue" items="#{trainCoachIssuesController.currentActiveIssues}">
+						<li><h:outputText value="#{issue.descr}"></h:outputText></li>
+					</c:forEach>
+				</ul>
 				<div class="row mainview_traincoach_panelheader">
 					<h4>Oude problemen</h4>
 				</div>
+				<ul>
+					<c:forEach var="issue" items="#{trainCoachIssuesController.currentCompletedIssues}">
+						<li><h:outputText value="#{issue.descr}"></h:outputText></li>
+					</c:forEach>
+				</ul>
 			</div>
 		</div>
 

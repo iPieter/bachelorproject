@@ -64,6 +64,9 @@ public class TrainCoachIssuesController implements Serializable
 		//TODO:: proper check
 		currentWorkplace = workplaceEJB.findWorkplaceByTraincoachID( currentTraincoachID ).get( 0 );
 		
+		currentActiveIssues.clear();
+		currentCompletedIssues.clear();
+		
 		currentActiveIssues.addAll( issueEJB.findAssignedIssuesByTraincoachId( currentTraincoachID ) );
 		currentActiveIssues.addAll( issueEJB.findInProgressIssuesByTraincoachId( currentTraincoachID ) );
 		
