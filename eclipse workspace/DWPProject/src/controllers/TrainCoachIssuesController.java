@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import bachelorproject.model.Issue;
 import bachelorproject.model.IssueAsset;
 import bachelorproject.model.TrainCoach;
 import bachelorproject.model.Workplace;
+import bachelorproject.services.UserService;
 
 /**
  * 	The controller for traincoach_issue.xhtml
@@ -48,6 +50,8 @@ public class TrainCoachIssuesController implements Serializable
 	private IssueEJB issueEJB;
 	@Inject
 	private IssueAssetEJB issueAssetEJB;
+	@Inject
+	private UserService userService;
 	
 	private Workplace currentWorkplace = new Workplace();
 	private TrainCoach currentTrainCoach = new TrainCoach();
@@ -56,6 +60,9 @@ public class TrainCoachIssuesController implements Serializable
 	private HashMap<Integer,List<IssueAsset>> currentIssueAssets = new HashMap<Integer, List<IssueAsset>>();
 	
 	private int currentTraincoachID = -1;
+	
+	private int fieldIssueID = 0;
+	private String fieldIssueAssetDescription = "";
 	
 	/**
 	 * 	This method gets called when the page first loads.
@@ -84,6 +91,24 @@ public class TrainCoachIssuesController implements Serializable
 			currentIssueAssets.put( i.getId(), issueAssetEJB.getAllIssueAssetsByIssueID( i.getId() ) );
 		for( Issue i : currentCompletedIssues )
 			currentIssueAssets.put( i.getId(), issueAssetEJB.getAllIssueAssetsByIssueID( i.getId() ) );
+	}
+	
+	/**
+	 * 	Creates a IssueAsset and links it to an issue.
+	 *  @return The resulting URL.
+	 * */
+	public String createIssueAsset()
+	{		
+		IssueAsset asset = new IssueAsset();
+		asset.setDescr( fieldIssueAssetDescription );
+		asset.setLocation( "" );
+		asset.setTime( new Date() );
+		asset.setUser( userService.getUser() );
+		
+		issueAssetEJB.createIssueAsset( asset );
+		issueEJB.addAsset( asset, fieldIssueID );
+		
+		return "traincoach_issues.xhtml?id=" + currentTrainCoach.getId();
 	}
 	
 	/**
@@ -196,4 +221,37 @@ public class TrainCoachIssuesController implements Serializable
 	{
 		this.currentIssueAssets = currentIssueAssets;
 	}
+
+	/**
+	 * @return the fieldIssueID
+	 */
+	public int getFieldIssueID()
+	{
+		return fieldIssueID;
+	}
+
+	/**
+	 * @param fieldIssueID the fieldIssueID to set
+	 */
+	public void setFieldIssueID( int fieldIssueID )
+	{
+		this.fieldIssueID = fieldIssueID;
+	}
+
+	/**
+	 * @return the fieldIssueAssetDescription
+	 */
+	public String getFieldIssueAssetDescription()
+	{
+		return fieldIssueAssetDescription;
+	}
+
+	/**
+	 * @param fieldIssueAssetDescription the fieldIssueAssetDescription to set
+	 */
+	public void setFieldIssueAssetDescription( String fieldIssueAssetDescription )
+	{
+		this.fieldIssueAssetDescription = fieldIssueAssetDescription;
+	}
+	
 }

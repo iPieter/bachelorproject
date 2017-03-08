@@ -75,4 +75,21 @@ public class IssueAssetEJB
 			return null;
 		return result.get( 0 );
 	}
+	
+	/**
+	 * 	Persists an IssueAsset object to the database.
+	 *  @param asset A valid IssueAsset object.
+	 * */
+	public void createIssueAsset( IssueAsset asset )
+	{
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		
+		em.persist( asset );
+
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
+	}
 }
