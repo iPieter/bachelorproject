@@ -109,7 +109,7 @@ body, html
 {
     border: 1px solid #95a5a6;
     border-radius: 3px;
-    height: 45vh;
+    height: 100%;
     margin-left: 1vh;
     margin-bottom: 5px;
     margin-top: 5px;
@@ -134,8 +134,19 @@ body, html
     overflow: hidden;
 }
 
+#map_size
+{
+	height:45vh;
+}
+
+#graph
+{
+	height:45vh;
+}
+
 #map
 {
+	height:45vh;
 }
 
 .mainview_issue

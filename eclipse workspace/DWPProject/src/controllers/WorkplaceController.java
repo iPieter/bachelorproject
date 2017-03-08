@@ -58,6 +58,8 @@ public class WorkplaceController implements Serializable
 	public void findTrainCoachByTraincoachId()
 	{
 		currentTrainCoach = traincoachEJB.findTrainCoachByTraincoachId( currentTrainCoach.getId() );
+		if( currentTrainCoach == null )
+			currentTrainCoach = new TrainCoach();
 		List<Workplace> result = workplaceEJB.findWorkplaceByTraincoachID( currentTrainCoach.getId() );
 		if ( result.size() > 0 )
 		{

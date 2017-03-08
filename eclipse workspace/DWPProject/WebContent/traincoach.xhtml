@@ -45,7 +45,7 @@
 			value="#{workplaceController.currentSensorData.id}"
 			id="current_traincoach" />
 		<div class="row">
-			<div class="col-sm-10 mainview_panel">
+			<div class="col-sm-10 mainview_panel" id="graph">
 				<div id="graph_options"> 
 					<label class="radio-inline"><input type="radio" name="optradio" id="radio_yaw" />Yaw</label> 
 					<label class="radio-inline"><input type="radio" name="optradio" id="radio_roll" />Roll</label>
@@ -83,7 +83,7 @@
 				</div>
 				</c:forEach>
 			</div>
-			<div class="col-sm-5 mainview_panel">
+			<div class="col-sm-5 mainview_panel" id="map_size">
 				<div id="map"></div>
 			</div>
 		</div>
