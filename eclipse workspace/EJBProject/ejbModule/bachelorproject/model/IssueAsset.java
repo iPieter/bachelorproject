@@ -46,6 +46,9 @@ public class IssueAsset implements Serializable
 	@Lob
 	private String location;
 
+	@NotNull
+	private User user;
+	
 	public IssueAsset()
 	{
 	}
@@ -112,5 +115,21 @@ public class IssueAsset implements Serializable
 	public void setTime( Date time )
 	{
 		this.time = time;
+	}
+
+	/**
+	 * @return the user
+	 */
+	public User getUser()
+	{
+		return user;
+	}
+
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser( User user )
+	{
+		this.user = user;
 	}
 }
