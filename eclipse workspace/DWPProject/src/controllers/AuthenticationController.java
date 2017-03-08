@@ -85,7 +85,6 @@ public class AuthenticationController implements Serializable
 	 */
 	public boolean hasOperatorAccess()
 	{
-		System.out.println( "op.access: " + UserRole.OPERATOR );
 		return hasAccess( UserRole.OPERATOR );
 	}
 	
@@ -98,7 +97,6 @@ public class AuthenticationController implements Serializable
 	 */
 	public boolean hasNoOperatorAccess()
 	{
-		System.out.println( "!op.access: " + UserRole.OPERATOR );
 		return !hasAccess( UserRole.OPERATOR );
 	}
 
