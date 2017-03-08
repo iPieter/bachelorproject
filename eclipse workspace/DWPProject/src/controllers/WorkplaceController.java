@@ -64,6 +64,8 @@ public class WorkplaceController implements Serializable
 			currentWorkplace = result.get( 0 );
 		}
 		currentSensorData = psdEJB.getProcessedSensorDataByTrainCoachID( currentTrainCoach.getId() );
+		if( currentSensorData == null )
+			System.out.println( "Failed to locate sensordata" );
 		
 		mechanics.clear();
 		for ( User u : workplaceEJB.findMechanicsByWorkplaceId( currentWorkplace.getId() ) )

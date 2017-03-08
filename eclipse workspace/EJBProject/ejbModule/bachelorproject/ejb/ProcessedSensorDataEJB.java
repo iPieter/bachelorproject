@@ -1,5 +1,7 @@
 package bachelorproject.ejb;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -15,7 +17,8 @@ import bachelorproject.model.ProcessedSensorData;
  *  This class allows for the controller to manipulate and fetch specific
  *  ProcessedSensorData instances. It validates new objects and handles 
  *  errors when, for example, no entries in the database exist.
- *  
+ *  @author Anton Danneels
+ *  @version 0.1.0
  * */
 @Named
 @Stateless
@@ -39,13 +42,15 @@ public class ProcessedSensorDataEJB
 				ProcessedSensorData.class );
 		query.setParameter( "id", id );
 
-		ProcessedSensorData data = query.getSingleResult();
+		List<ProcessedSensorData> resultList = query.getResultList();
 
 		em.getTransaction().commit();
 		em.close();
 		emf.close();
 
-		return data;
+		if( resultList.size() == 0 )
+			return null;
+		return resultList.get( 0 );
 	}
 	
 	/**
@@ -54,7 +59,7 @@ public class ProcessedSensorDataEJB
 	 *  Based on the ID parameter, this method searches and returns the 
 	 *  latest processedsensordata.
 	 *  @param id The ID of the TrainCoach.
-	 *  @return The ProcessedSensorData
+	 *  @return The ProcessedSensorData if found, null otherwise.
 	 * */
 	public ProcessedSensorData getProcessedSensorDataByTrainCoachID( int id )
 	{
@@ -67,12 +72,14 @@ public class ProcessedSensorDataEJB
 		query.setParameter( "id", id );
 		query.setMaxResults( 1 );
 
-		ProcessedSensorData data = query.getSingleResult();
+		List<ProcessedSensorData> resultList = query.getResultList();
 
 		em.getTransaction().commit();
 		em.close();
 		emf.close();
 
-		return data;
+		if( resultList.size() == 0 )
+			return null;
+		return resultList.get( 0 );
 	}
 }

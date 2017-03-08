@@ -17,7 +17,8 @@ import bachelorproject.model.TrainCoach;
  *  This class allows for the controller to manipulate and fetch specific
  *  TrainCoach instances. It validates new objects and handles 
  *  errors when, for example, no entries in the database exist.
- *  
+ *  @author Anton Danneels
+ *  @version 0.1.0
  * */
 @Named
 @Stateless
@@ -62,11 +63,6 @@ public class TrainCoachEJB
 		TypedQuery<TrainCoach> query = em.createNamedQuery( TrainCoach.FIND_ALL_NEEDS_REVIEW, TrainCoach.class );
 		query.setParameter( "id", workplaceID );
 		List<TrainCoach> result = query.getResultList();
-
-		for( TrainCoach t : result )
-		{
-			System.out.println( t );
-		}
 		
 		em.getTransaction().commit();
 		em.close();
