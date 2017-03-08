@@ -32,7 +32,7 @@ public class IssueAsset implements Serializable
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private int id;
 
-	private int descr;
+	private String descr;
 
 	@Lob
 	private String location;
@@ -41,34 +41,51 @@ public class IssueAsset implements Serializable
 	{
 	}
 
+	/**
+	 * @return the id
+	 */
 	public int getId()
 	{
-		return this.id;
+		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId( int id )
 	{
 		this.id = id;
 	}
 
-	public int getDesc()
+	/**
+	 * @return the descr
+	 */
+	public String getDescr()
 	{
-		return this.descr;
+		return descr;
 	}
 
-	public void setDesc( int desc )
+	/**
+	 * @param descr the descr to set
+	 */
+	public void setDescr( String descr )
 	{
-		this.descr = desc;
+		this.descr = descr;
 	}
 
+	/**
+	 * @return the location
+	 */
 	public String getLocation()
 	{
-		return this.location;
+		return location;
 	}
 
+	/**
+	 * @param location the location to set
+	 */
 	public void setLocation( String location )
 	{
 		this.location = location;
 	}
-
 }
