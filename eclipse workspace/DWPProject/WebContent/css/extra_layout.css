@@ -3,6 +3,13 @@ body, html
     height: 100% !important;
 }
 
+.issue_list
+{
+	list-style: none;
+	margin-left:0px;
+	margin-right:0px;
+}
+
 .glyphicon-unchecked
 {
 	margin-left:5px;
