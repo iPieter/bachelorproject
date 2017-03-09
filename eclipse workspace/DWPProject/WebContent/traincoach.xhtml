@@ -12,26 +12,23 @@
 	<f:metadata>
 		<f:viewParam name="id"
 			value="#{workplaceController.currentTrainCoach.id}" />
-		<f:viewAction action="#{workplaceController.findTrainCoachByTraincoachId()}" />
+		<f:viewAction
+			action="#{workplaceController.findTrainCoachByTraincoachId()}" />
 	</f:metadata>
-	
+
 	<ui:define name="title">Traincoach Manager</ui:define>
 
 	<!-- BREADCRUMB -->
 	<ui:define name="breadcrumb">
 		<ol class="breadcrumb breadcrumb_extra">
-			<li>
-				<h:link outcome="index.xhtml">
+			<li><h:link outcome="index.xhtml">
 					<span class="glyphicon glyphicon-home"></span>
-				</h:link>
-			</li>
-			<li>
-			<h:link class="active"
+				</h:link></li>
+			<li><h:link class="active"
 					value="#{workplaceController.currentWorkplace.name}"
 					outcome="workplace.xhtml?workplace_id=#{workplaceController.currentWorkplace.id}" />
 			</li>
-			<li>
-			<h:link class="active"
+			<li><h:link class="active"
 					value="#{workplaceController.currentTrainCoach.type} - #{workplaceController.currentTrainCoach.name}"
 					outcome="traincoach.xhtml?id=#{workplaceController.currentTrainCoach.id}" />
 			</li>
@@ -40,15 +37,16 @@
 
 	<!-- MAINVIEW CONTENT -->
 	<ui:define name="mainview_content">
-		
+
 		<input type="hidden"
 			value="#{workplaceController.currentSensorData.id}"
 			id="current_traincoach" />
 		<div class="row">
 			<div class="col-sm-10 mainview_panel">
-				<div id="graph_options"> 
-					<label class="radio-inline"><input type="radio" name="optradio" id="radio_yaw" />Yaw</label> 
-					<label class="radio-inline"><input type="radio" name="optradio" id="radio_roll" />Roll</label>
+				<div id="graph_options">
+					<label class="radio-inline"><input type="radio"
+						name="optradio" id="radio_yaw" />Yaw</label> <label class="radio-inline"><input
+						type="radio" name="optradio" id="radio_roll" />Roll</label>
 				</div>
 				<div class="" id="topleft">
 					<h1>Data wordt geladen...</h1>
@@ -60,27 +58,34 @@
 				<div class="mainview_issue row">
 					<div class="col-sm-12 issue_bar">
 						<h:form class="issue_bar">
-						<button type="button" name="button" class="btn btn-danger btn-large" data-toggle="modal"
-							data-target="#assignModal">Nieuwe herstelling</button>
-						<h:commandButton name="buttonApprove" class="btn btn-success btn-large" 
-								action="#{workplaceController.setTrainCoachReviewed()}" type="submit" value="Goedkeuren"></h:commandButton>
+							<button type="button" name="button"
+								class="btn btn-danger btn-large" data-toggle="modal"
+								data-target="#assignModal">Nieuwe herstelling</button>
+							<h:commandButton name="buttonApprove"
+								class="btn btn-success btn-large"
+								action="#{workplaceController.setTrainCoachReviewed()}"
+								type="submit" value="Goedkeuren"></h:commandButton>
 						</h:form>
 					</div>
 				</div>
 				<c:forEach var="mechanic" items="#{workplaceController.mechanics}">
-				<div class="mainview_issue row">
-					<b class="col-sm-4 dont-break-out">#{mechanic.name}</b>
-					<div class="col-sm-8">
-						<h:outputText value="#{workplaceController.findActiveIssuesByMechanicId(mechanic.id)}"></h:outputText>
-						<p>
-							<div class="progress">
-								<div class="progress-bar progress-bar-success"
-									role="progressbar" aria-valuenow="40" aria-valuemin="0"
-									aria-valuemax="100" style="width: 40%">40% Complete</div>
-							</div>
-						</p>
+					<div class="mainview_issue row">
+						<b class="col-sm-4 dont-break-out">#{mechanic.name}</b>
+						<div class="col-sm-8">
+							<c:forEach var="activeIssue"
+								items="#{workplaceController.findActiveIssuesByMechanicId(mechanic.id)}">
+								<li><h:outputText
+										value="#{activeIssue.status}: #{activeIssue.descr}" /></li>
+							</c:forEach>
+							<p>
+								<div class="progress">
+									<div class="progress-bar progress-bar-success"
+										role="progressbar" aria-valuenow="40" aria-valuemin="0"
+										aria-valuemax="100" style="width: 40%">40% Complete</div>
+								</div>
+							</p>
+						</div>
 					</div>
-				</div>
 				</c:forEach>
 			</div>
 			<div class="col-sm-5 mainview_panel">
@@ -97,31 +102,36 @@
 							<h4 class="modal-title">Nieuwe herstelling</h4>
 						</div>
 						<div class="modal-body">
-							
-								 
-								<label for="description">Omschrijving probleem:</label> <br />
-								<h:inputTextarea name="description" rows="8" cols="40"
-									class="form-control" value="#{workplaceController.description}"></h:inputTextarea>
-								<label for="list_empl">Kies een onderhoudstechnicus:</label> <br />
-								<br />
-								
-								  
-								<div class="container">
-								
-								<h:selectOneMenu value="#{workplaceController.mechanicID}" class="form-group">
-									
-									<f:selectItems value="#{workplaceController.mechanics}" var="mechanic" itemValue="#{mechanic.id}" itemLabel="#{mechanic.name}" />
-									
+
+
+							<label for="description">Omschrijving probleem:</label> <br />
+							<h:inputTextarea name="description" rows="8" cols="40"
+								class="form-control" value="#{workplaceController.description}"></h:inputTextarea>
+							<label for="list_empl">Kies een onderhoudstechnicus:</label> <br />
+							<br />
+
+
+							<div class="container">
+
+								<h:selectOneMenu value="#{workplaceController.mechanicID}"
+									class="form-group">
+
+									<f:selectItems value="#{workplaceController.mechanics}"
+										var="mechanic" itemValue="#{mechanic.id}"
+										itemLabel="#{mechanic.name}" />
+
 								</h:selectOneMenu>
-								
-								</div>
-								
-								
+
+							</div>
+
+
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Sluit</button>
-							<h:commandButton class="btn btn-default btn-large" 
-									action="#{workplaceController.createIssue()}" type="submit" value="Verstuur"></h:commandButton>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Sluit</button>
+							<h:commandButton class="btn btn-default btn-large"
+								action="#{workplaceController.createIssue()}" type="submit"
+								value="Verstuur"></h:commandButton>
 						</div>
 					</h:form>
 				</div>

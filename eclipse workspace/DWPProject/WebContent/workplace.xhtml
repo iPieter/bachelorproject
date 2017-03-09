@@ -90,12 +90,12 @@
 										<b>#{mechanic.name}</b>
 									</div>
 		                            <div class="col-sm-8">
-		                            	<c:forEach var="activeIssue" items="#{workplaceController.findActiveIssuesByMechanicId(mechanic.id)}">
-		                            		<li>
-		                            			<h:outputText value="activeIssue.status: activeIssue.descr" />
-		                            		</li>
-		                            	</c:forEach>
-		                            </div>
+									<c:forEach var="activeIssue"
+										items="#{workplaceController.findActiveIssuesByMechanicId(mechanic.id)}">
+										<li><h:outputText
+												value="#{activeIssue.status}: #{activeIssue.descr}" /></li>
+									</c:forEach>
+								</div>
 		                        </div> <!-- END TECHNICUS -->
 		                        </c:forEach>
 							</div> <!-- END OVERZICHT TECHNICI -->
