@@ -108,7 +108,7 @@ public class TrainCoachIssuesController implements Serializable
 		issueAssetEJB.createIssueAsset( asset );
 		issueEJB.addAsset( asset, fieldIssueID );
 		
-		return "traincoach_issues.xhtml?id=" + currentTrainCoach.getId();
+		return "traincoach_issues.xhtml?faces-redirect=true&id=" + currentTrainCoach.getId();
 	}
 	
 	/**

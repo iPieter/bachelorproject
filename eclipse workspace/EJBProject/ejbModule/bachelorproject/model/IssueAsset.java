@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -49,6 +50,7 @@ public class IssueAsset implements Serializable
 	private String location;
 
 	@NotNull
+	@OneToOne
 	private User user;
 	
 	public IssueAsset()
