@@ -10,7 +10,7 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import bachelorproject.model.Issue;
-import bachelorproject.model.TrainCoach;
+import bachelorproject.model.IssueAsset;
 import bachelorproject.model.IssueStatus;
 
 /**
@@ -154,5 +154,31 @@ public class IssueEJB
 		emf.close();
 
 		return result;
+	}
+
+	/**
+	 * 	Adds an issue asset to the Issue specified with the ID.
+	 *  @param asset A valid, already persisted, IssueAsset object.
+	 *  @param id The ID of the Issue this asset should be linked to.
+	 * */
+	public void addAsset( IssueAsset asset, int issueID )
+	{
+		//TODO proper exception handling
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		
+		Issue issue = em.find( Issue.class, issueID );
+		
+		if( issue != null )
+			issue.getAssets().add( asset );
+		else
+			System.out.println( "ERROR(issueEJB): no issue found" );
+		
+		em.persist( issue );
+		
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
 	}
 }

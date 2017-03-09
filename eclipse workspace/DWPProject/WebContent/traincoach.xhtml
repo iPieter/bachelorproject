@@ -42,11 +42,18 @@
 			value="#{workplaceController.currentSensorData.id}"
 			id="current_traincoach" />
 		<div class="row">
+<<<<<<< HEAD
 			<div class="col-sm-10 mainview_panel">
 				<div id="graph_options">
 					<label class="radio-inline"><input type="radio"
 						name="optradio" id="radio_yaw" />Yaw</label> <label class="radio-inline"><input
 						type="radio" name="optradio" id="radio_roll" />Roll</label>
+=======
+			<div class="col-sm-10 mainview_panel" id="graph">
+				<div id="graph_options"> 
+					<label class="radio-inline"><input type="radio" name="optradio" id="radio_yaw" />Yaw</label> 
+					<label class="radio-inline"><input type="radio" name="optradio" id="radio_roll" />Roll</label>
+>>>>>>> origin/master
 				</div>
 				<div class="" id="topleft">
 					<h1>Data wordt geladen...</h1>
@@ -88,7 +95,7 @@
 					</div>
 				</c:forEach>
 			</div>
-			<div class="col-sm-5 mainview_panel">
+			<div class="col-sm-5 mainview_panel" id="map_size">
 				<div id="map"></div>
 			</div>
 		</div>
@@ -102,6 +109,7 @@
 							<h4 class="modal-title">Nieuwe herstelling</h4>
 						</div>
 						<div class="modal-body">
+<<<<<<< HEAD
 
 
 							<label for="description">Omschrijving probleem:</label> <br />
@@ -120,6 +128,21 @@
 										var="mechanic" itemValue="#{mechanic.id}"
 										itemLabel="#{mechanic.name}" />
 
+=======
+							
+								 
+								<label for="description">Omschrijving probleem:</label> <br />
+								<h:inputTextarea name="description" rows="8" cols="40"
+									class="form-control" value="#{workplaceController.description}"></h:inputTextarea>
+								<label for="list_empl">Kies een onderhoudstechnicus:</label> <br />
+								<br />
+								
+								  
+								<div class="container">
+								
+								<h:selectOneMenu value="#{workplaceController.mechanicID}" class="form-group">
+									<f:selectItems value="#{workplaceController.mechanics}" var="mechanic" itemValue="#{mechanic.id}" itemLabel="#{mechanic.name}" />
+>>>>>>> origin/master
 								</h:selectOneMenu>
 
 							</div>

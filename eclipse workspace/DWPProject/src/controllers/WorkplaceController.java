@@ -58,6 +58,8 @@ public class WorkplaceController implements Serializable
 	public void findTrainCoachByTraincoachId()
 	{
 		currentTrainCoach = traincoachEJB.findTrainCoachByTraincoachId( currentTrainCoach.getId() );
+		if( currentTrainCoach == null )
+			currentTrainCoach = new TrainCoach();
 		List<Workplace> result = workplaceEJB.findWorkplaceByTraincoachID( currentTrainCoach.getId() );
 		if ( result.size() > 0 )
 		{
@@ -87,7 +89,7 @@ public class WorkplaceController implements Serializable
 		if( currentTrainCoach != null)
 		{
 			traincoachEJB.setTrainCoachReviewed( currentTrainCoach.getId() );
-			return "index.xhtml";
+			return "workplace.xhtml?faces-redirect=true&workplace_id=" + currentWorkplace.getId();
 		}
 		return null;
 	}
@@ -125,7 +127,7 @@ public class WorkplaceController implements Serializable
 		
 		issueEJB.createIssue( issue );
 		
-		return "index.html";
+		return "traincoach.xhtml?faces-redirect=true&id=" + currentTrainCoach.getId();
 	}
 
 	public List<String> findActiveTraincoachProblemsById( int traincoachId )

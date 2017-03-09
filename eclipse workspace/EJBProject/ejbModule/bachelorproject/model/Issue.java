@@ -1,6 +1,7 @@
 package bachelorproject.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -48,7 +49,7 @@ public class Issue implements Serializable
 	private IssueStatus status;
 
 	@OneToMany( fetch = FetchType.LAZY )
-	private List<IssueAsset> assets;
+	private List<IssueAsset> assets = new ArrayList<IssueAsset>();
 
 	@OneToOne( fetch = FetchType.LAZY )
 	private User mechanic;

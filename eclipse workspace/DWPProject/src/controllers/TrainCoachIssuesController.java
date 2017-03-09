@@ -2,18 +2,23 @@ package controllers;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import bachelorproject.ejb.IssueAssetEJB;
 import bachelorproject.ejb.IssueEJB;
 import bachelorproject.ejb.TrainCoachEJB;
 import bachelorproject.ejb.WorkplaceEJB;
 import bachelorproject.model.Issue;
+import bachelorproject.model.IssueAsset;
 import bachelorproject.model.TrainCoach;
 import bachelorproject.model.Workplace;
+import bachelorproject.services.UserService;
 
 /**
  * 	The controller for traincoach_issue.xhtml
@@ -43,13 +48,21 @@ public class TrainCoachIssuesController implements Serializable
 	private TrainCoachEJB traincoachEJB;
 	@Inject
 	private IssueEJB issueEJB;
+	@Inject
+	private IssueAssetEJB issueAssetEJB;
+	@Inject
+	private UserService userService;
 	
 	private Workplace currentWorkplace = new Workplace();
 	private TrainCoach currentTrainCoach = new TrainCoach();
 	private List<Issue> currentActiveIssues = new ArrayList<Issue>();
 	private List<Issue> currentCompletedIssues = new ArrayList<>();
+	private HashMap<Integer,List<IssueAsset>> currentIssueAssets = new HashMap<Integer, List<IssueAsset>>();
 	
 	private int currentTraincoachID = -1;
+	
+	private int fieldIssueID = 0;
+	private String fieldIssueAssetDescription = "";
 	
 	/**
 	 * 	This method gets called when the page first loads.
@@ -64,10 +77,53 @@ public class TrainCoachIssuesController implements Serializable
 		//TODO:: proper check
 		currentWorkplace = workplaceEJB.findWorkplaceByTraincoachID( currentTraincoachID ).get( 0 );
 		
+		currentActiveIssues.clear();
+		currentCompletedIssues.clear();
+		
 		currentActiveIssues.addAll( issueEJB.findAssignedIssuesByTraincoachId( currentTraincoachID ) );
 		currentActiveIssues.addAll( issueEJB.findInProgressIssuesByTraincoachId( currentTraincoachID ) );
 		
 		currentCompletedIssues.addAll( issueEJB.findClosedIssuesByTraincoachId( currentTraincoachID ) );
+		
+		currentIssueAssets.clear();
+		
+		for( Issue i : currentActiveIssues )
+			currentIssueAssets.put( i.getId(), issueAssetEJB.getAllIssueAssetsByIssueID( i.getId() ) );
+		for( Issue i : currentCompletedIssues )
+			currentIssueAssets.put( i.getId(), issueAssetEJB.getAllIssueAssetsByIssueID( i.getId() ) );
+	}
+	
+	/**
+	 * 	Creates a IssueAsset and links it to an issue.
+	 *  @return The resulting URL.
+	 * */
+	public String createIssueAsset()
+	{		
+		IssueAsset asset = new IssueAsset();
+		asset.setDescr( fieldIssueAssetDescription );
+		asset.setLocation( "" );
+		asset.setTime( new Date() );
+		asset.setUser( userService.getUser() );
+		
+		issueAssetEJB.createIssueAsset( asset );
+		issueEJB.addAsset( asset, fieldIssueID );
+		
+		return "traincoach_issues.xhtml?faces-redirect=true&id=" + currentTrainCoach.getId();
+	}
+	
+	/**
+	 * 	Returns a list of an issue's assets.
+	 *  <p>
+	 *  Looks up the HashMap to find an issue's assets. If found, it will return the list, else and empty one
+	 *  @param issueID The ID of the Issue who's assets are needed.
+	 *  @return A list with the issue's assets.
+	 * */
+	public List<IssueAsset> getIssueAssets( int issueID )
+	{
+		if( !currentIssueAssets.containsKey( issueID ) )
+			return new ArrayList<IssueAsset>();
+		
+		return currentIssueAssets.get( issueID );
 	}
 
 	/**
@@ -149,4 +205,53 @@ public class TrainCoachIssuesController implements Serializable
 	{
 		this.currentWorkplace = currentWorkplace;
 	}
+
+	/**
+	 * @return the currentIssueAssets
+	 */
+	public HashMap<Integer, List<IssueAsset>> getCurrentIssueAssets()
+	{
+		return currentIssueAssets;
+	}
+
+	/**
+	 * @param currentIssueAssets the currentIssueAssets to set
+	 */
+	public void setCurrentIssueAssets( HashMap<Integer, List<IssueAsset>> currentIssueAssets )
+	{
+		this.currentIssueAssets = currentIssueAssets;
+	}
+
+	/**
+	 * @return the fieldIssueID
+	 */
+	public int getFieldIssueID()
+	{
+		return fieldIssueID;
+	}
+
+	/**
+	 * @param fieldIssueID the fieldIssueID to set
+	 */
+	public void setFieldIssueID( int fieldIssueID )
+	{
+		this.fieldIssueID = fieldIssueID;
+	}
+
+	/**
+	 * @return the fieldIssueAssetDescription
+	 */
+	public String getFieldIssueAssetDescription()
+	{
+		return fieldIssueAssetDescription;
+	}
+
+	/**
+	 * @param fieldIssueAssetDescription the fieldIssueAssetDescription to set
+	 */
+	public void setFieldIssueAssetDescription( String fieldIssueAssetDescription )
+	{
+		this.fieldIssueAssetDescription = fieldIssueAssetDescription;
+	}
+	
 }
