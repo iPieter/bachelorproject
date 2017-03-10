@@ -29,7 +29,6 @@ public class WorkplaceController implements Serializable
 	@EJB
 	private IssueEJB issueEJB;
 
-	//POJOS
 	private Workplace currentWorkplace = new Workplace();
 
 	/**

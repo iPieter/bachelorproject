@@ -78,6 +78,15 @@ public class TrainCoachController implements Serializable
 	}
 	
 	/**
+	 * 	Returns a list of all the current active TrainCoaches of the currentWorkplace object.
+	 * 	@return A List of TrainCoach objects stored in the currentWorkplace.
+	 * */
+	public List<TrainCoach> findActiveTrainCoaches( )
+	{
+		return traincoachEJB.getAllTraincoachesNeedReview( currentWorkplace.getId() );
+	}
+	
+	/**
 	 * 	Calls into the TrainCoachEJB object to set this TrainCoach as reviewed.
 	 *  @return If this method succeeds, it will redirect to index
 	 * */
