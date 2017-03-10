@@ -24,10 +24,10 @@ import bachelorproject.model.IssueAsset;
  *  @author Anton Danneels
  *  @see IssueAsset
  * */
-@Path( "/issue_asset" )
+@Path( "/assets/issue" )
 public class IssueAssetRestService
 {
-	/** Allows acces to request info */
+	/** Allows access to request info */
 	@Context
 	private UriInfo context;
 	
