@@ -143,11 +143,12 @@ public class AuthenticationController implements Serializable
 	}
 
 	/**
-	 * Returns the
+	 * Returns the name of the current logged in user, if any. Otherwise an
+	 * empty String.
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @return
+	 * @return String with the name of the logged in user
 	 */
 	public String getName()
 	{
@@ -158,6 +159,28 @@ public class AuthenticationController implements Serializable
 		}
 		
 		return "";
+	}
+	
+	/**
+	 * The user avatar is a non-guessable file, this function returns the name
+	 * of the file. Appending it with it's image format (".png", ".jpg") will 
+	 * result in the correct file.
+	 * <p>
+	 * The REST api will do this for you. So just call <code>/rest/assets/user/#</code>.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return String with the non-guessable location of the user avatar. 
+	 */
+	public String getAvatar()
+	{
+		User u = userService.getUser();
+		if (u != null)
+		{
+			return u.getImageHash();
+		}
+		
+		return "";		
 	}
 
 	public void setEmail(String email)
