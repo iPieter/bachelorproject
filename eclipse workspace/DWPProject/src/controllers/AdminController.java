@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import bachelorproject.model.User;
 import bachelorproject.model.UserRole;
+import bachelorproject.services.UserService;
 import bachelorproject.ejb.UserEJB;
 
 /**
@@ -87,6 +88,19 @@ public class AdminController implements Serializable
 	{
 		userEJB.updateUser(this.workingUser);
 		this.users = userEJB.findAllUsers();
+	}
+	
+	
+	/**
+	 * Generate a new User object to be set as the workingUser. this will be
+	 * populated by JSF.
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 */
+	public void newWorkingUser()
+	{
+		this.workingUser = new User();
+		UserService.populateUser(workingUser, "password123");
 	}
 
 	public User getWorkingUser()

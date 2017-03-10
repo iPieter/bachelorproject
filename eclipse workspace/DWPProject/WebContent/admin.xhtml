@@ -40,7 +40,7 @@
 
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
-				
+
 				<h:form>
 
 					<ul class="nav navbar-nav navbar-right">
@@ -50,8 +50,7 @@
 							aria-haspopup="true" aria-expanded="false">
 								<div class="avatar">
 									<img src="rest/assets/user/#{authenticationController.avatar}" />
-								</div> 
-								<span id="name"><h:outputText
+								</div> <span id="name"><h:outputText
 										value="#{authenticationController.name}" /></span> <span
 								class="caret"></span>
 						</a>
@@ -91,9 +90,9 @@
 						<h:dataTable class="table" value="#{adminController.users}"
 							var="user">
 							<h:column>
-							<div class="avatar">
+								<div class="avatar">
 									<img src="rest/assets/user/#{user.imageHash}" />
-								</div> 
+								</div>
 							</h:column>
 							<h:column>
 								<f:facet name="header">
@@ -139,6 +138,20 @@
 							</h:column>
 						</h:dataTable>
 					</h:form>
+					<div class="panel-footer">
+						<div class="pull-right">
+							<h:form>
+								<h:commandLink type="button" class="btn btn-default"
+									onclick="$('#editUser').modal('show');" immediate="true"
+									action="#{adminController.newWorkingUser}">
+									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+									Gebruiker toevoegen
+									<f:ajax execute="@this" render=":editForm" />
+								</h:commandLink>
+							</h:form>
+						</div>
+					</div>
+
 				</div>
 
 			</div>
@@ -157,7 +170,12 @@
 							aria-label="Close">
 							<span aria-hidden="true">x</span>
 						</button>
-						<h4 class="modal-title" id="myModalLabel">Gebruiker aanpassen</h4>
+						<ui:fragment rendered="#{adminController.workingUser.email ne null}">
+						<h4 class="modal-title" id="myModalLabel" >Gebruiker aanpassen</h4>
+						</ui:fragment>
+						<ui:fragment rendered="#{adminController.workingUser.email eq null}">
+						<h4 class="modal-title" id="myModalLabel" >Gebruiker aanmaken</h4>
+						</ui:fragment>
 					</div>
 					<div class="modal-body">
 						<div class="form-horizontal">

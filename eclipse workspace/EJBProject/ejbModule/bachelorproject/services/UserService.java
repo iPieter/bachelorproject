@@ -115,6 +115,7 @@ public class UserService implements Serializable
 	 * <p>
 	 * Note we do not provide feedback about the existence of either the email
 	 * nor the password (obviously). This is to prevent automated guessing and stuff.
+	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
 	 * @param email A string with the email address used as login credential
@@ -132,6 +133,10 @@ public class UserService implements Serializable
 				if ( Arrays.equals( u.getPass(), ( generateHash( password, u.getSalt() ) ) ) )
 				{
 					this.user = u;
+					
+					//set the lastLogin
+					u.setLastLogin(new Date());
+					
 					return true;
 
 				}
@@ -183,13 +188,47 @@ public class UserService implements Serializable
 	 * @throws UnsupportedEncodingException
 	 * @see MesageDigest
 	 */
-	private byte[] generateHash( String password, byte[] salt )
+	private static byte[] generateHash( String password, byte[] salt )
 			throws NoSuchAlgorithmException, UnsupportedEncodingException
 	{
 		MessageDigest sha = MessageDigest.getInstance( UserService.HASHING_METHOD );
 		sha.reset();
 		sha.update( salt );
 		return sha.digest( password.getBytes( "UTF-8" ) );
+	}
+	
+	
+	/**
+	 * Given a User object with filled in email, name etc..., this service
+	 * will populate the other fields (like salt, lastLogin etc...) and 
+	 * calculate the password hash provided by the second parameter.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 0.1.0
+	 * @param user The User object to be populated
+	 * @param password The password intender for the linked User object
+	 */
+	public static void populateUser(User user, String password)
+	{
+		
+		user.setSalt( salt( User.SALT_LENGTH ) );
+		try
+		{
+			user.setPass( generateHash( password, user.getSalt() ) );
+		}
+		catch ( Exception e )
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Set the lastLogin to the current date/time
+		user.setLastLogin(new Date());
+		
+		//Set to default profile avatar
+		//TODO: change this
+		user.setImageHash("qwertyui");
+		
 	}
 
 	/**
@@ -200,7 +239,7 @@ public class UserService implements Serializable
 	 * @return A byte array with random bytes.
 	 * @see SecureRandom
 	 */
-	private byte[] salt( int length )
+	private static byte[] salt( int length )
 	{
 
 		SecureRandom sRnd = new SecureRandom();
@@ -219,7 +258,7 @@ public class UserService implements Serializable
 	 * @param bs The byte array to be converted to a string.
 	 * @return A string representing the byte array as ASCII.
 	 */
-	public String bytesToString( byte[] bs )
+	public static String bytesToString( byte[] bs )
 	{
 		StringBuilder s = new StringBuilder();
 
