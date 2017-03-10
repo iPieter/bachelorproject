@@ -3,6 +3,7 @@ package bachelorproject.ejb;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -25,6 +26,9 @@ import bachelorproject.model.IssueStatus;
 @Stateless
 public class IssueEJB
 {
+	@Inject
+	private EntityManagerSingleton ems;
+	
 	/**
 	 * Creates a correct Issue object and persists it to the database
 	 * @author Anton
@@ -32,8 +36,7 @@ public class IssueEJB
 	 */
 	public void createIssue( Issue issue )
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 
 		try
@@ -46,98 +49,66 @@ public class IssueEJB
 		}
 
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 	}
 
 	public List<Issue> findInProgressIssuesByMechanicId( int mechanicId )
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_MECHANIC_ID, Issue.class )
 				.setParameter( "status", IssueStatus.IN_PROGRESS ).setParameter( "mechanic_id", mechanicId );
 		List<Issue> result = query.getResultList();
 
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 
 		return result;
 	}
 
 	public List<Issue> findAssignedIssuesByMechanicId( int mechanicId )
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 
 		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_MECHANIC_ID, Issue.class )
 				.setParameter( "status", IssueStatus.ASSIGNED ).setParameter( "mechanic_id", mechanicId );
 		List<Issue> result = query.getResultList();
 
-		for ( Issue i : result )
-		{
-			System.out.println( i.getDescr() );
-
-		}
-
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 
 		return result;
 	}
 
 	public List<Issue> findInProgressIssuesByTraincoachId( int traincoachId )
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 
 		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_TRAINCOACH_ID, Issue.class )
 				.setParameter( "status", IssueStatus.IN_PROGRESS ).setParameter( "traincoachId", traincoachId );
 		List<Issue> result = query.getResultList();
 
-		for ( Issue i : result )
-		{
-			System.out.println( i.getDescr() );
-
-		}
-
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 
 		return result;
 	}
 
 	public List<Issue> findAssignedIssuesByTraincoachId( int traincoachId )
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 
 		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_TRAINCOACH_ID, Issue.class )
 				.setParameter( "status", IssueStatus.ASSIGNED ).setParameter( "traincoachId", traincoachId );
 		List<Issue> result = query.getResultList();
 		
-		for ( Issue i : result )
-		{
-			System.out.println( i.getDescr() );
-		}
-
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 
 		return result;
 	}
 
 	public List<Issue> findClosedIssuesByTraincoachId(int traincoachId)
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 		
 		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_TRAINCOACH_ID, Issue.class )
@@ -145,13 +116,7 @@ public class IssueEJB
 									.setParameter("traincoachId", traincoachId);
 		List<Issue> result = query.getResultList();
 		
-		for(Issue i:result){
-			System.out.println(i.getDescr());
-		}
-		
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 
 		return result;
 	}
@@ -164,8 +129,7 @@ public class IssueEJB
 	public void addAsset( IssueAsset asset, int issueID )
 	{
 		//TODO proper exception handling
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 		
 		Issue issue = em.find( Issue.class, issueID );
@@ -178,7 +142,5 @@ public class IssueEJB
 		em.persist( issue );
 		
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 	}
 }

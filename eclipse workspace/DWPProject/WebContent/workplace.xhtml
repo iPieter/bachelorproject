@@ -11,7 +11,7 @@
 <ui:composition template="templates/main_layout.xhtml">
 	
 	<f:metadata>
-		<f:viewParam name="workplace_id" value="#{workplaceController.currentWorkplace.id}"/>
+		<f:viewParam name="workplace_id" value="#{workplaceController.currentWorkplaceID}"/>
 		<f:viewAction action="#{workplaceController.findWorkplaceByWorkplaceId()}"/>
 	</f:metadata>
 	
