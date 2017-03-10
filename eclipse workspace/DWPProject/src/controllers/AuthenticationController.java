@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
 import bachelorproject.model.Password;
+import bachelorproject.model.User;
 import bachelorproject.model.UserRole;
 import bachelorproject.services.UserService;
 
@@ -41,43 +42,45 @@ public class AuthenticationController implements Serializable
 	private String password = "";
 
 	/**
-	 * Checks if the email and password set by JSF match. This check is done
-	 * by the UserService.
+	 * Checks if the email and password set by JSF match. This check is done by
+	 * the UserService.
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 0.1.0
-	 * @return The url where JSF should redirect to. If the user is an admin, this will be admin.xhtml. 
+	 * @return The url where JSF should redirect to. If the user is an admin,
+	 *         this will be admin.xhtml.
 	 * @see UserService
 	 */
 	public String doLogin()
 	{
-		if ( userService.verificateLogin( email, password ) )
+		if (userService.verificateLogin(email, password))
 		{
-			return userService.hasCurrentUserRequiredRole(UserRole.ADMIN)? "admin.xhtml?faces-redirect=true" : "index.xhtml?faces-redirect=true";
-		}
-		else
+			return userService.hasCurrentUserRequiredRole(UserRole.ADMIN) ? "admin.xhtml?faces-redirect=true"
+					: "index.xhtml?faces-redirect=true";
+		} else
 		{
 			return null;
 		}
 	}
 
-	
 	/**
 	 * Returns if the current user has the provided role.
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param ur UserRole enum to check
+	 * @param ur
+	 *            UserRole enum to check
 	 * @return True if the user has the same role, false otherwise.
 	 */
-	public boolean hasAccess( UserRole ur )
+	public boolean hasAccess(UserRole ur)
 	{
 
-		return userService.hasCurrentUserRequiredRole( ur );
+		return userService.hasCurrentUserRequiredRole(ur);
 	}
 
 	/**
 	 * Provides a easy check for one UserRole type: OPERATOR
+	 * 
 	 * @author Pieter Delobelle
 	 * @version 0.1.0
 	 * @return True if the user has the OPERATOR role, false otherwise
@@ -85,11 +88,12 @@ public class AuthenticationController implements Serializable
 	 */
 	public boolean hasOperatorAccess()
 	{
-		return hasAccess( UserRole.OPERATOR );
+		return hasAccess(UserRole.OPERATOR);
 	}
-	
+
 	/**
 	 * Provides a easy check for one UserRole type: OPERATOR
+	 * 
 	 * @author Pieter Delobelle
 	 * @version 0.1.0
 	 * @return False if the user has the OPERATOR role, true otherwise
@@ -97,11 +101,12 @@ public class AuthenticationController implements Serializable
 	 */
 	public boolean hasNoOperatorAccess()
 	{
-		return !hasAccess( UserRole.OPERATOR );
+		return !hasAccess(UserRole.OPERATOR);
 	}
 
 	/**
 	 * Provides a easy check for one UserRole type: MECHANIC
+	 * 
 	 * @author Pieter Delobelle
 	 * @version 0.1.0
 	 * @return True if the user has the MECHANIC role, false otherwise
@@ -109,11 +114,12 @@ public class AuthenticationController implements Serializable
 	 */
 	public boolean hasMechanicAccess()
 	{
-		return hasAccess( UserRole.MECHANIC );
+		return hasAccess(UserRole.MECHANIC);
 	}
 
 	/**
 	 * Provides a easy check for one UserRole type: MECHANIC
+	 * 
 	 * @author Pieter Delobelle
 	 * @version 0.1.0
 	 * @return True if the user has the MECHANIC role, false otherwise
@@ -121,12 +127,12 @@ public class AuthenticationController implements Serializable
 	 */
 	public boolean hasAdminAccess()
 	{
-		return hasAccess( UserRole.ADMIN );
+		return hasAccess(UserRole.ADMIN);
 	}
 
-	
 	/**
 	 * When called, this will log out the current user in the UserService.
+	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
 	 * @see UserService
@@ -136,7 +142,48 @@ public class AuthenticationController implements Serializable
 		userService.tryLogout();
 	}
 
-	public void setEmail( String email )
+	/**
+	 * Returns the name of the current logged in user, if any. Otherwise an
+	 * empty String.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return String with the name of the logged in user
+	 */
+	public String getName()
+	{
+		User u = userService.getUser();
+		if (u != null)
+		{
+			return u.getName();
+		}
+		
+		return "";
+	}
+	
+	/**
+	 * The user avatar is a non-guessable file, this function returns the name
+	 * of the file. Appending it with it's image format (".png", ".jpg") will 
+	 * result in the correct file.
+	 * <p>
+	 * The REST api will do this for you. So just call <code>/rest/assets/user/#</code>.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return String with the non-guessable location of the user avatar. 
+	 */
+	public String getAvatar()
+	{
+		User u = userService.getUser();
+		if (u != null)
+		{
+			return u.getImageHash();
+		}
+		
+		return "";		
+	}
+
+	public void setEmail(String email)
 	{
 		this.email = email;
 	}
@@ -146,7 +193,7 @@ public class AuthenticationController implements Serializable
 		return this.email;
 	}
 
-	public void setPassword( String password )
+	public void setPassword(String password)
 	{
 		this.password = password;
 	}

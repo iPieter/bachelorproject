@@ -44,7 +44,8 @@ public class TrainCoachController implements Serializable
 	private TrainCoach currentTrainCoach = new TrainCoach();
 	private Workplace currentWorkplace = new Workplace();
 	private List<User> mechanics = new ArrayList<User>();
-	
+	private int currentTrainCoachID;
+
 	@NotNull
 	@Size( min=10, max= 1000 )
 	private String description = "";
@@ -60,7 +61,7 @@ public class TrainCoachController implements Serializable
 	 * */
 	public void loadPage()
 	{
-		currentTrainCoach = traincoachEJB.findTrainCoachByTraincoachId( currentTrainCoach.getId() );
+		currentTrainCoach = traincoachEJB.findTrainCoachByTraincoachId( currentTrainCoachID );
 		if( currentTrainCoach == null )
 			currentTrainCoach = new TrainCoach();
 		List<Workplace> result = workplaceEJB.findWorkplaceByTraincoachID( currentTrainCoach.getId() );
@@ -226,6 +227,14 @@ public class TrainCoachController implements Serializable
 	public void setCurrentSensorData( ProcessedSensorData currentSensorData )
 	{
 		this.currentSensorData = currentSensorData;
+	}
+	
+	public int getCurrentTrainCoachID() {
+		return currentTrainCoachID;
+	}
+
+	public void setCurrentTrainCoachID(int currentTrainCoachID) {
+		this.currentTrainCoachID = currentTrainCoachID;
 	}
 	
 }

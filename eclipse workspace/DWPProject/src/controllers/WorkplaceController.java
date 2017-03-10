@@ -30,7 +30,8 @@ public class WorkplaceController implements Serializable
 	private IssueEJB issueEJB;
 
 	private Workplace currentWorkplace = new Workplace();
-
+	private int currentWorkplaceID;
+	
 	/**
 	 * 	This method gets called when the page first loads.
 	 *  <p>
@@ -39,7 +40,7 @@ public class WorkplaceController implements Serializable
 	 * */
 	public void loadPage()
 	{
-		currentWorkplace = workplaceEJB.findWorkplaceByWorkplaceId( currentWorkplace.getId() );
+		currentWorkplace = workplaceEJB.findWorkplaceByWorkplaceId( currentWorkplaceID );
 	}
 	
 	/**
@@ -187,5 +188,26 @@ public class WorkplaceController implements Serializable
 	public List<Workplace> getAllWorkplaces()
 	{
 		return workplaceEJB.getAllWorkplaces();
+	}
+
+	/**
+	 * @return the currentWorkplaceID
+	 */
+	public int getCurrentWorkplaceID() {
+		return currentWorkplaceID;
+	}
+
+	/**
+	 * @param currentWorkplaceID the currentWorkplaceID to set
+	 */
+	public void setCurrentWorkplaceID(int currentWorkplaceID) {
+		this.currentWorkplaceID = currentWorkplaceID;
+	}
+
+	/**
+	 * @param currentWorkplace the currentWorkplace to set
+	 */
+	public void setCurrentWorkplace(Workplace currentWorkplace) {
+		this.currentWorkplace = currentWorkplace;
 	}
 }
