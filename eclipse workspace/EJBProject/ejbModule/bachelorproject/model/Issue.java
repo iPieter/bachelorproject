@@ -60,6 +60,9 @@ public class Issue implements Serializable
 	@OneToOne( fetch = FetchType.LAZY )
 	private ProcessedSensorData data;
 
+	private double gpsLat;
+	private double gpsLon;
+	
 	public Issue()
 	{
 	}
