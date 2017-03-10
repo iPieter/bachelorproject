@@ -40,24 +40,18 @@
 
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
-				<h:form>
-					<ul class="nav navbar-nav">
-						<li><a href="#">Login</a></li>
-						<li><h:commandLink
-								action="#{authenticationController.logout()}">Log out</h:commandLink></li>
-						<li><a href="#contact">Help</a></li>
-					</ul>
-				</h:form>
+				
 				<h:form>
 
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">Link</a></li>
+						<li><a href="#">Help</a></li>
 						<li class="dropdown"><a id="user" href="#"
 							class="dropdown-toggle" data-toggle="dropdown" role="button"
 							aria-haspopup="true" aria-expanded="false">
-								<div id="avatar">
+								<div class="avatar">
 									<img src="rest/assets/user/#{authenticationController.avatar}" />
-								</div> <span id="name"><h:outputText
+								</div> 
+								<span id="name"><h:outputText
 										value="#{authenticationController.name}" /></span> <span
 								class="caret"></span>
 						</a>
@@ -91,14 +85,16 @@
 						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 						Gebruikers
 					</div>
-					<div class="panel-body">
-						<p>...</p>
-					</div>
 
 					<!-- Table -->
 					<h:form>
 						<h:dataTable class="table" value="#{adminController.users}"
 							var="user">
+							<h:column>
+							<div class="avatar">
+									<img src="rest/assets/user/#{user.imageHash}" />
+								</div> 
+							</h:column>
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="Gebruikersnaam" />

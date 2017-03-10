@@ -243,10 +243,11 @@ body, html {
 	height: 10%;
 }
 
-#avatar {
+.avatar {
 	display: inline-block;
 	position: relative;
-	margin-right: 6px; width : 36px;
+	margin-right: 6px;
+	width: 36px;
 	height: 36px;
 	border: 2px solid rgb(189, 195, 199);
 	-webkit-border-radius: 200px;
@@ -255,7 +256,7 @@ body, html {
 	width: 36px;
 }
 
-#avatar img {
+.avatar img {
 	height: 32px;
 	width: 32px;
 	border-radius: 200px;
@@ -269,4 +270,13 @@ body, html {
 #user #name {
 	padding-top: 15px;
 	padding-bottom: 15px
+}
+
+.table>tbody>tr>td {
+	vertical-align: middle;
+}
+
+.table>tbody>tr>td:first-child
+{
+	width: 36px;
 }
