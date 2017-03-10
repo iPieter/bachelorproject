@@ -11,9 +11,9 @@
 
 	<f:metadata>
 		<f:viewParam name="id"
-			value="#{workplaceController.currentTrainCoach.id}" />
+			value="#{trainCoachController.currentTrainCoach.id}" />
 		<f:viewAction
-			action="#{workplaceController.findTrainCoachByTraincoachId()}" />
+			action="#{trainCoachController.loadPage()}" />
 	</f:metadata>
 
 	<ui:define name="title">Traincoach Manager</ui:define>
@@ -25,12 +25,12 @@
 					<span class="glyphicon glyphicon-home"></span>
 				</h:link></li>
 			<li><h:link class="active"
-					value="#{workplaceController.currentWorkplace.name}"
-					outcome="workplace.xhtml?workplace_id=#{workplaceController.currentWorkplace.id}" />
+					value="#{trainCoachController.currentWorkplace.name}"
+					outcome="workplace.xhtml?workplace_id=#{trainCoachController.currentWorkplace.id}" />
 			</li>
 			<li><h:link class="active"
-					value="#{workplaceController.currentTrainCoach.type} - #{workplaceController.currentTrainCoach.name}"
-					outcome="traincoach.xhtml?id=#{workplaceController.currentTrainCoach.id}" />
+					value="#{trainCoachController.currentTrainCoach.type} - #{trainCoachController.currentTrainCoach.name}"
+					outcome="traincoach.xhtml?id=#{trainCoachController.currentTrainCoach.id}" />
 			</li>
 		</ol>
 	</ui:define>
@@ -39,7 +39,7 @@
 	<ui:define name="mainview_content">
 
 		<input type="hidden"
-			value="#{workplaceController.currentSensorData.id}"
+			value="#{trainCoachController.currentSensorData.id}"
 			id="current_traincoach" />
 		<div class="row">
 			<div class="col-sm-10 mainview_panel" id="graph">
@@ -61,17 +61,17 @@
 								data-target="#assignModal">Nieuwe herstelling</button>
 							<h:commandButton name="buttonApprove"
 								class="btn btn-success btn-large"
-								action="#{workplaceController.setTrainCoachReviewed()}"
+								action="#{trainCoachController.setTrainCoachReviewed()}"
 								type="submit" value="Goedkeuren"></h:commandButton>
 						</h:form>
 					</div>
 				</div>
-				<c:forEach var="mechanic" items="#{workplaceController.mechanics}">
+				<c:forEach var="mechanic" items="#{trainCoachController.mechanics}">
 					<div class="mainview_issue row">
 						<b class="col-sm-4 dont-break-out">#{mechanic.name}</b>
 						<div class="col-sm-8">
 							<c:forEach var="activeIssue"
-								items="#{workplaceController.findActiveIssuesByMechanicId(mechanic.id)}">
+								items="#{trainCoachController.findActiveIssuesByMechanicId(mechanic.id)}">
 								<li><h:outputText
 										value="#{activeIssue.status}: #{activeIssue.descr}" /></li>
 							</c:forEach>
@@ -103,15 +103,15 @@
 														 
 								<label for="description">Omschrijving probleem:</label> <br />
 								<h:inputTextarea name="description" rows="8" cols="40"
-									class="form-control" value="#{workplaceController.description}"></h:inputTextarea>
+									class="form-control" value="#{trainCoachController.description}"></h:inputTextarea>
 								<label for="list_empl">Kies een onderhoudstechnicus:</label> <br />
 								<br />
 								
 								  
 								<div class="container">
 								
-								<h:selectOneMenu value="#{workplaceController.mechanicID}" class="form-group">
-									<f:selectItems value="#{workplaceController.mechanics}" var="mechanic" itemValue="#{mechanic.id}" itemLabel="#{mechanic.name}" />
+								<h:selectOneMenu value="#{trainCoachController.mechanicID}" class="form-group">
+									<f:selectItems value="#{trainCoachController.mechanics}" var="mechanic" itemValue="#{mechanic.id}" itemLabel="#{mechanic.name}" />
 								</h:selectOneMenu>
 
 							</div>
@@ -122,7 +122,7 @@
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">Sluit</button>
 							<h:commandButton class="btn btn-default btn-large"
-								action="#{workplaceController.createIssue()}" type="submit"
+								action="#{trainCoachController.createIssue()}" type="submit"
 								value="Verstuur"></h:commandButton>
 						</div>
 					</h:form>
