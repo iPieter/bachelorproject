@@ -3,6 +3,7 @@ package bachelorproject.ejb;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -24,6 +25,9 @@ import bachelorproject.model.IssueAsset;
 @Stateless
 public class IssueAssetEJB
 {
+	@Inject
+	private EntityManagerSingleton ems;
+	
 	/**
 	 * 	Gets all the IssueAssets connected to the IssueID.
 	 *  <p>
@@ -34,8 +38,7 @@ public class IssueAssetEJB
 	 * */
 	public List<IssueAsset> getAllIssueAssetsByIssueID( int issueID )
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 		
 		TypedQuery<IssueAsset> query = em.createNamedQuery( IssueAsset.FIND_BY_ISSUE_ID, IssueAsset.class );
@@ -44,8 +47,6 @@ public class IssueAssetEJB
 		List<IssueAsset> result = query.getResultList();
 
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 		
 		return result;
 	}
@@ -58,8 +59,7 @@ public class IssueAssetEJB
 	 * */
 	public IssueAsset getIssueAssetByID( int issueAssetID )
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 		
 		TypedQuery<IssueAsset> query = em.createNamedQuery( IssueAsset.FIND_BY_ID, IssueAsset.class );
@@ -68,8 +68,6 @@ public class IssueAssetEJB
 		List<IssueAsset> result = query.getResultList();
 
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 		
 		if( result.size() == 0 )
 			return null;
@@ -82,14 +80,11 @@ public class IssueAssetEJB
 	 * */
 	public void createIssueAsset( IssueAsset asset )
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 		
 		em.persist( asset );
 
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 	}
 }

@@ -47,6 +47,9 @@ public class WorkplaceController implements Serializable
 	private Workplace currentWorkplace = new Workplace();
 	private List<User> mechanics = new ArrayList<User>();
 	
+	private int currentWorkplaceID = 0;
+	private int currentTrainCoachID = 0;
+	
 	@NotNull
 	@Size( min=10, max= 1000 )
 	private String description = "";
@@ -57,15 +60,15 @@ public class WorkplaceController implements Serializable
 	//TODO using attr? or returning list?
 	public void findTrainCoachByTraincoachId()
 	{
-		currentTrainCoach = traincoachEJB.findTrainCoachByTraincoachId( currentTrainCoach.getId() );
+		currentTrainCoach = traincoachEJB.findTrainCoachByTraincoachId( currentTrainCoachID );
 		if( currentTrainCoach == null )
 			currentTrainCoach = new TrainCoach();
-		List<Workplace> result = workplaceEJB.findWorkplaceByTraincoachID( currentTrainCoach.getId() );
+		List<Workplace> result = workplaceEJB.findWorkplaceByTraincoachID( currentTrainCoachID );
 		if ( result.size() > 0 )
 		{
 			currentWorkplace = result.get( 0 );
 		}
-		currentSensorData = psdEJB.getProcessedSensorDataByTrainCoachID( currentTrainCoach.getId() );
+		currentSensorData = psdEJB.getProcessedSensorDataByTrainCoachID( currentTrainCoachID );
 		if( currentSensorData == null )
 			System.out.println( "Failed to locate sensordata" );
 		
@@ -77,7 +80,7 @@ public class WorkplaceController implements Serializable
 	//TODO using attr? or returning list?
 	public void findWorkplaceByWorkplaceId()
 	{
-		currentWorkplace = workplaceEJB.findWorkplaceByWorkplaceId( currentWorkplace.getId() );
+		currentWorkplace = workplaceEJB.findWorkplaceByWorkplaceId( currentWorkplaceID );
 	}
 	
 	/**
@@ -319,6 +322,38 @@ public class WorkplaceController implements Serializable
 	public void setCurrentSensorData( ProcessedSensorData currentSensorData )
 	{
 		this.currentSensorData = currentSensorData;
+	}
+
+	/**
+	 * @return the currentWorkplaceID
+	 */
+	public int getCurrentWorkplaceID()
+	{
+		return currentWorkplaceID;
+	}
+
+	/**
+	 * @param currentWorkplaceID the currentWorkplaceID to set
+	 */
+	public void setCurrentWorkplaceID( int currentWorkplaceID )
+	{
+		this.currentWorkplaceID = currentWorkplaceID;
+	}
+
+	/**
+	 * @return the currentTrainCoachID
+	 */
+	public int getCurrentTrainCoachID()
+	{
+		return currentTrainCoachID;
+	}
+
+	/**
+	 * @param currentTrainCoachID the currentTrainCoachID to set
+	 */
+	public void setCurrentTrainCoachID( int currentTrainCoachID )
+	{
+		this.currentTrainCoachID = currentTrainCoachID;
 	}
 	
 }

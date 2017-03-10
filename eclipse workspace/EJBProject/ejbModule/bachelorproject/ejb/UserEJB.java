@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
@@ -16,18 +17,17 @@ import bachelorproject.model.User;
 @Local
 public class UserEJB
 {
+	@Inject
+	private EntityManagerSingleton ems;
 
 	public void createUser( User u )
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 
 		em.persist( u );
 
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 	}
 
 	/**
@@ -37,17 +37,13 @@ public class UserEJB
 	 */
 	public List<User> findAllUsers()
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 
 		TypedQuery<User> q = em.createNamedQuery( User.FIND_ALL, User.class );
 
 		q.setMaxResults( 20 );
 
 		List<User> results = q.getResultList();
-
-		em.close();
-		emf.close();
 
 		return results;
 	}
@@ -61,10 +57,7 @@ public class UserEJB
 	 */
 	public User findUserByEmail( String email )
 	{
-
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
-
+		EntityManager em = ems.getEntityManager();
 		TypedQuery<User> q = em.createNamedQuery( User.FIND_BY_EMAIL, User.class );
 		q.setParameter( "email", email );
 
@@ -76,14 +69,8 @@ public class UserEJB
 		}
 		catch ( NoResultException e )
 		{
-			em.close();
-			emf.close();
-
 			return null;
 		}
-
-		em.close();
-		emf.close();
 
 		return result;
 	}
@@ -97,9 +84,7 @@ public class UserEJB
 	 */
 	public void deleteUserById(int userId)
 	{
-
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 
 		User u = em.find(User.class, userId);
@@ -111,8 +96,6 @@ public class UserEJB
 		}
 		
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 	}
 
 	/**
@@ -123,13 +106,9 @@ public class UserEJB
 	 */
 	public User findUserById(int userId)
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		User u = em.find(User.class, userId);
 	
-		em.close();
-		emf.close();
-		
 		return u;
 	}
 	
@@ -140,8 +119,7 @@ public class UserEJB
 	 */
 	public void updateUser(User user)
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 
 		//User u = em.find(User.class, user.getId());
@@ -153,7 +131,5 @@ public class UserEJB
 		//}
 		
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 	}
 }
