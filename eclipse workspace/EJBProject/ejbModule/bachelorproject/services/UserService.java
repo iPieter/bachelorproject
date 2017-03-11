@@ -59,24 +59,30 @@ public class UserService implements Serializable
 				User u = new User();
 
 				u.setName( "John Doe" );
-				u.setEmail( "john" + (int) ( Math.random() * 100 ) + "@test.be" );
-				u.setLastLogin( new Date() );
-				u.setSalt( salt( User.SALT_LENGTH ) );
-				try
-				{
-					u.setPass( generateHash( "password123", u.getSalt() ) );
-				}
-				catch ( Exception e )
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				u.setRole( Math.random() > 0.75 ? UserRole.OPERATOR : UserRole.MECHANIC );
+				u.setEmail( "john" + i + "@test.be" );
+				
+				populateUser(u, "password123");
+				
+				u.setRole( i >5  ? UserRole.OPERATOR : UserRole.MECHANIC );
 
 				userEJB.createUser( u );
 
 				System.out.println( "Saved user ..." + u.getEmail() );
 			}
+			
+			User u = new User();
+
+			u.setName( "Jane Doe" );
+			u.setEmail( "admin@test.be" );
+
+			populateUser(u, "password123");
+			
+			u.setRole(UserRole.ADMIN);
+
+			userEJB.createUser( u );
+
+			System.out.println( "Saved user ..." + u.getEmail() );
+			
 
 		}
 

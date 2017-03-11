@@ -66,7 +66,7 @@ public class AdminController implements Serializable
 		System.out.println("updated user " + userId);
 		if (userId == 0)
 		{
-			this.workingUser = new User();
+			//this.workingUser = new User();
 
 		} else
 		{
