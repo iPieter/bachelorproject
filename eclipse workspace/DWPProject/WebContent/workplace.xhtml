@@ -42,7 +42,7 @@
             
 	       	<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
 	       	<c:forEach var="traincoach" items="#{workplaceController.findActiveTrainCoaches()}">
-	            <div class="traincoach traincoach_active">
+	            <div class="traincoach">
 	                <h4 class="sidebar_text_traincoach">
 	                	<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
 	                	<h:link value="#{traincoach.type} - #{traincoach.name}" outcome="traincoach.xhtml?id=#{traincoach.getId()}"/>
