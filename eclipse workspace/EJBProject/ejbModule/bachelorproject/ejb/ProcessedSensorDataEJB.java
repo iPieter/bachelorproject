@@ -1,6 +1,9 @@
 package bachelorproject.ejb;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,12 +18,16 @@ import bachelorproject.model.ProcessedSensorData;
  *  This class allows for the controller to manipulate and fetch specific
  *  ProcessedSensorData instances. It validates new objects and handles 
  *  errors when, for example, no entries in the database exist.
- *  
+ *  @author Anton Danneels
+ *  @version 0.1.0
  * */
 @Named
 @Stateless
 public class ProcessedSensorDataEJB
 {
+	@Inject
+	private EntityManagerSingleton ems;
+	
 	/**
 	 * 	Fetches a ProcessedSensorData from the database if it exists.
 	 *  <p>
@@ -31,21 +38,20 @@ public class ProcessedSensorDataEJB
 	 * */
 	public ProcessedSensorData getProcessedSensorDataByID( int id )
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 
 		TypedQuery<ProcessedSensorData> query = em.createNamedQuery( ProcessedSensorData.FIND_BY_ID,
 				ProcessedSensorData.class );
 		query.setParameter( "id", id );
 
-		ProcessedSensorData data = query.getSingleResult();
+		List<ProcessedSensorData> resultList = query.getResultList();
 
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 
-		return data;
+		if( resultList.size() == 0 )
+			return null;
+		return resultList.get( 0 );
 	}
 	
 	/**
@@ -54,12 +60,11 @@ public class ProcessedSensorDataEJB
 	 *  Based on the ID parameter, this method searches and returns the 
 	 *  latest processedsensordata.
 	 *  @param id The ID of the TrainCoach.
-	 *  @return The ProcessedSensorData
+	 *  @return The ProcessedSensorData if found, null otherwise.
 	 * */
 	public ProcessedSensorData getProcessedSensorDataByTrainCoachID( int id )
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 
 		TypedQuery<ProcessedSensorData> query = em.createNamedQuery( ProcessedSensorData.FIND_BY_TRAINCOACH_ID,
@@ -67,12 +72,12 @@ public class ProcessedSensorDataEJB
 		query.setParameter( "id", id );
 		query.setMaxResults( 1 );
 
-		ProcessedSensorData data = query.getSingleResult();
+		List<ProcessedSensorData> resultList = query.getResultList();
 
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 
-		return data;
+		if( resultList.size() == 0 )
+			return null;
+		return resultList.get( 0 );
 	}
 }

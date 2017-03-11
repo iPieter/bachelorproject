@@ -3,6 +3,7 @@ package bachelorproject.ejb;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -17,12 +18,16 @@ import bachelorproject.model.TrainCoach;
  *  This class allows for the controller to manipulate and fetch specific
  *  TrainCoach instances. It validates new objects and handles 
  *  errors when, for example, no entries in the database exist.
- *  
+ *  @author Anton Danneels
+ *  @version 0.1.0
  * */
 @Named
 @Stateless
 public class TrainCoachEJB
 {
+	@Inject
+	private EntityManagerSingleton ems;
+	
 	/**
 	 * 	Retrieves ALL TrainCoaches from the database
 	 *  @return A List of TrainCoach objects
@@ -31,17 +36,14 @@ public class TrainCoachEJB
 	 * */	
 	public List<TrainCoach> getAllTraincoaches()
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 
 		TypedQuery<TrainCoach> query = em.createNamedQuery( TrainCoach.FIND_ALL, TrainCoach.class );
 		List<TrainCoach> result = query.getResultList();
 
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
-
+		
 		return result;
 	}
 	
@@ -55,22 +57,14 @@ public class TrainCoachEJB
 	 * */
 	public List<TrainCoach> getAllTraincoachesNeedReview( int workplaceID )
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 
 		TypedQuery<TrainCoach> query = em.createNamedQuery( TrainCoach.FIND_ALL_NEEDS_REVIEW, TrainCoach.class );
 		query.setParameter( "id", workplaceID );
 		List<TrainCoach> result = query.getResultList();
-
-		for( TrainCoach t : result )
-		{
-			System.out.println( t );
-		}
 		
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 
 		return result;
 	}
@@ -82,15 +76,12 @@ public class TrainCoachEJB
 	 * */
 	public TrainCoach findTrainCoachByTraincoachId( int id )
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 
 		TrainCoach result = em.find( TrainCoach.class, id );
 
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 
 		return result;
 	}
@@ -105,8 +96,7 @@ public class TrainCoachEJB
 	 * */
 	public void setTrainCoachReviewed( int id )
 	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "EJBProject" );
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 
 		TrainCoach result = em.find( TrainCoach.class, id );
@@ -116,7 +106,5 @@ public class TrainCoachEJB
 
 		em.persist( result );
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 	}
 }

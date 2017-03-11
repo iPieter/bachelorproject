@@ -67,6 +67,9 @@ public class User implements Serializable
 	@Enumerated( EnumType.STRING )
 	@NotNull
 	private UserRole role;
+	
+	@Lob
+	private String imageHash;
 
 	// Used constants
 	public static final int SALT_LENGTH = 32;
@@ -144,6 +147,30 @@ public class User implements Serializable
 	public void setLastLogin( Date lastLogin )
 	{
 		this.lastLogin = lastLogin;
+	}
+	
+	
+
+	/**
+	 * Returns a hash of the profile picture the user uploaded
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return the imageHash
+	 */
+	public String getImageHash()
+	{
+		return imageHash;
+	}
+
+	/**
+	 * Sets the hash of image the user uploaded as a profile picture.
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param imageHash the imageHash to set
+	 */
+	public void setImageHash(String imageHash)
+	{
+		this.imageHash = imageHash;
 	}
 
 	@Override

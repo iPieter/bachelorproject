@@ -11,8 +11,8 @@
 <ui:composition template="templates/main_layout.xhtml">
 	
 	<f:metadata>
-		<f:viewParam name="workplace_id" value="#{workplaceController.currentWorkplace.id}"/>
-		<f:viewAction action="#{workplaceController.findWorkplaceByWorkplaceId()}"/>
+		<f:viewParam name="workplace_id" value="#{workplaceController.currentWorkplaceID}"/>
+		<f:viewAction action="#{workplaceController.loadPage()}"/>
 	</f:metadata>
 	
 	<ui:define name="title">Workplace Manager</ui:define>
@@ -28,6 +28,39 @@
 		</ol>
 	</ui:define>
 	
+	<!-- SIDEBAR CONTENT -->
+	<ui:define name="sidebar_content">
+   		<div class="workplace workplace_active">	
+   			
+   			<!-- GESELECTEERDE STAANPLAATS -->	
+   			<c:set var="workplace" value="#{workplaceController.currentWorkplace}"/>
+            <h4>
+            	<span class="glyphicon glyphicon-unchecked"></span>
+            	<h:link value="#{workplace.name}" 
+            			outcome="workplace.xhtml?workplace_id=#{workplace.id}"/>
+            </h4>
+            
+	       	<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
+	       	<c:forEach var="traincoach" items="#{workplaceController.findActiveTrainCoaches()}">
+	            <div class="traincoach">
+	                <h4 class="sidebar_text_traincoach">
+	                	<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
+	                	<h:link value="#{traincoach.type} - #{traincoach.name}" outcome="traincoach.xhtml?id=#{traincoach.getId()}"/>
+	                </h4>
+	                <!-- METADATA PER WAGON -->
+	                <div class="traincoach_data">
+	                    <h5>
+	                    	<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
+	                    	<h:link value="Problemen" outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"/>
+	                    	<span class="badge"></span>
+	                    </h5>
+	                    <h5><span class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span> Sensoren</h5>
+	                </div>
+	            </div>
+			</c:forEach>
+		</div>
+	</ui:define>
+		
 	<!-- MAINVIEW CONTENT -->
 	<ui:define name="mainview_content">
 		<!--MAIN ROW -->
@@ -76,7 +109,7 @@
                     
                     <div class="col-sm-5"> <!-- TODO -->
                         <div class="row">
-							<div class="col-sm-12 mainview_panel">
+							<div class="col-sm-12 mainview_panel" id="map_size">
 								<div id="map">
 								</div>
 							</div>
@@ -90,12 +123,12 @@
 										<b>#{mechanic.name}</b>
 									</div>
 		                            <div class="col-sm-8">
-		                            	<c:forEach var="activeIssue" items="#{workplaceController.findActiveIssuesByMechanicId(mechanic.id)}">
-		                            		<li>
-		                            			<h:outputText value="activeIssue.status: activeIssue.descr" />
-		                            		</li>
-		                            	</c:forEach>
-		                            </div>
+									<c:forEach var="activeIssue"
+										items="#{workplaceController.findActiveIssuesByMechanicId(mechanic.id)}">
+										<li><h:outputText
+												value="#{activeIssue.status}: #{activeIssue.descr}" /></li>
+									</c:forEach>
+								</div>
 		                        </div> <!-- END TECHNICUS -->
 		                        </c:forEach>
 							</div> <!-- END OVERZICHT TECHNICI -->

@@ -4,90 +4,43 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import bachelorproject.ejb.IssueEJB;
-import bachelorproject.ejb.ProcessedSensorDataEJB;
 import bachelorproject.ejb.TrainCoachEJB;
 import bachelorproject.ejb.WorkplaceEJB;
 import bachelorproject.model.Issue;
-import bachelorproject.model.IssueStatus;
-import bachelorproject.model.ProcessedSensorData;
 import bachelorproject.model.TrainCoach;
 import bachelorproject.model.User;
 import bachelorproject.model.Workplace;
-import bachelorproject.services.UserService;
 
 @Named
-//@RequestScoped
 @SessionScoped
 public class WorkplaceController implements Serializable
 {
-	private static final long serialVersionUID = 1L;
-
-	@Inject
+	private static final long serialVersionUID = -5824382672006285083L;
+	
+	@EJB
 	private WorkplaceEJB workplaceEJB;
-	@Inject
+	@EJB
 	private TrainCoachEJB traincoachEJB;
-	@Inject
-	private ProcessedSensorDataEJB psdEJB;
-	@Inject
+	@EJB
 	private IssueEJB issueEJB;
-	@Inject
-	private UserService userService;
 
-	private ProcessedSensorData currentSensorData = new ProcessedSensorData();
-
-	//TODO zijn attr nodig? ==>rechtstreeks in methoden OF via init methode die alles aanroept
-	private TrainCoach currentTrainCoach = new TrainCoach();
 	private Workplace currentWorkplace = new Workplace();
-	private List<User> mechanics = new ArrayList<User>();
-	
-	@NotNull
-	@Size( min=10, max= 1000 )
-	private String description = "";
-	
-	@NotNull
-	private String mechanicID = "";
-
-	//TODO using attr? or returning list?
-	public void findTrainCoachByTraincoachId()
-	{
-		currentTrainCoach = traincoachEJB.findTrainCoachByTraincoachId( currentTrainCoach.getId() );
-		List<Workplace> result = workplaceEJB.findWorkplaceByTraincoachID( currentTrainCoach.getId() );
-		if ( result.size() > 0 )
-		{
-			currentWorkplace = result.get( 0 );
-		}
-		currentSensorData = psdEJB.getProcessedSensorDataByTrainCoachID( currentTrainCoach.getId() );
-		
-		mechanics.clear();
-		for ( User u : workplaceEJB.findMechanicsByWorkplaceId( currentWorkplace.getId() ) )
-			mechanics.add( u );
-	}
-
-	//TODO using attr? or returning list?
-	public void findWorkplaceByWorkplaceId()
-	{
-		currentWorkplace = workplaceEJB.findWorkplaceByWorkplaceId( currentWorkplace.getId() );
-	}
+	private int currentWorkplaceID;
 	
 	/**
-	 * 	Calls into the TrainCoachEJB object to set this TrainCoach as reviewed.
-	 *  @return If this method succeeds, it will redirect to index
+	 * 	This method gets called when the page first loads.
+	 *  <p>
+	 *  It extracts the id parameter from the URL requests and uses this
+	 *  to load the correct data from the webpage.
 	 * */
-	public String setTrainCoachReviewed()
+	public void loadPage()
 	{
-		if( currentTrainCoach != null)
-		{
-			traincoachEJB.setTrainCoachReviewed( currentTrainCoach.getId() );
-			return "index.xhtml";
-		}
-		return null;
+		currentWorkplace = workplaceEJB.findWorkplaceByWorkplaceId( currentWorkplaceID );
 	}
 	
 	/**
@@ -97,33 +50,6 @@ public class WorkplaceController implements Serializable
 	public List<TrainCoach> findActiveTrainCoaches( )
 	{
 		return traincoachEJB.getAllTraincoachesNeedReview( currentWorkplace.getId() );
-	}
-	
-	/**
-	 * 	Calls into the IssueEJB to create new issues.
-	 * */
-	public String createIssue()
-	{
-		currentSensorData = psdEJB.getProcessedSensorDataByTrainCoachID( currentTrainCoach.getId() );
-		
-		Issue issue = new Issue();
-		issue.setData( currentSensorData );
-		issue.setDescr( description );
-		
-		User m = new User();
-		for( User mm : mechanics )
-		{
-			if( mm.getId() == Integer.parseInt( mechanicID ) )
-				m = mm;
-		}
-		
-		issue.setMechanic( m );
-		issue.setOperator( userService.getUser() );
-		issue.setStatus( IssueStatus.ASSIGNED );
-		
-		issueEJB.createIssue( issue );
-		
-		return "index.html";
 	}
 
 	//MECHANICS OF CURRENT WORKPLACE
@@ -217,17 +143,12 @@ public class WorkplaceController implements Serializable
 	 */
 	public List<Issue> findActiveIssuesByMechanicId( int mechanicId )
 	{
-		// TODO ERRORCHECKING
-		List<Issue> result = new ArrayList();
+		List<Issue> result = new ArrayList<Issue>();
 		result.addAll(findInProgressIssuesByMechanicId(mechanicId));
 		result.addAll(findAssignedIssuesByMechanicId(mechanicId));
 		return result;
 	}
 
-	public List<TrainCoach> getAllTraincoaches()
-	{
-		return traincoachEJB.getAllTraincoachesNeedReview( currentWorkplace.getId() );
-	}
 	/**
 	 * Returns a List of Issue objects for a given mechanicId.
 	 * All queried issues have an IssueState IN_PROGRESS.
@@ -269,44 +190,24 @@ public class WorkplaceController implements Serializable
 		return workplaceEJB.getAllWorkplaces();
 	}
 
-	public TrainCoach getCurrentTrainCoach()
-	{
-		return currentTrainCoach;
+	/**
+	 * @return the currentWorkplaceID
+	 */
+	public int getCurrentWorkplaceID() {
+		return currentWorkplaceID;
 	}
 
-	public List<User> getMechanics()
-	{
-		return mechanics;
-	}
-	
-	public String getDescription()
-	{
-		return description;
-	}
-	
-	public void setDescription( String description )
-	{
-		this.description = description;
+	/**
+	 * @param currentWorkplaceID the currentWorkplaceID to set
+	 */
+	public void setCurrentWorkplaceID(int currentWorkplaceID) {
+		this.currentWorkplaceID = currentWorkplaceID;
 	}
 
-	public String getMechanicID()
-	{
-		return mechanicID;
+	/**
+	 * @param currentWorkplace the currentWorkplace to set
+	 */
+	public void setCurrentWorkplace(Workplace currentWorkplace) {
+		this.currentWorkplace = currentWorkplace;
 	}
-
-	public void setMechanicID( String mechanicID )
-	{
-		this.mechanicID = mechanicID;
-	}
-
-	public ProcessedSensorData getCurrentSensorData()
-	{
-		return currentSensorData;
-	}
-
-	public void setCurrentSensorData( ProcessedSensorData currentSensorData )
-	{
-		this.currentSensorData = currentSensorData;
-	}
-	
 }
