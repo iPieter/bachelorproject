@@ -2,8 +2,10 @@ package controllers;
 
 import java.io.Serializable;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -53,13 +55,18 @@ public class AuthenticationController implements Serializable
 	 */
 	public String doLogin()
 	{
+		
+		System.out.println("Login function called" + email + " : " + password);
+		
 		if (userService.verificateLogin(email, password))
 		{
 			return userService.hasCurrentUserRequiredRole(UserRole.ADMIN) ? "admin.xhtml?faces-redirect=true"
 					: "index.xhtml?faces-redirect=true";
 		} else
 		{
-			return null;
+			FacesContext.getCurrentInstance().addMessage("inputPassword",  new FacesMessage("Invalid login", 
+					"There seems to be a problem with either the password or the email."));
+			return "";
 		}
 	}
 
