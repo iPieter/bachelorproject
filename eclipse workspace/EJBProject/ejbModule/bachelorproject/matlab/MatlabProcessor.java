@@ -21,8 +21,6 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-import bachelorproject.model.Issue;
-import bachelorproject.model.IssueStatus;
 import bachelorproject.model.ProcessedSensorData;
 import bachelorproject.model.TrainCoach;
 import bachelorproject.model.Workplace;
@@ -57,6 +55,9 @@ import matlabcontrol.extensions.MatlabTypeConverter;
  *  	<li>An array with the maximum roll values of the trip</li>
  *  	<li>An array with the lat values of the trip</li>
  *  	<li>An array with the lng values of the trip</li>
+ *      <li>An array with the speed values of the trip</li>
+ *      <li>An array with the acceleration values of the trip</li>
+ *      <li>Maximum and minimum values of the yaw & roll arrays</li>
  *  </ul>
  *  Because of the naming convention, we are able to wire everything in the database together.
  *  @author: Anton Danneels
@@ -199,8 +200,15 @@ public class MatlabProcessor
 		MatlabNumericArray time_out = processor.getNumericArray( "time_out" );
 		MatlabNumericArray lat_out = processor.getNumericArray( "lat_out" );
 		MatlabNumericArray lng_out = processor.getNumericArray( "lng_out" );
+		MatlabNumericArray speed_out = processor.getNumericArray( "speed_out" );
+		MatlabNumericArray accel_out = processor.getNumericArray( "accel_out" );
+		
 		double lat_off = ( (double[]) proxy.getVariable( "lat_offset" ) )[0];
 		double lng_off = ( (double[]) proxy.getVariable( "lon_offset" ) )[0];
+		double max_roll = ( (double[]) proxy.getVariable( "max_roll" ) )[0];
+		double min_roll = ( (double[]) proxy.getVariable( "min_roll" ) )[0];
+		double max_yaw = ( (double[]) proxy.getVariable( "max_yaw" ) )[0];
+		double min_yaw = ( (double[]) proxy.getVariable( "min_yaw" ) )[0];
 
 		double yaw[][] = yaw_out.getRealArray2D();
 		double roll[][] = roll_out.getRealArray2D();
@@ -211,6 +219,7 @@ public class MatlabProcessor
 		double hour = time_out.getRealValue( 3 );
 		double minute = time_out.getRealValue( 4 );
 		double second = time_out.getRealValue( 5 );
+		
 
 		try
 		{
@@ -224,15 +233,24 @@ public class MatlabProcessor
 			writeLine( writeValue( "hour", hour ), true, writer );
 			writeLine( writeValue( "minute", minute ), true, writer );
 			writeLine( writeValue( "second", second ), true, writer );
+			
 			writeLine( writeValue( "lat_off", lat_off ), true, writer );
 			writeLine( writeValue( "lng_off", lng_off ), true, writer );
 
+			writeLine( writeValue( "max_roll", max_roll ), true, writer );
+			writeLine( writeValue( "min_roll", min_roll ), true, writer );
+			writeLine( writeValue( "max_yaw", max_yaw ), true, writer );
+			writeLine( writeValue( "min_yaw", min_yaw ), true, writer );
+			
 			writeArray2D( "yaw", yaw, true, writer );
 			writeArray2D( "roll", roll, true, writer );
 
 			writeNumericArray( "lat", lat_out, true, writer );
-			writeNumericArray( "lng", lng_out, false, writer );
+			writeNumericArray( "lng", lng_out, true, writer );
 
+			writeNumericArray( "speed", speed_out, true, writer );
+			writeNumericArray( "accel", accel_out, false, writer );
+			
 			writeLine( "}", false, writer );
 
 			writer.flush();
