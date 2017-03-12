@@ -18,7 +18,7 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet" />
 	<link href="css/login.css" rel="stylesheet" />
 	<link href="css/extra_layout.css" rel="stylesheet" />
-	<title>Gebruikersbeheer</title>
+	<title>Beheer stelplaatsen</title>
 </h:head>
 
 <!-- Renders when logged in -->
@@ -40,10 +40,7 @@
 
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
-			<ul class="nav navbar-nav">
-						<li class="active"><a href="#">Gebruikers</a></li>
-						<li><a href="alter_workplaces.xhtml">Werkplaatsen</a></li>
-					</ul>
+
 				<h:form>
 
 					<ul class="nav navbar-nav navbar-right">
@@ -84,42 +81,31 @@
 
 					<!-- Default panel contents -->
 					<div class="panel-heading">
-						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-						Gebruikers
+						<span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span>
+						Stelplaatsen
 					</div>
 
 					<!-- Table -->
 					<h:form>
-						<h:dataTable class="table userTable" value="#{adminController.users}"
-							var="user">
+						<h:dataTable class="table" value="#{workplaceController.allWorkplaces}"
+							var="workplace">
 							<h:column>
-								<div class="avatar">
-									<img src="rest/assets/user/#{user.imageHash}" />
-								</div>
+								<f:facet name="header">
+									<h:outputText value="Naam" />
+								</f:facet>
+								<h:outputText value="#{workplace.name}" />
 							</h:column>
 							<h:column>
 								<f:facet name="header">
-									<h:outputText value="Gebruikersnaam" />
+									<h:outputText value="Aantal wagons" />
 								</f:facet>
-								<h:outputText value="#{user.name}" />
+								<h:outputText value="#{workplace.traincoaches.size()}" />
 							</h:column>
 							<h:column>
 								<f:facet name="header">
-									<h:outputText value="Emailadres" />
+									<h:outputText value="Aantal technici" />
 								</f:facet>
-								<h:outputText value="#{user.email}" />
-							</h:column>
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Laatste login" />
-								</f:facet>
-								<h:outputText value="#{user.lastPrettyLogin}" />
-							</h:column>
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Rol" />
-								</f:facet>
-								<h:outputText value="#{user.role}" />
+								<h:outputText value="#{workplace.mechanics.size()}" />
 							</h:column>
 							<h:column>
 								<f:facet name="header">
