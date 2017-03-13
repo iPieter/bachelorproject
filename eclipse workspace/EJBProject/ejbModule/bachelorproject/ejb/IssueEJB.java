@@ -24,7 +24,7 @@ import bachelorproject.model.IssueStatus;
  */
 @Named
 @Stateless
-public class IssueEJB
+public class IssueEJB //TODO: when changing issue status, timestamp must be taken.
 {
 	@Inject
 	private EntityManagerSingleton ems;
@@ -142,5 +142,59 @@ public class IssueEJB
 		em.persist( issue );
 		
 		em.getTransaction().commit();
+	}
+	
+	/**
+	 * Returns a List of Issue objects for the current User(UserRole=OPERATOR).
+	 * The list contains an overview of the Issues that the Operator assigned, 
+	 * that are recently closed by a Mechanic. Thus IssueStatus=CLOSED for all returned issues.
+	 * <p>
+	 * The method uses a query where the userId is used to find the closed issues.
+	 * 
+	 * @author Matthias De Lange
+	 * @version 0.0.1
+	 * @param userId the id of operator to find closed issues from
+	 * @return List of Issue objects
+	 * @see IndexController
+	 */
+	public List<Issue> findOperatorClosedIssues( int userId ){
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+		
+		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_OPERATOR_ID, Issue.class )
+									.setParameter("status", IssueStatus.CLOSED)
+									.setParameter("operator_id", userId );
+		List<Issue> result = query.getResultList();
+		
+		em.getTransaction().commit();
+
+		return result;
+	}
+	
+	/**
+	 * Returns a List of Issue objects for the current User(UserRole=OPERATOR).
+	 * The list contains an overview of the Issues that the Operator assigned, 
+	 * that are in progress by a Mechanic. Thus IssueStatus=IN_PROGRESS for all returned issues.
+	 * <p>
+	 * The method uses a query where the userId is used to find the issues in progress.
+	 * 
+	 * @author Matthias De Lange
+	 * @version 0.0.1
+	 * @param userId the id of operator to find issues in progress from
+	 * @return List of Issue objects
+	 * @see IndexController
+	 */
+	public List<Issue> findOperatorInProgressIssues( int userId ){
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+		
+		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_OPERATOR_ID, Issue.class )
+									.setParameter("status", IssueStatus.IN_PROGRESS)
+									.setParameter("operator_id", userId );
+		List<Issue> result = query.getResultList();
+		
+		em.getTransaction().commit();
+
+		return result;
 	}
 }

@@ -7,6 +7,10 @@
   <param-value>Development</param-value>
   <!-- DELETE SECTION AFTER DEPLOYMENT/SET TO "PRODUCTION" -->
  </context-param>
+ <context-param>
+	<param-name>primefaces.THEME</param-name>
+	<param-value>aristo</param-value>
+</context-param>
  <session-config>
   <session-timeout>30</session-timeout>
  </session-config>

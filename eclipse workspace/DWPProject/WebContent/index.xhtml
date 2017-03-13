@@ -5,7 +5,9 @@
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
 	
 <h:head>
 	<meta charset="utf-8"/>
@@ -19,15 +21,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<link href="css/bootstrap.min.css" rel="stylesheet"/>
 	<link href="css/extra_layout.css" rel="stylesheet"/>
+	<link href="css/index.css" rel="stylesheet"/>
 	<link rel="stylesheet" href="css/leaflet.css" />
 	<title>Televic Managment Home</title>
 </h:head>
 
 <!-- Renders when logged in -->
 <h:body rendered="#{authenticationController.hasOperatorAccess()}">	
-<input 	type="hidden"
-		value="#{workplaceController.currentSensorData.id}"
-		id="current_traincoach" />
 			
 <div class="container-fluid">
 	<div class="row">
@@ -53,23 +53,96 @@
    			<!-- SIDEBAR CONTENT --> 	
    			<div class="workplace workplace_active">	
    			
-   			<!-- STAANPLAATSEN -->	
-			<c:forEach var="workplace" items="#{workplaceController.getAllWorkplaces()}">
-                <h4>
-                	<span class="glyphicon glyphicon-unchecked sidebar_icon"></span>
-                	<h:link value="#{workplace.name}" outcome="workplace.xhtml?workplace_id=#{workplace.id}"/>
-                </h4>
-   			</c:forEach>
+	   			<!-- STAANPLAATSEN -->	
+				<c:forEach var="workplace" items="#{workplaceController.getAllWorkplaces()}">
+	                <h4>
+	                	<span class="glyphicon glyphicon-unchecked sidebar_icon"></span>
+	                	<h:link value="#{workplace.name}" outcome="workplace.xhtml?workplace_id=#{workplace.id}"/>
+	                </h4>
+	   			</c:forEach>
    			</div> <!-- END SIDEBAR CONTENT -->
    		</div> <!-- END LEFT SIDEBAR -->
 	
 	<!-- MAINVIEW CONTENT -->
-		<div class="jumbotron">
-		  <h1>Hello, <h:outputText value="#{authenticationController.email}"></h:outputText></h1>
-		  <p>Welcome to Televic Traincoach Managment!</p>
-		  <p><a class="btn btn-primary btn-lg" href="#" role="button">I am a pointless button</a></p>
-		</div>
-
+	<div class="col-sm-10">
+			
+		<!-- USER DATA ROW -->
+		<div class="row userdata_row">
+			<div class="col-sm-12"></div>
+				<h:form id="form">
+	    			<p:growl id="msgs" showDetail="true" />
+	    			
+	    			<!-- TABS -->
+	    			<p:tabView dynamic="true" cache="true">
+	    			
+	    				<!--TAB: CLOSED ISSUES -->
+				        <p:tab title="Closed Issues">
+							<h:outputText value="Issues you assigned, recently closed." />
+							<h:dataTable value="#{indexController.findOperatorClosedIssues()}" var="issue">
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Closing Date" />
+									</f:facet>
+									<h:outputText value="#{issue.closedTime}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Description" />
+									</f:facet>
+									<h:outputText value="#{issue.descr}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Mechanic" />
+									</f:facet>
+									<h:outputText value="#{issue.mechanic}" />
+								</h:column>							
+							</h:dataTable>
+				        </p:tab>
+				        
+				        <!--TAB: IN_PROGRESS ISSUES -->
+				        <p:tab title="Issues In Progress">
+							<h:outputText value="Issues you assigned, now in progress." />
+							<h:dataTable value="#{indexController.findOperatorInProgressIssues()}" var="issue">
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="In Progress Date" />
+									</f:facet>
+									<h:outputText value="#{issue.inProgressTime}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Description" />
+									</f:facet>
+									<h:outputText value="#{issue.descr}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Mechanic" />
+									</f:facet>
+									<h:outputText value="#{issue.mechanic}" />
+								</h:column>							
+							</h:dataTable>
+				        </p:tab>
+				        
+				    </p:tabView>
+	    		</h:form>
+    		</div> <!-- END USER DATA ROW -->
+    		
+    		<!-- STATISTIC GRAPHICS ROW -->
+			<div class="row graphics_row">
+				<!-- HEATMAP -->
+				<div class="col-sm-8">
+				
+				</div>
+				
+				<!-- HALF-DONUT STATISTICS--> 
+				<div class="col-sm-4">
+				
+				</div>
+			</div> <!-- END STATISTIC GRAPHICS ROW -->
+		
+		</div> <!-- END MAINVIEW CONTENT -->
 	</div> <!-- END MASTER ROW -->
 </div> <!-- END MASTER CONTAINER -->
 </h:body>

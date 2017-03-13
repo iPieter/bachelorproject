@@ -33,6 +33,7 @@ body, html {
 	border-top: 1px solid #293A40;
 	border-right: 1px solid #293A40;
 	border-bottom: 1px solid #293A40;
+	height: 100%;
 }
 
 .workplace_active {
