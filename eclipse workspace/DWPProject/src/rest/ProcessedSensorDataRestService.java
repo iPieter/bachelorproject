@@ -10,6 +10,14 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+/*
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
+*/
 import javax.ws.rs.core.UriInfo;
 
 import bachelorproject.ejb.ProcessedSensorDataEJB;
@@ -57,6 +65,13 @@ public class ProcessedSensorDataRestService
 	public String getProcessedSensorData( @PathParam( "id" ) int id )
 	{
 		ProcessedSensorData data = psdEJB.getProcessedSensorDataByID( id );
+		
+		if( data == null )
+		{
+			System.out.println( "ProcessedSensorData does not exist:" + id );
+			return "{ \"error\" : \"Error loading file.\" }";
+		}
+		
 		try
 		{
 			BufferedReader reader = new BufferedReader( new FileReader( data.getLocation() ) );
