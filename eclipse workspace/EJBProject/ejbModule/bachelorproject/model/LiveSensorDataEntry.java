@@ -1,6 +1,7 @@
 package bachelorproject.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -42,6 +45,9 @@ public class LiveSensorDataEntry implements Serializable
 	
 	@NotNull
 	private double accel;
+	
+	@Temporal( TemporalType.TIMESTAMP )
+	private Date time;
 
 	/**
 	 * @return the id
@@ -155,4 +161,19 @@ public class LiveSensorDataEntry implements Serializable
 		this.accel = accel;
 	}
 
+	/**
+	 * @return the time
+	 */
+	public Date getTime()
+	{
+		return time;
+	}
+
+	/**
+	 * @param time the time to set
+	 */
+	public void setTime( Date time )
+	{
+		this.time = time;
+	}
 }

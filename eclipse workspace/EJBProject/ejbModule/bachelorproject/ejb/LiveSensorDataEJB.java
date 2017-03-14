@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
 import bachelorproject.model.LiveSensorData;
@@ -31,7 +32,7 @@ public class LiveSensorDataEJB
 	 * 	Persists a LiveSensorData object to the database if it is correct
 	 *  @param lsd The LiveSensorDataObject to be persisted
 	 * */
-	public void createLiveSensorData( LiveSensorData lsd )
+	public int createLiveSensorData( LiveSensorData lsd )
 	{
 		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
@@ -39,6 +40,8 @@ public class LiveSensorDataEJB
 		em.persist( lsd );
 		
 		em.getTransaction().commit();
+		
+		return lsd.getId();
 	}
 	
 	/**
@@ -93,7 +96,7 @@ public class LiveSensorDataEJB
 		em.getTransaction().begin();
 		
 		TypedQuery<LiveSensorData> query = em.createNamedQuery( LiveSensorData.FIND_BY_DATE, LiveSensorData.class );
-		query.setParameter( "date", date );
+		query.setParameter( "date", date, TemporalType.TIMESTAMP );
 		
 		List<LiveSensorData> result = query.getResultList();
 		

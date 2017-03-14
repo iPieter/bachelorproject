@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
@@ -42,7 +43,8 @@ public class LiveSensorDataRestService
 	
 	/**
 	 * 	Creates a new LiveSensorData object and allows the sensor to add entries
-	 * 
+	 *  @param traincoachID The associated traincoach
+	 *  @param track The track of the ride.
 	 * */
 	@GET
 	@Path( "register/{traincoachID}/{track}" )
@@ -58,24 +60,45 @@ public class LiveSensorDataRestService
 		lsd.setLive( true );
 		lsd.setTrack( track );
 		lsd.setTraincoach( trainCoach );
+		lsd.setDate( now );
 		
-		lsdEJB.createLiveSensorData( lsd );
+		int id = lsdEJB.createLiveSensorData( lsd );
 		
-		LiveSensorData lsdCreated = lsdEJB.findLSDByDate( now );
-		
-		return Response.ok( "" ).build();
+		return Response.ok( id ).build();
 	}
 	
 	/**
-	 * 	Adds an entry to the specified 
+	 * 	Adds an entry to the specified LiveSensorData object
+	 *  
 	 * */
-	public void addEntry()
+	@POST
+	@Path( "add_entry/{lsdID}/{lat}/{lng}/{speed}/{accel}/{yaw}/{roll}" )
+	public Response addEntry( @PathParam("lsdID") int lsdID, @PathParam("lat") double lat, @PathParam("lng") double lng, 
+							  @PathParam("speed") double speed, @PathParam("accel") double accel,
+							  @PathParam("yaw") double yaw, @PathParam("roll") double roll )
 	{
+		LiveSensorDataEntry lsde = new LiveSensorDataEntry();
+		lsde.setLat( lat );
+		lsde.setLng( lng );
+		lsde.setSpeed( speed );
+		lsde.setAccel( accel );
+		lsde.setYaw( yaw );
+		lsde.setRoll( roll );
 		
+		if( !lsdeEJB.addEntry( lsdID, lsde ) )
+			return Response.status( Status.BAD_REQUEST ).build();
+			
+		return Response.ok().build();
 	}
 	
-	public void stopLiveTracking()
+	/**
+	 * 	Closes the {@link LiveSensorData} object.
+	 *  @param lsdID The {@link LiveSensorData} to be closed.
+	 * */
+	@GET
+	@Path( "/stop/{lsdID}" )
+	public void stopLiveTracking( @PathParam("lsdID") int lsdID )
 	{
-		
+		lsdEJB.closeLiveSensorData( lsdID );
 	}
 }

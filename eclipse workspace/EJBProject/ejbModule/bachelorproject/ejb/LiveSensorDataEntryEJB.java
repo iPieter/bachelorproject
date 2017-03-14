@@ -33,20 +33,26 @@ public class LiveSensorDataEntryEJB
 	 *  @param lsdID The ID of the LiveSensorData object that this entry is related to
 	 *  @param entry The new entry to be added.
 	 * */
-	public void addEntry( int lsdID, LiveSensorDataEntry entry )
+	public boolean addEntry( int lsdID, LiveSensorDataEntry entry )
 	{
 		EntityManager em = ems.getEntityManager();
-		em.getTransaction().begin();
 		
 		LiveSensorData lsd = lsdEJB.findLSDByID( lsdID );
+		
+		em.getTransaction().begin();
 		
 		if( lsd != null && lsd.isLive() )
 		{
 			lsd.getEntries().add( entry );
 			em.persist( entry );
 			em.persist( lsd );
+			
+			em.getTransaction().commit();
+			
+			return true;
 		}
 		
 		em.getTransaction().commit();
+		return false;
 	}
 }
