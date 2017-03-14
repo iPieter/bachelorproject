@@ -285,3 +285,8 @@ body, html {
 {
 	height: 55px;
 }
+
+.form-group select
+{
+	height: 32px;
+}

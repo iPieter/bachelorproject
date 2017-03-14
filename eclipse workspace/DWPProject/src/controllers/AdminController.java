@@ -58,8 +58,9 @@ public class AdminController implements Serializable
 	 * If the id is zero, a new user object will be created for edit.
 	 * 
 	 * @author Pieter Delobelle
-	 * @param userId
-	 *            The id of the user that will be set to workingUser
+	 * @version 0.9.9
+	 * @param userId The id of the user that will be set to workingUser
+	 * @see User
 	 */
 	public void updateWorkingUser(int userId)
 	{
