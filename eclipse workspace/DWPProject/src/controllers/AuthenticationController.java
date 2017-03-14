@@ -136,6 +136,18 @@ public class AuthenticationController implements Serializable
 	{
 		return hasAccess(UserRole.ADMIN);
 	}
+	
+	/**
+	 * Tells if a user is logged in by returning true and false otherwise.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return True is a user is logged in, false otherwise.
+	 */
+	public boolean isLoggedIn()
+	{
+		return userService.getUser() != null;
+	}
 
 	/**
 	 * When called, this will log out the current user in the UserService.
