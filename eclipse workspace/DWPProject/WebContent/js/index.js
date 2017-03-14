@@ -1,18 +1,35 @@
 
-var data_recent = $("#operator_statistics_recent").val();
+var operator_id =null;
 var data_history = $("#operator_statistics_history").val();
+var data_donut=null;
 
-function setView( input )
+$(document).ready(function() {
+	
+	operator_id = $("#current_operator_id").val();
+	
+	$.get( "rest/statistics_data/" + operator_id, function( data )
+	{ 
+		setDonutView(data);
+	}).fail( function( error )
+	{
+		console.log( "Failed to fetch donut_data: " + error );
+	});
+	
+});
+
+function setDonutView(data)
 {
 	
-	Highcharts.chart('container', {
+	console.log(data);
+	
+	Highcharts.chart('donut_graph', {
 	    chart: {
 	        plotBackgroundColor: null,
 	        plotBorderWidth: 0,
 	        plotShadow: false
 	    },
 	    title: {
-	        text: 'Browser<br>shares<br>2015',
+	        text: 'Problemen<br>Deze<br>Maand',
 	        align: 'center',
 	        verticalAlign: 'middle',
 	        y: 40
@@ -23,36 +40,23 @@ function setView( input )
 	    plotOptions: {
 	        pie: {
 	            dataLabels: {
-	                enabled: true,
+	                enabled: false,
 	                distance: -50,
 	                style: {
 	                    fontWeight: 'bold',
 	                    color: 'white'
 	                }
 	            },
-	            startAngle: -90,
-	            endAngle: 90,
+	            startAngle: -95,
+	            endAngle: 95,
 	            center: ['50%', '75%']
 	        }
 	    },
 	    series: [{
 	        type: 'pie',
-	        name: 'Browser share',
-	        innerSize: '50%',
-	        data: [
-	            ['Firefox',   10.38],
-	            ['IE',       56.33],
-	            ['Chrome', 24.03],
-	            ['Safari',    4.77],
-	            ['Opera',     0.91],
-	            {
-	                name: 'Proprietary or Undetectable',
-	                y: 0.2,
-	                dataLabels: {
-	                    enabled: false
-	                }
-	            }
-	        ]
+	        name: 'Percentage',
+	        innerSize: '60%',
+	        data: data.issue_counts
 	    }]
 	});
 }

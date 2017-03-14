@@ -1,13 +1,13 @@
 package bachelorproject.ejb;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import bachelorproject.model.Issue;
@@ -41,6 +41,8 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 
 		try
 		{
+			Date now=new Date();
+			issue.setAssignedTime(now);
 			em.persist( issue );
 		}
 		catch ( Exception e )
@@ -147,22 +149,23 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 	/**
 	 * Returns a List of Issue objects for the current User(UserRole=OPERATOR).
 	 * The list contains an overview of the Issues that the Operator assigned, 
-	 * that are recently closed by a Mechanic. Thus IssueStatus=CLOSED for all returned issues.
+	 * that are recently closed by a Mechanic. 
 	 * <p>
 	 * The method uses a query where the userId is used to find the closed issues.
 	 * 
 	 * @author Matthias De Lange
 	 * @version 0.0.1
 	 * @param userId the id of operator to find closed issues from
+	 * @param issueStatus status of the queried issue 
 	 * @return List of Issue objects
 	 * @see IndexController
 	 */
-	public List<Issue> findOperatorClosedIssues( int userId ){
+	public List<Issue> findOperatorIssues( int userId, IssueStatus issueStatus ){
 		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 		
 		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_OPERATOR_ID, Issue.class )
-									.setParameter("status", IssueStatus.CLOSED)
+									.setParameter("status", issueStatus)
 									.setParameter("operator_id", userId );
 		List<Issue> result = query.getResultList();
 		
@@ -172,26 +175,25 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 	}
 	
 	/**
-	 * Returns a List of Issue objects for the current User(UserRole=OPERATOR).
-	 * The list contains an overview of the Issues that the Operator assigned, 
-	 * that are in progress by a Mechanic. Thus IssueStatus=IN_PROGRESS for all returned issues.
-	 * <p>
-	 * The method uses a query where the userId is used to find the issues in progress.
+	 * Returns the amount of issues from now until backTime days from the selected operator.
 	 * 
 	 * @author Matthias De Lange
 	 * @version 0.0.1
-	 * @param userId the id of operator to find issues in progress from
-	 * @return List of Issue objects
+	 * @param userId the id of operator to find issues from
+	 * @param backTime the amount of days from now to search on
+	 * @return Integer
 	 * @see IndexController
 	 */
-	public List<Issue> findOperatorInProgressIssues( int userId ){
+	public int countOperatorIssues( int userId, IssueStatus issueStatus, int backTime ){
 		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 		
-		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_OPERATOR_ID, Issue.class )
-									.setParameter("status", IssueStatus.IN_PROGRESS)
-									.setParameter("operator_id", userId );
-		List<Issue> result = query.getResultList();
+		Date now = new Date();
+		Timestamp thirtyDaysAgo = new Timestamp(now.getTime() - 86400000 * backTime);
+		
+		TypedQuery<Integer> query = em.createNamedQuery( Issue.COUNT_BY_OPERATOR_ID, Integer.class )
+									.setParameter("backTime", thirtyDaysAgo);
+		int result = query.getFirstResult();
 		
 		em.getTransaction().commit();
 

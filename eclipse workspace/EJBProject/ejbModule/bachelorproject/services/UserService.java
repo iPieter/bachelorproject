@@ -101,10 +101,6 @@ public class UserService implements Serializable
 		return this.user.getRole().equals( ur );
 
 	}
-
-	/*
-
-	 */
 	
 	/**
 	 * The verification of a login consists of two steps: 1. finding the
@@ -231,6 +227,7 @@ public class UserService implements Serializable
 		return s.toString();
 	}
 
+	//GETTERS & SETTERS
 	public User getUser()
 	{
 		return user;

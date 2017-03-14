@@ -64,8 +64,7 @@
    		</div> <!-- END LEFT SIDEBAR -->
 	
 	<!-- MAINVIEW CONTENT -->
-	<div class="col-sm-10">
-			
+	<div class="col-sm-10">			
 		<!-- USER DATA ROW -->
 		<div class="row userdata_row">
 			<div class="col-sm-12"></div>
@@ -75,13 +74,22 @@
 	    			<!-- TABS -->
 	    			<p:tabView dynamic="true" cache="true">
 	    			
+	    				<!--TAB: WELCOME -->
+	    				<p:tab title="Welcome">
+	    					<div class="jumbotron">
+							  <h:outputText value="Welcome, #{indexController.userService.user.name}!"/>
+							  <p>...</p>
+							  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+							</div>
+	    				</p:tab>
+	    				
 	    				<!--TAB: CLOSED ISSUES -->
 				        <p:tab title="Closed Issues">
 							<h:outputText value="Issues you assigned, recently closed." />
-							<h:dataTable value="#{indexController.findOperatorClosedIssues()}" var="issue">
+							<h:dataTable class="table" value="#{indexController.findOperatorClosedIssues()}" var="issue">
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="Closing Date" />
+										<h:outputText value="Closed" />
 									</f:facet>
 									<h:outputText value="#{issue.closedTime}" />
 								</h:column>
@@ -103,10 +111,10 @@
 				        <!--TAB: IN_PROGRESS ISSUES -->
 				        <p:tab title="Issues In Progress">
 							<h:outputText value="Issues you assigned, now in progress." />
-							<h:dataTable value="#{indexController.findOperatorInProgressIssues()}" var="issue">
+							<h:dataTable class="table" value="#{indexController.findOperatorInProgressIssues()}" var="issue">
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="In Progress Date" />
+										<h:outputText value="Started" />
 									</f:facet>
 									<h:outputText value="#{issue.inProgressTime}" />
 								</h:column>
@@ -137,14 +145,22 @@
 				</div>
 				
 				<!-- HALF-DONUT STATISTICS--> 
+				<input	type="hidden"
+						value="#{indexController.userService.user.id}"
+						id="current_operator_id"/>
+						
 				<div class="col-sm-4">
-				
+					<div id="donut_graph"></div>
 				</div>
 			</div> <!-- END STATISTIC GRAPHICS ROW -->
 		
 		</div> <!-- END MAINVIEW CONTENT -->
 	</div> <!-- END MASTER ROW -->
 </div> <!-- END MASTER CONTAINER -->
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="js/index.js" type="text/javascript"></script>
 </h:body>
 
 <!-- Renders when not logged in and redirect doesnt' work -->

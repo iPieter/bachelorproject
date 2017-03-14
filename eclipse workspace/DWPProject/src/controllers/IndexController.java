@@ -5,14 +5,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import bachelorproject.ejb.IssueEJB;
 import bachelorproject.model.Issue;
+import bachelorproject.model.IssueStatus;
 import bachelorproject.services.UserService;
 
+@Named
+@SessionScoped
 public class IndexController implements Serializable{
 
 	private static final long serialVersionUID = 426047598496441124L;
@@ -22,20 +26,6 @@ public class IndexController implements Serializable{
 	
 	@Inject
 	private UserService userService;
-	
-	//Returns how many actions the user contributed to: #solved issues, #assigned tasks
-	public Map<String,String> getUserHistoryStatistics(){
-		HashMap result=new HashMap<String,String>();
-		//TODO manier om statistics door te geven
-		return result;
-	}
-	
-	//Returns recent activity of the user
-	public Map<String,String> getUserRecentStatistics(){
-		HashMap result=new HashMap<String,String>();
-		//TODO manier om statistics door te geven
-		return result;
-	}
 	
 	/**
 	 * Returns a List of Issue objects for the current User(UserRole=OPERATOR).
@@ -48,7 +38,7 @@ public class IndexController implements Serializable{
 	 * @see IssueEJB
 	 */
 	public List<Issue> findOperatorClosedIssues(){
-		return issueEJB.findOperatorClosedIssues( userService.getUser().getId() );
+		return issueEJB.findOperatorIssues( userService.getUser().getId(), IssueStatus.CLOSED );
 	}
 	
 	/**
@@ -62,9 +52,21 @@ public class IndexController implements Serializable{
 	 * @see IssueEJB
 	 */
 	public List<Issue> findOperatorInProgressIssues(){
-		return issueEJB.findOperatorInProgressIssues( userService.getUser().getId() );
+		return issueEJB.findOperatorIssues( userService.getUser().getId(), IssueStatus.IN_PROGRESS  );
 	}
 	
-	// GETTERS & SETTERS
+	// GETTERS & SETTERS	
+	/**
+	 * @return the userService
+	 */
+	public UserService getUserService() {
+		return userService;
+	}
 
+	/**
+	 * @param userService the userService to set
+	 */
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 }

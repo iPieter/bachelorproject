@@ -33,6 +33,7 @@ import javax.validation.constraints.NotNull;
 	@NamedQuery( name = Issue.FIND_BY_OPERATOR_ID, query = "SELECT i FROM Issue i WHERE i.status = :status AND i.operator.id = :operator_id" ),
 	@NamedQuery( name = Issue.FIND_BY_TRAINCOACH_ID, 
 				query = "SELECT i FROM Issue i WHERE EXISTS (SELECT d FROM ProcessedSensorData d WHERE d.traincoach.id = :traincoachId AND d.id = i.data.id ) AND i.status = :status"),				
+	@NamedQuery( name = Issue.COUNT_BY_OPERATOR_ID, query = "SELECT COUNT(i) FROM Issue i WHERE i.assignedTime BETWEEN CURRENT_TIMESTAMP and :backTime" ),
 } )
 public class Issue implements Serializable
 {
@@ -42,6 +43,7 @@ public class Issue implements Serializable
 	public static final String FIND_BY_MECHANIC_ID = "Issue.findByMechanicId";
 	public static final String FIND_BY_OPERATOR_ID = "Issue.findByOperatorId";
 	public static final String FIND_BY_TRAINCOACH_ID = "Issue.findByTraincoachId";
+	public static final String COUNT_BY_OPERATOR_ID="Issue.countByOperatorId";
 	
 
 	@Id
