@@ -15,22 +15,19 @@ import bachelorproject.model.UserRole;
 import bachelorproject.services.UserService;
 
 /**
- * @author Pieter
- *
- */
-/**
- * @author Pieter
- *
+ * The authenticationController provides a link between the UserService
+ * and the login page. 
+ * <p>
+ * The AuthenticationController is used by the authentication.(x)html page.
+ * 
+ * @author Pieter Delobelle
+ * @version 1.0.0
+ * @see UserService
  */
 @ManagedBean
 @SessionScoped
 public class AuthenticationController implements Serializable
 {
-
-	/**
-	 * The AuthenticationController is used by the authentication.(x)html page.
-	 */
-
 	private static final long serialVersionUID = -8396156684143995442L;
 
 	@Inject
