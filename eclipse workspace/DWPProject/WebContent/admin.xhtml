@@ -58,7 +58,7 @@
 									<f:facet name="header">
 										<h:outputText value="Rol" />
 									</f:facet>
-									<h:outputText value="#{user.role}" />
+									<h:outputText value="#{user.role.descr}" />
 								</h:column>
 								<h:column>
 									<f:facet name="header">
@@ -147,8 +147,10 @@
 								<div class="form-group">
 									<label for="inputRole" class="col-sm-2 control-label">Rol</label>
 									<div class="col-sm-10">
-										<h:selectOneMenu value="#{adminController.workingUser.role}">
-											<f:selectItems value="#{adminController.userRoles}" />
+										<h:selectOneMenu value="#{adminController.workingUser.role}"
+										class="form-control">
+											<f:selectItems value="#{adminController.userRoles}" var="role"
+											 itemValue="#{role}" itemLabel="#{role.descr}"/>
 										</h:selectOneMenu>
 									</div>
 								</div>
