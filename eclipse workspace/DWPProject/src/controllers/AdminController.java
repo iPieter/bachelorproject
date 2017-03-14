@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.Serializable;
+import java.util.Base64;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -29,7 +30,8 @@ public class AdminController implements Serializable
 
 	private List<User> users;
 	private User workingUser;
-
+	private String workingUserPassword;
+	
 	@PostConstruct
 	public void init()
 	{
@@ -48,6 +50,8 @@ public class AdminController implements Serializable
 	public void deleteUser(int userId)
 	{
 		userEJB.deleteUserById(userId);
+		this.users = userEJB.findAllUsers();
+
 	}
 
 	/**
@@ -75,6 +79,9 @@ public class AdminController implements Serializable
 			this.workingUser = userEJB.findUserById(userId);
 
 		}
+		
+		this.users = userEJB.findAllUsers();
+
 	}
 
 	/**
@@ -95,13 +102,19 @@ public class AdminController implements Serializable
 	/**
 	 * Generate a new User object to be set as the workingUser. this will be
 	 * populated by JSF.
+	 * <p>
+	 * It also generates a password to be used for the workingUser.
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
 	 */
 	public void newWorkingUser()
 	{
 		this.workingUser = new User();
-		UserService.populateUser(workingUser, "password123");
+		
+		//Generate password
+		this.workingUserPassword = Base64.getEncoder().encodeToString(UserService.salt(8)).substring(0, 8);
+				
+		UserService.populateUser(workingUser, workingUserPassword);
 	}
 
 	public User getWorkingUser()
@@ -134,4 +147,26 @@ public class AdminController implements Serializable
 	{
 		return UserRole.values();
 	}
+
+	/**
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return the workingUserPassword
+	 */
+	public String getWorkingUserPassword()
+	{
+		return workingUserPassword;
+	}
+
+	/**
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param workingUserPassword the workingUserPassword to set
+	 */
+	public void setWorkingUserPassword(String workingUserPassword)
+	{
+		this.workingUserPassword = workingUserPassword;
+	}
+	
+	
 }

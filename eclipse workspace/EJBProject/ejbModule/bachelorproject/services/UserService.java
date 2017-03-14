@@ -183,8 +183,9 @@ public class UserService implements Serializable
 	 * The generateHash method takes a salt, likely provided by the User object,
 	 * and a password string and generates the hash described by the defined
 	 * method.
-	 * 
+	 * <p>
 	 * This function is intended to be used internally, not by other services.
+	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
 	 * @param password A String with the password to generate a hash.
@@ -194,7 +195,7 @@ public class UserService implements Serializable
 	 * @throws UnsupportedEncodingException
 	 * @see MesageDigest
 	 */
-	private static byte[] generateHash( String password, byte[] salt )
+	public static byte[] generateHash( String password, byte[] salt )
 			throws NoSuchAlgorithmException, UnsupportedEncodingException
 	{
 		MessageDigest sha = MessageDigest.getInstance( UserService.HASHING_METHOD );
@@ -245,7 +246,7 @@ public class UserService implements Serializable
 	 * @return A byte array with random bytes.
 	 * @see SecureRandom
 	 */
-	private static byte[] salt( int length )
+	public static byte[] salt( int length )
 	{
 
 		SecureRandom sRnd = new SecureRandom();
