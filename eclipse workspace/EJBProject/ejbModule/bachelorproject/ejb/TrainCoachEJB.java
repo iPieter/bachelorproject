@@ -1,5 +1,6 @@
 package bachelorproject.ejb;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -109,6 +110,45 @@ public class TrainCoachEJB
 			result.setNeedsReview( false );
 			em.merge( result );
 		}
+		em.getTransaction().commit();
+		em.close();
+	}
+	
+	/**
+	 * 	Gets a traincoach object by the specified name & type
+	 * 	@param name The name of the asked traincoach
+	 *  @param type The type of the traincoach
+	 * */
+	public TrainCoach findByData( String name, String type, String constructor )
+	{
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+
+		TypedQuery<TrainCoach> query = em.createNamedQuery( TrainCoach.FIND_BY_DATA, TrainCoach.class );
+		query.setParameter( "name", name );
+		query.setParameter( "type", type );
+		query.setParameter( "constructor", constructor );
+		
+		List<TrainCoach> result = new ArrayList<TrainCoach>();
+		
+		em.getTransaction().commit();
+		em.close();
+		
+		if( result.size() == 0 )
+			return null;
+		return result.get( 0 );
+	}
+	
+	/**
+	 * 	Creates a new traincoach object	
+	 * */
+	public void createTrainCoach( TrainCoach t )
+	{
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+
+		em.persist( t );
+		
 		em.getTransaction().commit();
 		em.close();
 	}

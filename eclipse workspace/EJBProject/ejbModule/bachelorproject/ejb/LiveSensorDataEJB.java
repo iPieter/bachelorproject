@@ -110,4 +110,23 @@ public class LiveSensorDataEJB
 			return null;
 		return result.get( 0 );
 	}
+	
+	/**
+	 * 	Returns a list of all active sensors.
+	 *  @return The list of all active sensors
+	 * */
+	public List<LiveSensorData> getAllActiveSensorObjects()
+	{
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+		
+		TypedQuery<LiveSensorData> query = em.createNamedQuery( LiveSensorData.FIND_ALL_ACTIVE, LiveSensorData.class );
+		
+		List<LiveSensorData> result = query.getResultList();
+		
+		em.getTransaction().commit();
+		em.close();
+	
+		return result;
+	}
 }

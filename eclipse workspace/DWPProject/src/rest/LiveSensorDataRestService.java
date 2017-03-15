@@ -52,13 +52,22 @@ public class LiveSensorDataRestService
 	 *  @param track The track of the ride.
 	 * */
 	@GET
-	@Path( "register/{traincoachID}/{track}" )
-	public Response startLiveTracking( @PathParam("traincoachID") int traincoachID, @PathParam("track") String track )
+	@Path( "register/{type}/{name}/{constr}/{track}" )
+	public Response startLiveTracking(  @PathParam("type") String type, @PathParam("name") String name, 
+										@PathParam("constr") String constructor,@PathParam("track") String track )
 	{
-		TrainCoach trainCoach = traincoachEJB.findTrainCoachByTraincoachId( traincoachID );
+		TrainCoach trainCoach = traincoachEJB.findByData( name, type, constructor );
 		
-		if( trainCoach == null )
-			return Response.status( Status.BAD_REQUEST ).build();
+		if( trainCoach == null)
+		{
+			trainCoach = new TrainCoach();
+			trainCoach.setConstructor( constructor );
+			trainCoach.setName( name );
+			trainCoach.setNeedsReview( false );
+			trainCoach.setType( type );
+			
+			traincoachEJB.createTrainCoach( trainCoach );
+		}
 		
 		Date now = new Date();
 		LiveSensorData lsd = new LiveSensorData();

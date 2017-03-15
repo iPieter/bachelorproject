@@ -1,5 +1,8 @@
 body, html {
 	height: 100% !important;
+	margin-left: 0px;
+	width: 100%;
+	background-color: #ecf0f1;
 }
 
 .info_label
@@ -285,11 +288,11 @@ body, html {
 	padding-bottom: 15px
 }
 
-.table>tbody>tr>td {
+.userTable>tbody>tr>td {
 	vertical-align: middle;
 }
 
-.table>tbody>tr>td:first-child
+.userTable>tbody>tr>td:first-child
 {
 	width: 36px;
 }

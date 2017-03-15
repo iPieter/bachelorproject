@@ -20,86 +20,16 @@ var pathPolyline = null;
 var lastDate = null;
 var initialLoad = true;
 
+var yawSeries = null;
+var rollSeries = null;
+
 // Create the chart
 Highcharts.stockChart('realtime_chart_yaw', {
     chart: {
         events: {
             load: function () 
             {
-            	console.log( "loading..." );
-            	var series = this.series[0];
-                var corePath = "http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/get/280/";
-            	
-            	var path;
-        		path = corePath + "2013-01-01_00-00-00";
-        		lastDate = "2013-01-01_00-00-00";
-   
-                $.get( path, function(data)
-                {
-            		var initialData = [];
-            		for( var i = 0; i < data.data.length; i++ )
-            		{
-            			var dateTime = data.data[i].time;
-            			
-            			var split = dateTime.split("_");
-                    	var ymd = split[0].split("-");
-                    	var hms = split[1].split("-");
-                    	var date = new Date( ymd[0], ymd[1] - 1, ymd[2], hms[0], hms[1], hms[2] );
-            			
-            			initialData.push( [date, data.data[i].yaw] );
-            			train_path.push( [ data.data[i].lat * 180.0 / Math.PI, data.data[i].lng * 180.0 / Math.PI ] );
-            			lastDate = data.data[i].time;
-            		}
-            			
-            		series.setData( initialData );
-                	if( pathPolyline != null )
-                        map.removeLayer( pathPolyline );
-                    
-                	if( train_path.length > 0 )
-            		{
-                        pathPolyline = L.polyline(train_path, {color: 'red'}).addTo(map);
-                        map.fitBounds(pathPolyline.getBounds());
-            		}
-        		
-                	setInterval(function () 
-                    {
-                		path = corePath + lastDate;
-                		
-                        $.get( path, function(data)
-                        {
-                        	console.log( data.data.length );
-                    		for( var i = 0; i < data.data.length; i++ )
-                            {
-                            	var dataPoint = data.data[i];
-                            	lastDate = dataPoint.time;
-                            	
-                            	var split = lastDate.split("_");
-                            	var ymd = split[0].split("-");
-                            	var hms = split[1].split("-");
-                            	var date = new Date( ymd[0], ymd[1] - 1, ymd[2], hms[0], hms[1], hms[2] );
-
-                            	series.addPoint( [ date, dataPoint.yaw ] );
-    							
-                                train_path.push( [ dataPoint.lat * 180.0 / Math.PI, dataPoint.lng * 180.0 / Math.PI ] );
-                                
-                                $( "#current_speed" ).html( dataPoint.speed.toFixed(4) );
-                                $( "#current_accel" ).html( dataPoint.accel.toFixed(4) );
-                            }
-                                
-                        	if( pathPolyline != null )
-                                map.removeLayer( pathPolyline );
-                            
-                        	if( train_path.length > 0 )
-                    		{
-                                pathPolyline = L.polyline(train_path, {color: 'red'}).addTo(map);
-                                map.fitBounds(pathPolyline.getBounds());
-
-                    		}
-                        } );
-
-                    }, 1000);
-                });
-            	
+            	yawSeries = this.series[0];
             }
         }
     },
@@ -134,3 +64,138 @@ Highcharts.stockChart('realtime_chart_yaw', {
         data: [ 0,0,0,0,0,0,0,0,0,0,0]
     }]
 });
+
+Highcharts.stockChart('realtime_chart_roll', {
+    chart: {
+        events: {
+            load: function () 
+            {
+            	rollSeries = this.series[0];
+            }
+        }
+    },
+
+    rangeSelector: {
+        buttons: [{
+            count: 1,
+            type: 'minute',
+            text: '1M'
+        }, {
+            count: 5,
+            type: 'minute',
+            text: '5M'
+        }, {
+            type: 'all',
+            text: 'All'
+        }],
+        inputEnabled: false,
+        selected: 0
+    },
+
+    title: {
+        text: 'Roll'
+    },
+
+    exporting: {
+        enabled: false
+    },
+
+    series: [{
+        name: 'Roll',
+        data: [ 0,0,0,0,0,0,0,0,0,0,0]
+    }]
+});
+
+loadData();
+
+function loadData()
+{
+	console.log( "loading..." );
+	var id = $( "#sensor_id" ).val();
+    var corePath = "http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/get/" + id + "/";
+	
+	var path;
+	path = corePath + "2013-01-01_00-00-00";
+	lastDate = "2013-01-01_00-00-00";
+
+	$( "#loading_modal" ).modal({backdrop: 'static', keyboard: false, show:true});
+	
+    $.get( path, function(data)
+    {
+    	
+		var initialDataYaw = [];
+		var initialDataRoll = [];
+		
+		for( var i = 0; i < data.data.length; i++ )
+		{
+			var dateTime = data.data[i].time;
+			
+			var split = dateTime.split("_");
+        	var ymd = split[0].split("-");
+        	var hms = split[1].split("-");
+        	var date = new Date( ymd[0], ymd[1] - 1, ymd[2], hms[0], hms[1], hms[2] );
+			
+        	initialDataYaw.push( [date, data.data[i].yaw] );
+        	initialDataRoll.push( [date, data.data[i].roll] );
+        	
+			train_path.push( [ data.data[i].lat * 180.0 / Math.PI, data.data[i].lng * 180.0 / Math.PI ] );
+			lastDate = data.data[i].time;
+			
+			$( "#current_speed" ).html( data.data[i].speed.toFixed(4) + " m/s" );
+            $( "#current_accel" ).html( data.data[i].accel.toFixed(4) + " m/s²" );
+		}
+			
+		yawSeries.setData( initialDataYaw );
+		rollSeries.setData( initialDataRoll );
+		
+    	if( pathPolyline != null )
+            map.removeLayer( pathPolyline );
+        
+    	if( train_path.length > 0 )
+		{
+            pathPolyline = L.polyline(train_path, {color: 'red'}).addTo(map);
+            map.fitBounds(pathPolyline.getBounds());
+		}
+    	
+    	$( "#loading_modal" ).modal("hide");
+	
+    	setInterval(function () 
+        {
+    		path = corePath + lastDate;
+    		
+            $.get( path, function(data)
+            {
+            	console.log( data.data.length );
+        		for( var i = 0; i < data.data.length; i++ )
+                {
+                	var dataPoint = data.data[i];
+                	lastDate = dataPoint.time;
+                	
+                	var split = lastDate.split("_");
+                	var ymd = split[0].split("-");
+                	var hms = split[1].split("-");
+                	var date = new Date( ymd[0], ymd[1] - 1, ymd[2], hms[0], hms[1], hms[2] );
+
+                	yawSeries.addPoint( [ date, dataPoint.yaw ] );
+                	rollSeries.addPoint( [ date, dataPoint.roll ] );
+					
+                    train_path.push( [ dataPoint.lat * 180.0 / Math.PI, dataPoint.lng * 180.0 / Math.PI ] );
+                    
+                    $( "#current_speed" ).html( dataPoint.speed.toFixed(4) + " m/s" );
+                    $( "#current_accel" ).html( dataPoint.accel.toFixed(4) + " m/s²" );
+                }
+                    
+            	if( pathPolyline != null )
+                    map.removeLayer( pathPolyline );
+                
+            	if( train_path.length > 0 )
+        		{
+                    pathPolyline = L.polyline(train_path, {color: 'red'}).addTo(map);
+                    map.fitBounds(pathPolyline.getBounds());
+
+        		}
+            } );
+
+        }, 1000);
+    });
+}
