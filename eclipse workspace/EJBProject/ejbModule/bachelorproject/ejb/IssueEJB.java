@@ -145,7 +145,7 @@ public class IssueEJB
 		else
 			System.out.println( "ERROR(issueEJB): no issue found" );
 		
-		em.persist( issue );
+		em.merge( issue );
 		
 		em.getTransaction().commit();
 		em.close();

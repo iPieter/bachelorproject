@@ -105,9 +105,10 @@ public class TrainCoachEJB
 		TrainCoach result = em.find( TrainCoach.class, id );
 		
 		if( result != null )
+		{
 			result.setNeedsReview( false );
-
-		em.persist( result );
+			em.merge( result );
+		}
 		em.getTransaction().commit();
 		em.close();
 	}

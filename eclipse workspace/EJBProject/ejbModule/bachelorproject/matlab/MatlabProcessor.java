@@ -307,6 +307,7 @@ public class MatlabProcessor
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 
+		boolean newTrainCoach = false;
 		TrainCoach trainCoach;
 		if ( traincoachResult.size() == 0 )
 		{
@@ -314,16 +315,19 @@ public class MatlabProcessor
 			trainCoach.setConstructor( nameSplit[1] );
 			trainCoach.setType( nameSplit[2] );
 			trainCoach.setName( nameSplit[3] );
+			newTrainCoach = true;
 		}
 		else trainCoach = traincoachResult.get( 0 );
 		
 		trainCoach.setNeedsReview( true );
 
+		boolean newWorkplace = false;
 		Workplace workplace;
 		if ( workplaceResult.size() == 0 )
 		{
 			workplace = new Workplace();
 			workplace.setName( nameSplit[0] );
+			newWorkplace = true;
 		}
 		else workplace = workplaceResult.get( 0 );
 
@@ -338,9 +342,18 @@ public class MatlabProcessor
 		data.setTrack( nameSplit[4] );
 		data.setTrainCoach( trainCoach );
 		
-		em.persist( trainCoach );
+		if( newTrainCoach )
+			em.persist( trainCoach );
+		else
+			em.merge( trainCoach );
+		
 		em.persist( data );
-		em.persist( workplace );
+		
+		if( newWorkplace )
+			em.persist( workplace );
+		else
+			em.merge( workplace );
+		
 		tx.commit();
 	}
 
