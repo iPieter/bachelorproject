@@ -69,13 +69,8 @@ public class AdminController implements Serializable
 	public void updateWorkingUser(int userId)
 	{
 		System.out.println("updated user " + userId);
-		if (userId == 0)
+		if (userId != 0)
 		{
-			//this.workingUser = new User();
-
-		} else
-		{
-
 			this.workingUser = userEJB.findUserById(userId);
 
 		}
@@ -93,9 +88,10 @@ public class AdminController implements Serializable
 	 * @version 1.0.0
 	 */
 	public void updateUser()
-	{
+	{	
 		userEJB.updateUser(this.workingUser);
 		this.users = userEJB.findAllUsers();
+	
 	}
 	
 	
@@ -112,9 +108,9 @@ public class AdminController implements Serializable
 		this.workingUser = new User();
 		
 		//Generate password
-		this.workingUserPassword = Base64.getEncoder().encodeToString(UserService.salt(8)).substring(0, 8);
-				
-		UserService.populateUser(workingUser, workingUserPassword);
+		this.workingUserPassword = Base64.getEncoder().encodeToString(UserService.salt(10)).substring(0, 9);
+		System.out.println("user + '" + this.workingUserPassword + "'");		
+		UserService.populateUser(this.workingUser, this.workingUserPassword, "qwertyui");
 	}
 
 	public User getWorkingUser()
