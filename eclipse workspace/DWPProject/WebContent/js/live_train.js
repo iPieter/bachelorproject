@@ -21,7 +21,7 @@ var lastDate = null;
 var initialLoad = true;
 
 // Create the chart
-Highcharts.stockChart('topleft', {
+Highcharts.stockChart('realtime_chart_yaw', {
     chart: {
         events: {
             load: function () 
@@ -39,7 +39,14 @@ Highcharts.stockChart('topleft', {
             		var initialData = [];
             		for( var i = 0; i < data.data.length; i++ )
             		{
-            			initialData.push( data.data[i].yaw );
+            			var dateTime = data.data[i].time;
+            			
+            			var split = dateTime.split("_");
+                    	var ymd = split[0].split("-");
+                    	var hms = split[1].split("-");
+                    	var date = new Date( ymd[0], ymd[1] - 1, ymd[2], hms[0], hms[1], hms[2] );
+            			
+            			initialData.push( [date, data.data[i].yaw] );
             			train_path.push( [ data.data[i].lat * 180.0 / Math.PI, data.data[i].lng * 180.0 / Math.PI ] );
             			lastDate = data.data[i].time;
             		}
@@ -64,10 +71,19 @@ Highcharts.stockChart('topleft', {
                     		for( var i = 0; i < data.data.length; i++ )
                             {
                             	var dataPoint = data.data[i];
-                                series.addPoint( dataPoint.yaw );
+                            	lastDate = dataPoint.time;
+                            	
+                            	var split = lastDate.split("_");
+                            	var ymd = split[0].split("-");
+                            	var hms = split[1].split("-");
+                            	var date = new Date( ymd[0], ymd[1] - 1, ymd[2], hms[0], hms[1], hms[2] );
+
+                            	series.addPoint( [ date, dataPoint.yaw ] );
     							
                                 train_path.push( [ dataPoint.lat * 180.0 / Math.PI, dataPoint.lng * 180.0 / Math.PI ] );
-                                lastDate = dataPoint.time;
+                                
+                                $( "#current_speed" ).html( dataPoint.speed.toFixed(4) );
+                                $( "#current_accel" ).html( dataPoint.accel.toFixed(4) );
                             }
                                 
                         	if( pathPolyline != null )
@@ -118,9 +134,3 @@ Highcharts.stockChart('topleft', {
         data: [ 0,0,0,0,0,0,0,0,0,0,0]
     }]
 });
-
-//var marker = L.marker([51.00, 3.73]).addTo(map);
-//marker.bindPopup("<b>Trein 1: Sensor 1</b><br>Afwijkende waarde x-as").openPopup();
-
-//var polyline = L.polyline(latlngs, {color: 'black', smoothFactor:10}).addTo(map);
-//map.fitBounds(polyline.getBounds());

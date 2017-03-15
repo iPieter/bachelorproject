@@ -12,22 +12,45 @@
 <body>
 	<div class="container">
         <div class="row">
-			
-            <div class="col-sm-10 main_view">
-				<div class="row header">
-					<ol class="breadcrumb breadcrumb_extra">
-						<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
-						<li><a href="#">Staanplaats 1 </a></li>
-						<li><a href="#" class="active">wagon 1 </a></li>
-					</ol>
-				</div>
+            <div class="col-sm-12 main_view">
                 <div class="row">
-                    <div class="col-sm-10 mainview_panel" id="topleft">
+                    <div class="col-sm-7 mainview_panel" id="realtime_chart_yaw">
 						<h1>Data wordt geladen...</h1>
+                    </div>
+                    <div class="col-sm-4 mainview_panel" id="map_size">
+                    	<h1>Rit info</h1>
+                    	<table class="table">
+                    		<thead></thead>
+                    		<tbody>
+								<tr>
+									<td>Model</td>
+									<td>M7</td>
+								</tr>
+								<tr>
+									<td>Nummer</td>
+									<td>788485</td>
+								</tr>
+								<tr>
+									<td>Rit</td>
+									<td>Gent Sint-Pieters - Oostende</td>
+								</tr>
+								<tr>
+									<td>Huidige snelheid:</td>
+									<td id="current_speed">-</td>
+								</tr>
+								<tr>
+									<td>Huidige versnelling:</td>
+									<td id="current_accel">-</td>
+								</tr>
+							</tbody>
+  						</table>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-5 mainview_panel" id="map_size">
+                	<div class="col-sm-7 mainview_panel" id="realtime_chart_roll">
+						<h1>Data wordt geladen...</h1>
+                    </div>
+                    <div class="col-sm-4 mainview_panel" id="map_size">
 						<div id="map">
 						</div>
                     </div>

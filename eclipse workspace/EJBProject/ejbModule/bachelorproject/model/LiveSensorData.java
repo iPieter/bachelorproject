@@ -23,7 +23,7 @@ import javax.validation.constraints.NotNull;
 ({
 	@NamedQuery( name=LiveSensorData.FIND_ALL, query="SELECT lsd FROM LiveSensorData lsd" ),
 	@NamedQuery( name=LiveSensorData.FIND_BY_DATE, query="SELECT lsd FROM LiveSensorData lsd WHERE lsd.date = :date" ),
-	@NamedQuery( name=LiveSensorData.FIND_ALL_AFTER_DATE, query="SELECT lsde FROM LiveSensorData lsd JOIN lsd.entries lsde WHERE lsde.time > :date AND lsd.id = :id" )
+	@NamedQuery( name=LiveSensorData.FIND_ALL_AFTER_DATE, query="SELECT lsde FROM LiveSensorData lsd JOIN lsd.entries lsde WHERE lsde.time > :date AND lsd.id = :id ORDER BY lsde.time ASC" )
 })
 public class LiveSensorData implements Serializable
 {
