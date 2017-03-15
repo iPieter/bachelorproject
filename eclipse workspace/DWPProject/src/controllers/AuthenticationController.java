@@ -2,8 +2,10 @@ package controllers;
 
 import java.io.Serializable;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
@@ -13,22 +15,19 @@ import bachelorproject.model.UserRole;
 import bachelorproject.services.UserService;
 
 /**
- * @author Pieter
- *
- */
-/**
- * @author Pieter
- *
+ * The authenticationController provides a link between the UserService
+ * and the login page. 
+ * <p>
+ * The AuthenticationController is used by the authentication.(x)html page.
+ * 
+ * @author Pieter Delobelle
+ * @version 1.0.0
+ * @see UserService
  */
 @ManagedBean
 @SessionScoped
 public class AuthenticationController implements Serializable
 {
-
-	/**
-	 * The AuthenticationController is used by the authentication.(x)html page.
-	 */
-
 	private static final long serialVersionUID = -8396156684143995442L;
 
 	@Inject
@@ -53,13 +52,18 @@ public class AuthenticationController implements Serializable
 	 */
 	public String doLogin()
 	{
+		
+		System.out.println("Login function called" + email + " : " + password);
+		
 		if (userService.verificateLogin(email, password))
 		{
 			return userService.hasCurrentUserRequiredRole(UserRole.ADMIN) ? "admin.xhtml?faces-redirect=true"
 					: "index.xhtml?faces-redirect=true";
 		} else
 		{
-			return null;
+			FacesContext.getCurrentInstance().addMessage("inputPassword",  new FacesMessage("Invalid login", 
+					"There seems to be a problem with either the password or the email."));
+			return "";
 		}
 	}
 
@@ -128,6 +132,18 @@ public class AuthenticationController implements Serializable
 	public boolean hasAdminAccess()
 	{
 		return hasAccess(UserRole.ADMIN);
+	}
+	
+	/**
+	 * Tells if a user is logged in by returning true and false otherwise.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return True is a user is logged in, false otherwise.
+	 */
+	public boolean isLoggedIn()
+	{
+		return userService.getUser() != null;
 	}
 
 	/**

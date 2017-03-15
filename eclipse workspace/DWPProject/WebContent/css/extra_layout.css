@@ -260,7 +260,6 @@ body, html {
 	-webkit-border-radius: 200px;
 	-moz-border-radius: 200px;
 	border-radius: 200px;
-	width: 36px;
 }
 
 .avatar img {
@@ -283,7 +282,35 @@ body, html {
 	vertical-align: middle;
 }
 
-.table>tbody>tr>td:first-child
+.userTable>tbody>tr>td:first-child
 {
 	width: 36px;
+}
+
+.panel-footer
+{
+	height: 55px;
+}
+
+.form-group select
+{
+	height: 32px;
+}
+
+.big-avatar {
+	margin-left:auto;
+	margin-right:auto;
+	width: 196px;
+	height: 196px;
+	border: 2px solid rgb(189, 195, 199);
+	-webkit-border-radius: 200px;
+	-moz-border-radius: 200px;
+	border-radius: 200px;
+}
+
+.big-avatar img {
+	height: 192px;
+	width: 192px;
+	border-radius: 200px;
+
 }

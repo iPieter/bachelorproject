@@ -25,7 +25,7 @@ public class PasswordValidator implements ConstraintValidator<Password, String>
 		}
 
 		// Very advanced password validation ...
-		return pass.length() > 8;
+		return pass.length() >= 8;
 	}
 
 }
