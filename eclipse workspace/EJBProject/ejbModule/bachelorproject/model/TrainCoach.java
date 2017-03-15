@@ -24,10 +24,10 @@ import javax.validation.constraints.NotNull;
 { 	
 	@NamedQuery( name = TrainCoach.FIND_ALL, query = "SELECT t FROM TrainCoach t" ),
 	@NamedQuery( name = TrainCoach.FIND_ALL_NEEDS_REVIEW, 
-				query = "SELECT t FROM Workplace w JOIN w.traincoaches t WHERE t.needsReview = true AND w.id = :id" ),
-	@NamedQuery( name = TrainCoach.FIND_BY_DATA, query = "SELECT t FROM TrainCoach t WHERE t.name = :name AND t.type = :type AND t.constructor = :constructor " ) 
+				 query = "SELECT t FROM Workplace w JOIN w.traincoaches t WHERE t.needsReview = true AND w.id = :id" ),
+	@NamedQuery( name = TrainCoach.FIND_BY_DATA, 
+				 query = "SELECT t FROM TrainCoach t WHERE t.name = :name AND t.type = :type AND t.constructor = :constructor" ) 
 } )
-
 public class TrainCoach implements Serializable
 {
 

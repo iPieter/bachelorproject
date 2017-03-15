@@ -58,6 +58,8 @@ public class LiveSensorDataRestService
 	{
 		TrainCoach trainCoach = traincoachEJB.findByData( name, type, constructor );
 		
+		System.out.println( type + "," + name + "," + constructor + "=" + trainCoach );
+		
 		if( trainCoach == null)
 		{
 			trainCoach = new TrainCoach();

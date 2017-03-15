@@ -130,6 +130,8 @@ public class TrainCoachEJB
 		query.setParameter( "constructor", constructor );
 		
 		List<TrainCoach> result = new ArrayList<TrainCoach>();
+		for( TrainCoach t : result )
+			System.out.println( t );
 		
 		em.getTransaction().commit();
 		em.close();
