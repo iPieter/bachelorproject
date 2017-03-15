@@ -1,12 +1,17 @@
 package rest;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -84,11 +89,61 @@ public class LiveSensorDataRestService
 		lsde.setAccel( accel );
 		lsde.setYaw( yaw );
 		lsde.setRoll( roll );
+		lsde.setTime( new Date() );
 		
 		if( !lsdeEJB.addEntry( lsdID, lsde ) )
 			return Response.status( Status.BAD_REQUEST ).build();
 			
 		return Response.ok().build();
+	}
+	
+	/**
+	 * 	Returns all LiveSensorDataEntry objects after specified date
+	 * 	@param lsdID The ID of the associated LiveSensorData object
+	 *  @param from The data from which to retrieve the entries
+	 * */
+	@GET
+	@Path( "get/{lsdID}/{date}" )
+	@Produces( "text/json" )
+	public Response getSensorDataEntries( @PathParam("lsdID") int lsdID, @PathParam("date") String from )
+	{
+		SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd_HH-mm-ss" );
+		Date date = new Date();
+		try
+		{
+			date = format.parse( from );
+		}
+		catch ( ParseException e )
+		{
+			e.printStackTrace();
+		}
+		List<LiveSensorDataEntry> entries = lsdeEJB.getAllEntriesAfterDate( lsdID, date );
+	
+		String newLine = System.getProperty( "line.separator" );
+		String out = "{ " + newLine;
+		out += "\"data\": [" + newLine;
+		int i = 0;
+		for( LiveSensorDataEntry lsde : entries )
+		{
+			out += "{" + newLine;
+			out += "\"lat\":" + lsde.getLat() + "," + newLine;
+			out += "\"lng\":" + lsde.getLng() + "," + newLine;
+			out += "\"speed\":" + lsde.getSpeed() + "," + newLine;
+			out += "\"accel\":" + lsde.getAccel() + "," + newLine;
+			out += "\"yaw\":" + lsde.getYaw() + "," + newLine;
+			out += "\"roll\":" + lsde.getRoll() + "," + newLine;
+			out += "\"time\": \"" + format.format( lsde.getTime() ) + "\"" + newLine;
+			
+			if( i != entries.size() -1 )
+				out += "}," + newLine;
+			else
+				out += "}" + newLine;
+			i++;
+		}
+		out += "]" + newLine;
+		out += "}" + newLine;
+		
+		return Response.ok( out ).build();
 	}
 	
 	/**

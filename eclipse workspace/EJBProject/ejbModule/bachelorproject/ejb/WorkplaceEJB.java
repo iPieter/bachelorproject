@@ -31,6 +31,8 @@ public class WorkplaceEJB
 
 		em.getTransaction().commit();
 
+		em.close();
+		
 		return result;
 	}
 
@@ -42,6 +44,8 @@ public class WorkplaceEJB
 		Workplace result = em.find( Workplace.class, id );
 
 		em.getTransaction().commit();
+		
+		em.close();
 
 		return result;
 	}
@@ -57,6 +61,7 @@ public class WorkplaceEJB
 
 		em.getTransaction().commit();
 
+		em.close();
 		return result;
 	}
 
@@ -69,7 +74,9 @@ public class WorkplaceEJB
 		query.setParameter( "id", workplaceId );
 		List<User> result = query.getResultList();
 
-		em.getTransaction().commit();;
+		em.getTransaction().commit();
+		
+		em.close();
 
 		return result;
 	}

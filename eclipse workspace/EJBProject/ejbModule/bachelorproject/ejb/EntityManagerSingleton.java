@@ -24,7 +24,7 @@ public class EntityManagerSingleton
 	
 	public EntityManager getEntityManager()
 	{
-		return em;
+		return emf.createEntityManager();
 	}
 	
 	@PreDestroy

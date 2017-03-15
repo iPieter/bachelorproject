@@ -15,9 +15,9 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @NamedQueries
-(
+({
 	@NamedQuery( name=LiveSensorDataEntry.FIND_ALL, query="SELECT lsd FROM LiveSensorData lsd" )
-)
+})
 public class LiveSensorDataEntry implements Serializable
 {
 	private static final long serialVersionUID = 1L;

@@ -43,6 +43,7 @@ public class TrainCoachEJB
 		List<TrainCoach> result = query.getResultList();
 
 		em.getTransaction().commit();
+		em.close();
 		
 		return result;
 	}
@@ -65,6 +66,7 @@ public class TrainCoachEJB
 		List<TrainCoach> result = query.getResultList();
 		
 		em.getTransaction().commit();
+		em.close();
 
 		return result;
 	}
@@ -82,6 +84,7 @@ public class TrainCoachEJB
 		TrainCoach result = em.find( TrainCoach.class, id );
 
 		em.getTransaction().commit();
+		em.close();
 
 		return result;
 	}
@@ -106,5 +109,6 @@ public class TrainCoachEJB
 
 		em.persist( result );
 		em.getTransaction().commit();
+		em.close();
 	}
 }

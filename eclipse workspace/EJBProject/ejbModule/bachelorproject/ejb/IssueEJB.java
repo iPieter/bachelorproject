@@ -49,6 +49,7 @@ public class IssueEJB
 		}
 
 		em.getTransaction().commit();
+		em.close();
 	}
 
 	public List<Issue> findInProgressIssuesByMechanicId( int mechanicId )
@@ -60,7 +61,8 @@ public class IssueEJB
 		List<Issue> result = query.getResultList();
 
 		em.getTransaction().commit();
-
+		em.close();
+		
 		return result;
 	}
 
@@ -74,7 +76,8 @@ public class IssueEJB
 		List<Issue> result = query.getResultList();
 
 		em.getTransaction().commit();
-
+		em.close();
+		
 		return result;
 	}
 
@@ -88,6 +91,7 @@ public class IssueEJB
 		List<Issue> result = query.getResultList();
 
 		em.getTransaction().commit();
+		em.close();
 
 		return result;
 	}
@@ -102,6 +106,7 @@ public class IssueEJB
 		List<Issue> result = query.getResultList();
 		
 		em.getTransaction().commit();
+		em.close();
 
 		return result;
 	}
@@ -117,7 +122,8 @@ public class IssueEJB
 		List<Issue> result = query.getResultList();
 		
 		em.getTransaction().commit();
-
+		em.close();
+		
 		return result;
 	}
 
@@ -142,6 +148,7 @@ public class IssueEJB
 		em.persist( issue );
 		
 		em.getTransaction().commit();
+		em.close();
 	}
 	
 	/**
@@ -157,6 +164,7 @@ public class IssueEJB
 		Issue issue = em.find( Issue.class, issueID );
 		
 		em.getTransaction().commit();
+		em.close();
 		
 		return issue;
 	}

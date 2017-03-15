@@ -1,9 +1,15 @@
 package bachelorproject.ejb;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 
 import bachelorproject.model.LiveSensorData;
 import bachelorproject.model.LiveSensorDataEntry;
@@ -45,14 +51,36 @@ public class LiveSensorDataEntryEJB
 		{
 			lsd.getEntries().add( entry );
 			em.persist( entry );
-			em.persist( lsd );
+			em.merge( lsd );
 			
 			em.getTransaction().commit();
+			em.close();
 			
 			return true;
 		}
 		
 		em.getTransaction().commit();
+		em.close();
 		return false;
+	}
+	
+	/**
+	 * 	Returns a list of all LiveSensorDataEntry objects after the specified date
+	 * */
+	public List<LiveSensorDataEntry> getAllEntriesAfterDate( int lsdID, Date date )
+	{
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+		
+		TypedQuery<LiveSensorDataEntry> query = em.createNamedQuery( LiveSensorData.FIND_ALL_AFTER_DATE, LiveSensorDataEntry.class );
+		query.setParameter( "id", lsdID );
+		query.setParameter( "date", date, TemporalType.TIMESTAMP );
+		
+		List<LiveSensorDataEntry> result = query.getResultList();
+		
+		em.getTransaction().commit();
+		em.close();
+		
+		return result;
 	}
 }

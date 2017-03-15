@@ -40,6 +40,7 @@ public class LiveSensorDataEJB
 		em.persist( lsd );
 		
 		em.getTransaction().commit();
+		em.close();
 		
 		return lsd.getId();
 	}
@@ -68,6 +69,7 @@ public class LiveSensorDataEJB
 		}
 		
 		em.getTransaction().commit();
+		em.close();
 	}
 	
 	/**
@@ -82,6 +84,7 @@ public class LiveSensorDataEJB
 		LiveSensorData sensordata = em.find( LiveSensorData.class, lsdID );
 		
 		em.getTransaction().commit();
+		em.close();
 	
 		return sensordata;
 	}
@@ -101,6 +104,7 @@ public class LiveSensorDataEJB
 		List<LiveSensorData> result = query.getResultList();
 		
 		em.getTransaction().commit();
+		em.close();
 	
 		if( result.size() == 0 )
 			return null;
