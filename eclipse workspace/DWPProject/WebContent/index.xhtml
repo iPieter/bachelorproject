@@ -108,7 +108,7 @@
 							<h:dataTable class="table" value="#{indexController.findOperatorAssignedIssues()}" var="issue">
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="Closed" />
+										<h:outputText value="Assigned" />
 									</f:facet>
 									<h:outputText value="#{issue.assignedTime}" />
 								</h:column>
@@ -131,6 +131,12 @@
 				        <p:tab title="Issues In Progress">
 							<h:outputText value="Issues you assigned, now in progress." />
 							<h:dataTable class="table" value="#{indexController.findOperatorInProgressIssues()}" var="issue">
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Assigned" />
+									</f:facet>
+									<h:outputText value="#{issue.assignedTime}" />
+								</h:column>
 								<h:column>
 									<f:facet name="header">
 										<h:outputText value="Started" />
@@ -156,6 +162,18 @@
 				        <p:tab title="Closed Issues">
 							<h:outputText value="Issues you assigned, recently closed." />
 							<h:dataTable class="table" value="#{indexController.findOperatorClosedIssues()}" var="issue">
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Assigned" />
+									</f:facet>
+									<h:outputText value="#{issue.assignedTime}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Started" />
+									</f:facet>
+									<h:outputText value="#{issue.inProgressTime}" />
+								</h:column>
 								<h:column>
 									<f:facet name="header">
 										<h:outputText value="Closed" />
@@ -184,7 +202,7 @@
     		<!-- STATISTIC GRAPHICS ROW -->
 			<div class="row graphics_row">
 				<!-- HEATMAP -->
-				<div class="col-sm-8">
+				<div class="col-sm-8 no_padding">
 					<div id="map_size">
 						<div id="map"></div>
 					</div>
