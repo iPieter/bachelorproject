@@ -1,0 +1,86 @@
+/*****SIDEBAR ELEMENTS*****/
+
+.sidebar {
+	border-right: 3px solid #2c3e50;
+	height: 100vh;
+	padding-top: 5px;
+	background-color: #344951;
+	color: #ecf0f1;
+	overflow: hidden;
+}
+
+/* WORKPLACE */
+.workplace_active .workplace {
+	padding-left: 15px;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+	border-left: 1px solid gray;
+	border-top: 1px solid #293A40;
+	border-right: 1px solid #293A40;
+	border-bottom: 1px solid #293A40;
+	height: 100%;
+}
+
+.workplace_active {
+	background-color: #293A40;
+	padding: 2px;
+}
+
+.workplace a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+/* TRAINCOACH */
+.traincoach {
+	padding-left: 15px;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+	border-left: 1px solid gray;
+	border-top: 1px solid #344951;
+	border-right: 1px solid #344951;
+	border-bottom: 1px solid #344951;
+}
+
+.traincoach a {
+	text-decoration: none;
+	color: #ecf0f1;
+}
+
+.traincoach_active {
+	background-color: #435D66;
+}
+
+/* TRAINCOACH ISSUES */
+.traincoach_data {
+	padding-left: 15px;
+	border-left: 1px solid gray;
+}
+
+/* SENSOR DATA */
+.sensor_active {
+	background-color: #293A40;
+	padding: 2px;
+}
+
+/* SIDEBAR EXTRA*/
+.sidebar_icon {
+	margin-left: 3px;
+	margin-right: 4px;
+}
+
+.sidebar_icon_traincoach {
+	margin-right: 4px;
+	font-size: 14px;
+	top: -1px;
+}
+
+.sidebar_icon_metadata {
+	margin-left: 4px;
+	margin-right: 1px;
+	font-size: 12px;
+}
+
+.sidebar_text_traincoach {
+	font-size: 100%;
+}

@@ -23,6 +23,7 @@
 	<link href="css/extra_layout.css" rel="stylesheet"/>
 	<link href="css/index.css" rel="stylesheet"/>
 	<link rel="stylesheet" href="css/leaflet.css" />
+	<link rel="stylesheet" href="css/sidebar.css" />
 	<title>Televic Managment Home</title>
 </h:head>
 
@@ -122,8 +123,14 @@
 									<f:facet name="header">
 										<h:outputText value="Mechanic" />
 									</f:facet>
-									<h:outputText value="#{issue.mechanic}" />
-								</h:column>							
+									<h:outputText value="#{issue.mechanic.name}" />
+								</h:column>	
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="E-mail" />
+									</f:facet>
+									<h:outputText value="#{issue.mechanic.email}" />
+								</h:column>						
 							</h:dataTable>
 				        </p:tab>
 				        
@@ -153,7 +160,13 @@
 									<f:facet name="header">
 										<h:outputText value="Mechanic" />
 									</f:facet>
-									<h:outputText value="#{issue.mechanic}" />
+									<h:outputText value="#{issue.mechanic.name}" />
+								</h:column>	
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="E-mail" />
+									</f:facet>
+									<h:outputText value="#{issue.mechanic.email}" />
 								</h:column>							
 							</h:dataTable>
 				        </p:tab>
@@ -190,7 +203,13 @@
 									<f:facet name="header">
 										<h:outputText value="Mechanic" />
 									</f:facet>
-									<h:outputText value="#{issue.mechanic}" />
+									<h:outputText value="#{issue.mechanic.name}" />
+								</h:column>	
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="E-mail" />
+									</f:facet>
+									<h:outputText value="#{issue.mechanic.email}" />
 								</h:column>							
 							</h:dataTable>
 				        </p:tab>
