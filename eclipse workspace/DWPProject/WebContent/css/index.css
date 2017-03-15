@@ -41,5 +41,11 @@
 
 .alert_box{
 	margin-top: 20px;
+	margin-right: 10px;
 	vertical-align:middle;
 }
+
+#map_size {
+	height: 45vh;
+}
+

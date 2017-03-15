@@ -186,7 +186,6 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 	 */
 	public int countOperatorIssues( int userId, IssueStatus issueStatus, int backTime ){
 		EntityManager em = ems.getEntityManager();
-		em.getTransaction().begin();
 		
 		Date now = new Date();
 		Timestamp thirtyDaysAgo = new Timestamp(now.getTime() - 86400000 * backTime);
@@ -194,9 +193,25 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		TypedQuery<Integer> query = em.createNamedQuery( Issue.COUNT_BY_OPERATOR_ID, Integer.class )
 									.setParameter("backTime", thirtyDaysAgo);
 		int result = query.getFirstResult();
-		
-		em.getTransaction().commit();
 
+		return result;
+	}
+	
+	/**
+	 * Find all active issues. An active issue has IssueStatus=IN_PROGRESS or IssueStatus=ASSIGNED.
+	 * 
+	 * @author Matthias De Lange
+	 * @version 0.0.1
+	 * @return List<Issue>
+	 * @see HeatmapRestService
+	 */
+	public List<Issue> findAllActiveIssues(){
+		EntityManager em = ems.getEntityManager();
+		
+		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_ALL_ACTIVE, Issue.class )
+				.setParameter("status1", IssueStatus.IN_PROGRESS)
+				.setParameter("status2", IssueStatus.ASSIGNED );
+		List<Issue> result = query.getResultList();
 		return result;
 	}
 }

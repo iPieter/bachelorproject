@@ -34,6 +34,7 @@ import javax.validation.constraints.NotNull;
 	@NamedQuery( name = Issue.FIND_BY_TRAINCOACH_ID, 
 				query = "SELECT i FROM Issue i WHERE EXISTS (SELECT d FROM ProcessedSensorData d WHERE d.traincoach.id = :traincoachId AND d.id = i.data.id ) AND i.status = :status"),				
 	@NamedQuery( name = Issue.COUNT_BY_OPERATOR_ID, query = "SELECT COUNT(i) FROM Issue i WHERE i.assignedTime BETWEEN CURRENT_TIMESTAMP and :backTime" ),
+	@NamedQuery( name = Issue.FIND_ALL_ACTIVE, query = "SELECT i FROM Issue i WHERE i.status= :status1 OR i.status= :status2" ),
 } )
 public class Issue implements Serializable
 {
@@ -44,7 +45,7 @@ public class Issue implements Serializable
 	public static final String FIND_BY_OPERATOR_ID = "Issue.findByOperatorId";
 	public static final String FIND_BY_TRAINCOACH_ID = "Issue.findByTraincoachId";
 	public static final String COUNT_BY_OPERATOR_ID="Issue.countByOperatorId";
-	
+	public static final String FIND_ALL_ACTIVE="Issue.findAllActive";
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
@@ -201,5 +202,33 @@ public class Issue implements Serializable
 	 */
 	public void setClosedTime(Date closedTime) {
 		this.closedTime = closedTime;
+	}
+
+	/**
+	 * @return the gpsLat
+	 */
+	public double getGpsLat() {
+		return gpsLat;
+	}
+
+	/**
+	 * @param gpsLat the gpsLat to set
+	 */
+	public void setGpsLat(double gpsLat) {
+		this.gpsLat = gpsLat;
+	}
+
+	/**
+	 * @return the gpsLon
+	 */
+	public double getGpsLon() {
+		return gpsLon;
+	}
+
+	/**
+	 * @param gpsLon the gpsLon to set
+	 */
+	public void setGpsLon(double gpsLon) {
+		this.gpsLon = gpsLon;
 	}
 }
