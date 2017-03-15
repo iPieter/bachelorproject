@@ -19,3 +19,27 @@
 	margin-top: 5px;
 	background-color: white;
 }
+
+.index_avatar {
+	display: inline-block;
+	position: relative;
+	margin-right: 3px;
+	margin-top:18px;
+	width: 36px;
+	height: 36px;
+	border: 2px solid rgb(189, 195, 199);
+	-webkit-border-radius: 200px;
+	-moz-border-radius: 200px;
+	border-radius: 200px;
+}
+
+.index_avatar img {
+	height: 32px;
+	width: 32px;
+	border-radius: 200px;
+}
+
+.alert_box{
+	margin-top: 20px;
+	vertical-align:middle;
+}
