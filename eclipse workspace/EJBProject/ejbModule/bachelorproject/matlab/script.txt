@@ -1,9 +1,11 @@
-data_width  = 100;
 input       = imu.gyro.yaw;
-time        = imu.gyro.timestamp;
+data_width  = 100;
+if( length( input ) / data_width  > 10000 )
+   data_width = round( length( input ) / 10000 );
+end
 steps       = 1:data_width:length( input );
 ni          = length( steps );
-yaw_out     = zeros( ni, 2 );
+yaw_out     = zeros( ni, 0 );
 for j = 1:ni
     i    = steps( j );
     left = data_width;
@@ -12,11 +14,16 @@ for j = 1:ni
     end
     [~,index]    = max( abs( input( i:i+left ) ) );
     yaw_out(j,1) = input( i + index - 1 );
-    yaw_out(j,2) = time( i + index - 1  );
 end
+
+max_yaw = max( yaw_out );
+min_yaw = min( yaw_out );
 
 data_width  = 100;
 input       = imu.gyro.roll;
+if( length( input ) / data_width  > 10000 )
+   data_width = round( length( input ) / 10000 );
+end
 time        = imu.gyro.timestamp;
 steps       = 1:data_width:length( input );
 ni          = length( steps );
@@ -32,6 +39,9 @@ for j = 1:ni
     roll_out(j,2) = time( i + index - 1 );
 end
 
+max_roll = max( roll_out );
+min_roll = min( roll_out );
+
 time_out(1) = gps.gps_time.year(1);
 time_out(2) = gps.gps_time.month(1);
 time_out(3) = gps.gps_time.day(1);
@@ -41,3 +51,11 @@ time_out(6) = gps.gps_time.second(1);
 
 lat_out     = gps.gps_lat.latitude;
 lng_out     = gps.gps_lon.longitude;
+
+speed_out   = gps.gps_lon.speed;
+accel_out   = zeros( length( speed_out ), 1 ); 
+for i=1:( length( speed_out ) - 1 )
+    d               = speed_out( i + 1 ) - speed_out( i );
+    deltaT          = gps.gps_time.timestamp( i + 1 ) - gps.gps_time.timestamp( i );
+    accel_out( i )  = d / deltaT;
+end

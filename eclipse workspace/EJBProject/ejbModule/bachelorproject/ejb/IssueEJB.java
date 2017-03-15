@@ -214,4 +214,21 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		List<Issue> result = query.getResultList();
 		return result;
 	}
+
+	/**
+	 * 	Returns the issue specified by the ID.
+	 * 	@param issueID 
+	 *  @return An Issue if found
+	 * */
+	public Issue findByID( int issueID )
+	{
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+		
+		Issue issue = em.find( Issue.class, issueID );
+		
+		em.getTransaction().commit();
+		
+		return issue;
+	}
 }

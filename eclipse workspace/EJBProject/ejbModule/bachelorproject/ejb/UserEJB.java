@@ -1,6 +1,8 @@
 package bachelorproject.ejb;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -12,6 +14,7 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import bachelorproject.model.User;
+import bachelorproject.model.UserRole;
 
 @Stateless
 @Local
@@ -52,6 +55,7 @@ public class UserEJB
 	 * This function finds the user by it's email address and returns it as a
 	 * User object. If no user is found, it will return null.
 	 * 
+	 * @author Pieter Delobelle
 	 * @param email A string with the email address of the user.
 	 * @return User object if the user is found, null otherwise
 	 */
@@ -80,6 +84,7 @@ public class UserEJB
 	 * a user is not really deleted, but detached. This means it will still
 	 * exist in the heap, but not on the persistence.
 	 * 
+	 * @author Pieter Delobelle
 	 * @param userId The id of the user to be deleted.
 	 */
 	public void deleteUserById(int userId)
@@ -101,6 +106,7 @@ public class UserEJB
 	/**
 	 * Searches for the user by an id. If no user is found, null is returned.
 	 * 
+	 * @author Pieter Delobelle
 	 * @param userId The id of the user the function is to return
 	 * @return An User object or null if not found
 	 */
@@ -115,6 +121,7 @@ public class UserEJB
 	/**
 	 * Finds the user provided by it's id and update the other field if needed.
 	 * 
+	 * @author Pieter Delobelle
 	 * @param user The User object to be updated in persistence.
 	 */
 	public void updateUser(User user)
@@ -131,5 +138,23 @@ public class UserEJB
 		//}
 		
 		em.getTransaction().commit();
+	}
+	
+	/**
+	 * Find all the users with a provided UserType
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param type
+	 * @return
+	 * @see UserRole
+	 */
+	public List<User> findAllUsersByRole(UserRole role)
+	{
+		List<User> ls = findAllUsers().stream()
+					.filter(user -> user.getRole().equals(role))
+					.collect(Collectors.toList());
+		return ls;	
+		
 	}
 }

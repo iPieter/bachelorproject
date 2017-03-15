@@ -13,6 +13,9 @@ $.get( "rest/processed_data/" + id, function( data )
 	var radiobtn = document.getElementById("radio_yaw");
 	console.log( radiobtn );
 	radiobtn.checked = true;
+	
+	$( "#max" ).html( "<b>Max yaw: </b>" + data.max_yaw.toFixed(3) );
+	$( "#min" ).html( "<b>Min yaw: </b>" + data.min_yaw.toFixed(3) );
 
     map = L.map( "map" ).setView( [51.0499582, 3.7270672], 10 );
 	L.tileLayer( 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
@@ -33,6 +36,7 @@ $.get( "rest/processed_data/" + id, function( data )
 }).fail( function( error )
 {
 	console.log( "Failed to fetch data: " + error );
+	$( "#topleft" ).html( "<b>ERROR: Failed to load data</b>");
 });
 
 function setView( input )
@@ -43,11 +47,15 @@ function setView( input )
 	{
 		title = "roll";
 		data = SENSOR_DATA.roll;
+		$( "#max" ).html( "<b>Max roll: </b>" + SENSOR_DATA.max_roll.toFixed(3) );
+		$( "#min" ).html( "<b>Min roll: </b>" + SENSOR_DATA.min_roll.toFixed(3) );
 	}
 	else
 	{
 		data = SENSOR_DATA.yaw;
 		title = "yaw";
+		$( "#max" ).html( "<b>Max yaw: </b>" + SENSOR_DATA.max_yaw.toFixed(3) );
+		$( "#min" ).html( "<b>Min yaw: </b>" + SENSOR_DATA.min_yaw.toFixed(3) );
 	}	
 	Highcharts.chart('topleft', 
 	{
@@ -90,7 +98,10 @@ function setView( input )
                 	    	 fillColor: '#f03',
                 	    	 fillOpacity: 0.5,
                 	    	 radius: 5
-                		   } ).addTo(map);
+                		   } );
+	                       marker.addTo( map );
+	                       $( "#current_speed" ).html( "<b>Snelheid: </b>" + SENSOR_DATA.speed[ index ].toFixed(3) );
+	                       $( "#current_accel" ).html( "<b>Versnelling: </b>" + SENSOR_DATA.accel[ index ].toFixed(3) );
                         }
                     }
                 },

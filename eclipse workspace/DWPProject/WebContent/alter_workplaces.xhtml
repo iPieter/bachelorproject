@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="templates/admin_layout.xhtml">
+
+	<ui:define name="title">Stelplaatsbeheer</ui:define>
+
+	<ui:define name="nav_content">
+		<li><a href="admin.xhtml">Gebruikers</a></li>
+		<li class="active"><a href="#">Werkplaatsen</a></li>
+	</ui:define>
+
+	<ui:define name="mainview_content">
+
+		<div class="container">
+			<div class="col-sm-10 col-sm-offset-1">
+				<div class="row">
+					<div class="panel panel-default">
+
+						<!-- Default panel contents -->
+						<div class="panel-heading">
+							<span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span>
+							Stelplaatsen
+						</div>
+
+						<!-- Table -->
+						<h:form>
+							<h:dataTable class="table"
+								value="#{adminWorkplaceController.allWorkplaces}"
+								var="workplace">
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Naam" />
+									</f:facet>
+									<h:outputText value="#{workplace.name}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Aantal wagons" />
+									</f:facet>
+									<h:outputText value="#{workplace.traincoaches.size()}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Aantal technici" />
+									</f:facet>
+									<h:outputText value="#{workplace.mechanics.size()} " />
+
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Acties" />
+									</f:facet>
+									<div class="btn-group" role="group" aria-label="Acties">
+										
+										<h:commandLink type="button" class="btn btn-default"
+											onclick="$('#addUser').modal('show');" immediate="true"
+											action="#{adminWorkplaceController.setCurrentWorkplace(workplace.id)}">
+											<span class="glyphicon glyphicon-plus-sign"
+												aria-hidden="false" aria-lable="Add user to workplace"></span>
+											Voeg technicus toe
+											<f:ajax execute="@this" render=":addForm" />
+										</h:commandLink>
+										
+										<h:commandLink type="button" class="btn btn-default"
+											rendered="#{workplace.mechanics.size() ge 1}"
+											onclick="$('#addUser').modal('show');" immediate="true"
+											action="#{adminWorkplaceController.setCurrentWorkplace(workplace.id)}">
+											<span class="glyphicon glyphicon-list"
+												aria-hidden="false" aria-lable="Add user to workplace"></span>
+											Bekijk technici
+											<f:ajax execute="@this" render=":addForm" />
+										</h:commandLink>
+									</div>
+								</h:column>
+							</h:dataTable>
+						</h:form>
+					
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!-- /container -->
+
+		<!-- Modal -->
+		<div class="modal fade" id="addUser" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<h:form id="addForm">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">x</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">Technicus
+								toevoegen</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-horizontal">
+								<div class="form-group">
+									<label for="inputName" class="col-sm-2 control-label">Technicus</label>
+									<div class="col-sm-10">
+										<h:selectOneMenu
+											value="#{adminWorkplaceController.mechanicId}"
+											class="form-control">
+											<f:selectItems value="#{adminWorkplaceController.mechanics}"
+												var="mechanic" itemValue="#{mechanic.id}"
+												itemLabel="#{mechanic.name} (#{mechanic.email})" />
+										</h:selectOneMenu>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Sluit</button>
+							<h:commandButton type="submit" class="btn btn-primary"
+								action="#{adminWorkplaceController.addMechanic()}"
+								value="Opslaan">
+							</h:commandButton>
+						</div>
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+
+	</ui:define>
+</ui:composition>
+</html>
