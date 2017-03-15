@@ -76,15 +76,16 @@ public class Issue implements Serializable
 	
 	/** Date when the issue status was changed to IN_PROGRESS */
 	@Temporal( TemporalType.TIMESTAMP )
-	@NotNull
 	private Date inProgressTime;
 	
 	/** Date when the issue status was changed to CLOSED */
 	@Temporal( TemporalType.TIMESTAMP )
-	@NotNull
 	private Date closedTime;
 
+	@NotNull
 	private double gpsLat;
+	
+	@NotNull
 	private double gpsLon;
 	
 	public Issue()

@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -109,6 +110,8 @@ public class TrainCoachController implements Serializable
 		currentSensorData = psdEJB.getProcessedSensorDataByTrainCoachID( currentTrainCoach.getId() );
 		
 		Issue issue = new Issue();
+		Date now=new Date();
+		
 		issue.setData( currentSensorData );
 		issue.setDescr( description );
 		
@@ -122,6 +125,11 @@ public class TrainCoachController implements Serializable
 		issue.setMechanic( m );
 		issue.setOperator( userService.getUser() );
 		issue.setStatus( IssueStatus.ASSIGNED );
+		issue.setAssignedTime(now);
+		
+		//TODO set COORDINATES dynamicly
+		issue.setGpsLat(50);
+		issue.setGpsLon(50);
 		
 		issueEJB.createIssue( issue );
 		

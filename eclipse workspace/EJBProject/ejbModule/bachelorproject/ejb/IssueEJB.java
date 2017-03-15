@@ -41,8 +41,6 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 
 		try
 		{
-			Date now=new Date();
-			issue.setAssignedTime(now);
 			em.persist( issue );
 		}
 		catch ( Exception e )
