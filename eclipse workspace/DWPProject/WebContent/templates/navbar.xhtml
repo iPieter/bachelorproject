@@ -1,8 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html 
-	xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
@@ -18,7 +17,7 @@
 				<span class="sr-only">Toggle navigation</span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
-			</button> 
+			</button>
 			<!--<a class="navbar-brand" href="#">Televic Managment</a>-->
 			<a class="navbar-brand" href="index.xhtml"><img
 				src="http://rve2013.onyxrail.co.uk/img/televic_logo.png" /></a>
@@ -27,8 +26,17 @@
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 				<ui:insert name="nav_content">
-					<li class="active"><a href="admin.xhtml">Gebruikers</a></li>
-					<li><a href="alter_workplaces.xhtml">Werkplaatsen</a></li>
+					<ui:fragment
+						rendered="#{authenticationController.hasAdminAccess()}">
+						<li class="active"><a href="admin.xhtml">Gebruikers</a></li>
+						<li><a href="alter_workplaces.xhtml">Werkplaatsen</a></li>
+					</ui:fragment>
+					<ui:fragment
+						rendered="#{authenticationController.hasOperatorAccess()}">
+
+						<li class="active"><a href="index.xhtml">Dashboard</a></li>
+						<li><a href="#">Live</a></li>
+					</ui:fragment>
 				</ui:insert>
 			</ul>
 			<h:form>
@@ -45,7 +53,8 @@
 							class="caret"></span>
 					</a>
 						<ul class="dropdown-menu">
-							<li><a href="change_password.xhtml">Wachtwoord veranderen</a></li>
+							<li><a href="change_password.xhtml">Wachtwoord
+									veranderen</a></li>
 							<li role="separator" class="divider"></li>
 							<li><h:commandLink
 									action="#{authenticationController.logout()}">Afmelden</h:commandLink></li>
