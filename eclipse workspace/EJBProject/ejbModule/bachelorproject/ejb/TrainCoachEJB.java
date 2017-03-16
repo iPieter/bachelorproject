@@ -129,9 +129,7 @@ public class TrainCoachEJB
 		query.setParameter( "type", type );
 		query.setParameter( "constructor", constructor );
 		
-		List<TrainCoach> result = new ArrayList<TrainCoach>();
-		for( TrainCoach t : result )
-			System.out.println( t );
+		List<TrainCoach> result = query.getResultList();
 		
 		em.getTransaction().commit();
 		em.close();

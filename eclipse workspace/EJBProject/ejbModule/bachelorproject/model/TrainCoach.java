@@ -59,54 +59,83 @@ public class TrainCoach implements Serializable
 	{
 	}
 
-	// GETTERS & SETTERS
+	/**
+	 * @return the id
+	 */
 	public int getId()
 	{
-		return this.id;
+		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId( int id )
 	{
 		this.id = id;
 	}
 
+	/**
+	 * @return the constructor
+	 */
 	public String getConstructor()
 	{
-		return this.constructor;
+		return constructor;
 	}
 
+	/**
+	 * @param constructor the constructor to set
+	 */
 	public void setConstructor( String constructor )
 	{
 		this.constructor = constructor;
 	}
 
+	/**
+	 * @return the name
+	 */
 	public String getName()
 	{
-		return this.name;
+		return name;
 	}
 
+	/**
+	 * @param name the name to set
+	 */
 	public void setName( String name )
 	{
 		this.name = name;
 	}
 
+	/**
+	 * @return the type
+	 */
 	public String getType()
 	{
-		return this.type;
+		return type;
 	}
 
+	/**
+	 * @param type the type to set
+	 */
 	public void setType( String type )
 	{
 		this.type = type;
 	}
 
-	public void setNeedsReview( boolean b )
+	/**
+	 * @return the needsReview
+	 */
+	public boolean isNeedsReview()
 	{
-		needsReview = b;
+		return needsReview;
 	}
 
-	public boolean getNeedsReview()
+	/**
+	 * @param needsReview the needsReview to set
+	 */
+	public void setNeedsReview( boolean needsReview )
 	{
-		return true;
+		this.needsReview = needsReview;
 	}
 }
