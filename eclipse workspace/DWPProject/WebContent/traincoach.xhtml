@@ -12,8 +12,7 @@
 	<f:metadata>
 		<f:viewParam name="id"
 			value="#{trainCoachController.currentTrainCoachID}" />
-		<f:viewAction
-			action="#{trainCoachController.loadPage()}" />
+		<f:viewAction action="#{trainCoachController.loadPage()}" />
 	</f:metadata>
 
 	<ui:define name="title">Traincoach Manager</ui:define>
@@ -37,56 +36,71 @@
 
 	<!-- SIDEBAR CONTENT -->
 	<ui:define name="sidebar_content">
-   		<div class="workplace workplace_active">	
-   			
-   			<!-- GESELECTEERDE STAANPLAATS -->	
-   			<c:set var="workplace" value="#{trainCoachController.currentWorkplace}"/>
-            <h4>
-            	<span class="glyphicon glyphicon-unchecked"></span>
-            	<h:link value="#{workplace.name}" 
-            			outcome="workplace.xhtml?workplace_id=#{workplace.id}"/>
-            </h4>
-            
-	       	<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
-	       	<c:forEach var="traincoach" items="#{trainCoachController.findActiveTrainCoaches()}">
-	       		<c:choose>
-	       			<!-- GESELECTEERDE WAGON -->
-		       		<c:when test="#{trainCoachController.currentTrainCoach.id == traincoach.id}">
-			            <div class="traincoach traincoach_active">
-			                <h4 class="sidebar_text_traincoach">
-			                	<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
-			                	<h:link value="#{traincoach.type} - #{traincoach.name}" outcome="traincoach.xhtml?id=#{traincoach.getId()}"/>
-			                </h4>
-			                <!-- METADATA PER WAGON -->
-			                <div class="traincoach_data">
-			                    <h5>
-			                    	<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
-			                    	<h:link value="Problemen" outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"/>
-			                    	<span class="badge"></span>
-			                    </h5>
-			                    <h5><span class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span> Sensoren</h5>
-			                </div>
-			            </div>
-		            </c:when>
-		            <!-- NIET-GESELECTEERDE WAGONS -->
-		            <c:otherwise>
-		            	<div class="traincoach">
-			                <h4 class="sidebar_text_traincoach">
-			                	<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
-			                	<h:link value="#{traincoach.type} - #{traincoach.name}" outcome="traincoach.xhtml?id=#{traincoach.getId()}"/>
-			                </h4>
-			                <!-- METADATA PER WAGON -->
-			                <div class="traincoach_data">
-			                    <h5>
-			                    	<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
-			                    	<h:link value="Problemen" outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"/>
-			                    	<span class="badge"></span>
-			                    </h5>
-			                    <h5><span class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span> Sensoren</h5>
-			                </div>
-			            </div>
-		            </c:otherwise>
-	            </c:choose>
+		<div class="workplace workplace_active">
+
+			<!-- GESELECTEERDE STAANPLAATS -->
+			<c:set var="workplace"
+				value="#{trainCoachController.currentWorkplace}" />
+			<h4>
+				<span class="glyphicon glyphicon-unchecked"></span>
+				<h:link value="#{workplace.name}"
+					outcome="workplace.xhtml?workplace_id=#{workplace.id}" />
+			</h4>
+
+			<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
+			<c:forEach var="traincoach"
+				items="#{trainCoachController.findActiveTrainCoaches()}">
+				<c:choose>
+					<!-- GESELECTEERDE WAGON -->
+					<c:when
+						test="#{trainCoachController.currentTrainCoach.id == traincoach.id}">
+						<div class="traincoach traincoach_active">
+							<h4 class="sidebar_text_traincoach">
+								<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
+								<h:link value="#{traincoach.type} - #{traincoach.name}"
+									outcome="traincoach.xhtml?id=#{traincoach.getId()}" />
+							</h4>
+							<!-- METADATA PER WAGON -->
+							<div class="traincoach_data">
+								<h5>
+									<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
+									<h:link value="Problemen"
+										outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}" />
+									<span class="badge"></span>
+								</h5>
+								<h5>
+									<span
+										class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span>
+									Sensoren
+								</h5>
+							</div>
+						</div>
+					</c:when>
+					<!-- NIET-GESELECTEERDE WAGONS -->
+					<c:otherwise>
+						<div class="traincoach">
+							<h4 class="sidebar_text_traincoach">
+								<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
+								<h:link value="#{traincoach.type} - #{traincoach.name}"
+									outcome="traincoach.xhtml?id=#{traincoach.getId()}" />
+							</h4>
+							<!-- METADATA PER WAGON -->
+							<div class="traincoach_data">
+								<h5>
+									<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
+									<h:link value="Problemen"
+										outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}" />
+									<span class="badge"></span>
+								</h5>
+								<h5>
+									<span
+										class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span>
+									Sensoren
+								</h5>
+							</div>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</c:forEach>
 		</div>
 	</ui:define>
@@ -99,13 +113,14 @@
 			id="current_traincoach" />
 		<div class="row">
 			<div class="col-sm-10 mainview_panel" id="graph">
-				<div id="graph_options"> 
-					<label class="radio-inline"><input type="radio" name="optradio" id="radio_yaw" />Yaw</label> 
-					<label class="radio-inline"><input type="radio" name="optradio" id="radio_roll" />Roll</label>				
-					<label class="info_label" id="max">Max: Wordt geladen...</label>
-					<label class="info_label" id="min">Min: Wordt geladen...</label>
-					<label class="info_label" id="current_speed">Snelheid: 0</label>
-					<label class="info_label" id="current_accel">Versnelling: 0</label>
+				<div id="graph_options">
+					<label class="radio-inline"><input type="radio"
+						name="optradio" id="radio_yaw" />Yaw</label> <label class="radio-inline"><input
+						type="radio" name="optradio" id="radio_roll" />Roll</label> <label
+						class="info_label" id="max">Max: Wordt geladen...</label> <label
+						class="info_label" id="min">Min: Wordt geladen...</label> <label
+						class="info_label" id="current_speed">Snelheid: 0</label> <label
+						class="info_label" id="current_accel">Versnelling: 0</label>
 				</div>
 				<div class="" id="topleft">
 					<h1>Data wordt geladen...</h1>
@@ -161,21 +176,23 @@
 							<h4 class="modal-title">Nieuwe herstelling</h4>
 						</div>
 						<div class="modal-body">
-														 
-								<label for="description">Omschrijving probleem:</label> <br />
-								<h:inputTextarea name="description" rows="8" cols="40"
-									class="form-control" value="#{trainCoachController.description}"></h:inputTextarea>
-								<label for="list_empl">Kies een onderhoudstechnicus:</label> <br />
-								<br />
-								
-								  
-								<div class="container">
-								
-								<h:selectOneMenu value="#{trainCoachController.mechanicID}" class="form-group">
-									<f:selectItems value="#{trainCoachController.mechanics}" var="mechanic" itemValue="#{mechanic.id}" itemLabel="#{mechanic.name}" />
-								</h:selectOneMenu>
 
-							</div>
+							<label class="control-label" for="description">Omschrijving
+								probleem:</label> <br />
+							<h:inputTextarea name="description" rows="8" cols="40"
+								class="form-control" value="#{trainCoachController.description}"></h:inputTextarea>
+							<br></br>
+							<label class="control-label" for="list_empl">Kies een
+								onderhoudstechnicus:</label> 
+
+
+							<h:selectOneMenu value="#{trainCoachController.mechanicID}"
+								class="form-control">
+								<f:selectItems value="#{trainCoachController.mechanics}"
+									var="mechanic" itemValue="#{mechanic.id}"
+									itemLabel="#{mechanic.name} (#{mechanic.email})" />
+							</h:selectOneMenu>
+
 
 
 						</div>
