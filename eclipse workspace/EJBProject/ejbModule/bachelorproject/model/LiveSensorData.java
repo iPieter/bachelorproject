@@ -14,6 +14,7 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -44,6 +45,7 @@ public class LiveSensorData implements Serializable
 	private String track;
 	
 	@NotNull
+	@OneToOne
 	private TrainCoach traincoach;
 
 	@NotNull
