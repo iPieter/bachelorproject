@@ -195,7 +195,7 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		Date now = new Date();
 		Timestamp thirtyDaysAgo = new Timestamp(now.getTime() - 86400000 * backTime);
 		
-		TypedQuery<Integer> query = em.createNamedQuery( Issue.COUNT_BY_OPERATOR_ID, Integer.class )
+		TypedQuery<Long> query = em.createNamedQuery( Issue.COUNT_BY_OPERATOR_ID, Long.class )
 									.setParameter("backTime", thirtyDaysAgo);
 		int result = query.getFirstResult();
 
