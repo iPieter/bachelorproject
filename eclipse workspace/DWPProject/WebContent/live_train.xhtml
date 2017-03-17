@@ -26,11 +26,22 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet"/>
 	<link href="css/extra_layout.css" rel="stylesheet"/>
 	<link rel="stylesheet" href="css/leaflet.css" />
+	<link rel="stylesheet" href="css/extra_layout.css" />
+	<link rel="stylesheet" href="css/login.css" />
 	<title><ui:insert name="title">Live train tracking</ui:insert></title>
 </h:head>
 
 <!-- Renders when logged in -->
-<h:body rendered="#{authenticationController.hasOperatorAccess()}">	
+<h:body rendered="#{authenticationController.hasOperatorAccess()}">
+
+	<!-- FIXED NAVBAR -->
+	<ui:include src="templates/navbar.xhtml"/>
+	
+	<ui:define name="nav_content">
+		<li><a href="index.xhtml">Dashboard</a></li>
+		<li class="active"><a href="live_train_overview.xhtml">Live Tracking</a></li>
+	</ui:define>
+	
 	<div class="container-fluid">
         <div class="row">
             <div class="col-sm-12 main_view">
