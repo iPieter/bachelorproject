@@ -49,6 +49,7 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		}
 
 		em.getTransaction().commit();
+		em.close();
 	}
 
 	public List<Issue> findInProgressIssuesByMechanicId( int mechanicId )
@@ -60,7 +61,8 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		List<Issue> result = query.getResultList();
 
 		em.getTransaction().commit();
-
+		em.close();
+		
 		return result;
 	}
 
@@ -74,7 +76,8 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		List<Issue> result = query.getResultList();
 
 		em.getTransaction().commit();
-
+		em.close();
+		
 		return result;
 	}
 
@@ -88,6 +91,7 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		List<Issue> result = query.getResultList();
 
 		em.getTransaction().commit();
+		em.close();
 
 		return result;
 	}
@@ -102,6 +106,7 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		List<Issue> result = query.getResultList();
 		
 		em.getTransaction().commit();
+		em.close();
 
 		return result;
 	}
@@ -117,7 +122,8 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		List<Issue> result = query.getResultList();
 		
 		em.getTransaction().commit();
-
+		em.close();
+		
 		return result;
 	}
 
@@ -139,9 +145,10 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		else
 			System.out.println( "ERROR(issueEJB): no issue found" );
 		
-		em.persist( issue );
+		em.merge( issue );
 		
 		em.getTransaction().commit();
+		em.close();
 	}
 	
 	/**
@@ -226,6 +233,7 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		Issue issue = em.find( Issue.class, issueID );
 		
 		em.getTransaction().commit();
+		em.close();
 		
 		return issue;
 	}

@@ -48,6 +48,7 @@ public class ProcessedSensorDataEJB
 		List<ProcessedSensorData> resultList = query.getResultList();
 
 		em.getTransaction().commit();
+		em.close();
 
 		if( resultList.size() == 0 )
 			return null;
@@ -75,6 +76,7 @@ public class ProcessedSensorDataEJB
 		List<ProcessedSensorData> resultList = query.getResultList();
 
 		em.getTransaction().commit();
+		em.close();
 
 		if( resultList.size() == 0 )
 			return null;
