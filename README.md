@@ -25,3 +25,6 @@ password123
 ## 3 Mechanic Issue States
 Issue kan 3 staten bevatten: "Assigned", "In Progress", "Solved".
 "Active" wordt gebruikt voor de verzameling van "Assigned" en "In Progress" issues.
+
+## 4 user_assets
+In de map `user_assets` de afbeelding `qwertyui.jpg` plaatsen. Deze staat in de git directory onder `assets/qwerty.jpg`.

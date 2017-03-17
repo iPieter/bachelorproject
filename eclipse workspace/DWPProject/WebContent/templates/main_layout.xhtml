@@ -21,12 +21,18 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet"/>
 	<link href="css/extra_layout.css" rel="stylesheet"/>
 	<link rel="stylesheet" href="css/leaflet.css" />
+	<link rel="stylesheet" href="css/extra_layout.css" />
+	<link rel="stylesheet" href="css/login.css" />
 	<title><ui:insert name="title">Insert title here</ui:insert></title>
-</h:head>
+</h:head> 
 
 <!-- Renders when logged in -->
 <h:body rendered="#{authenticationController.hasOperatorAccess()}">	
+<!-- FIXED NAVBAR -->
+<ui:include src="navbar.xhtml"/>
+
 <div class="container-fluid">
+	
 	<div class="row">
 	
 		<!-- LEFT SIDEBAR -->

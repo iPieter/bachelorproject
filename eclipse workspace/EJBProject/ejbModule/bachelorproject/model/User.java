@@ -18,6 +18,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
+import org.ocpsoft.prettytime.PrettyTime;
 
 /**
  * The persistent class for the User database table.
@@ -147,6 +148,12 @@ public class User implements Serializable
 	public void setLastLogin( Date lastLogin )
 	{
 		this.lastLogin = lastLogin;
+	}
+	
+	public String getLastPrettyLogin()
+	{
+		PrettyTime p = new PrettyTime();
+		return p.format(this.lastLogin);
 	}
 	
 	

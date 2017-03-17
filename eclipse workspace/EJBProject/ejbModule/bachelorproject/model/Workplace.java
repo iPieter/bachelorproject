@@ -85,4 +85,26 @@ public class Workplace implements Serializable
 		this.traincoaches = traincoaches;
 	}
 
+	/**
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return the mechanics
+	 */
+	public List<User> getMechanics()
+	{
+		return mechanics;
+	}
+
+	/**
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param mechanics the mechanics to set
+	 */
+	public void setMechanics(List<User> mechanics)
+	{
+		this.mechanics = mechanics;
+	}
+	
+	
+
 }

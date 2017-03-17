@@ -112,8 +112,7 @@ function setView( input )
         },
         series: [{
             name: 'Afwijking(°)',
-				data:
-        data
+			data: data
         }]
     });
 }

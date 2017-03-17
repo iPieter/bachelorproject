@@ -78,6 +78,26 @@ public class WorkplaceEJB
 		
 		em.close();
 
+
 		return result;
+	}
+
+	/**
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param currentWorkplace The workplace where the user should be added.
+	 * @param userId The id of the user (mechanic) to be added to the workplace
+	 */
+	public void insertMechanicIntoWorkplace(Workplace currentWorkplace, int userId)
+	{
+
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+
+		
+
+		em.getTransaction().commit();;
+
 	}
 }
