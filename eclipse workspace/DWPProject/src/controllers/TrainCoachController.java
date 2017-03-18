@@ -272,5 +272,14 @@ public class TrainCoachController implements Serializable
 		PrettyTime pt = new PrettyTime( );
 		return pt.format( currentSensorData.getTime() );
 	}
+	
+	/**
+	 * 	Test if the current displayed sensor data isn't the most recent one
+	 *  @return True if the current displayed sensor data is old, false otherwise
+	 * */
+	public boolean isOldData()
+	{
+		return currentpsdID != 0;
+	}
 }
 
