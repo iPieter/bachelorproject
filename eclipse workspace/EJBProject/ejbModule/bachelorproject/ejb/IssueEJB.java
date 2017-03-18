@@ -2,6 +2,7 @@ package bachelorproject.ejb;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -28,6 +29,9 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 {
 	@Inject
 	private EntityManagerSingleton ems;
+	
+	@Inject
+	private TrainCoachEJB traincoachEJB;
 	
 	/**
 	 * Creates a correct Issue object and persists it to the database
@@ -236,5 +240,49 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		em.close();
 		
 		return issue;
+	}
+	
+	/**
+	 * 	Closes an issue and sets a traincoach to closed if needed.
+	 *  @param issueID The issue to be closed.
+	 *  @param currentTrainCoachID The associated traincoach ID.
+	 *  @return This method will return true if the traincoach has no more active issues.
+	 * */
+	public boolean closeIssue( int issueID, int currentTrainCoachID )
+	{
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+
+		boolean success = false;
+		Issue i = em.find( Issue.class, issueID );
+		if( i != null )
+		{
+			i.setClosedTime( new Date() );
+			i.setStatus( IssueStatus.CLOSED );
+			em.merge( i );
+			
+			List<Issue> issues = findAssignedIssuesByTraincoachId( currentTrainCoachID );
+			issues.addAll( findInProgressIssuesByTraincoachId( currentTrainCoachID ) );
+			
+			Iterator<Issue> iterator = issues.iterator();
+			while( iterator.hasNext() )
+			{
+				Issue ii = iterator.next();
+				if( ii.getId() == i.getId() )
+					iterator.remove();
+			}
+				
+			if( issues.size() == 0 )
+			{
+				System.out.println( "Closing traincoach" );
+				traincoachEJB.setTrainCoachReviewed( currentTrainCoachID );
+				success = true;
+			}
+		}
+		
+		em.getTransaction().commit();
+		em.close();
+		
+		return success;
 	}
 }
