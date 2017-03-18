@@ -111,8 +111,8 @@
 	<!-- MAINVIEW CONTENT -->
 	<ui:define name="mainview_content">
 
-		<div class="mainview_panel">
-			<h:outputText value="#{trainCoachController.currentSensorData.track} - #{trainCoachController.sensorDataToPrettyTime()}" />
+		<div class="mainview_panel col-sm-10">
+			<h:outputText value="Rit: #{trainCoachController.currentSensorData.track} - #{trainCoachController.sensorDataToPrettyTime()}" />
 		</div>
 		<input type="hidden"
 			value="#{trainCoachController.currentSensorData.id}"
