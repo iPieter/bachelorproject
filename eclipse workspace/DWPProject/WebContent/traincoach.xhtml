@@ -12,6 +12,8 @@
 	<f:metadata>
 		<f:viewParam name="id"
 			value="#{trainCoachController.currentTrainCoachID}" />
+		<f:viewParam name="psdid"
+			value="#{trainCoachController.currentpsdID}" />
 		<f:viewAction action="#{trainCoachController.loadPage()}" />
 	</f:metadata>
 
@@ -31,7 +33,7 @@
 			</li>
 			<li><h:link class="active"
 					value="#{trainCoachController.currentTrainCoach.type} - #{trainCoachController.currentTrainCoach.name}"
-					outcome="traincoach.xhtml?id=#{trainCoachController.currentTrainCoach.id}" />
+					outcome="traincoach.xhtml?id=#{trainCoachController.currentTrainCoach.id}&amp;psdid=0" />
 			</li>
 		</ol>
 	</ui:define>
@@ -60,7 +62,7 @@
 							<h4 class="sidebar_text_traincoach">
 								<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
 								<h:link value="#{traincoach.type} - #{traincoach.name}"
-									outcome="traincoach.xhtml?id=#{traincoach.getId()}" />
+									outcome="traincoach.xhtml?id=#{traincoach.getId()}&amp;psdid=0" />
 							</h4>
 							<!-- METADATA PER WAGON -->
 							<div class="traincoach_data">
@@ -71,10 +73,9 @@
 									<span class="badge"></span>
 								</h5>
 								<h5>
-									<span
-										class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span>
-									Sensoren
-								</h5>
+			                    	<span class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span>
+			                    	<h:link value="Geschiedenis" outcome="traincoach_sensor.xhtml?id=#{traincoach.getId()}"/>
+			                    </h5>
 							</div>
 						</div>
 					</c:when>
@@ -84,7 +85,7 @@
 							<h4 class="sidebar_text_traincoach">
 								<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
 								<h:link value="#{traincoach.type} - #{traincoach.name}"
-									outcome="traincoach.xhtml?id=#{traincoach.getId()}" />
+									outcome="traincoach.xhtml?id=#{traincoach.getId()}&amp;psdid=0" />
 							</h4>
 							<!-- METADATA PER WAGON -->
 							<div class="traincoach_data">
@@ -110,6 +111,9 @@
 	<!-- MAINVIEW CONTENT -->
 	<ui:define name="mainview_content">
 
+		<div class="mainview_panel col-sm-10">
+			<h:outputText value="Rit: #{trainCoachController.currentSensorData.track} - #{trainCoachController.sensorDataToPrettyTime()}" />
+		</div>
 		<input type="hidden"
 			value="#{trainCoachController.currentSensorData.id}"
 			id="current_traincoach" />
@@ -131,6 +135,14 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-5 mainview_panel">
+			<c:choose>
+			<c:when test="#{trainCoachController.currentpsdID != 0}" >
+				<p>
+					U bent niet de meest recente data aan het bekijken waardoor u 
+					geen nieuwe herstellingen kunt aanmaken.
+				</p>
+			</c:when>
+			<c:otherwise>
 				<div class="mainview_issue row">
 					<div class="col-sm-12 issue_bar">
 						<h:form class="issue_bar">
@@ -153,16 +165,11 @@
 								<li><h:outputText
 										value="#{activeIssue.status}: #{activeIssue.descr}" /></li>
 							</c:forEach>
-							<p>
-								<div class="progress">
-									<div class="progress-bar progress-bar-success"
-										role="progressbar" aria-valuenow="40" aria-valuemin="0"
-										aria-valuemax="100" style="width: 40%">40% Complete</div>
-								</div>
-							</p>
 						</div>
 					</div>
 				</c:forEach>
+			</c:otherwise>
+			</c:choose>
 			</div>
 			<div class="col-sm-5 mainview_panel" id="map_size">
 				<div id="map"></div>
