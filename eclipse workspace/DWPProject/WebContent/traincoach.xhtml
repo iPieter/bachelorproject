@@ -111,6 +111,9 @@
 	<!-- MAINVIEW CONTENT -->
 	<ui:define name="mainview_content">
 
+		<div class="mainview_panel">
+			<h:outputText value="#{trainCoachController.currentSensorData.track} - #{trainCoachController.currentSensorData.time}" />
+		</div>
 		<input type="hidden"
 			value="#{trainCoachController.currentSensorData.id}"
 			id="current_traincoach" />
