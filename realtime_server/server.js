@@ -32,7 +32,7 @@ request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/registe
         {
         });
 
-        if( index >= 100 )
+        if( index >= 1000 )
         {
             request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/stop/' + lsdID, function( error, response, body )
             {
