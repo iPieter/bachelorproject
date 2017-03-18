@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -164,7 +165,7 @@ public class LiveSensorDataEJB
 			data.setLocation( path );
 			data.setTime( new Date() );
 			data.setTrack( sensordata.getTrack() );
-			data.setTrainCoach( sensordata.getTraincoach() );
+			data.setTraincoach( sensordata.getTraincoach() );
 			
 			boolean newWorkplace = false;
 			List<Workplace> workplaces = workplaceEJB.getAllWorkplaces();
@@ -181,8 +182,16 @@ public class LiveSensorDataEJB
 				if( p.getName().toLowerCase().equals( workplaceName.toLowerCase() ) )
 					workplace = p;
 				
-				if( p.getTraincoaches().remove( trainCoach ) )
-					em.merge( p );
+				Iterator<TrainCoach> iterator = p.getTraincoaches().iterator();
+				while( iterator.hasNext() )
+				{
+					TrainCoach t = iterator.next();
+					if( t.getId() == trainCoach.getId() )
+					{
+						iterator.remove();
+						em.merge( p );
+					}
+				}
 			}
 			if( workplace == null )
 			{

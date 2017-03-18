@@ -340,7 +340,7 @@ public class MatlabProcessor
 		data.setLocation( outputPath );
 		data.setTime( new Date() );
 		data.setTrack( nameSplit[4] );
-		data.setTrainCoach( trainCoach );
+		data.setTraincoach( trainCoach );
 		
 		if( newTrainCoach )
 			em.persist( trainCoach );
