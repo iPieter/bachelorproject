@@ -47,39 +47,45 @@
 				<div class="row mainview_traincoach_panelheader">
 					<h4>Actieve ritten</h4>
 				</div>
-			  <h:form>
-				<h:dataTable class="table"
-					value="#{liveTrainOverviewController.liveTrains}" var="sensordata">
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Model - Naam" />
-						</f:facet>
-						<h:outputText value="#{sensordata.traincoach.type} - #{sensordata.traincoach.name}" />
-					</h:column>
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Rit" />
-						</f:facet>
-						<h:outputText value="#{sensordata.track}" />
-					</h:column>
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Vertrektijd" />
-						</f:facet>
-						<h:outputText value="#{sensordata.date}" />
-					</h:column>
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Acties" />
-						</f:facet>
-						<h:outputLink value="live_train.xhtml" class="btn btn-default">
-							<h:outputText value="Volg live" />
-							<f:param name="id" value="#{sensordata.id}" />
-						</h:outputLink>
-					</h:column>
-				</h:dataTable>
-			</h:form>
-			  
+				<c:choose>
+				<c:when test="#{liveTrainOverviewController.liveTrains.size() == 0}">
+					<em>Er zijn momenteel geen actieve ritten</em>
+				</c:when>
+				<c:otherwise>
+				  <h:form>
+					<h:dataTable class="table"
+						value="#{liveTrainOverviewController.liveTrains}" var="sensordata">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Model - Naam" />
+							</f:facet>
+							<h:outputText value="#{sensordata.traincoach.type} - #{sensordata.traincoach.name}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Rit" />
+							</f:facet>
+							<h:outputText value="#{sensordata.track}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Vertrektijd" />
+							</f:facet>
+							<h:outputText value="#{sensordata.date}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Acties" />
+							</f:facet>
+							<h:outputLink value="live_train.xhtml" class="btn btn-default">
+								<h:outputText value="Volg live" />
+								<f:param name="id" value="#{sensordata.id}" />
+							</h:outputLink>
+						</h:column>
+					</h:dataTable>
+				</h:form>
+				</c:otherwise>
+				</c:choose>  
 			</div>
 		</div>
     </div>

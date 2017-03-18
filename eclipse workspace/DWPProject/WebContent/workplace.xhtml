@@ -74,36 +74,43 @@
 						 <h4>Actieve Wagons</h4>
 					</div>
 				</div>
+				<c:choose>
+				<c:when test="#{workplaceController.findActiveTrainCoaches().size() == 0}">
+					<em>Er zijn momenteel geen wagons die inspectie nodig hebben in deze staanplaats.</em>
+				</c:when>
+				<c:otherwise>
 				
-				<!-- WAGONS OVERZICHT -->
-				<c:set var="workplace" value="#{workplaceController.currentWorkplace}"/>
-				<c:forEach var="traincoach" items="#{workplaceController.findActiveTrainCoaches()}">
-					<!-- WAGON OVERZICHT -->
-					<div class="row mainview_traincoach">
-						<div class="col-sm-4 mainview_wagon_header">
-							<h3>
-								<h:link value="#{traincoach.type} - #{traincoach.name}" 
-										outcome="traincoach.xhtml?id=#{traincoach.id}"/>
-							</h3>
-						</div>
-						<div class="col-sm-8">
-							<h4>Actieve problemen</h4>
-							<ul>
-								<c:forEach var="issue" 
-										   items="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id)}">
-									<li><h:outputText value="#{issue.descr}"></h:outputText></li>
-								</c:forEach>
-							</ul>
-							<h4>Afgewerkte problemen</h4>
-							<ul>
-								<c:forEach var="issue" 
-										   items="#{workplaceController.findClosedIssuesByTraincoachId(traincoach.id)}">
-									<li><h:outputText value="#{issue.descr}"></h:outputText></li>
-								</c:forEach>
-							</ul>
-						</div>
-				    </div> <!-- END WAGON OVERZICHT -->
-			    </c:forEach> <!-- END WAGONS OVERZICHT -->
+					<!-- WAGONS OVERZICHT -->
+					<c:set var="workplace" value="#{workplaceController.currentWorkplace}"/>
+					<c:forEach var="traincoach" items="#{workplaceController.findActiveTrainCoaches()}">
+						<!-- WAGON OVERZICHT -->
+						<div class="row mainview_traincoach">
+							<div class="col-sm-4 mainview_wagon_header">
+								<h3>
+									<h:link value="#{traincoach.type} - #{traincoach.name}" 
+											outcome="traincoach.xhtml?id=#{traincoach.id}"/>
+								</h3>
+							</div>
+							<div class="col-sm-8">
+								<h4>Actieve problemen</h4>
+								<ul>
+									<c:forEach var="issue" 
+											   items="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id)}">
+										<li><h:outputText value="#{issue.descr}"></h:outputText></li>
+									</c:forEach>
+								</ul>
+								<h4>Afgewerkte problemen</h4>
+								<ul>
+									<c:forEach var="issue" 
+											   items="#{workplaceController.findClosedIssuesByTraincoachId(traincoach.id)}">
+										<li><h:outputText value="#{issue.descr}"></h:outputText></li>
+									</c:forEach>
+								</ul>
+							</div>
+					    </div> <!-- END WAGON OVERZICHT -->
+				    </c:forEach> <!-- END WAGONS OVERZICHT -->
+			    </c:otherwise>
+				</c:choose>
 			    
 			</div> <!-- END MAIN PANEL-LARGE-LEFT -->
                     
