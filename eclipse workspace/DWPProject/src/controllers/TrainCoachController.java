@@ -12,6 +12,8 @@ import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 import bachelorproject.ejb.IssueEJB;
 import bachelorproject.ejb.ProcessedSensorDataEJB;
 import bachelorproject.ejb.TrainCoachEJB;
@@ -265,5 +267,10 @@ public class TrainCoachController implements Serializable
 		this.currentpsdID = currentpsdID;
 	}
 	
+	public String sensorDataToPrettyTime()
+	{
+		PrettyTime pt = new PrettyTime( );
+		return pt.format( currentSensorData.getTime() );
+	}
 }
 

@@ -112,7 +112,7 @@
 	<ui:define name="mainview_content">
 
 		<div class="mainview_panel">
-			<h:outputText value="#{trainCoachController.currentSensorData.track} - #{trainCoachController.currentSensorData.time}" />
+			<h:outputText value="#{trainCoachController.currentSensorData.track} - #{trainCoachController.sensorDataToPrettyTime()}" />
 		</div>
 		<input type="hidden"
 			value="#{trainCoachController.currentSensorData.id}"
