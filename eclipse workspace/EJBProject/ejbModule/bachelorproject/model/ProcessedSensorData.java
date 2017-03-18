@@ -144,11 +144,18 @@ public class ProcessedSensorData implements Serializable
 	}
 
 	/**
-	 * Sets the associated TrainCoach object
-	 * @param t The associated TrainCoach object.
-	 * */
-	public void setTrainCoach( TrainCoach t )
+	 * @return the traincoach
+	 */
+	public TrainCoach getTraincoach()
 	{
-		this.traincoach = t;
+		return traincoach;
+	}
+
+	/**
+	 * @param traincoach the traincoach to set
+	 */
+	public void setTraincoach( TrainCoach traincoach )
+	{
+		this.traincoach = traincoach;
 	}
 }

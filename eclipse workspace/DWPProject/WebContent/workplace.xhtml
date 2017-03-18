@@ -45,7 +45,7 @@
 	            <div class="traincoach">
 	                <h4 class="sidebar_text_traincoach">
 	                	<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
-	                	<h:link value="#{traincoach.type} - #{traincoach.name}" outcome="traincoach.xhtml?id=#{traincoach.getId()}"/>
+	                	<h:link value="#{traincoach.type} - #{traincoach.name}" outcome="traincoach.xhtml?id=#{traincoach.getId()}&amp;psdid=0"/>
 	                </h4>
 	                <!-- METADATA PER WAGON -->
 	                <div class="traincoach_data">
@@ -86,7 +86,7 @@
 						<div class="col-sm-4 mainview_wagon_header">
 							<h3>
 								<h:link value="#{traincoach.type} - #{traincoach.name}" 
-										outcome="traincoach.xhtml?id=#{traincoach.id}"/>
+										outcome="traincoach.xhtml?id=#{traincoach.id}&amp;psdid=0"/>
 							</h3>
 						</div>
 						<div class="col-sm-8">

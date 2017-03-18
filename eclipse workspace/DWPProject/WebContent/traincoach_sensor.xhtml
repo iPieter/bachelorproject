@@ -33,12 +33,12 @@
 			<li>
 			<h:link class="active"
 					value="#{trainCoachSensorController.currentTrainCoach.type} - #{trainCoachSensorController.currentTrainCoach.name}"
-					outcome="traincoach.xhtml?id=#{trainCoachSensorController.currentTrainCoach.id}" />
+					outcome="traincoach.xhtml?id=#{trainCoachSensorController.currentTrainCoach.id}&amp;psdid=0" />
 			</li>
 			<li>
 			<h:link class="active"
-					value="Problemen"
-					outcome="traincoach_issues.xhtml?id=#{trainCoachSensorController.currentTrainCoach.id}" />
+					value="Geschiedenis"
+					outcome="traincoach_sensor.xhtml?id=#{trainCoachSensorController.currentTrainCoach.id}" />
 			</li>
 		</ol>
 	</ui:define>
@@ -50,6 +50,39 @@
 				<div class="row mainview_traincoach_panelheader">
 					<h4>Oude ritten</h4>
 				</div>
+				<h:form>
+					<h:dataTable class="table"
+						value="#{trainCoachSensorController.data}" var="sensordata">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Model - Naam" />
+							</f:facet>
+							<h:outputText value="#{sensordata.traincoach.type} - #{sensordata.traincoach.name}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Rit" />
+							</f:facet>
+							<h:outputText value="#{sensordata.track}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Vertrektijd" />
+							</f:facet>
+							<h:outputText value="#{sensordata.time}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Acties" />
+							</f:facet>
+							<h:outputLink value="traincoach.xhtml" class="btn btn-default">
+								<h:outputText value="Bekijk data" />
+								<f:param name="id" value="#{sensordata.traincoach.id}" />
+								<f:param name="psdid" value="#{sensordata.id}" />
+							</h:outputLink>
+						</h:column>
+					</h:dataTable>
+				</h:form>
 			</div>
 		</div>
 		<script

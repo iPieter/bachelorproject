@@ -12,6 +12,8 @@
 	<f:metadata>
 		<f:viewParam name="id"
 			value="#{trainCoachController.currentTrainCoachID}" />
+		<f:viewParam name="psdid"
+			value="#{trainCoachController.currentpsdID}" />
 		<f:viewAction action="#{trainCoachController.loadPage()}" />
 	</f:metadata>
 
@@ -31,7 +33,7 @@
 			</li>
 			<li><h:link class="active"
 					value="#{trainCoachController.currentTrainCoach.type} - #{trainCoachController.currentTrainCoach.name}"
-					outcome="traincoach.xhtml?id=#{trainCoachController.currentTrainCoach.id}" />
+					outcome="traincoach.xhtml?id=#{trainCoachController.currentTrainCoach.id}&amp;psdid=0" />
 			</li>
 		</ol>
 	</ui:define>
@@ -60,7 +62,7 @@
 							<h4 class="sidebar_text_traincoach">
 								<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
 								<h:link value="#{traincoach.type} - #{traincoach.name}"
-									outcome="traincoach.xhtml?id=#{traincoach.getId()}" />
+									outcome="traincoach.xhtml?id=#{traincoach.getId()}&amp;psdid=0" />
 							</h4>
 							<!-- METADATA PER WAGON -->
 							<div class="traincoach_data">
@@ -83,7 +85,7 @@
 							<h4 class="sidebar_text_traincoach">
 								<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
 								<h:link value="#{traincoach.type} - #{traincoach.name}"
-									outcome="traincoach.xhtml?id=#{traincoach.getId()}" />
+									outcome="traincoach.xhtml?id=#{traincoach.getId()}&amp;psdid=0" />
 							</h4>
 							<!-- METADATA PER WAGON -->
 							<div class="traincoach_data">

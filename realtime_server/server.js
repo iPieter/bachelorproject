@@ -5,7 +5,7 @@ var data    = JSON.parse( fs.readFileSync( 'test.json', 'utf8' ) );
 
 var index   = 0;
 
-request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/register/M7/753159/Bombardier/Antwerpen-Leuven', function( error, response, body )
+request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/register/M7/65201/Bombardier/Antwerpen-Leuven', function( error, response, body )
 {
     if( error !== null )
         console.log( error );
@@ -32,12 +32,12 @@ request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/registe
         {
         });
 
-        if( index >= data.yaw.length )
+        if( index >= 100 )
         {
-            clearInterval( timer );
             request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/stop/' + lsdID, function( error, response, body )
             {
+                clearInterval( timer );
             } );
         }
-    }, 250 );
+    }, 100 );
 });
