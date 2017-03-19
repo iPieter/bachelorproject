@@ -177,7 +177,7 @@
 				<div id="map"></div>
 			</div>
 		</div>
-
+			
 		<!-- MODAL ON NO POINT SELECTED -->
 		<div id="pickAPointModal" class="modal fade" role="dialog" tabindex="10">
 			<div class="modal-dialog modal-lg">
@@ -214,13 +214,13 @@
 							<h4 class="modal-title">Nieuwe herstelling</h4>
 						</div>
 						<div class="modal-body">
-							<label class="control-label" for="description">Omschrijving
-								probleem:</label> <br />
+							<label class="control-label" for="description">Tijdstip van voorkomen:</label> <br/>
+							<p id="selected_time_value">No Point Selected"</p><br/>
+							<label class="control-label" for="description">Omschrijving probleem:</label> <br />
 							<h:inputTextarea name="description" rows="8" cols="40"
 								class="form-control" value="#{trainCoachController.description}"></h:inputTextarea>
 							<br></br>
-							<label class="control-label" for="list_empl">Kies een
-								onderhoudstechnicus:</label> 
+							<label class="control-label" for="list_empl">Kies een onderhoudstechnicus:</label> 
 							
 							
 							<h:selectOneMenu value="#{trainCoachController.mechanicID}"

@@ -138,19 +138,24 @@ function setDatapointSelected(){
 	console.log("datapointSelected="+datapointSelected);
 }
 
+/*Modal depends on Issue value selected*/
 function setModal(){
 	var html=null;
 	console.log("Entered setModal");
 	
 	if(datapointSelected == true){
+		/*Value to display in modal */
+		$('#selected_time_value').text(xTimeVal + " ms");
+		
+		/*Selecting Modal*/
 		$('#create_issue_button').attr("data-target","#assignModal");
 		console.log("Entered setModalHTML: if(true)");
 	}
 	else{
+		/*Selecting Modal*/
 		$('#create_issue_button').attr("data-target","#pickAPointModal");
 		console.log("Entered setModalHTML: if(false)");
 	}
-
 }
 
 
