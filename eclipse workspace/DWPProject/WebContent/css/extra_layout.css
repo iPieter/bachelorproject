@@ -54,7 +54,7 @@ body, html {
 	border-radius: 3px;
 	height: 100vh;
 	margin-bottom: 5px;
-	margin-left: 5px;
+	margin-left: 10px;
 }
 
 .mainview_panel_large > .content{
@@ -69,7 +69,12 @@ body, html {
 	height: 91vh;
 	margin-bottom: 5px;
 	margin-left: 10px;
-	margin-right: 0px;
+	margin-right: 10px;
+}
+
+.main_view{
+	height:100vh;
+	overflow:hidden;
 }
 
 #topright img {
