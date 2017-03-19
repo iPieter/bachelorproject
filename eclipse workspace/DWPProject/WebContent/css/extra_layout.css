@@ -1,6 +1,6 @@
 /**** MAIN LAYOUT****/
 body, html {
-	height: 100% !important;
+	height: 100%;
 }
 
 .info_label
@@ -34,6 +34,9 @@ body, html {
 }
 
 /**** BREADCRUMB ****/
+.breadcrumb{
+	margin-bottom: 0px;
+}
 .breadcrumb a {
 	color: #344951;
 }
@@ -41,22 +44,32 @@ body, html {
 /**** MAINVIEW PANELS ****/
 .mainview_panel {
 	border: 1px solid #95a5a6;
+	margin-top:5px;
 	border-radius: 3px;
 	height: 100%;
-	margin-left: 1vh;
-	margin-bottom: 5px;
-	margin-top: 5px;
 	background-color: white;
 }
 
 .mainview_panel_large {
-	border: 1px solid #95a5a6;
 	border-radius: 3px;
-	height: 91vh;
-	margin-left: 1vh;
+	height: 100vh;
 	margin-bottom: 5px;
-	margin-top: 5px;
+	margin-left: 5px;
+}
+
+.mainview_panel_large > .content{
+	border-left: 1px solid #95a5a6;
+	border-bottom: 1px solid #95a5a6;
+	border-right: 1px solid #95a5a6;
+	border-radius: 3px;
 	background-color: white;
+}
+
+.mainview_panel_large_right{
+	height: 91vh;
+	margin-bottom: 5px;
+	margin-left: 10px;
+	margin-right: 0px;
 }
 
 #topright img {
@@ -84,7 +97,6 @@ body, html {
 
 .mainview_traincoach {
 	border-bottom: 1px solid #2c3e50;
-	overflow: hidden;
 }
 
 .mainview_traincoach_panelheader {
@@ -97,7 +109,6 @@ body, html {
 }
 
 .mainview_traincoach_panelheader h4 {
-	margin-left: 30px;
 }
 
 .mainview_traincoach_header {
