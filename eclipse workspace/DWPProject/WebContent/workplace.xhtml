@@ -92,12 +92,12 @@
 			<!-- MAIN PANEL-LARGE-LEFT (descr=oplijsten wagons, incl. Actieve & afgewerkte problemen -->
 			<div class="col-sm-6 ">
 				<div class="row">
-					<div class="col-sm-12">
+					<div class="col-sm-12 pad">
 						<div class="mainview_panel_large">
 
 							<!-- WAGONS OVERZICHT HEADER -->
 							<div class="row mainview_traincoach">
-								<div class="col-sm-12 mainview_traincoach_panelheader">
+								<div class="col-sm-12 pad mainview_traincoach_panelheader">
 									<h4>Actieve Wagons</h4>
 								</div>
 							</div>
@@ -112,7 +112,7 @@
 								<c:otherwise>
 									<!-- WAGONS OVERZICHT -->
 									<div class="row content">
-										<div class="col-sm-12">
+										<div class="col-sm-12 pad">
 											<c:set var="workplace"
 												value="#{workplaceController.currentWorkplace}"
 											/>
@@ -163,14 +163,14 @@
 			<!-- MAINVIEW PANEL RIGHT SIDE -->
 			<div class="col-sm-6">
 				<div class="row">
-					<div class="col-sm-12">
+					<div class="col-sm-12 pad">
 						<div class="mainview_panel_large">
 
 							<!-- MAP HEADER & MAP -->
 
 							<div class="row mainview_traincoach">
-								<div class="col-sm-12 mainview_traincoach_panelheader">
-									<h4>Map</h4>
+								<div class="col-sm-12 pad mainview_traincoach_panelheader">
+									<h4>Kaart</h4>
 								</div>
 							</div>
 							<div class="row">
@@ -182,10 +182,10 @@
 					</div>
 
 					<div class="row">
-						<div class="col-sm-12">
+						<div class="col-sm-12 pad">
 							<div class="mainview_panel_large">
 
-								<!-- OVERZICHT TECHNICI -->
+							<!-- OVERZICHT TECHNICI -->
 
 								<!-- OVERZICHT TECHNICI HEADER-->
 								<div class="row mainview_traincoach">
@@ -195,7 +195,7 @@
 								</div>
 								<!-- OVERZICHT TECHNICI CONTENT-->
 								<div class="row content">
-									<div class="col-sm-12">
+									<div class="col-sm-12 pad">
 										<c:forEach var="mechanic"
 											items="#{workplaceController.findMechanicsOfCurrentWorkplace()}"
 										>
