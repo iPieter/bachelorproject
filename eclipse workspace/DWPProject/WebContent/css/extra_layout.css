@@ -35,11 +35,6 @@ body, html {
 	background-color: #ecf0f1;
 }
 
-/**** BREADCRUMB ****/
-.breadcrumb {
-	margin-bottom: 0px;
-}
-
 .breadcrumb a {
 	color: #344951;
 }
@@ -78,6 +73,8 @@ body, html {
 .main_view {
 	height: 100vh;
 	overflow: hidden;
+	padding: 0px;
+	
 }
 
 #topright img {
