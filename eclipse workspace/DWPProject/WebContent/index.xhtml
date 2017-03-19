@@ -98,25 +98,25 @@
 							<h:dataTable class="table" value="#{indexController.findOperatorAssignedIssues()}" var="issue">
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="Assigned" />
+										<h:outputText value="Toegewezen" />
 									</f:facet>
-									<h:outputText value="#{issue.assignedTime}" />
+									<h:outputText value="#{issue.assignedPrettyTime}" />
 								</h:column>
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="Description" />
+										<h:outputText value="Beschrijving" />
 									</f:facet>
 									<h:outputText value="#{issue.descr}" />
 								</h:column>
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="Mechanic" />
+										<h:outputText value="Toegewezen technicus" />
 									</f:facet>
 									<h:outputText value="#{issue.mechanic.name}" />
 								</h:column>	
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="E-mail" />
+										<h:outputText value="E-mail technicus" />
 									</f:facet>
 									<h:outputText value="#{issue.mechanic.email}" />
 								</h:column>						

@@ -21,6 +21,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 /**
  * The persistent class for the Issue database table.
  * 
@@ -231,5 +233,23 @@ public class Issue implements Serializable
 	 */
 	public void setGpsLon(double gpsLon) {
 		this.gpsLon = gpsLon;
+	}
+	
+	public String getAssignedPrettyTime()
+	{
+		PrettyTime p = new PrettyTime();
+		return p.format(this.assignedTime);	
+	}
+	
+	public String getClosedPrettyTime()
+	{
+		PrettyTime p = new PrettyTime();
+		return p.format(this.closedTime);	
+	}
+	
+	public String getInProgressPrettyTime()
+	{
+		PrettyTime p = new PrettyTime();
+		return p.format(this.inProgressTime);	
 	}
 }
