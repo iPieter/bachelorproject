@@ -32,19 +32,21 @@
 
 <!-- Renders when logged in -->
 <h:body rendered="#{authenticationController.hasOperatorAccess()}">
-
-	<!-- FIXED NAVBAR -->
-	<ui:include src="templates/navbar.xhtml"/>
 	
 	<ui:define name="nav_content">
 		<li><a href="index.xhtml">Dashboard</a></li>
 		<li class="active"><a href="live_train_overview.xhtml">Live Tracking</a></li>
-	</ui:define> 
+	</ui:define>
+	 
+	<!-- FIXED NAVBAR -->
+	<ui:include src="templates/navbar.xhtml"/>
 	
-	<div class="container-fluid">
-		<div class="col-sm-12 mainview_panel_large">
+ 
+	
+	<div class="container-fluid pad">
+		<div class="col-sm-12 mainview_panel_large" style="margin-top: 20px;">
 	    	<div class="row mainview_traincoach">
-				<div class="row mainview_traincoach_panelheader">
+				<div class="col-sm-12 pad mainview_traincoach_panelheader">
 					<h4>Actieve ritten</h4>
 				</div>
 				<c:choose>
