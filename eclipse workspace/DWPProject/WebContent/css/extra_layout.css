@@ -1,6 +1,9 @@
 /**** MAIN LAYOUT****/
 body, html {
 	height: 100%;
+	margin-left: 0px;
+	width: 100%;
+	background-color: #ecf0f1;
 }
 
 .info_label
@@ -85,6 +88,12 @@ body, html {
 
 #map_size {
 	height: 45vh;
+}
+
+#realtime_chart_yaw, #realtime_chart_roll
+{
+	height: 45vh;
+	overflow:hidden;
 }
 
 #graph {
@@ -235,7 +244,7 @@ body, html {
 	padding-bottom: 15px
 }
 
-.table>tbody>tr>td {
+.userTable>tbody>tr>td {
 	vertical-align: middle;
 }
 
@@ -270,4 +279,9 @@ body, html {
 	width: 192px;
 	border-radius: 200px;
 
+}
+
+.admin-container
+{
+	margin-top: 20px;
 }

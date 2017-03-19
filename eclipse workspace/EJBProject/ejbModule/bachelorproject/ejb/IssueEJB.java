@@ -2,6 +2,7 @@ package bachelorproject.ejb;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -29,6 +30,9 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 	@Inject
 	private EntityManagerSingleton ems;
 	
+	@Inject
+	private TrainCoachEJB traincoachEJB;
+	
 	/**
 	 * Creates a correct Issue object and persists it to the database
 	 * @author Anton
@@ -49,6 +53,7 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		}
 
 		em.getTransaction().commit();
+		em.close();
 	}
 
 	public List<Issue> findInProgressIssuesByMechanicId( int mechanicId )
@@ -60,7 +65,8 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		List<Issue> result = query.getResultList();
 
 		em.getTransaction().commit();
-
+		em.close();
+		
 		return result;
 	}
 
@@ -74,7 +80,8 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		List<Issue> result = query.getResultList();
 
 		em.getTransaction().commit();
-
+		em.close();
+		
 		return result;
 	}
 
@@ -88,6 +95,7 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		List<Issue> result = query.getResultList();
 
 		em.getTransaction().commit();
+		em.close();
 
 		return result;
 	}
@@ -102,6 +110,7 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		List<Issue> result = query.getResultList();
 		
 		em.getTransaction().commit();
+		em.close();
 
 		return result;
 	}
@@ -117,7 +126,8 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		List<Issue> result = query.getResultList();
 		
 		em.getTransaction().commit();
-
+		em.close();
+		
 		return result;
 	}
 
@@ -139,9 +149,10 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		else
 			System.out.println( "ERROR(issueEJB): no issue found" );
 		
-		em.persist( issue );
+		em.merge( issue );
 		
 		em.getTransaction().commit();
+		em.close();
 	}
 	
 	/**
@@ -188,7 +199,7 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		Date now = new Date();
 		Timestamp thirtyDaysAgo = new Timestamp(now.getTime() - 86400000 * backTime);
 		
-		TypedQuery<Integer> query = em.createNamedQuery( Issue.COUNT_BY_OPERATOR_ID, Integer.class )
+		TypedQuery<Long> query = em.createNamedQuery( Issue.COUNT_BY_OPERATOR_ID, Long.class )
 									.setParameter("backTime", thirtyDaysAgo);
 		int result = query.getFirstResult();
 
@@ -226,7 +237,52 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		Issue issue = em.find( Issue.class, issueID );
 		
 		em.getTransaction().commit();
+		em.close();
 		
 		return issue;
+	}
+	
+	/**
+	 * 	Closes an issue and sets a traincoach to closed if needed.
+	 *  @param issueID The issue to be closed.
+	 *  @param currentTrainCoachID The associated traincoach ID.
+	 *  @return This method will return true if the traincoach has no more active issues.
+	 * */
+	public boolean closeIssue( int issueID, int currentTrainCoachID )
+	{
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+
+		boolean success = false;
+		Issue i = em.find( Issue.class, issueID );
+		if( i != null )
+		{
+			i.setClosedTime( new Date() );
+			i.setStatus( IssueStatus.CLOSED );
+			em.merge( i );
+			
+			List<Issue> issues = findAssignedIssuesByTraincoachId( currentTrainCoachID );
+			issues.addAll( findInProgressIssuesByTraincoachId( currentTrainCoachID ) );
+			
+			Iterator<Issue> iterator = issues.iterator();
+			while( iterator.hasNext() )
+			{
+				Issue ii = iterator.next();
+				if( ii.getId() == i.getId() )
+					iterator.remove();
+			}
+				
+			if( issues.size() == 0 )
+			{
+				System.out.println( "Closing traincoach" );
+				traincoachEJB.setTrainCoachReviewed( currentTrainCoachID );
+				success = true;
+			}
+		}
+		
+		em.getTransaction().commit();
+		em.close();
+		
+		return success;
 	}
 }

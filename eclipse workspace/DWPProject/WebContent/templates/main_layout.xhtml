@@ -18,17 +18,22 @@
 	
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
 	<link href="css/bootstrap.min.css" rel="stylesheet"/>
 	<link href="css/extra_layout.css" rel="stylesheet"/>
 	<link href="css/sidebar.css" rel="stylesheet"/>
 	<link rel="stylesheet" href="css/leaflet.css" />
 	<link rel="stylesheet" href="css/nanoscroller.css" />
-	<script src="js/nanoscroller.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="css/login.css" />
 	<title><ui:insert name="title">Insert title here</ui:insert></title>
-</h:head>
+</h:head> 
 
 <!-- Renders when logged in -->
 <h:body rendered="#{authenticationController.hasOperatorAccess()}">	
+
+<!-- FIXED NAVBAR -->
+<ui:include src="navbar.xhtml"/>
+
 <!-- Bootstrap Container -->
 <div class="container-fluid">
 	<!-- Main Row-->
@@ -57,6 +62,7 @@
          
       </div> <!-- END MASTER ROW -->
 	</div> <!-- END MASTER CONTAINER -->
+	<script src="js/nanoscroller.js" type="text/javascript"></script>
 </h:body>
 
 <!-- Renders when not logged in and redirect doesnt' work -->

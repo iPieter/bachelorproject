@@ -12,6 +12,8 @@ import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 import bachelorproject.ejb.IssueEJB;
 import bachelorproject.ejb.ProcessedSensorDataEJB;
 import bachelorproject.ejb.TrainCoachEJB;
@@ -46,6 +48,7 @@ public class TrainCoachController implements Serializable
 	private Workplace currentWorkplace = new Workplace();
 	private List<User> mechanics = new ArrayList<User>();
 	private int currentTrainCoachID;
+	private int currentpsdID;
 
 	@NotNull
 	@Size( min=10, max= 1000 )
@@ -70,7 +73,10 @@ public class TrainCoachController implements Serializable
 		{
 			currentWorkplace = result.get( 0 );
 		}
-		currentSensorData = psdEJB.getProcessedSensorDataByTrainCoachID( currentTrainCoach.getId() );
+		if( currentpsdID == 0 )
+			currentSensorData = psdEJB.getProcessedSensorDataByTrainCoachID( currentTrainCoach.getId() );
+		else
+			currentSensorData = psdEJB.getProcessedSensorDataByID( currentpsdID );
 		if( currentSensorData == null )
 			System.out.println( "Failed to locate sensordata" );
 		
@@ -133,7 +139,7 @@ public class TrainCoachController implements Serializable
 		
 		issueEJB.createIssue( issue );
 		
-		return "traincoach.xhtml?faces-redirect=true&id=" + currentTrainCoach.getId();
+		return "traincoach.xhtml?faces-redirect=true&id=" + currentTrainCoach.getId() + "&psdid=0";
 	}	
 
 	//ISSUES BY MECHANIC_ID
@@ -244,6 +250,36 @@ public class TrainCoachController implements Serializable
 	public void setCurrentTrainCoachID(int currentTrainCoachID) {
 		this.currentTrainCoachID = currentTrainCoachID;
 	}
+
+	/**
+	 * @return the currentpsdID
+	 */
+	public int getCurrentpsdID()
+	{
+		return currentpsdID;
+	}
+
+	/**
+	 * @param currentpsdID the currentpsdID to set
+	 */
+	public void setCurrentpsdID( int currentpsdID )
+	{
+		this.currentpsdID = currentpsdID;
+	}
 	
+	public String sensorDataToPrettyTime()
+	{
+		PrettyTime pt = new PrettyTime( );
+		return pt.format( currentSensorData.getTime() );
+	}
+	
+	/**
+	 * 	Test if the current displayed sensor data isn't the most recent one
+	 *  @return True if the current displayed sensor data is old, false otherwise
+	 * */
+	public boolean isOldData()
+	{
+		return currentpsdID != 0;
+	}
 }
 

@@ -33,7 +33,7 @@
 			<li>
 			<h:link class="active"
 					value="#{trainCoachIssuesController.currentTrainCoach.type} - #{trainCoachIssuesController.currentTrainCoach.name}"
-					outcome="traincoach.xhtml?id=#{trainCoachIssuesController.currentTrainCoach.id}" />
+					outcome="traincoach.xhtml?id=#{trainCoachIssuesController.currentTrainCoach.id}&amp;psdid=0" />
 			</li>
 			<li>
 			<h:link class="active"
@@ -85,7 +85,7 @@
 										  </div>
 							      </c:forEach>
 							      <br />
-							      <button onclick="openModal(#{issue.id})" class="btn btn-default">Voeg commentaar toe</button>
+							      <button onclick="openModal(#{issue.id})" class="btn btn-default">Aanpassen</button>
 						      </div>
 						    </div>
 						  </div>
@@ -108,7 +108,7 @@
 					<h:form class="form-group" id="modal_form">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">Geef extra commentaar</h4>
+							<h4 class="modal-title">Geef extra commentaar of sluit het probleem af </h4>
 						</div>
 						<div class="modal-body">
 							
@@ -123,6 +123,8 @@
 							<button type="button" class="btn btn-default" data-dismiss="modal">Sluit</button>
 							<h:commandButton class="btn btn-default btn-large" 
 									action="#{trainCoachIssuesController.createIssueAsset()}" type="submit" value="Verstuur"></h:commandButton>
+							<h:commandButton class="btn btn-default btn-large"
+									action="#{trainCoachIssuesController.closeIssue()}" value="Goedkeuren" />
 						</div>
 					</h:form>
 				</div>

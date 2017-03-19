@@ -31,6 +31,8 @@ public class WorkplaceEJB
 
 		em.getTransaction().commit();
 
+		em.close();
+		
 		return result;
 	}
 
@@ -42,6 +44,8 @@ public class WorkplaceEJB
 		Workplace result = em.find( Workplace.class, id );
 
 		em.getTransaction().commit();
+		
+		em.close();
 
 		return result;
 	}
@@ -57,9 +61,18 @@ public class WorkplaceEJB
 
 		em.getTransaction().commit();
 
+		em.close();
 		return result;
 	}
 
+	/**
+	 * Searches for all mechanics by workplace id in the persistence context.
+	 * 
+	 * @version 1.0.0
+	 * @param workplaceId The id of the workplace.
+	 * @return A List<User> with all the mechanics of that workplace.
+	 * @see User
+	 */
 	public List<User> findMechanicsByWorkplaceId( int workplaceId )
 	{
 		EntityManager em = ems.getEntityManager();
@@ -70,26 +83,31 @@ public class WorkplaceEJB
 		List<User> result = query.getResultList();
 
 		em.getTransaction().commit();
+		
+		em.close();
+
 
 		return result;
 	}
-
+	
 	/**
+	 * When (for some reason) a workplace became detached, you can merge 
+	 * it to the persistence context with this function.
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param currentWorkplace The workplace where the user should be added.
-	 * @param userId The id of the user (mechanic) to be added to the workplace
+	 * @param wp The workplace to update in the database
 	 */
-	public void insertMechanicIntoWorkplace(Workplace currentWorkplace, int userId)
+	public void updateWorkplace(Workplace wp)
 	{
-
 		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 
-		
+		em.merge(wp);
 
-		em.getTransaction().commit();;
+		em.getTransaction().commit();
+		
+		em.close();
 
 	}
 }

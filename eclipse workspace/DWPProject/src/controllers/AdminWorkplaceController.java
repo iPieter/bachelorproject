@@ -46,8 +46,6 @@ public class AdminWorkplaceController implements Serializable
 	/**
 	 * When the admin wants to add a mechanic to a workplace, a workplace
 	 * the admin selected is set to the currentWorkplace by it's id.
-	 * <p>
-	 * If the id is zero, a new user object will be created for edit.
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 0.9.0
@@ -58,7 +56,6 @@ public class AdminWorkplaceController implements Serializable
 		if (workplaceId != 0)
 		{
 			this.currentWorkplace = workplaceEJB.findWorkplaceByWorkplaceId(workplaceId);
-			System.out.println(this.currentWorkplace);
 		}
 	}
 	
@@ -83,7 +80,10 @@ public class AdminWorkplaceController implements Serializable
 	 */
 	public void addMechanic()
 	{
+
 		currentWorkplace.getMechanics().add(userEJB.findUserById(Integer.valueOf(mechanicId)));
+		
+		workplaceEJB.updateWorkplace(currentWorkplace);
 	}
 
 	/**

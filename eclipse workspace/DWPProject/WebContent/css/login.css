@@ -38,6 +38,11 @@ body, html
 	color: #ecf0f1;
 }
 
+.navbar
+{
+	margin-bottom: 0px;	
+}
+
 .navbar-brand
 {
 	padding: 0px 15px;	

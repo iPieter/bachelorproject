@@ -31,6 +31,7 @@ public class UserEJB
 		em.persist( u );
 
 		em.getTransaction().commit();
+		em.close();
 	}
 
 	/**
@@ -47,6 +48,8 @@ public class UserEJB
 		q.setMaxResults( 20 );
 
 		List<User> results = q.getResultList();
+		
+		em.close();
 
 		return results;
 	}
@@ -75,6 +78,8 @@ public class UserEJB
 		{
 			return null;
 		}
+		
+		em.close();
 
 		return result;
 	}
@@ -100,6 +105,8 @@ public class UserEJB
 			em.remove(u);
 		}
 		
+		em.close();
+		
 		em.getTransaction().commit();
 	}
 
@@ -114,6 +121,8 @@ public class UserEJB
 	{
 		EntityManager em = ems.getEntityManager();
 		User u = em.find(User.class, userId);
+		
+		em.close();
 	
 		return u;
 	}
@@ -138,6 +147,8 @@ public class UserEJB
 		//}
 		
 		em.getTransaction().commit();
+		
+		em.close();
 	}
 	
 	/**

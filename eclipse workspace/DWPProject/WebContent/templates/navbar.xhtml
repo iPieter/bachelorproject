@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:fragment>
+	<!-- FIXED NAVBAR TOP -->
+	<nav class="navbar navbar-default navbar-static-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+				aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<!--<a class="navbar-brand" href="#">Televic Managment</a>-->
+			<a class="navbar-brand" href="index.xhtml"><img
+				src="http://rve2013.onyxrail.co.uk/img/televic_logo.png" /></a>
+
+		</div>
+		<div id="navbar" class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<ui:insert name="nav_content">
+					<ui:fragment
+						rendered="#{authenticationController.hasAdminAccess()}">
+						<li class="active"><a href="admin.xhtml">Gebruikers</a></li>
+						<li><a href="alter_workplaces.xhtml">Werkplaatsen</a></li>
+					</ui:fragment>
+					<ui:fragment
+						rendered="#{authenticationController.hasOperatorAccess()}">
+
+						<li class="active"><a href="index.xhtml">Dashboard</a></li>
+						<li><a href="live_train_overview.xhtml">Live Tracking</a></li>
+					</ui:fragment>
+				</ui:insert>
+			</ul>
+			<h:form>
+
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#">Help</a></li>
+					<li class="dropdown"><a id="user" href="#"
+						class="dropdown-toggle" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false">
+							<div class="avatar">
+								<img src="rest/assets/user/#{authenticationController.avatar}" />
+							</div> <span id="name"><h:outputText
+									value="#{authenticationController.name}" /></span> <span
+							class="caret"></span>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a href="change_password.xhtml">Wachtwoord
+									veranderen</a></li>
+							<li role="separator" class="divider"></li>
+							<li><h:commandLink
+									action="#{authenticationController.logout()}">Afmelden</h:commandLink></li>
+						</ul></li>
+
+				</ul>
+			</h:form>
+
+		</div>
+
+		<!--/.nav-collapse -->
+	</div>
+	</nav>
+</ui:fragment>
+</html>

@@ -56,7 +56,10 @@
 			                    	<h:link value="Problemen" outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"/>
 			                    	<span class="badge"></span>
 			                    </h5>
-			                    <h5><span class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span> Sensoren</h5>
+			                    <h5>
+			                    	<span class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span>
+			                    	<h:link value="Geschiedenis" outcome="traincoach_sensor.xhtml?id=#{traincoach.getId()}"/>
+			                    </h5>
 			                </div>
 			            </div>
 					</c:forEach>
@@ -82,6 +85,11 @@
 					</div>
 				</div>
 				
+				<c:choose>
+					<c:when test="#{workplaceController.findActiveTrainCoaches().size() == 0}">
+						<em>Er zijn momenteel geen wagons die inspectie nodig hebben in deze staanplaats.</em>
+					</c:when>
+				<c:otherwise>
 				<!-- WAGONS OVERZICHT -->
 				<div class="row content">
 					<div class="col-sm-12">
@@ -115,6 +123,8 @@
 					    </c:forEach> <!-- END WAGONS OVERZICHT -->
 				    </div>
 			    </div>
+			    </c:otherwise>
+			    </c:choose>
 			    </div>
 			    </div>
 			  </div>

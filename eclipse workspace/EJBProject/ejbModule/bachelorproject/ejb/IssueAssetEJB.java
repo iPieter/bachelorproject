@@ -47,6 +47,7 @@ public class IssueAssetEJB
 		List<IssueAsset> result = query.getResultList();
 
 		em.getTransaction().commit();
+		em.close();
 		
 		return result;
 	}
@@ -68,6 +69,7 @@ public class IssueAssetEJB
 		List<IssueAsset> result = query.getResultList();
 
 		em.getTransaction().commit();
+		em.close();
 		
 		if( result.size() == 0 )
 			return null;
@@ -86,5 +88,6 @@ public class IssueAssetEJB
 		em.persist( asset );
 
 		em.getTransaction().commit();
+		em.close();
 	}
 }

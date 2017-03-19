@@ -41,17 +41,12 @@ public class ProcessedSensorDataEJB
 		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 
-		TypedQuery<ProcessedSensorData> query = em.createNamedQuery( ProcessedSensorData.FIND_BY_ID,
-				ProcessedSensorData.class );
-		query.setParameter( "id", id );
-
-		List<ProcessedSensorData> resultList = query.getResultList();
+		ProcessedSensorData psd = em.find( ProcessedSensorData.class, id );
 
 		em.getTransaction().commit();
+		em.close();
 
-		if( resultList.size() == 0 )
-			return null;
-		return resultList.get( 0 );
+		return psd;
 	}
 	
 	/**
@@ -75,9 +70,35 @@ public class ProcessedSensorDataEJB
 		List<ProcessedSensorData> resultList = query.getResultList();
 
 		em.getTransaction().commit();
+		em.close();
 
 		if( resultList.size() == 0 )
 			return null;
 		return resultList.get( 0 );
+	}
+	
+	/**
+	 * 	Gets a list of all processed sensordata objects for the traincoach.
+	 *  <p>
+	 *  Based on the ID parameter, this method searches and returns the 
+	 *  latest processedsensordata.
+	 *  @param id The ID of the TrainCoach.
+	 *  @return A list of processed sensor data objects for specified train.
+	 * */
+	public List<ProcessedSensorData> getProcessedSensorDataListByTrainCoachID( int id )
+	{
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+
+		TypedQuery<ProcessedSensorData> query = em.createNamedQuery( ProcessedSensorData.FIND_BY_TRAINCOACH_ID,
+				ProcessedSensorData.class );
+		query.setParameter( "id", id );
+
+		List<ProcessedSensorData> resultList = query.getResultList();
+
+		em.getTransaction().commit();
+		em.close();
+
+		return resultList;
 	}
 }

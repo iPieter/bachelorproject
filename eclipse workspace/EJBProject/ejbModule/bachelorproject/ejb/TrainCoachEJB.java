@@ -1,5 +1,6 @@
 package bachelorproject.ejb;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -43,6 +44,7 @@ public class TrainCoachEJB
 		List<TrainCoach> result = query.getResultList();
 
 		em.getTransaction().commit();
+		em.close();
 		
 		return result;
 	}
@@ -65,6 +67,7 @@ public class TrainCoachEJB
 		List<TrainCoach> result = query.getResultList();
 		
 		em.getTransaction().commit();
+		em.close();
 
 		return result;
 	}
@@ -82,6 +85,7 @@ public class TrainCoachEJB
 		TrainCoach result = em.find( TrainCoach.class, id );
 
 		em.getTransaction().commit();
+		em.close();
 
 		return result;
 	}
@@ -102,9 +106,50 @@ public class TrainCoachEJB
 		TrainCoach result = em.find( TrainCoach.class, id );
 		
 		if( result != null )
+		{
 			result.setNeedsReview( false );
-
-		em.persist( result );
+			em.merge( result );
+		}
 		em.getTransaction().commit();
+		em.close();
+	}
+	
+	/**
+	 * 	Gets a traincoach object by the specified name & type
+	 * 	@param name The name of the asked traincoach
+	 *  @param type The type of the traincoach
+	 * */
+	public TrainCoach findByData( String name, String type, String constructor )
+	{
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+
+		TypedQuery<TrainCoach> query = em.createNamedQuery( TrainCoach.FIND_BY_DATA, TrainCoach.class );
+		query.setParameter( "name", name );
+		query.setParameter( "type", type );
+		query.setParameter( "constructor", constructor );
+		
+		List<TrainCoach> result = query.getResultList();
+		
+		em.getTransaction().commit();
+		em.close();
+		
+		if( result.size() == 0 )
+			return null;
+		return result.get( 0 );
+	}
+	
+	/**
+	 * 	Creates a new traincoach object	
+	 * */
+	public void createTrainCoach( TrainCoach t )
+	{
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+
+		em.persist( t );
+		
+		em.getTransaction().commit();
+		em.close();
 	}
 }

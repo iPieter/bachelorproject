@@ -125,6 +125,20 @@ public class TrainCoachIssuesController implements Serializable
 		
 		return currentIssueAssets.get( issueID );
 	}
+	
+	/**
+	 * 	Closes an issue.
+	 *  @param issueID The ID of an issue that needs to be closed.
+	 * */
+	public String closeIssue( )
+	{
+		if( issueEJB.closeIssue( fieldIssueID, currentTraincoachID ) )
+		{
+			System.out.println( "Issue closed." );
+			return "index.xhtml?faces-redirect=true";
+		}
+		return "traincoach_issues.xhmtl?faces-redirect=true&id=" + currentTraincoachID;
+	}
 
 	/**
 	 * @return the currentTrainCoach
