@@ -57,6 +57,8 @@ public class TrainCoachController implements Serializable
 	@NotNull
 	private String mechanicID = "";
 
+	private int lon;
+	private int lat;
 	/**
 	 * 	This method gets called when the page first loads.
 	 *  <p>
@@ -133,10 +135,10 @@ public class TrainCoachController implements Serializable
 		issue.setStatus( IssueStatus.ASSIGNED );
 		issue.setAssignedTime(now);
 		
-		//TODO set COORDINATES dynamicly
-		issue.setGpsLat(50);
-		issue.setGpsLon(50);
-		
+		//TODO TEST
+		issue.setGpsLat(lat);
+		issue.setGpsLon(lon);
+		System.out.println("Coordinates:"+lat+lon);
 		issueEJB.createIssue( issue );
 		
 		return "traincoach.xhtml?faces-redirect=true&id=" + currentTrainCoach.getId() + "&psdid=0";

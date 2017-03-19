@@ -2,7 +2,9 @@ var SENSOR_DATA = null;
 var map = null;
 var marker = null;
 var latlngs = null;
+var index = null;
 var xTimeVal = null;
+var selectedIndex = null;
 var datapointSelected= false;
 var id = $("#current_traincoach").val();
 
@@ -95,7 +97,7 @@ function setView( input )
 	                       if( marker != null )
 	                    	   map.removeLayer( marker );
 	                       
-	                       var index = Math.round( (this.x / this.series.data.length) * latlngs.length );
+	                       index = Math.round( (this.x / this.series.data.length) * latlngs.length );
 	                       marker = L.circle( latlngs[ index ], 
 	                       { color: 'red',
                 	    	 fillColor: '#f03',
@@ -108,6 +110,7 @@ function setView( input )
                         },
 			    		click: function(e){
 							xTimeVal=e.point.x;
+							selectedIndex=index;
 							setDatapointSelected();
 							console.log("The graph value onClick:"+ xTimeVal);
 						}
@@ -146,6 +149,9 @@ function setModal(){
 	if(datapointSelected == true){
 		/*Value to display in modal */
 		$('#selected_time_value').text(xTimeVal + " ms");
+		$('#selected_gps_value').text(
+				"lat:"+latlngs[selectedIndex][0].toFixed(3)
+				+"\n lon:"+latlngs[selectedIndex][1].toFixed(3));
 		
 		/*Selecting Modal*/
 		$('#create_issue_button').attr("data-target","#assignModal");
@@ -158,4 +164,14 @@ function setModal(){
 	}
 }
 
+function setGPSValues(){
+	var lat = latlngs[selectedIndex][0]; 
+    var lon = latlngs[selectedIndex][1];
+
+    document.getElementById("par_form:lat").value = lat;
+    document.getElementById("par_form:lon").value = lon;
+    
+    console.log(document.getElementById("par_form:lat").value);
+    console.log(document.getElementById("par_form:lon").value);
+}
 

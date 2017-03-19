@@ -216,12 +216,13 @@
 						<div class="modal-body">
 							<label class="control-label" for="description">Tijdstip van voorkomen:</label> <br/>
 							<p id="selected_time_value">No Point Selected"</p><br/>
+							<label class="control-label" for="description">Locatie:</label> <br/>
+							<p id="selected_gps_value">No Point Selected"</p><br/>
 							<label class="control-label" for="description">Omschrijving probleem:</label> <br />
 							<h:inputTextarea name="description" rows="8" cols="40"
 								class="form-control" value="#{trainCoachController.description}"></h:inputTextarea>
 							<br></br>
 							<label class="control-label" for="list_empl">Kies een onderhoudstechnicus:</label> 
-							
 							
 							<h:selectOneMenu value="#{trainCoachController.mechanicID}"
 								class="form-control">
@@ -233,9 +234,17 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">Sluit</button>
-							<h:commandButton class="btn btn-default btn-large"
-								action="#{trainCoachController.createIssue()}" type="submit"
-								value="Verstuur"></h:commandButton>
+							<h:form id="par_form">
+								<!-- Passing parameters to JavaEE -->
+								<h:inputHidden id="lat" value="trainCoachController.lat" />
+								<h:inputHidden id="lon" value="trainCoachController.lon" />
+								<h:commandButton 
+									class="btn btn-default btn-large"
+									action="#{trainCoachController.createIssue()}" 
+									type="submit"
+									value="Verstuur"
+									onclick="setGPSValues()"/>
+							</h:form>
 						</div>
 					</h:form>
 				</div>
