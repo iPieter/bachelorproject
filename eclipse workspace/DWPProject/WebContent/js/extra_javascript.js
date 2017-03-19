@@ -2,9 +2,10 @@ var SENSOR_DATA = null;
 var map = null;
 var marker = null;
 var latlngs = null;
-
+var xTimeVal = null;
 var id = $("#current_traincoach").val();
 
+/* Map Setup */
 $.get( "rest/processed_data/" + id, function( data )
 {
 	SENSOR_DATA = data;
@@ -39,6 +40,7 @@ $.get( "rest/processed_data/" + id, function( data )
 	$( "#topleft" ).html( "<b>ERROR: Failed to load data</b>");
 });
 
+/* HighCharts Setup */
 function setView( input )
 {
 	var data = null;
@@ -60,7 +62,7 @@ function setView( input )
 	Highcharts.chart('topleft', 
 	{
         chart: {
-            zoomType: 'x'
+            zoomType: 'x',
         },
         title: {
             text: 'Gyroscoop: ' + title
@@ -102,7 +104,11 @@ function setView( input )
 	                       marker.addTo( map );
 	                       $( "#current_speed" ).html( "<b>Snelheid: </b>" + SENSOR_DATA.speed[ index ].toFixed(3) );
 	                       $( "#current_accel" ).html( "<b>Versnelling: </b>" + SENSOR_DATA.accel[ index ].toFixed(3) );
-                        }
+                        },
+			    		click: function(e){
+							xTimeVal=e.point.x;
+							//console.log("The graph value onClick:"+ xTimeVal);
+						}
                     }
                 },
                 marker: {
@@ -117,6 +123,7 @@ function setView( input )
     });
 }
 
+/* Which data to display on Highcharts */
 $('input:radio').on('change', function()
 {
 	setView( $(this).context.id );
