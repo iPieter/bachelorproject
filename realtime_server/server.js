@@ -5,7 +5,7 @@ var data    = JSON.parse( fs.readFileSync( 'test.json', 'utf8' ) );
 
 var index   = 0;
 
-request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/register/M7/65201/Bombardier/Antwerpen-Leuven', function( error, response, body )
+request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/register/M7/123987/Bombardier/Luik-GentSP', function( error, response, body )
 {
     if( error !== null )
         console.log( error );
@@ -32,12 +32,12 @@ request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/registe
         {
         });
 
-        if( index >= 1000 )
+        if( index >= 2000 )
         {
             request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/stop/' + lsdID, function( error, response, body )
             {
                 clearInterval( timer );
             } );
         }
-    }, 100 );
+    }, 250 );
 });
