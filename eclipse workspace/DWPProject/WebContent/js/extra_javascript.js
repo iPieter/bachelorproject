@@ -3,6 +3,7 @@ var map = null;
 var marker = null;
 var latlngs = null;
 var xTimeVal = null;
+var datapointSelected= false;
 var id = $("#current_traincoach").val();
 
 /* Map Setup */
@@ -107,7 +108,8 @@ function setView( input )
                         },
 			    		click: function(e){
 							xTimeVal=e.point.x;
-							//console.log("The graph value onClick:"+ xTimeVal);
+							setDatapointSelected();
+							console.log("The graph value onClick:"+ xTimeVal);
 						}
                     }
                 },
@@ -129,8 +131,26 @@ $('input:radio').on('change', function()
 	setView( $(this).context.id );
 });
 
+/*Set true if GPS time value of Issue is selected*/
+function setDatapointSelected(){
+	datapointSelected=true;
+	$('#isDatapointSelected').val("true");
+	console.log("datapointSelected="+datapointSelected);
+}
 
+function setModal(){
+	var html=null;
+	console.log("Entered setModal");
+	
+	if(datapointSelected == true){
+		$('#create_issue_button').attr("data-target","#assignModal");
+		console.log("Entered setModalHTML: if(true)");
+	}
+	else{
+		$('#create_issue_button').attr("data-target","#pickAPointModal");
+		console.log("Entered setModalHTML: if(false)");
+	}
 
-
+}
 
 
