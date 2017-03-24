@@ -34,7 +34,7 @@
 
 	<!-- SIDEBAR CONTENT -->
 	<ui:define name="sidebar_content">
-		<div class="workplace">
+		<div class="workplace workplace_active">
 
 			<!-- GESELECTEERDE STAANPLAATS -->
 			<c:set var="workplace"
@@ -67,7 +67,7 @@
 									<h:link value="Problemen"
 										outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
 									/>
-									<span class="badge"></span>
+									<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
 								</h5>
 								<h5>
 									<span
@@ -83,6 +83,7 @@
 				</div>
 			</div>
 		</div>
+		
 	</ui:define>
 
 	<!-- MAINVIEW CONTENT -->
@@ -185,7 +186,7 @@
 						<div class="col-sm-12 pad">
 							<div class="mainview_panel_large">
 
-							<!-- OVERZICHT TECHNICI -->
+								<!-- OVERZICHT TECHNICI -->
 
 								<!-- OVERZICHT TECHNICI HEADER-->
 								<div class="row mainview_traincoach">

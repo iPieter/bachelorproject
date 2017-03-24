@@ -77,7 +77,7 @@
 									<h:link value="Problemen"
 										outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
 									/>
-									<span class="badge"></span>
+									<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
 								</h5>
 								<h5>
 									<span
@@ -96,7 +96,7 @@
 							<h4 class="sidebar_text_traincoach">
 								<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
 								<h:link value="#{traincoach.type} - #{traincoach.name}"
-									outcome="traincoach.xhtml?id=#{traincoach.getId()}&amp;psdid=0"
+									outcome="traincoach.xhtml?id=#{traincoach.id}&amp;psdid=0"
 								/>
 							</h4>
 							<!-- METADATA PER WAGON -->
@@ -106,12 +106,15 @@
 									<h:link value="Problemen"
 										outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
 									/>
-									<span class="badge"></span>
+									<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
 								</h5>
 								<h5>
 									<span
 										class="glyphicon glyphicon-dashboard sidebar_icon_metadata"
-									></span> Sensoren
+									></span>
+									<h:link value="Geschiedenis"
+										outcome="traincoach_sensor.xhtml?id=#{traincoach.getId()}"
+									/>
 								</h5>
 							</div>
 						</div>
@@ -120,7 +123,7 @@
 			</c:forEach>
 		</div>
 	</ui:define>
-
+	
 	<!-- MAINVIEW CONTENT -->
 	<ui:define name="mainview_content">
 		<div class="row pad">
