@@ -125,11 +125,12 @@
 	<ui:define name="mainview_content">
 
 		<div class="col-sm-10">
-			<h1>
-				<h:outputText
-					value="Rit: #{trainCoachController.currentSensorData.track} - #{trainCoachController.sensorDataToPrettyTime()}"
-				/>
-			</h1>
+			<h:messages styleClass="alert alert-warning" />
+		</div>
+
+		<div class="mainview_panel col-sm-10">
+			<h:outputText value="Rit: #{trainCoachController.currentSensorData.track} - #{trainCoachController.sensorDataToPrettyTime()}" />
+
 		</div>
 		<input type="hidden"
 			value="#{trainCoachController.currentSensorData.id}"
@@ -258,12 +259,11 @@
 
 							<label class="control-label" for="description">Omschrijving
 								probleem:</label> <br />
-							<h:inputTextarea name="description" rows="8" cols="40"
-								class="form-control" value="#{trainCoachController.description}"
-							></h:inputTextarea>
-							<br></br> <label class="control-label" for="list_empl">Kies
-								een onderhoudstechnicus:</label>
-
+							<h:inputTextarea name="description" rows="8" cols="40" id="inputDescription"
+								class="form-control" value="#{trainCoachController.description}"></h:inputTextarea>
+							<br></br>
+							<label class="control-label" for="list_empl">Kies een
+								onderhoudstechnicus:</label>
 
 							<h:selectOneMenu value="#{trainCoachController.mechanicID}"
 								class="form-control"
@@ -273,8 +273,6 @@
 									itemLabel="#{mechanic.name} (#{mechanic.email})"
 								/>
 							</h:selectOneMenu>
-
-
 
 						</div>
 						<div class="modal-footer">

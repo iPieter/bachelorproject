@@ -246,7 +246,9 @@ body, html {
 	padding-bottom: 15px
 }
 
-.userTable>tbody>tr>td {
+.userTable>tbody>tr>td 
+.workplaceTable>tbody>tr>td 
+{
 	vertical-align: middle;
 }
 
