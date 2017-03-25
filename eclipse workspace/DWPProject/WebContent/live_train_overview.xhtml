@@ -29,8 +29,8 @@
 
 						<!-- Default panel contents -->
 						<div class="panel-heading">
-							<span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span>
-							Stelplaatsen
+							<span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
+							Live wagons
 						</div>
 					
 					<c:choose>
@@ -49,6 +49,7 @@
 										<f:facet name="header">
 											<h:outputText value="Model - Naam" />
 										</f:facet>
+										<div class="breathing"></div>
 										<h:outputText
 											value="#{sensordata.traincoach.type} - #{sensordata.traincoach.name}"
 										/>
