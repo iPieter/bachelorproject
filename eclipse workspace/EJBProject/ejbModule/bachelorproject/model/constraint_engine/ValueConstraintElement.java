@@ -24,6 +24,10 @@ public class ValueConstraintElement extends ConstraintElement
 	@Enumerated( EnumType.STRING )
 	ValueConstraintType valueConstraintType;
 
+	@NotNull
+	@Enumerated( EnumType.STRING )
+	ValueConstraintAttribute valueConstraintAttribute;
+	
 	public ValueConstraintElement( )
 	{
 		super();
@@ -71,5 +75,37 @@ public class ValueConstraintElement extends ConstraintElement
 	public void setType( ValueConstraintType type )
 	{
 		this.valueConstraintType = type;
+	}
+
+	/**
+	 * @return the valueConstraintType
+	 */
+	public ValueConstraintType getValueConstraintType()
+	{
+		return valueConstraintType;
+	}
+
+	/**
+	 * @param valueConstraintType the valueConstraintType to set
+	 */
+	public void setValueConstraintType( ValueConstraintType valueConstraintType )
+	{
+		this.valueConstraintType = valueConstraintType;
+	}
+
+	/**
+	 * @return the valueConstraintAttribute
+	 */
+	public ValueConstraintAttribute getValueConstraintAttribute()
+	{
+		return valueConstraintAttribute;
+	}
+
+	/**
+	 * @param valueConstraintAttribute the valueConstraintAttribute to set
+	 */
+	public void setValueConstraintAttribute( ValueConstraintAttribute valueConstraintAttribute )
+	{
+		this.valueConstraintAttribute = valueConstraintAttribute;
 	}
 }

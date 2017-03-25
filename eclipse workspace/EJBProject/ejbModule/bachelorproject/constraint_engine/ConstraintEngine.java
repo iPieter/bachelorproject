@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.jboss.dmr.ModelType;
-
 import bachelorproject.ejb.ConstraintEJB;
 import bachelorproject.model.Issue;
 import bachelorproject.model.TrainCoach;
@@ -25,23 +23,35 @@ public class ConstraintEngine
 	@Inject
 	private ConstraintEJB constraintEJB;
 	
+	//Objects needed for the constraint engine to work
 	private final int ID;
 	private ConstraintEngineFactory factoryParent;
+	private ConstraintEngineLocationTester locationTester;
+	private ConstraintEngineValueTester valueTester;
+	private ConstraintEngineData ceData;
+	private String currentIssueDescription;
 	
+	//Objects from persistence context
 	private TrainCoach currentTraincoach;
-	private Issue issue;
+	private Issue currentIssue;
+	private List<Issue> issues;
 	private List<Constraint> constraints;
 	
 	public ConstraintEngine( ConstraintEngineFactory parent, int ID )
 	{
 		this.ID = ID;
 		factoryParent = parent;
+		locationTester = new ConstraintEngineLocationTester();
+		valueTester = new ConstraintEngineValueTester();
+		currentIssueDescription = "";
 	}
 	
 	public void start( TrainCoach trainCoach )
 	{
 		currentTraincoach = trainCoach;
 		constraints = constraintEJB.getAllConstraints();
+		currentIssue = null;
+		currentIssueDescription = "";
 	}
 	
 	/**
@@ -52,27 +62,90 @@ public class ConstraintEngine
 	 * */
 	public void addData( ConstraintEngineData data )
 	{
+		ceData = data;
+
 		for( Constraint c : constraints )
 		{
 			boolean isIssue = true;
+			currentIssue = new Issue();
 			for( ConstraintElement ce : c.getConstraints() )
+			{
 				isIssue = isIssue && ce.visit( this );
+			}
+			if( isIssue )
+			{
+				currentIssue.setDescr( currentIssueDescription );
+				issues.add( currentIssue );
+			}
 		}
 	}
 	
 	public boolean visit( LocationConstraintElement lce )
 	{
-		return true;
+		if( locationTester.isPointInPolygon( lce.getPolygon(), ceData.getLat(), ceData.getLng() ) )
+		{
+			currentIssueDescription += "In lokatie: " + ceData.getLat() + "," + ceData.getLng() + System.getProperty( "line.separator" );
+			currentIssue.setGpsLat( ceData.getLat() );
+			currentIssue.setGpsLon( ceData.getLng() );
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean visit( ModelTypeConstraintElement mtce )
 	{
-		return true;
+		if( mtce.getType().equals( currentTraincoach.getType() ) )
+		{
+			currentIssueDescription += "Voor: " + currentTraincoach.getType() + "-" + currentTraincoach.getName() + System.getProperty( "line.separator" );
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean visit( ValueConstraintElement vce )
 	{
-		return true;
+		switch ( vce.getValueConstraintAttribute() )
+		{
+			case YAW:
+				if( valueTester.testValueConstraint( vce.getType(), vce.getMaxValue(), ceData.getYaw() ) )
+				{
+					currentIssueDescription += "Waarde overschreven voor sensor: gyroscoop-yaw : " + ceData.getYaw();
+					return true;
+				}
+				break;
+			case ROLL:
+				if( valueTester.testValueConstraint( vce.getType(), vce.getMaxValue(), ceData.getRoll() ) )
+				{
+					currentIssueDescription += "Waarde overschreven voor sensor: gyroscoop-roll : " + ceData.getRoll();
+					return true;
+				}
+				break;
+			case SPEED:
+				if( valueTester.testValueConstraint( vce.getType(), vce.getMaxValue(), ceData.getSpeed() ) )
+				{
+					currentIssueDescription += "Waarde overschreven voor sensor: snelheidsmeter : " + ceData.getSpeed();
+					return true;
+				}
+				break;
+			case ACCEL:
+				if( valueTester.testValueConstraint( vce.getType(), vce.getMaxValue(), ceData.getAccel() ) )
+				{
+					currentIssueDescription += "Waarde overschreven voor sensor: versnellingsmeter : " + ceData.getAccel();
+					return true;
+				}
+				break;
+		}
+		return false;
+	}
+	
+	public void printStatusReport()
+	{
+		for( Issue i : issues )
+		{
+			System.out.println( "============================================" );
+			System.out.println( i.getDescr() );
+			System.out.println( "============================================" );
+		}
 	}
 	
 	/**
@@ -83,7 +156,10 @@ public class ConstraintEngine
 	public void stop()
 	{
 		currentTraincoach = null;
-		issue = null;
+		currentIssue = null;
+		issues.clear();
+		ceData = null;
+		constraints.clear();
 		factoryParent.returnConstraintEngine( this );
 	}
 
