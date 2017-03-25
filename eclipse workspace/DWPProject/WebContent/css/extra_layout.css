@@ -122,6 +122,13 @@ body, html {
 	color: #ecf0f1;
 }
 
+.panel-heading {
+	border-bottom: 2px solid #2c3e50;
+	border-top: 1px solid #2c3e50;
+	background-color: #2c3e50;
+	color: #ecf0f1;
+}
+
 .mainview_traincoach_panelheader h4 {
 	
 }
@@ -301,4 +308,21 @@ body, html {
 .pad {
 	padding-left: 15px;
 	padding-right: 15px;
+}
+
+@keyframes breath {
+    0%   {background-color: #c0392b;}
+    50% {background-color: white;}
+    100% {background-color: #c0392b;}
+}
+
+.breathing {
+	display: inline-block;
+	background-color: #c0392b;
+	height: 6px;
+	width: 6px;
+	margin-right: 4px;
+	margin-bottom: 3px;
+	border-radius: 300px;
+	animation: breath 4s infinite;
 }
