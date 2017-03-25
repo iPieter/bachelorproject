@@ -33,11 +33,12 @@ public class ValueConstraintElement extends ConstraintElement
 		super();
 	}
 	
-	public ValueConstraintElement(double maxValue, ValueConstraintType type)
+	public ValueConstraintElement(double maxValue, ValueConstraintType type, ValueConstraintAttribute attr )
 	{
 		super();
 		this.maxValue = maxValue;
 		this.valueConstraintType = type;
+		this.valueConstraintAttribute = attr;
 	}
 	
 	public boolean visit( ConstraintEngine ce )

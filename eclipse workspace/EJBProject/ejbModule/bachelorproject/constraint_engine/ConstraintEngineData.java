@@ -33,6 +33,9 @@ public class ConstraintEngineData
 		this.accel = accel;
 		this.speed = speed;
 	}
+	public ConstraintEngineData()
+	{
+	}
 	/**
 	 * @return the lat
 	 */

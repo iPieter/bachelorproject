@@ -8,8 +8,10 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import bachelorproject.constraint_engine.ConstraintEngine;
 import bachelorproject.model.constraint_engine.Constraint;
 import bachelorproject.model.constraint_engine.ConstraintElement;
+import bachelorproject.model.constraint_engine.ValueConstraintElement;
 
 /**
  * Defines the Entity Java Bean for the Constraint Entity.
@@ -80,4 +82,40 @@ public class ConstraintEJB
 		em.getTransaction().commit();
 		em.close();
 	}
+	
+	/**
+	 * 	Returns the specified constraint object
+	 *  @param cID The ID of the needed Constraint 
+	 *  @return The requested Constraint object or null
+	 * */
+	public Constraint getConstraintByID( int cID )
+	{
+		Constraint result = null;
+		EntityManager em = ems.getEntityManager();
+		
+		result = em.find( Constraint.class, cID );
+		
+		em.close();
+		
+		return result;
+	}
+
+	/**
+	 * 	Adds a ConstraintElement to a Constraint. Note that this method
+	 *  expects a ConstraintElement to be already persisted.
+	 *  @param ce The element to add to a ConstraintElement
+	 *  @param constraint A valid constraint object
+	 */
+	public void addConstraintElement( Constraint constraint, ConstraintElement ce )
+	{
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+		
+		constraint.getConstraints().add( ce );
+		em.merge( constraint );
+		
+		em.getTransaction().commit();
+		em.close();
+	}
+
 }

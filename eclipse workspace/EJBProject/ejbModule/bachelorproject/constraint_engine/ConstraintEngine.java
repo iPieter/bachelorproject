@@ -1,7 +1,10 @@
 package bachelorproject.constraint_engine;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import bachelorproject.ejb.ConstraintEJB;
@@ -20,7 +23,6 @@ import bachelorproject.model.constraint_engine.ValueConstraintElement;
  * */
 public class ConstraintEngine
 {
-	@Inject
 	private ConstraintEJB constraintEJB;
 	
 	//Objects needed for the constraint engine to work
@@ -34,7 +36,7 @@ public class ConstraintEngine
 	//Objects from persistence context
 	private TrainCoach currentTraincoach;
 	private Issue currentIssue;
-	private List<Issue> issues;
+	private List<String> issues;
 	private List<Constraint> constraints;
 	
 	public ConstraintEngine( ConstraintEngineFactory parent, int ID )
@@ -44,8 +46,11 @@ public class ConstraintEngine
 		locationTester = new ConstraintEngineLocationTester();
 		valueTester = new ConstraintEngineValueTester();
 		currentIssueDescription = "";
+		constraintEJB = parent.getConstraintEJB();
+		issues = new ArrayList<>();
 	}
 	
+	@PostConstruct
 	public void start( TrainCoach trainCoach )
 	{
 		currentTraincoach = trainCoach;
@@ -75,7 +80,12 @@ public class ConstraintEngine
 			if( isIssue )
 			{
 				currentIssue.setDescr( currentIssueDescription );
-				issues.add( currentIssue );
+				issues.add( currentIssueDescription );
+				
+				System.out.println( "============================================" );
+				System.out.println( currentIssueDescription );
+				System.out.println( "============================================" );
+				currentIssueDescription = "";
 			}
 		}
 	}
@@ -140,10 +150,11 @@ public class ConstraintEngine
 	
 	public void printStatusReport()
 	{
-		for( Issue i : issues )
+		for( String i : issues )
+		//for( Issue i : issues )
 		{
 			System.out.println( "============================================" );
-			System.out.println( i.getDescr() );
+			System.out.println( i );
 			System.out.println( "============================================" );
 		}
 	}

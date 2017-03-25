@@ -3,7 +3,11 @@ package bachelorproject.constraint_engine;
 import java.util.LinkedList;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
+
+import bachelorproject.ejb.ConstraintEJB;
 
 /**
  * 	This class is used to reliably supply multiple ConstraintEngine objects.
@@ -12,8 +16,12 @@ import javax.ejb.Startup;
  *  @author Anton Danneels
  * */
 @Startup
+@Singleton
 public class ConstraintEngineFactory
 {
+	@Inject
+	private ConstraintEJB constraintEJB;
+	
 	public static final int CEF_SIZE = 100;
 	private ConstraintEngine [] constraintEngines;
 	private LinkedList<Integer> freeEngines;
@@ -52,5 +60,10 @@ public class ConstraintEngineFactory
 	public void returnConstraintEngine( ConstraintEngine engine )
 	{
 		freeEngines.add( engine.getID() );
+	}
+
+	public ConstraintEJB getConstraintEJB()
+	{
+		return constraintEJB;
 	}
 }
