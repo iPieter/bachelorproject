@@ -5,41 +5,37 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+>
 
 <ui:composition template="templates/main_layout.xhtml">
 
 	<f:metadata>
 		<f:viewParam name="id"
-			value="#{trainCoachSensorController.currentTrainCoachID}" />
+			value="#{trainCoachSensorController.currentTrainCoachID}"
+		/>
 		<f:viewAction action="#{trainCoachSensorController.loadPage()}" />
 	</f:metadata>
-	
+
 	<ui:define name="title">Overzicht van sensordata</ui:define>
 
 	<!-- BREADCRUMB -->
 	<ui:define name="breadcrumb">
 		<ol class="breadcrumb breadcrumb_extra">
-			<li>
-				<h:link outcome="index.xhtml">
+			<li><h:link outcome="index.xhtml">
 					<span class="glyphicon glyphicon-home"></span>
-				</h:link>
-			</li>
-			<li>
-			<h:link class="active"
+				</h:link></li>
+			<li><h:link class="active"
 					value="#{trainCoachSensorController.currentWorkplace.name}"
-					outcome="workplace.xhtml?workplace_id=#{trainCoachSensorController.currentWorkplace.id}" />
-			</li>
-			<li>
-			<h:link class="active"
+					outcome="workplace.xhtml?workplace_id=#{trainCoachSensorController.currentWorkplace.id}"
+				/></li>
+			<li><h:link class="active"
 					value="#{trainCoachSensorController.currentTrainCoach.type} - #{trainCoachSensorController.currentTrainCoach.name}"
-					outcome="traincoach.xhtml?id=#{trainCoachSensorController.currentTrainCoach.id}&amp;psdid=0" />
-			</li>
-			<li>
-			<h:link class="active"
-					value="Geschiedenis"
-					outcome="traincoach_sensor.xhtml?id=#{trainCoachSensorController.currentTrainCoach.id}" />
-			</li>
+					outcome="traincoach.xhtml?id=#{trainCoachSensorController.currentTrainCoach.id}&amp;psdid=0"
+				/></li>
+			<li><h:link class="active" value="Geschiedenis"
+					outcome="traincoach_sensor.xhtml?id=#{trainCoachSensorController.currentTrainCoach.id}"
+				/></li>
 		</ol>
 	</ui:define>
 
@@ -129,20 +125,27 @@
 	</ui:define>
 
 	<!-- MAINVIEW CONTENT -->
-	<ui:define name="mainview_content">	
-		<div class="row">
-			<div class="mainview_panel col-sm-11">
-				<div class="row mainview_traincoach_panelheader">
-					<h4>Oude ritten</h4>
+	<ui:define name="mainview_content">
+		<div class="row pad">
+			<div class="mainview_panel col-sm-12">
+				<!-- HEADER -->
+				<div class="row mainview_traincoach">
+					<div class="col-sm-12 pad mainview_traincoach_panelheader">
+						<h4>Actieve Wagons</h4>
+					</div>
 				</div>
+				
 				<h:form>
 					<h:dataTable class="table"
-						value="#{trainCoachSensorController.data}" var="sensordata">
+						value="#{trainCoachSensorController.data}" var="sensordata"
+					>
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="Model - Naam" />
 							</f:facet>
-							<h:outputText value="#{sensordata.traincoach.type} - #{sensordata.traincoach.name}" />
+							<h:outputText
+								value="#{sensordata.traincoach.type} - #{sensordata.traincoach.name}"
+							/>
 						</h:column>
 						<h:column>
 							<f:facet name="header">
@@ -172,7 +175,8 @@
 		</div>
 		<script
 			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"
-			type="text/javascript"></script>
+			type="text/javascript"
+		></script>
 		<script src="js/bootstrap.min.js" type="text/javascript"></script>
 		<script src="js/underscore-min.js" type="text/javascript"></script>
 		<script type="text/javascript" src="js/traincoach_issues.js"></script>

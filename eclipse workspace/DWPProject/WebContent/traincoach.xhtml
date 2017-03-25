@@ -77,7 +77,7 @@
 									<h:link value="Problemen"
 										outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
 									/>
-									<span class="badge"></span>
+									<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
 								</h5>
 								<h5>
 									<span
@@ -106,7 +106,7 @@
 									<h:link value="Problemen"
 										outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
 									/>
-									<span class="badge">#{traincoach.id}</span>
+									<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
 								</h5>
 								<h5>
 									<span
