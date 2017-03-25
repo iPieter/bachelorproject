@@ -72,13 +72,18 @@
 							</h4>
 							<!-- METADATA PER WAGON -->
 							<div class="traincoach_data">
-								<h5>
-									<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
-									<h:link value="Problemen"
-										outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
-									/>
-									<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
-								</h5>
+								<ui:fragment
+									rendered="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size() ge 1}">
+
+									<h5>
+
+										<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
+										<h:link value="Problemen"
+											outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
+										/>
+										<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
+									</h5>
+								</ui:fragment>
 								<h5>
 									<span
 										class="glyphicon glyphicon-dashboard sidebar_icon_metadata"
@@ -101,13 +106,18 @@
 							</h4>
 							<!-- METADATA PER WAGON -->
 							<div class="traincoach_data">
-								<h5>
-									<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
-									<h:link value="Problemen"
-										outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
-									/>
-									<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
-								</h5>
+								<ui:fragment
+									rendered="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size() ge 1}">
+
+									<h5>
+
+										<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
+										<h:link value="Problemen"
+											outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
+										/>
+										<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
+									</h5>
+								</ui:fragment>
 								<h5>
 									<span
 										class="glyphicon glyphicon-dashboard sidebar_icon_metadata"

@@ -62,13 +62,19 @@
 							</h4>
 							<!-- METADATA PER WAGON -->
 							<div class="traincoach_data">
-								<h5>
-									<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
-									<h:link value="Problemen"
-										outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
-									/>
-									<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
-								</h5>
+								<ui:fragment
+									rendered="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size() ge 1}">
+
+									<h5>
+
+										<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
+										<h:link value="Problemen"
+											outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
+										/>
+										<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
+									</h5>
+								</ui:fragment>
+
 								<h5>
 									<span
 										class="glyphicon glyphicon-dashboard sidebar_icon_metadata"
@@ -83,7 +89,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 	</ui:define>
 
 	<!-- MAINVIEW CONTENT -->
@@ -190,7 +196,7 @@
 
 								<!-- OVERZICHT TECHNICI HEADER-->
 								<div class="row mainview_traincoach">
-									<div class="col-sm-12 mainview_traincoach_panelheader">
+									<div class="col-sm-12 pad mainview_traincoach_panelheader">
 										<h4>Technici</h4>
 									</div>
 								</div>
