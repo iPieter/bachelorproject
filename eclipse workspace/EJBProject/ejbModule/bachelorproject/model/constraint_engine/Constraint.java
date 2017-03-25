@@ -107,5 +107,20 @@ public class Constraint implements Serializable
 	{
 		this.creator = creator;
 	}
-	
+
+	/**
+	 * @return the constraints
+	 */
+	public List<ConstraintElement> getConstraints()
+	{
+		return constraints;
+	}
+
+	/**
+	 * @param constraints the constraints to set
+	 */
+	public void setConstraints( List<ConstraintElement> constraints )
+	{
+		this.constraints = constraints;
+	}
 }

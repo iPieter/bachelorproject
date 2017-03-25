@@ -1,5 +1,7 @@
 package bachelorproject.model.constraint_engine;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,8 +13,10 @@ import javax.validation.constraints.NotNull;
  *  @author Anton Danneels
  * */
 @Entity
-public class LocationPoint
+public class LocationPoint implements Serializable
 {
+	private static final long serialVersionUID = 4294967991640387961L;
+
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private int id;

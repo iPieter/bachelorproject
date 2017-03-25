@@ -6,12 +6,16 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 
+import bachelorproject.constraint_engine.ConstraintEngine;
+
 /**
  * 	This class stores a value constraint: a max value and a condition.
  * */
 @Entity
 public class ValueConstraintElement extends ConstraintElement
 {
+	private static final long serialVersionUID = 9149375801125492782L;
+
 	@NotNull
 	@Column( name = "`max_value`" )
 	double maxValue;
@@ -30,6 +34,11 @@ public class ValueConstraintElement extends ConstraintElement
 		super();
 		this.maxValue = maxValue;
 		this.valueConstraintType = type;
+	}
+	
+	public boolean visit( ConstraintEngine ce )
+	{
+		return ce.visit( this );
 	}
 
 	/**

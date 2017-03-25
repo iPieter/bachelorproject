@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import bachelorproject.constraint_engine.ConstraintEngine;
+
 /**
  * 	Allows the operator to define constraints for a specific area.
  *  @author Anton Danneels
@@ -14,6 +16,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class LocationConstraintElement extends ConstraintElement
 {
+	private static final long serialVersionUID = -5790355500796825408L;
+
 	@NotNull
 	@OneToMany
 	private List<LocationPoint> polygon;
@@ -28,6 +32,11 @@ public class LocationConstraintElement extends ConstraintElement
 	{
 		super();
 		this.polygon = polygon;
+	}
+	
+	public boolean visit( ConstraintEngine ce )
+	{
+		return ce.visit( this );
 	}
 
 	/**
@@ -45,6 +54,4 @@ public class LocationConstraintElement extends ConstraintElement
 	{
 		this.polygon = polygon;
 	}
-	
-	
 }
