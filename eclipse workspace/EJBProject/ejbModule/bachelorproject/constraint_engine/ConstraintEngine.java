@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 import bachelorproject.ejb.ConstraintEJB;
 import bachelorproject.model.Issue;
@@ -180,5 +178,37 @@ public class ConstraintEngine
 	public int getID()
 	{
 		return ID;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ID;
+		result = prime * result + ( ( factoryParent == null ) ? 0 : factoryParent.hashCode() );
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals( Object obj )
+	{
+		if ( this == obj ) return true;
+		if ( obj == null ) return false;
+		if ( getClass() != obj.getClass() ) return false;
+		ConstraintEngine other = (ConstraintEngine) obj;
+		if ( ID != other.ID ) return false;
+		if ( factoryParent == null )
+		{
+			if ( other.factoryParent != null ) return false;
+		}
+		else if ( !factoryParent.equals( other.factoryParent ) ) return false;
+		return true;
 	}
 }

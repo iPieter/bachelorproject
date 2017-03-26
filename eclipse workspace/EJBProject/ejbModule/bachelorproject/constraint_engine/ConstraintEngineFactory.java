@@ -1,5 +1,7 @@
 package bachelorproject.constraint_engine;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 import javax.annotation.PostConstruct;
@@ -24,17 +26,17 @@ public class ConstraintEngineFactory
 	
 	public static final int CEF_SIZE = 100;
 	private ConstraintEngine [] constraintEngines;
-	private LinkedList<Integer> freeEngines;
+	private boolean [] freeEngines;
 	
 	@PostConstruct
 	public void init()
 	{
 		constraintEngines = new ConstraintEngine[ CEF_SIZE ];
-		freeEngines = new LinkedList<>();
+		freeEngines = new boolean[ CEF_SIZE ];
 		for( int i = 0; i < CEF_SIZE; i++ )
 		{
 			constraintEngines[ i ] = new ConstraintEngine( this, i );
-			freeEngines.add( i );
+			freeEngines[ i ] = true;
 		}
 	}
 	
@@ -45,11 +47,15 @@ public class ConstraintEngineFactory
 	 * */
 	public ConstraintEngine getConstraintEngine() throws OutOfConstraintEngineException
 	{
-		if( freeEngines.size() == 0 )
-			throw new OutOfConstraintEngineException();
-		
-		int free = freeEngines.removeFirst();
-		return constraintEngines[ free ];
+		for( int i = 0; i < freeEngines.length; i++ )
+		{
+			if( freeEngines[i] )
+			{
+				freeEngines[i] = false;
+				return constraintEngines[i];
+			}
+		}
+		throw new OutOfConstraintEngineException();
 	}
 	
 	/**
@@ -59,11 +65,46 @@ public class ConstraintEngineFactory
 	 */
 	public void returnConstraintEngine( ConstraintEngine engine )
 	{
-		freeEngines.add( engine.getID() );
+		for( int i = 0; i < freeEngines.length; i++ )
+		{
+			if( constraintEngines[ i ].equals( engine ) )
+			{
+				freeEngines[ i ] = true;
+				break;
+			}
+		}
 	}
 
 	public ConstraintEJB getConstraintEJB()
 	{
 		return constraintEJB;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode( constraintEngines );
+		result = prime * result + Arrays.hashCode( freeEngines );
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals( Object obj )
+	{
+		if ( this == obj ) return true;
+		if ( obj == null ) return false;
+		if ( getClass() != obj.getClass() ) return false;
+		ConstraintEngineFactory other = (ConstraintEngineFactory) obj;
+		if ( !Arrays.equals( constraintEngines, other.constraintEngines ) ) return false;
+		if ( !Arrays.equals( freeEngines, other.freeEngines ) ) return false;
+		return true;
 	}
 }
