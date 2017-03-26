@@ -92,7 +92,7 @@ public class ConstraintEngine
 	{
 		if( locationTester.isPointInPolygon( lce.getPolygon(), ceData.getLat(), ceData.getLng() ) )
 		{
-			currentIssueDescription += "In lokatie: " + ceData.getLat() + "," + ceData.getLng() + System.getProperty( "line.separator" );
+			currentIssueDescription += "In locatie: " + ceData.getLat() + "," + ceData.getLng() + System.getProperty( "line.separator" );
 			currentIssue.setGpsLat( ceData.getLat() );
 			currentIssue.setGpsLon( ceData.getLng() );
 			return true;

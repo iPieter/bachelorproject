@@ -29,12 +29,10 @@ public class LocationPoint implements Serializable
 
 	public LocationPoint()
 	{
-		super();
 	}
 
 	public LocationPoint(double lat, double lng)
 	{
-		super();
 		this.lat = lat;
 		this.lng = lng;
 	}
