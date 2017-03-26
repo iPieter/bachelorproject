@@ -54,4 +54,11 @@ public class LocationConstraintElement extends ConstraintElement
 	{
 		this.polygon = polygon;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "Locatie beperking: " + polygon;
+	}
+
 }

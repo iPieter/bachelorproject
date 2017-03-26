@@ -11,5 +11,30 @@ package bachelorproject.model.constraint_engine;
  */
 public enum ValueConstraintType
 {
-	GREATER_THAN, LESS_THAN
+	GREATER_THAN("groter dan"), LESS_THAN("kleiner dan");
+	
+	private String descr;
+	
+	private ValueConstraintType( String descr )
+	{
+		this.descr = descr;
+	}
+
+	/**
+	 * @return the descr
+	 */
+	public String getDescr()
+	{
+		return descr;
+	}
+
+	/**
+	 * @param descr the descr to set
+	 */
+	public void setDescr( String descr )
+	{
+		this.descr = descr;
+	}
+	
+	
 }

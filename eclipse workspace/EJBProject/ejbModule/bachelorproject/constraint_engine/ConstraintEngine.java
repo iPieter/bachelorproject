@@ -115,28 +115,28 @@ public class ConstraintEngine
 		switch ( vce.getValueConstraintAttribute() )
 		{
 			case YAW:
-				if( valueTester.testValueConstraint( vce.getType(), vce.getMaxValue(), ceData.getYaw() ) )
+				if( valueTester.testValueConstraint( vce.getValueConstraintType(), vce.getMaxValue(), ceData.getYaw() ) )
 				{
 					currentIssueDescription += "Waarde overschreven voor sensor: gyroscoop-yaw : " + ceData.getYaw();
 					return true;
 				}
 				break;
 			case ROLL:
-				if( valueTester.testValueConstraint( vce.getType(), vce.getMaxValue(), ceData.getRoll() ) )
+				if( valueTester.testValueConstraint( vce.getValueConstraintType(), vce.getMaxValue(), ceData.getRoll() ) )
 				{
 					currentIssueDescription += "Waarde overschreven voor sensor: gyroscoop-roll : " + ceData.getRoll();
 					return true;
 				}
 				break;
 			case SPEED:
-				if( valueTester.testValueConstraint( vce.getType(), vce.getMaxValue(), ceData.getSpeed() ) )
+				if( valueTester.testValueConstraint( vce.getValueConstraintType(), vce.getMaxValue(), ceData.getSpeed() ) )
 				{
 					currentIssueDescription += "Waarde overschreven voor sensor: snelheidsmeter : " + ceData.getSpeed();
 					return true;
 				}
 				break;
 			case ACCEL:
-				if( valueTester.testValueConstraint( vce.getType(), vce.getMaxValue(), ceData.getAccel() ) )
+				if( valueTester.testValueConstraint( vce.getValueConstraintType(), vce.getMaxValue(), ceData.getAccel() ) )
 				{
 					currentIssueDescription += "Waarde overschreven voor sensor: versnellingsmeter : " + ceData.getAccel();
 					return true;

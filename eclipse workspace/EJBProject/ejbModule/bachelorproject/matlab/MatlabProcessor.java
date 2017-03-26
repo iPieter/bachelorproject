@@ -27,20 +27,9 @@ import bachelorproject.constraint_engine.ConstraintEngine;
 import bachelorproject.constraint_engine.ConstraintEngineData;
 import bachelorproject.constraint_engine.ConstraintEngineFactory;
 import bachelorproject.constraint_engine.OutOfConstraintEngineException;
-import bachelorproject.ejb.ConstraintEJB;
-import bachelorproject.ejb.ConstraintElementEJB;
-import bachelorproject.ejb.UserEJB;
 import bachelorproject.model.ProcessedSensorData;
 import bachelorproject.model.TrainCoach;
-import bachelorproject.model.User;
-import bachelorproject.model.UserRole;
 import bachelorproject.model.Workplace;
-import bachelorproject.model.constraint_engine.Constraint;
-import bachelorproject.model.constraint_engine.ConstraintElement;
-import bachelorproject.model.constraint_engine.ValueConstraintAttribute;
-import bachelorproject.model.constraint_engine.ValueConstraintElement;
-import bachelorproject.model.constraint_engine.ValueConstraintType;
-import bachelorproject.services.UserService;
 import matlabcontrol.MatlabConnectionException;
 import matlabcontrol.MatlabInvocationException;
 import matlabcontrol.MatlabProxy;
@@ -87,12 +76,6 @@ public class MatlabProcessor
 {
 	@Inject
 	private ConstraintEngineFactory cef;
-	@Inject
-	private ConstraintEJB cEJB;
-	@Inject
-	private ConstraintElementEJB ceEJB;
-	@Inject
-	private UserEJB userEJB;
 	
 	/** Stores the matlab script which will be executed, loaded on startup. */
 	private String script = "";
@@ -284,36 +267,6 @@ public class MatlabProcessor
 			writer.flush();
 			writer.close();
 			writeToDatabase( name, em );
-			
-			//For testing purposes only.
-			List<Constraint> constraints = cEJB.getAllConstraints();
-			
-			if( constraints.size() == 0 )
-			{
-				Constraint constraint = new Constraint( );
-				
-				User u = new User();
-
-				u.setName("Constraint Engine");
-				u.setEmail("constraint@engine.be");
-
-				UserService.populateUser(u, "password123", "qwertyui");
-
-				u.setRole(UserRole.ADMIN);
-
-				userEJB.createUser(u);
-				
-				constraint.setCreator( u );
-				constraint.setName( "Speed test constraint" );
-				ValueConstraintElement vce = new ValueConstraintElement();
-				vce.setMaxValue( 3 );
-				vce.setType( ValueConstraintType.GREATER_THAN );
-				vce.setValueConstraintAttribute( ValueConstraintAttribute.SPEED );
-				
-				cEJB.createConstraint( constraint );
-				ceEJB.createConstraintElement( vce );
-				cEJB.addConstraintElement( constraint , vce );
-			}
 			
 			ConstraintEngine ce = cef.getConstraintEngine();
 			ce.start( currentTraincoach );

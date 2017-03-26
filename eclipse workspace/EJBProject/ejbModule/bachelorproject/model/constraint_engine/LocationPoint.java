@@ -85,4 +85,8 @@ public class LocationPoint implements Serializable
 		this.lng = lng;
 	}
 	
+	public String toString()
+	{
+		return lat + "," + lng;
+	}
 }

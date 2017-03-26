@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<meta charset="utf-8"/>
+	
+	<!-- LOGIN REDIRECT -->
+    <ui:fragment rendered="#{!authenticationController.hasOperatorAccess()}">
+		<meta http-equiv="refresh" content="0; url=login.xhtml"/>
+    </ui:fragment>
+    
+    <f:metadata>
+		<f:viewAction action="#{liveTrainOverviewController.loadPage()}"/>
+	</f:metadata>
+	
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link href="css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="css/extra_layout.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="css/leaflet.css" />
+	<link rel="stylesheet" href="css/extra_layout.css" />
+	<link rel="stylesheet" href="css/login.css" />
+	<title><ui:insert name="title">Constraint Engine Editor</ui:insert></title>
+</h:head>
+
+<!-- Renders when logged in -->
+<h:body rendered="#{authenticationController.hasOperatorAccess()}">
+	
+	<ui:define name="nav_content">
+		<li><a href="index.xhtml">Dashboard</a></li>
+		<li class="active"><a href="live_train_overview.xhtml">Live Tracking</a></li>
+	</ui:define>
+	 
+	<!-- FIXED NAVBAR -->
+	<ui:include src="templates/navbar.xhtml"/>
+	
+	<div class="container-fluid pad">
+		<c:forEach var="constraint" items="#{constraintEditorController.constraints}">
+            <h:outputText value="#{constraint.getName()}" />
+            <br />
+         	<c:forEach var="constraint_element" items="#{constraint.constraints}">
+	            <h:outputText value="#{constraint_element}" />
+	         </c:forEach>
+         </c:forEach>
+    </div>
+</h:body>
+
+<!-- Renders when not logged in and redirect doesnt' work -->
+<h:body rendered="#{!authenticationController.hasOperatorAccess()}">
+	<div class="container-fluid main_view">
+		<div class="row">
+			<div class="col-sm-10 col-sm-offset-1">
+				<h1>You're not authorized for this page!</h1>
+				<h2>It seems like we failed to redirect you to the <a href="login.xhtml">login page</a>.</h2>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>

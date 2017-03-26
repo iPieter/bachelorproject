@@ -27,4 +27,24 @@ public abstract class ConstraintElement  implements Serializable
 	
 	@Transient
 	public abstract boolean visit( ConstraintEngine ceVisitor );
+	
+	@Transient
+	public abstract String toString();
+	
+	/**
+	 * @return the id
+	 */
+	public int getId()
+	{
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId( int id )
+	{
+		this.id = id;
+	}
+
 }

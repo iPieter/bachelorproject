@@ -34,21 +34,25 @@ public class ModelTypeConstraintElement extends ConstraintElement
 	{
 		return ce.visit( this );
 	}
-	
+
 	/**
-	 * @return the type
+	 * @return the modelType
 	 */
-	public String getType()
+	public String getModelType()
 	{
 		return modelType;
 	}
 
 	/**
-	 * @param type the type to set
+	 * @param modelType the modelType to set
 	 */
-	public void setType( String type )
+	public void setModelType( String modelType )
 	{
-		this.modelType = type;
+		this.modelType = modelType;
 	}
 	
+	public String toString()
+	{
+		return "Model beperking: " + modelType;
+	}
 }

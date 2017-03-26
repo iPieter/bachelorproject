@@ -61,23 +61,6 @@ public class ValueConstraintElement extends ConstraintElement
 	{
 		this.maxValue = maxValue;
 	}
-
-	/**
-	 * @return the type
-	 */
-	public ValueConstraintType getType()
-	{
-		return valueConstraintType;
-	}
-
-	/**
-	 * @param type the type to set
-	 */
-	public void setType( ValueConstraintType type )
-	{
-		this.valueConstraintType = type;
-	}
-
 	/**
 	 * @return the valueConstraintType
 	 */
@@ -108,5 +91,10 @@ public class ValueConstraintElement extends ConstraintElement
 	public void setValueConstraintAttribute( ValueConstraintAttribute valueConstraintAttribute )
 	{
 		this.valueConstraintAttribute = valueConstraintAttribute;
+	}
+	
+	public String toString()
+	{
+		return "Beperking op: " + valueConstraintAttribute.getDescr() + " mag niet " + valueConstraintType.getDescr() + " " + maxValue + " zijn.";
 	}
 }

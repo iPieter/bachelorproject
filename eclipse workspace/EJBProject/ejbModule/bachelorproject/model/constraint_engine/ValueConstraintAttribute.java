@@ -13,5 +13,30 @@ package bachelorproject.model.constraint_engine;
  */
 public enum ValueConstraintAttribute
 {
-	YAW, ROLL, ACCEL, SPEED
+	YAW("yaw"), ROLL("roll"), ACCEL("versnelling"), SPEED("snelheid");
+	
+	private String descr;
+	
+	private ValueConstraintAttribute( String descr )
+	{
+		this.descr = descr;
+	}
+
+	/**
+	 * @return the descr
+	 */
+	public String getDescr()
+	{
+		return descr;
+	}
+
+	/**
+	 * @param descr the descr to set
+	 */
+	public void setDescr( String descr )
+	{
+		this.descr = descr;
+	}
+	
+	
 }
