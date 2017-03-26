@@ -52,11 +52,20 @@
 							class="caret"></span>
 					</a>
 						<ul class="dropdown-menu">
-							<li><a href="change_password.xhtml">Wachtwoord
-									veranderen</a></li>
+							<li><a href="change_account.xhtml">
+								<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+								Account
+							</a></li>	
+							<li><a href="change_password.xhtml">
+								<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+								Wachtwoord veranderen
+							</a></li>	
 							<li role="separator" class="divider"></li>
 							<li><h:commandLink
-									action="#{authenticationController.logout()}">Afmelden</h:commandLink></li>
+									action="#{authenticationController.logout()}">
+										<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+										Afmelden
+									</h:commandLink></li>
 						</ul></li>
 
 				</ul>
