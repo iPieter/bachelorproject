@@ -45,7 +45,7 @@
 
 			<!-- GESELECTEERDE STAANPLAATS -->
 			<c:set var="workplace"
-				value="#{trainCoachController.currentWorkplace}"
+				value="#{trainCoachIssuesController.currentWorkplace}"
 			/>
 			<h4>
 				<span class="glyphicon glyphicon-unchecked"></span>
@@ -56,12 +56,12 @@
 
 			<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
 			<c:forEach var="traincoach"
-				items="#{trainCoachController.findActiveTrainCoaches()}"
+				items="#{trainCoachIssuesController.traincoachesOfCurrentWorkplace}"
 			>
 				<c:choose>
 					<!-- GESELECTEERDE WAGON -->
 					<c:when
-						test="#{trainCoachController.currentTrainCoach.id == traincoach.id}"
+						test="#{trainCoachIssuesController.currentTrainCoach.id == traincoach.id}"
 					>
 						<div class="traincoach traincoach_active">
 							<h4 class="sidebar_text_traincoach">

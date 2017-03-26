@@ -268,4 +268,17 @@ public class TrainCoachIssuesController implements Serializable
 		this.fieldIssueAssetDescription = fieldIssueAssetDescription;
 	}
 	
+	/**
+	 * Generates a list with TrainCoach object by using the current
+	 * workplace. If no workplace is set, null is returned.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return A list with all the traincoach object of the current workplace.
+	 */
+	public List<TrainCoach> getTraincoachesOfCurrentWorkplace()
+	{
+		return currentWorkplace.getTraincoaches();
+	}
+	
 }
