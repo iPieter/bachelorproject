@@ -35,7 +35,7 @@ eclipse workspace/RemoteSystemsTempFiles/.project
 management/~$dagboek.xlsx
 eclipse workspace\DWPProject\pom.xml
 eclipse workspace\DemoEAR\pom.xml
-
+log.txt
 *.xml
 
 eclipse workspace/EJBProject/bin/ejbModule/be/kuleuven/cs/gent/projectweek/logging/LoggingInterceptor.class
