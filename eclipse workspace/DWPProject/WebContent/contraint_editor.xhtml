@@ -44,11 +44,15 @@
 	<div class="container-fluid pad">
 		<c:forEach var="constraint" items="#{constraintEditorController.constraints}">
             <h:outputText value="#{constraint.getName()}" />
-            <br />
+            <h:inputHidden value="#{constraintEditorController.getPolygon(constraint.id)}" id="constraint_#{constraint.id}" />
+         	<br/>
          	<c:forEach var="constraint_element" items="#{constraint.constraints}">
-	            <h:outputText value="#{constraint_element}" />
+	            <h:outputText value="#{constraint_element}" rendered="#{constraint_element.toString().length() != 0}"/>
+	            <br/>
 	         </c:forEach>
          </c:forEach>
+    	<div >
+    	</div>
     </div>
 </h:body>
 

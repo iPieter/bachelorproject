@@ -102,7 +102,7 @@ public class ConstraintEngine
 	
 	public boolean visit( ModelTypeConstraintElement mtce )
 	{
-		if( mtce.getType().equals( currentTraincoach.getType() ) )
+		if( mtce.getModelType().equals( currentTraincoach.getType() ) )
 		{
 			currentIssueDescription += "Voor: " + currentTraincoach.getType() + "-" + currentTraincoach.getName() + System.getProperty( "line.separator" );
 			return true;

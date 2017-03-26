@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
@@ -19,7 +20,7 @@ public class LocationConstraintElement extends ConstraintElement
 	private static final long serialVersionUID = -5790355500796825408L;
 
 	@NotNull
-	@OneToMany
+	@OneToMany( fetch = FetchType.EAGER )
 	private List<LocationPoint> polygon;
 
 	public LocationConstraintElement()
@@ -58,7 +59,6 @@ public class LocationConstraintElement extends ConstraintElement
 	@Override
 	public String toString()
 	{
-		return "Locatie beperking: " + polygon;
+		return "";
 	}
-
 }
