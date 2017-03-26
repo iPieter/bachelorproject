@@ -94,16 +94,21 @@ public class UserAssetRestService
 	public Response addIssueAsset( MultipartFormDataInput input )
 	{		
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
-        List<InputPart> inputParts = uploadForm.get("attachment");
+        System.out.println(uploadForm);
+        List<InputPart> inputParts = uploadForm.get("password");
+        System.out.println(inputParts);
+        List<InputPart> inputParts2 = uploadForm.get("email");
+        System.out.println(inputParts2);
+        List<InputPart> inputParts3 = uploadForm.get("image");
  
-        for (InputPart inputPart : inputParts)
+        for (InputPart inputPart : inputParts3)
         {
             try
             {
-				int userId = Integer.valueOf( uploadForm.get( "userId" ).get( 0 ).getBodyAsString() );
-				
-				User user = userEJB.findUserById(userId);
-				
+				System.out.println(uploadForm.get( uploadForm.get("email").get( 0 ).getBodyAsString()));
+
+				User user = userEJB.findUserByEmail(uploadForm.get( "email" ).get( 0 ).getBodyAsString());
+				System.out.println(user);
 				if( user != null )
 				{
 					@SuppressWarnings("unused")
