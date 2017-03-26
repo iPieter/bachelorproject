@@ -7,6 +7,9 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.Validator;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
@@ -51,7 +54,7 @@ public class TrainCoachController implements Serializable
 	private int currentpsdID;
 
 	@NotNull
-	@Size( min=10, max= 1000 )
+	@Size( min=10, max= 1000, message="De beschrijving van het probleem moet minimaal {min} tekens bevatten en maximaal {max}." )
 	private String description = "";
 	
 	@NotNull
@@ -113,6 +116,12 @@ public class TrainCoachController implements Serializable
 	 * */
 	public String createIssue()
 	{
+		if( description.length() < 10 )
+		{
+			FacesContext.getCurrentInstance().addMessage("inputDescription",  new FacesMessage("De beschrijving moet minimaal 10 tekens bevatten.", 
+					"Het is zeer handig voor de onderhoudstechnicus als hij een gedetailleerde beschrijving van het probleem heeft."));
+			return "traincoach.xhtml?faces-redirect=true&id=" + currentTrainCoach.getId() + "&psdid=0";
+		}
 		currentSensorData = psdEJB.getProcessedSensorDataByTrainCoachID( currentTrainCoach.getId() );
 		
 		Issue issue = new Issue();

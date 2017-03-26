@@ -24,11 +24,13 @@
 	<link href="css/index.css" rel="stylesheet"/>
 	<link href="css/login.css" rel="stylesheet"/>
 	<link rel="stylesheet" href="css/leaflet.css" />
+	<link rel="stylesheet" href="css/sidebar.css" />
 	<title>Televic Managment Home</title>
 </h:head>
 
 <!-- Renders when logged in -->
 <h:body rendered="#{authenticationController.hasOperatorAccess()}">	
+
 <!-- FIXED NAVBAR -->
 <ui:include src="templates/navbar.xhtml"/>
 			
@@ -36,25 +38,11 @@
 	<div class="row">
 	
 		<!-- LEFT SIDEBAR -->
-		<div class="col-sm-2 sidebar">
+		<div class="col-sm-2 sidebar_container">
 			
-			<!-- SEARCH INPUT -->
-            <form class="form-group" role="search">
-   				<div class="input-group">
-   					<input type="text" class="form-control" placeholder="Zoek staanplaatsen" name="search_input" id="search_input" autocomplete="off"/>
-   					<div class="input-group-btn">
-   						<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
-   					</div>
-   				</div>
-   				<div class="dropdown">
-   					<a class="dropdown-toggle" data-toggle="dropdown" id="search_dropdown"></a>
-   					<ul class="dropdown-menu" id="search_dropdown_list" >
-   					</ul>
-   				</div>
-   			</form> <!-- END SEARCH INPUT -->
    			
    			<!-- SIDEBAR CONTENT --> 	
-   			<div class="workplace workplace_active">	
+   			<div class="workplace">	
    			
 	   			<!-- STAANPLAATSEN -->	
 				<c:forEach var="workplace" items="#{workplaceController.getAllWorkplaces()}">
@@ -106,94 +94,112 @@
 	    				</p:tab>
 	    				
 	    				<!--TAB: ASSIGNED ISSUES -->
-				        <p:tab title="Assigned Issues">
+				        <p:tab title="Toegewezen">
 							<h:outputText value="Issues you assigned." />
 							<h:dataTable class="table" value="#{indexController.findOperatorAssignedIssues()}" var="issue">
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="Assigned" />
+										<h:outputText value="Toegewezen" />
 									</f:facet>
-									<h:outputText value="#{issue.assignedTime}" />
+									<h:outputText value="#{issue.assignedPrettyTime}" />
 								</h:column>
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="Description" />
+										<h:outputText value="Beschrijving" />
 									</f:facet>
 									<h:outputText value="#{issue.descr}" />
 								</h:column>
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="Mechanic" />
+										<h:outputText value="Toegewezen technicus" />
 									</f:facet>
-									<h:outputText value="#{issue.mechanic}" />
-								</h:column>							
+									<h:outputText value="#{issue.mechanic.name}" />
+								</h:column>	
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Email technicus" />
+									</f:facet>
+									<h:outputText value="#{issue.mechanic.email}" />
+								</h:column>						
 							</h:dataTable>
 				        </p:tab>
 				        
 				        <!--TAB: IN_PROGRESS ISSUES -->
-				        <p:tab title="Issues In Progress">
+				        <p:tab title="Bezig">
 							<h:outputText value="Issues you assigned, now in progress." />
 							<h:dataTable class="table" value="#{indexController.findOperatorInProgressIssues()}" var="issue">
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="Assigned" />
+										<h:outputText value="Toegewezen" />
 									</f:facet>
-									<h:outputText value="#{issue.assignedTime}" />
+									<h:outputText value="#{issue.assignedPrettyTime}" />
 								</h:column>
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="Started" />
+										<h:outputText value="Gestart" />
 									</f:facet>
-									<h:outputText value="#{issue.inProgressTime}" />
+									<h:outputText value="#{issue.inProgressPrettyTime}" />
 								</h:column>
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="Description" />
+										<h:outputText value="Beschrijving" />
 									</f:facet>
 									<h:outputText value="#{issue.descr}" />
 								</h:column>
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="Mechanic" />
+										<h:outputText value="Technicus" />
 									</f:facet>
-									<h:outputText value="#{issue.mechanic}" />
+									<h:outputText value="#{issue.mechanic.name}" />
+								</h:column>	
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Email technicus" />
+									</f:facet>
+									<h:outputText value="#{issue.mechanic.email}" />
 								</h:column>							
 							</h:dataTable>
 				        </p:tab>
 				        
 	    				<!--TAB: CLOSED ISSUES -->
-				        <p:tab title="Closed Issues">
+				        <p:tab title="Gesloten">
 							<h:outputText value="Issues you assigned, recently closed." />
 							<h:dataTable class="table" value="#{indexController.findOperatorClosedIssues()}" var="issue">
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="Assigned" />
+										<h:outputText value="Toegewezen" />
 									</f:facet>
-									<h:outputText value="#{issue.assignedTime}" />
+									<h:outputText value="#{issue.assignedPrettyTime}" />
 								</h:column>
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="Started" />
+										<h:outputText value="Gestart" />
 									</f:facet>
-									<h:outputText value="#{issue.inProgressTime}" />
+									<h:outputText value="#{issue.inProgressPrettyTime}" />
 								</h:column>
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="Closed" />
+										<h:outputText value="Gesloten" />
 									</f:facet>
-									<h:outputText value="#{issue.closedTime}" />
+									<h:outputText value="#{issue.closedPrettyTime}" />
 								</h:column>
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="Description" />
+										<h:outputText value="Beschrijving" />
 									</f:facet>
 									<h:outputText value="#{issue.descr}" />
 								</h:column>
 								<h:column>
 									<f:facet name="header">
-										<h:outputText value="Mechanic" />
+										<h:outputText value="Technicus" />
 									</f:facet>
-									<h:outputText value="#{issue.mechanic}" />
+									<h:outputText value="#{issue.mechanic.name}" />
+								</h:column>	
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Email technicus" />
+									</f:facet>
+									<h:outputText value="#{issue.mechanic.email}" />
 								</h:column>							
 							</h:dataTable>
 				        </p:tab>
