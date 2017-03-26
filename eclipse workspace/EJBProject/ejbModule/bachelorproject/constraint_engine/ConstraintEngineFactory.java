@@ -1,8 +1,6 @@
 package bachelorproject.constraint_engine;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedList;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -63,16 +61,9 @@ public class ConstraintEngineFactory
 	 *  This method should not be called by any outside objects but is
 	 *  intended for ConstraintEngine's to return themselves.
 	 */
-	public void returnConstraintEngine( ConstraintEngine engine )
+	public void returnConstraintEngine( int ID )
 	{
-		for( int i = 0; i < freeEngines.length; i++ )
-		{
-			if( constraintEngines[ i ].equals( engine ) )
-			{
-				freeEngines[ i ] = true;
-				break;
-			}
-		}
+		freeEngines[ ID ] = true;
 	}
 
 	public ConstraintEJB getConstraintEJB()

@@ -169,7 +169,7 @@ public class ConstraintEngine
 		issues.clear();
 		ceData = null;
 		constraints.clear();
-		factoryParent.returnConstraintEngine( this );
+		factoryParent.returnConstraintEngine( getID() );
 	}
 
 	/**
