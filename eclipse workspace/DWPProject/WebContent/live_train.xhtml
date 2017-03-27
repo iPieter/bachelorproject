@@ -5,15 +5,13 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
->
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="templates/user_layout.xhtml">
 
 	<f:metadata>
 		<f:viewParam name="id"
-			value="#{liveTrainOverviewController.currentTrainID}"
-		/>
+			value="#{liveTrainOverviewController.currentTrainID}" />
 		<f:viewAction action="#{liveTrainOverviewController.loadPage()}" />
 	</f:metadata>
 
@@ -27,62 +25,62 @@
 
 	<ui:define name="mainview_content">
 
-		<div class="container-fluid">
+		<div class="" id="map_container">
+			<div id="map"></div>
+		</div>
+		<div class="container map_overlay">
+
 			<div class="row">
-				<div class="col-sm-12 main_view">
-					<input type="hidden" id="sensor_id"
-						value="#{liveTrainOverviewController.currentTrainID}"
-					/>
-					<div class="row">
-						<div class="col-sm-7 mainview_panel" id="realtime_chart_yaw">
-							<h1>Data wordt geladen...</h1>
-						</div>
-						<div class="col-sm-4 mainview_panel" id="map_size">
-							<h1>Rit info</h1>
-							<table class="table">
-								<thead></thead>
-								<tbody>
-									<tr>
-										<td>Model</td>
-										<td><h:outputText
-												value="#{liveTrainOverviewController.currentLSD.traincoach.type}"
-											/></td>
-									</tr>
-									<tr>
-										<td>Nummer</td>
-										<td><h:outputText
-												value="#{liveTrainOverviewController.currentLSD.traincoach.name}"
-											/></td>
-									</tr>
-									<tr>
-										<td>Rit</td>
-										<td><h:outputText
-												value="#{liveTrainOverviewController.currentLSD.track}"
-											/></td>
-									</tr>
-									<tr>
-										<td>Huidige snelheid:</td>
-										<td id="current_speed">-</td>
-									</tr>
-									<tr>
-										<td>Huidige versnelling:</td>
-										<td id="current_accel">-</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+
+				<!-- Data table -->
+				<div class="col-sm-3 mainview_panel" id="left_panel">
+					<h1>Rit info</h1>
+					<table class="table">
+						<thead></thead>
+						<tbody>
+							<tr>
+								<td>Model</td>
+								<td><h:outputText
+										value="#{liveTrainOverviewController.currentLSD.traincoach.type}" /></td>
+							</tr>
+							<tr>
+								<td>Nummer</td>
+								<td><h:outputText
+										value="#{liveTrainOverviewController.currentLSD.traincoach.name}" /></td>
+							</tr>
+							<tr>
+								<td>Rit</td>
+								<td><h:outputText
+										value="#{liveTrainOverviewController.currentLSD.track}" /></td>
+							</tr>
+							<tr>
+								<td>Huidige snelheid:</td>
+								<td id="current_speed">-</td>
+							</tr>
+							<tr>
+								<td>Huidige versnelling:</td>
+								<td id="current_accel">-</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- End data table -->
+
+				<!-- Graphs -->
+				<input type="hidden" id="sensor_id"
+					value="#{liveTrainOverviewController.currentTrainID}" />
+
+				<div class="col-sm-4 col-sm-offset-5 mainview_panel" id="right_panel">
+					<div id="realtime_chart_yaw">
+						<h1>Data wordt geladen...</h1>
 					</div>
-					<div class="row">
-						<div class="col-sm-7 mainview_panel" id="realtime_chart_roll">
-							<h1>Data wordt geladen...</h1>
-						</div>
-						<div class="col-sm-4 mainview_panel" id="map_size">
-							<div id="map"></div>
-						</div>
+					<div id="realtime_chart_roll">
+						<h1>Data wordt geladen...</h1>
 					</div>
 
 				</div>
 			</div>
+
 		</div>
 
 		<div id="loading_modal" class="modal fade" role="dialog">
@@ -92,8 +90,8 @@
 						<div class="progress">
 							<div class="progress-bar progress-bar-striped active"
 								role="progressbar" aria-valuenow="100" aria-valuemin="0"
-								aria-valuemax="100" style="width: 100%" id="modal_progress_div"
-							>De gegevens worden geladen, even geduld aub...</div>
+								aria-valuemax="100" style="width: 100%" id="modal_progress_div">De
+								gegevens worden geladen, even geduld aub...</div>
 						</div>
 					</div>
 				</div>
@@ -102,10 +100,9 @@
 
 		<script
 			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"
-			type="text/javascript"
-		></script>
+			type="text/javascript"></script>
 		<script src="js/bootstrap.min.js" type="text/javascript"></script>
-		<script src="https://code.highcharts.com/stock/highstock.js"></script>
+		<script src="https://code.highcharts.com/highcharts.js"></script>
 		<script src="https://code.highcharts.com/modules/exporting.js"></script>
 		<script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
 		<script src="js/underscore-min.js" type="text/javascript"></script>

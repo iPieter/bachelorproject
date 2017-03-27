@@ -141,10 +141,10 @@
 			<h:messages styleClass="alert alert-warning" />
 		</div>
 
-		<h1 class="pad">
+		<h2 class="pad">
 			<h:outputText value="Rit: #{trainCoachController.currentSensorData.track} - #{trainCoachController.sensorDataToPrettyTime()}" />
 
-		</h1>
+		</h2>
 		<input type="hidden"
 			value="#{trainCoachController.currentSensorData.id}"
 			id="current_traincoach"
@@ -227,7 +227,7 @@
 													items="#{trainCoachController.findActiveIssuesByMechanicId(mechanic.id)}"
 												>
 													<li><h:outputText
-															value="#{activeIssue.status}: #{activeIssue.descr}"
+															value="#{activeIssue.status.descr}: #{activeIssue.descr}"
 														/></li>
 												</c:forEach>
 											</div>
