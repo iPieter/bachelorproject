@@ -11,10 +11,10 @@ import javax.inject.Named;
 import bachelorproject.ejb.IssueEJB;
 import bachelorproject.ejb.TrainCoachEJB;
 import bachelorproject.ejb.WorkplaceEJB;
-import bachelorproject.model.Issue;
 import bachelorproject.model.TrainCoach;
-import bachelorproject.model.User;
 import bachelorproject.model.Workplace;
+import bachelorproject.model.issue.Issue;
+import bachelorproject.model.user.User;
 
 @Named
 @SessionScoped

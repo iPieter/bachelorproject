@@ -1,4 +1,4 @@
-package bachelorproject.model;
+package bachelorproject.model.issue;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,6 +14,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
+import bachelorproject.model.user.User;
 
 /**
  * The persistent class for the IssueAssets database table.

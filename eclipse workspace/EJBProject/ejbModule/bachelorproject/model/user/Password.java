@@ -1,4 +1,4 @@
-package bachelorproject.model;
+package bachelorproject.model.user;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

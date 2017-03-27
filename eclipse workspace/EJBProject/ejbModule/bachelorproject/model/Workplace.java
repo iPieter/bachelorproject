@@ -15,6 +15,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import bachelorproject.model.user.User;
+
 /**
  * The persistent class for the Workplace database table.
  * 

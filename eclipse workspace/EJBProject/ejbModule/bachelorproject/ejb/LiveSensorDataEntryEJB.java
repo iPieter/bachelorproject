@@ -11,8 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
-import bachelorproject.model.LiveSensorData;
-import bachelorproject.model.LiveSensorDataEntry;
+import bachelorproject.model.sensordata.LiveSensorData;
+import bachelorproject.model.sensordata.LiveSensorDataEntry;
 
 /**
  * Defines the Entity Java Bean for the LiveSensorDataEntry Entity.

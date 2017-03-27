@@ -1,4 +1,4 @@
-package bachelorproject.model;
+package bachelorproject.model.issue;
 
 public enum IssueStatus
 {

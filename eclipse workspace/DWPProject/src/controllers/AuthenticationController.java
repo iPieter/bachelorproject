@@ -9,9 +9,9 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
-import bachelorproject.model.Password;
-import bachelorproject.model.User;
-import bachelorproject.model.UserRole;
+import bachelorproject.model.user.Password;
+import bachelorproject.model.user.User;
+import bachelorproject.model.user.UserRole;
 import bachelorproject.services.UserService;
 
 /**

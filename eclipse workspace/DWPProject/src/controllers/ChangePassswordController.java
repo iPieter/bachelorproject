@@ -8,7 +8,7 @@ import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
 
 import bachelorproject.ejb.UserEJB;
-import bachelorproject.model.UserRole;
+import bachelorproject.model.user.UserRole;
 import bachelorproject.services.UserService;
 
 /**

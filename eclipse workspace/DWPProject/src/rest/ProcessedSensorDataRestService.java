@@ -21,7 +21,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.UriInfo;
 
 import bachelorproject.ejb.ProcessedSensorDataEJB;
-import bachelorproject.model.ProcessedSensorData;
+import bachelorproject.model.sensordata.ProcessedSensorData;
 
 /**
  * 	A REST endpoint to fetch processed sensor data in JSON format.

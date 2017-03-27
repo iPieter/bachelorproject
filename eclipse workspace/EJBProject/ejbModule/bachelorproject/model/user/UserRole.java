@@ -1,4 +1,4 @@
-package bachelorproject.model;
+package bachelorproject.model.user;
 
 /**
  * The UserRole a User can have, like ADMIN. 

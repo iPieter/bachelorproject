@@ -18,11 +18,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
-import bachelorproject.model.LiveSensorData;
-import bachelorproject.model.LiveSensorDataEntry;
-import bachelorproject.model.ProcessedSensorData;
 import bachelorproject.model.TrainCoach;
 import bachelorproject.model.Workplace;
+import bachelorproject.model.sensordata.LiveSensorData;
+import bachelorproject.model.sensordata.LiveSensorDataEntry;
+import bachelorproject.model.sensordata.ProcessedSensorData;
 
 /**
  * Defines the Entity Java Bean for the LiveSensorData Entity.
@@ -163,7 +163,7 @@ public class LiveSensorDataEJB
 			
 			ProcessedSensorData data = new ProcessedSensorData();
 			data.setLocation( path );
-			data.setTime( new Date() );
+			data.setDate( new Date() );
 			data.setTrack( sensordata.getTrack() );
 			data.setTraincoach( sensordata.getTraincoach() );
 			
@@ -215,6 +215,8 @@ public class LiveSensorDataEJB
 				em.remove( lsde );
 			
 			sensordata.getEntries().clear();
+			
+			//TODO: REMOVE ISSUES FROM LSD TO PSD ( CONSTRAINT_ENGINE )
 			
 			em.merge( sensordata );
 			em.remove( sensordata );

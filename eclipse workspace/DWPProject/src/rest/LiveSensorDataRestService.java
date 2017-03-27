@@ -17,9 +17,9 @@ import javax.ws.rs.core.Response.Status;
 import bachelorproject.ejb.LiveSensorDataEJB;
 import bachelorproject.ejb.LiveSensorDataEntryEJB;
 import bachelorproject.ejb.TrainCoachEJB;
-import bachelorproject.model.LiveSensorData;
-import bachelorproject.model.LiveSensorDataEntry;
 import bachelorproject.model.TrainCoach;
+import bachelorproject.model.sensordata.LiveSensorData;
+import bachelorproject.model.sensordata.LiveSensorDataEntry;
 
 /**
  * 	A REST endpoint to allow the sensors to communicate with the server.

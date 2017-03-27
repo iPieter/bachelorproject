@@ -10,7 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-import bachelorproject.model.IssueAsset;
+import bachelorproject.model.issue.IssueAsset;
 
 /**
  * Defines the Entity Java Bean for the IssueAsset Entity.

@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import bachelorproject.model.Issue;
+import bachelorproject.model.issue.Issue;
 
 /**
  * @author Pieter Delobelle

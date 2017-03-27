@@ -12,10 +12,10 @@ import bachelorproject.ejb.IssueEJB;
 import bachelorproject.ejb.ProcessedSensorDataEJB;
 import bachelorproject.ejb.TrainCoachEJB;
 import bachelorproject.ejb.WorkplaceEJB;
-import bachelorproject.model.Issue;
-import bachelorproject.model.ProcessedSensorData;
 import bachelorproject.model.TrainCoach;
 import bachelorproject.model.Workplace;
+import bachelorproject.model.issue.Issue;
+import bachelorproject.model.sensordata.ProcessedSensorData;
 
 /**
  * 	The controller for traincoach_sensor.xhtml

@@ -27,9 +27,9 @@ import bachelorproject.constraint_engine.ConstraintEngine;
 import bachelorproject.constraint_engine.ConstraintEngineData;
 import bachelorproject.constraint_engine.ConstraintEngineFactory;
 import bachelorproject.constraint_engine.OutOfConstraintEngineException;
-import bachelorproject.model.ProcessedSensorData;
 import bachelorproject.model.TrainCoach;
 import bachelorproject.model.Workplace;
+import bachelorproject.model.sensordata.ProcessedSensorData;
 import matlabcontrol.MatlabConnectionException;
 import matlabcontrol.MatlabInvocationException;
 import matlabcontrol.MatlabProxy;
@@ -365,7 +365,7 @@ public class MatlabProcessor
 
 		ProcessedSensorData data = new ProcessedSensorData();
 		data.setLocation( outputPath );
-		data.setTime( new Date() );
+		data.setDate( new Date() );
 		data.setTrack( nameSplit[4] );
 		data.setTraincoach( trainCoach );
 		

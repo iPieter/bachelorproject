@@ -1,18 +1,19 @@
 package bachelorproject.constraint_engine;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 
 import bachelorproject.ejb.ConstraintEJB;
-import bachelorproject.model.Issue;
 import bachelorproject.model.TrainCoach;
 import bachelorproject.model.constraint_engine.Constraint;
 import bachelorproject.model.constraint_engine.ConstraintElement;
 import bachelorproject.model.constraint_engine.LocationConstraintElement;
 import bachelorproject.model.constraint_engine.ModelTypeConstraintElement;
 import bachelorproject.model.constraint_engine.ValueConstraintElement;
+import bachelorproject.model.issue.Issue;
 
 /**
  * 	This class tests the supplied data for all the constraints and generates new Issues
@@ -30,11 +31,12 @@ public class ConstraintEngine
 	private ConstraintEngineValueTester valueTester;
 	private ConstraintEngineData ceData;
 	private String currentIssueDescription;
+	private HashSet<Constraint> usedConstraints;
 	
 	//Objects from persistence context
 	private TrainCoach currentTraincoach;
 	private Issue currentIssue;
-	private List<String> issues;
+	private List<Issue> issues;
 	private List<Constraint> constraints;
 	
 	public ConstraintEngine( ConstraintEngineFactory parent, int ID )
@@ -46,6 +48,7 @@ public class ConstraintEngine
 		currentIssueDescription = "";
 		constraintEJB = parent.getConstraintEJB();
 		issues = new ArrayList<>();
+		usedConstraints = new HashSet<>();
 	}
 	
 	@PostConstruct
@@ -71,19 +74,18 @@ public class ConstraintEngine
 		{
 			boolean isIssue = true;
 			currentIssue = new Issue();
+			currentIssueDescription = "";
 			for( ConstraintElement ce : c.getConstraints() )
-			{
 				isIssue = isIssue && ce.visit( this );
-			}
+
 			if( isIssue )
 			{
 				currentIssue.setDescr( currentIssueDescription );
-				issues.add( currentIssueDescription );
+				issues.add( currentIssue );
 				
 				System.out.println( "============================================" );
 				System.out.println( currentIssueDescription );
 				System.out.println( "============================================" );
-				currentIssueDescription = "";
 			}
 		}
 	}
@@ -148,11 +150,10 @@ public class ConstraintEngine
 	
 	public void printStatusReport()
 	{
-		for( String i : issues )
-		//for( Issue i : issues )
+		for( Issue i : issues )
 		{
 			System.out.println( "============================================" );
-			System.out.println( i );
+			System.out.println( i.getDescr() );
 			System.out.println( "============================================" );
 		}
 	}
@@ -166,9 +167,11 @@ public class ConstraintEngine
 	{
 		currentTraincoach = null;
 		currentIssue = null;
-		issues.clear();
 		ceData = null;
+		issues.clear();
 		constraints.clear();
+		usedConstraints.clear();
+		//Reset attributes before this
 		factoryParent.returnConstraintEngine( getID() );
 	}
 

@@ -13,8 +13,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-import bachelorproject.model.User;
-import bachelorproject.model.UserRole;
+import bachelorproject.model.user.User;
+import bachelorproject.model.user.UserRole;
 
 @Stateless
 @Local

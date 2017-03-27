@@ -31,8 +31,8 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import bachelorproject.ejb.IssueAssetEJB;
 import bachelorproject.ejb.IssueEJB;
 import bachelorproject.ejb.UserEJB;
-import bachelorproject.model.Issue;
-import bachelorproject.model.IssueAsset;
+import bachelorproject.model.issue.Issue;
+import bachelorproject.model.issue.IssueAsset;
 
 /**
  * 	A REST endpoint to fetch issue asset Images.

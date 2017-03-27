@@ -10,7 +10,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 import bachelorproject.ejb.IssueEJB;
-import bachelorproject.model.Issue;
+import bachelorproject.model.issue.Issue;
 
 @Path( "/heatmap_data" )
 public class HeatmapRestService {

@@ -1,4 +1,4 @@
-package bachelorproject.model;
+package bachelorproject.model.user;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

@@ -1,4 +1,4 @@
-package bachelorproject.model;
+package bachelorproject.model.sensordata;
 
 import java.io.Serializable;
 import java.util.Date;

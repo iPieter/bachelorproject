@@ -9,9 +9,9 @@ import javax.inject.Named;
 
 import bachelorproject.ejb.UserEJB;
 import bachelorproject.ejb.WorkplaceEJB;
-import bachelorproject.model.User;
-import bachelorproject.model.UserRole;
 import bachelorproject.model.Workplace;
+import bachelorproject.model.user.User;
+import bachelorproject.model.user.UserRole;
 
 
 @Named

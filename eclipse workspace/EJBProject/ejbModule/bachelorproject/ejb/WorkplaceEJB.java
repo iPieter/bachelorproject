@@ -10,8 +10,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-import bachelorproject.model.User;
 import bachelorproject.model.Workplace;
+import bachelorproject.model.user.User;
 
 @Named
 @Stateless

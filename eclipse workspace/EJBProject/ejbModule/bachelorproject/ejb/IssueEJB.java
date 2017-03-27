@@ -11,9 +11,9 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import bachelorproject.model.Issue;
-import bachelorproject.model.IssueAsset;
-import bachelorproject.model.IssueStatus;
+import bachelorproject.model.issue.Issue;
+import bachelorproject.model.issue.IssueAsset;
+import bachelorproject.model.issue.IssueStatus;
 
 /**
  * Defines the Entity Java Bean for the Issue Entity.

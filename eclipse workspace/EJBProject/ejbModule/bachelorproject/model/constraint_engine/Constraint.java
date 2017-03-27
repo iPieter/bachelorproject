@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import bachelorproject.model.User;
+import bachelorproject.model.user.User;
 
 /**
  * 	This class is the general collection of constraints.
