@@ -35,7 +35,7 @@ import org.ocpsoft.prettytime.PrettyTime;
 	@NamedQuery( name = Issue.FIND_BY_OPERATOR_ID, query = "SELECT i FROM Issue i WHERE i.status = :status AND i.operator.id = :operator_id" ),
 	@NamedQuery( name = Issue.FIND_BY_TRAINCOACH_ID, 
 				query = "SELECT i FROM Issue i WHERE EXISTS (SELECT d FROM ProcessedSensorData d WHERE d.traincoach.id = :traincoachId AND d.id = i.data.id ) AND i.status = :status"),				
-	@NamedQuery( name = Issue.COUNT_BY_OPERATOR_ID, query = "SELECT COUNT(i) FROM Issue i WHERE i.assignedTime BETWEEN CURRENT_TIMESTAMP and :backTime" ),
+	@NamedQuery( name = Issue.COUNT_BY_OPERATOR_ID, query = "SELECT COUNT(i) FROM Issue i WHERE i.operator.id= :operatorId AND i.assignedTime BETWEEN :backTime AND CURRENT_TIMESTAMP AND i.status= :status"),
 	@NamedQuery( name = Issue.FIND_ALL_ACTIVE, query = "SELECT i FROM Issue i WHERE i.status= :status1 OR i.status= :status2" ),
 } )
 public class Issue implements Serializable

@@ -42,13 +42,14 @@ public class StatisticsRestService {
 				"{"
 				+ "\"issue_counts\":"
 				+ "["
-				+"[\"Afgewerkt\","+closedIssueCount+"],"
-				+"[\"Toegewezen\","+assignedIssueCount+"],"
-				+"[\"In Behandeling\","+inProgressIssueCount+"]"
+				+"[\"Afgewerkte Problemen\","+closedIssueCount+"],"
+				+"[\"Toegewezen Problemen\","+assignedIssueCount+"],"
+				+"[\"Problemen In Behandeling\","+inProgressIssueCount+"]"
 				+ "]"
 				+"}");
 		
 		System.out.println("DONUT_DATA: "+result);
+		System.out.println("DONUT_DATA: USER_ID="+id);
 		
 		return result;
 	}

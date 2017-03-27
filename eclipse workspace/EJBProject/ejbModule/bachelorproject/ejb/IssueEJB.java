@@ -1,6 +1,7 @@
 package bachelorproject.ejb;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -196,12 +197,18 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 	public int countOperatorIssues( int userId, IssueStatus issueStatus, int backTime ){
 		EntityManager em = ems.getEntityManager();
 		
-		Date now = new Date();
-		Timestamp thirtyDaysAgo = new Timestamp(now.getTime() - 86400000 * backTime);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.DAY_OF_WEEK, -backTime); //Subtracting 'backTime' days from now
+		Timestamp sqldate = new Timestamp(calendar.getTimeInMillis());
+		System.out.println("DONUT: Thirtydaysago = "+sqldate);
+		
 		
 		TypedQuery<Long> query = em.createNamedQuery( Issue.COUNT_BY_OPERATOR_ID, Long.class )
-									.setParameter("backTime", thirtyDaysAgo);
-		int result = query.getFirstResult();
+									.setParameter("backTime", sqldate)
+									.setParameter("operatorId", userId)
+									.setParameter("status", issueStatus);
+		int result =( (Integer) query.getSingleResult().intValue() );
 
 		return result;
 	}
