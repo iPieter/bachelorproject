@@ -208,43 +208,58 @@
 		<div id="assignModal" class="modal fade" role="dialog" tabindex="10">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
-					<h:form class="form-group">
+					<h:form id="modal-form" class="form-group">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 							<h4 class="modal-title">Nieuwe herstelling</h4>
 						</div>
 						<div class="modal-body">
-							<label class="control-label" for="description">Tijdstip van voorkomen:</label> <br/>
-							<p id="selected_time_value">No Point Selected"</p><br/>
-							<label class="control-label" for="description">Locatie:</label> <br/>
-							<p id="selected_gps_value">No Point Selected"</p><br/>
-							<label class="control-label" for="description">Omschrijving probleem:</label> <br />
-							<h:inputTextarea name="description" rows="8" cols="40"
+							<div class="form-group">
+								<label class="control-label" for="selected_time_value">Tijdstip van voorkomen</label>
+								<h:inputText id="selected_time_value">No Point Selected</h:inputText>
+							</div>
+							<div class="form-group">							
+								<label class="control-label" for="selected_lat_value">Locatie</label>
+								<div class="input-group">
+									<span class="input-group-addon">Lat</span>
+									<h:inputText 
+										value="#{trainCoachController.lat}"
+										id="selected_lat_value">No Point Selected
+									</h:inputText>
+									
+									<span class="input-group-addon">Lon</span>
+									<h:inputText 
+										value="#{trainCoachController.lon}"
+										id="selected_lon_value">No Point Selected
+									</h:inputText>
+								
+								</div>
+							</div>
+							<div class="form-group">							
+								<label class="control-label" for="description">Omschrijving probleem:</label>
+								<h:inputTextarea name="description" rows="8" cols="40"
 								class="form-control" value="#{trainCoachController.description}"></h:inputTextarea>
-							<br></br>
-							<label class="control-label" for="list_empl">Kies een onderhoudstechnicus:</label> 
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="list_empl">Kies een onderhoudstechnicus:</label> 
 							
-							<h:selectOneMenu value="#{trainCoachController.mechanicID}"
-								class="form-control">
-								<f:selectItems value="#{trainCoachController.mechanics}"
-									var="mechanic" itemValue="#{mechanic.id}"
-									itemLabel="#{mechanic.name} (#{mechanic.email})" />
-							</h:selectOneMenu>
+								<h:selectOneMenu value="#{trainCoachController.mechanicID}"
+									class="form-control">
+									<f:selectItems value="#{trainCoachController.mechanics}"
+										var="mechanic" itemValue="#{mechanic.id}"
+										itemLabel="#{mechanic.name} (#{mechanic.email})" />
+								</h:selectOneMenu>
+							</div>
+							<h:messages />
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">Sluit</button>
-							<h:form id="par_form">
-								<!-- Passing parameters to JavaEE -->
-								<h:inputHidden id="lat" value="trainCoachController.lat" />
-								<h:inputHidden id="lon" value="trainCoachController.lon" />
 								<h:commandButton 
 									class="btn btn-default btn-large"
 									action="#{trainCoachController.createIssue()}" 
 									type="submit"
-									value="Verstuur"
-									onclick="setGPSValues()"/>
-							</h:form>
+									value="Verstuur"/>
 						</div>
 					</h:form>
 				</div>

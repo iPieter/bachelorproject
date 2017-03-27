@@ -112,7 +112,7 @@ function setView( input )
 							xTimeVal=e.point.x;
 							selectedIndex=index;
 							setDatapointSelected();
-							console.log("The graph value onClick:"+ xTimeVal);
+							console.log("The graph value onClick:"+ xTimeVal + ", latlon: "+latlngs[selectedIndex]);
 						}
                     }
                 },
@@ -143,15 +143,14 @@ function setDatapointSelected(){
 
 /*Modal depends on Issue value selected*/
 function setModal(){
-	var html=null;
 	console.log("Entered setModal");
 	
 	if(datapointSelected == true){
 		/*Value to display in modal */
-		$('#selected_time_value').text(xTimeVal + " ms");
-		$('#selected_gps_value').text(
-				"lat:"+latlngs[selectedIndex][0].toFixed(3)
-				+"\n lon:"+latlngs[selectedIndex][1].toFixed(3));
+		
+		$('#modal-form\\:selected_time_value').val(xTimeVal + " ms");
+		$('#modal-form\\:selected_lat_value').val(latlngs[selectedIndex][0].toFixed(3));
+		$('#modal-form\\:selected_lon_value').val(latlngs[selectedIndex][1].toFixed(3));
 		
 		/*Selecting Modal*/
 		$('#create_issue_button').attr("data-target","#assignModal");
@@ -162,16 +161,5 @@ function setModal(){
 		$('#create_issue_button').attr("data-target","#pickAPointModal");
 		console.log("Entered setModalHTML: if(false)");
 	}
-}
-
-function setGPSValues(){
-	var lat = latlngs[selectedIndex][0]; 
-    var lon = latlngs[selectedIndex][1];
-
-    document.getElementById("par_form:lat").value = lat;
-    document.getElementById("par_form:lon").value = lon;
-    
-    console.log(document.getElementById("par_form:lat").value);
-    console.log(document.getElementById("par_form:lon").value);
 }
 
