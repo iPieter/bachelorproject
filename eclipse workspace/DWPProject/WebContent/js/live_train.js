@@ -11,7 +11,8 @@ L.tileLayer( 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
     id: 'mapbox.streets',
-    accessToken: 'pk.eyJ1IjoiYW50b25kIiwiYSI6ImNpbXRkM2wwNDAwNmd2d20xNDJnN3RwYjMifQ.PtxXr8pyGM4qccCXDecL2A'
+    accessToken: 'pk.eyJ1IjoiYW50b25kIiwiYSI6ImNpbXRkM2wwNDAwNmd2d20xNDJnN3RwYjMifQ.PtxXr8pyGM4qccCXDecL2A',
+    ZIndex: 10
 } ).addTo( map );
 
 var train_path = [];
@@ -24,7 +25,7 @@ var yawSeries = null;
 var rollSeries = null;
 
 // Create the chart
-Highcharts.stockChart('realtime_chart_yaw', {
+Highcharts.chart('realtime_chart_yaw', {
     chart: {
         events: {
             load: function () 
@@ -65,7 +66,7 @@ Highcharts.stockChart('realtime_chart_yaw', {
     }]
 });
 
-Highcharts.stockChart('realtime_chart_roll', {
+Highcharts.chart('realtime_chart_roll', {
     chart: {
         events: {
             load: function () 
@@ -118,6 +119,9 @@ function loadData()
 	path = corePath + "2013-01-01_00-00-00";
 	lastDate = "2013-01-01_00-00-00";
 
+
+	map.zoomControl.setPosition('bottomleft');
+	
 	$( "#loading_modal" ).modal({backdrop: 'static', keyboard: false, show:true});
 	
     $.get( path, function(data)
@@ -153,8 +157,9 @@ function loadData()
         
     	if( train_path.length > 0 )
 		{
-            pathPolyline = L.polyline(train_path, {color: 'red'}).addTo(map);
-            map.fitBounds(pathPolyline.getBounds());
+            pathPolyline = L.polyline(train_path, {color: '#b0cb1b'}).addTo(map);
+            map.fitBounds(pathPolyline.getBounds(), 
+         		   {padding: [$("#realtime_chart_yaw").width(), $("#realtime_chart_yaw").width()]}); 
 		}
     	
     	$( "#loading_modal" ).modal("hide");
@@ -190,8 +195,15 @@ function loadData()
                 
             	if( train_path.length > 0 )
         		{
-                    pathPolyline = L.polyline(train_path, {color: 'red'}).addTo(map);
-                    map.fitBounds(pathPolyline.getBounds());
+                    pathPolyline = L.polyline(train_path, {color: '#b0cb1b'}).addTo(map);
+                    map.fitBounds(pathPolyline.getBounds(), 
+                    	{
+
+                    		paddingTopLeft: [$("#left_panel").width(), $("#left_panel).height()"],
+                    		paddingBottomRight: [$("#right_panel").width(), $("#right_panel"").width()"]
+
+                		}); 
+
 
         		}
             } );

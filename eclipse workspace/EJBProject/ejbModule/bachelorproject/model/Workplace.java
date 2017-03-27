@@ -104,7 +104,4 @@ public class Workplace implements Serializable
 	{
 		this.mechanics = mechanics;
 	}
-	
-	
-
 }

@@ -46,6 +46,7 @@ body, html {
 	border-radius: 3px;
 	height: 100%;
 	background-color: white;
+	z-index: 11;
 }
 
 .mainview_panel_large {
@@ -56,6 +57,7 @@ body, html {
 	border-bottom: 1px solid #2c3e50;
 	border-right: 1px solid #2c3e50	;
 	border-radius: 3px;
+	z-index: 12;
 }
 
 .mainview_panel_large>.content {
@@ -327,4 +329,16 @@ body, html {
 	margin-bottom: 3px;
 	border-radius: 300px;
 	animation: breath 4s infinite;
+}
+
+#map_container {	
+	height: 100%;
+	z-index: 10;
+
+}
+
+.map_overlay {
+	position: fixed;
+	top: 0;
+	padding-top: 75px;
 }
