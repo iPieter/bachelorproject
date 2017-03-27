@@ -118,6 +118,23 @@ public class IssueAssetRestService
 	}
 	
 	/**
+	 * 	Returns the meta data of an asset.
+	 *  @param id The ID of the issue who's assets to fetch
+	 * */
+	@GET
+	@Path( "all" )
+	@Produces( "text/json" )
+	public Response getAllAssets( )
+	{
+		List<IssueAsset> issues = issueAssetEJB.getAll();		
+				
+		if( issues == null )
+			return Response.status( Status.NOT_FOUND ).build();
+		
+		return Response.ok( issues ).build();
+	}
+	
+	/**
 	 * 	Allows the users to POST an issue asset via a multipart form
 	 *  @param input The uploaded form.
 	 *  @return a Response
