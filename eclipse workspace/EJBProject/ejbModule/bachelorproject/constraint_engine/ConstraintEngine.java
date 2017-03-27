@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 
 import bachelorproject.ejb.ConstraintEJB;
 import bachelorproject.ejb.IssueEJB;
-import bachelorproject.model.TrainCoach;
 import bachelorproject.model.constraint_engine.Constraint;
 import bachelorproject.model.constraint_engine.ConstraintElement;
 import bachelorproject.model.constraint_engine.LocationConstraintElement;
@@ -55,6 +54,11 @@ public class ConstraintEngine
 		usedConstraints = new HashSet<>();
 	}
 	
+	/**
+	 * 	Allows the Constraint Engine to start its work. It resets all data & prepares
+	 *  to test new constraints
+	 *  @param data The SensorData object that needs to be tested.
+	 * */
 	@PostConstruct
 	public void start( SensorData data )
 	{
@@ -62,6 +66,16 @@ public class ConstraintEngine
 		constraints = constraintEJB.getAllConstraints();
 		currentIssue = null;
 		currentIssueDescription = "";
+		
+		List<Issue> issues = issueEJB.getIssuesBySensorDataID( data.getId() );
+		for( Issue i : issues )
+		{
+			for( Constraint c : constraints )
+			{
+				if( i.getDescr().contains( c.getName() ) )
+					usedConstraints.add( c );
+			}
+		}
 	}
 	
 	/**

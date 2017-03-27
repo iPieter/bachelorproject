@@ -23,7 +23,6 @@ import javax.validation.constraints.NotNull;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
-import bachelorproject.model.sensordata.ProcessedSensorData;
 import bachelorproject.model.sensordata.SensorData;
 import bachelorproject.model.user.User;
 
