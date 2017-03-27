@@ -6,6 +6,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
 >
 
 <ui:composition template="templates/main_layout.xhtml">
@@ -304,22 +305,33 @@
 						</div>
 						<div class="modal-body">
 							<div class="form-group">
-								<label class="control-label" for="selected_time_value">Tijdstip van voorkomen</label>
-								<h:inputText id="selected_time_value">No Point Selected</h:inputText>
+								<label class="control-label" for="selected_time_value">Tijdstip</label>
+								<h:inputText 
+									class="form-control" 
+									id="selected_time_value"
+									a:disabled="disabled">
+									No Point Selected
+								</h:inputText>
 							</div>
 							<div class="form-group">							
 								<label class="control-label" for="selected_lat_value">Locatie</label>
 								<div class="input-group">
 									<span class="input-group-addon">Lat</span>
 									<h:inputText 
+										class="form-control"
 										value="#{trainCoachController.lat}"
-										id="selected_lat_value">No Point Selected
+										id="selected_lat_value"
+										a:disabled="disabled">
+										No Point Selected
 									</h:inputText>
 									
 									<span class="input-group-addon">Lon</span>
 									<h:inputText 
+										class="form-control"
 										value="#{trainCoachController.lon}"
-										id="selected_lon_value">No Point Selected
+										id="selected_lon_value"
+										a:disabled="disabled">
+										No Point Selected
 									</h:inputText>
 								
 								</div>
