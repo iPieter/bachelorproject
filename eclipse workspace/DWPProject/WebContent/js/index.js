@@ -90,8 +90,8 @@ function setHeatMapView( data ){
 	if(data!=null)
 	{
 	map_entries = [];
-	var intensity= 0.2;
-	for( var i = 0; i < data.lat.length; i++ )
+	var intensity= 1;
+	for( var i = 0; i < data.gpsLat.length; i++ )
 		map_entries.push( [ data.gpsLat[i] , data.gpsLon[i], intensity] );
 	
 	// lat, lng, intensity
