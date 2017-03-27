@@ -34,9 +34,10 @@ public class StatisticsRestService {
 		String result="";
 		int id=userService.getUser().getId();
 		
-		int closedIssueCount=issueEJB.countOperatorIssues(id, IssueStatus.CLOSED, 30);
-		int assignedIssueCount=issueEJB.countOperatorIssues(id, IssueStatus.ASSIGNED, 30);
-		int inProgressIssueCount=issueEJB.countOperatorIssues(id, IssueStatus.IN_PROGRESS, 30);
+		final int DAYS_BACK_FROM_NOW = 30;
+		int closedIssueCount=issueEJB.countOperatorIssues(id, IssueStatus.CLOSED, DAYS_BACK_FROM_NOW);
+		int assignedIssueCount=issueEJB.countOperatorIssues(id, IssueStatus.ASSIGNED, DAYS_BACK_FROM_NOW);
+		int inProgressIssueCount=issueEJB.countOperatorIssues(id, IssueStatus.IN_PROGRESS, DAYS_BACK_FROM_NOW);
 		
 		result=result.concat(
 				"{"
