@@ -85,6 +85,39 @@ public class IssueAssetRestService
 	}
 	
 	/**
+	 * 	Returns the meta data of an asset.
+	 *  @param id The ID of the issue asset to fetch
+	 * */
+	@GET
+	@Path( "data/{id}" )
+	@Produces( "text/json" )
+	public Response getIssueAssetData( @PathParam( "id" ) int id )
+	{
+		IssueAsset asset = issueAssetEJB.getIssueAssetByID( id );
+		if( asset == null )
+			return Response.status( Status.NOT_FOUND ).build();
+		
+		return Response.ok( asset ).build();
+	}
+	
+	/**
+	 * 	Returns the meta data of an asset.
+	 *  @param id The ID of the issue who's assets to fetch
+	 * */
+	@GET
+	@Path( "data_by_issueID/{id}" )
+	@Produces( "text/json" )
+	public Response getIssueAssetDataByIssueID( @PathParam( "id" ) int id )
+	{
+		Issue issue = issueEJB.findByID( id );
+		
+		if( issue == null )
+			return Response.status( Status.NOT_FOUND ).build();
+		
+		return Response.ok( issue.getAssets() ).build();
+	}
+	
+	/**
 	 * 	Allows the users to POST an issue asset via a multipart form
 	 *  @param input The uploaded form.
 	 *  @return a Response
