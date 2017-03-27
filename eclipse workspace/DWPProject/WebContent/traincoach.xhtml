@@ -5,15 +5,16 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+>
 
 <ui:composition template="templates/main_layout.xhtml">
 
 	<f:metadata>
 		<f:viewParam name="id"
-			value="#{trainCoachController.currentTrainCoachID}" />
-		<f:viewParam name="psdid"
-			value="#{trainCoachController.currentpsdID}" />
+			value="#{trainCoachController.currentTrainCoachID}"
+		/>
+		<f:viewParam name="psdid" value="#{trainCoachController.currentpsdID}" />
 		<f:viewAction action="#{trainCoachController.loadPage()}" />
 	</f:metadata>
 
@@ -29,12 +30,12 @@
 				</h:link></li>
 			<li><h:link class="active"
 					value="#{trainCoachController.currentWorkplace.name}"
-					outcome="workplace.xhtml?workplace_id=#{trainCoachController.currentWorkplace.id}" />
-			</li>
+					outcome="workplace.xhtml?workplace_id=#{trainCoachController.currentWorkplace.id}"
+				/></li>
 			<li><h:link class="active"
 					value="#{trainCoachController.currentTrainCoach.type} - #{trainCoachController.currentTrainCoach.name}"
-					outcome="traincoach.xhtml?id=#{trainCoachController.currentTrainCoach.id}&amp;psdid=0" />
-			</li>
+					outcome="traincoach.xhtml?id=#{trainCoachController.currentTrainCoach.id}&amp;psdid=0"
+				/></li>
 		</ol>
 	</ui:define>
 
@@ -44,38 +45,53 @@
 
 			<!-- GESELECTEERDE STAANPLAATS -->
 			<c:set var="workplace"
-				value="#{trainCoachController.currentWorkplace}" />
+				value="#{trainCoachController.currentWorkplace}"
+			/>
 			<h4>
 				<span class="glyphicon glyphicon-unchecked"></span>
 				<h:link value="#{workplace.name}"
-					outcome="workplace.xhtml?workplace_id=#{workplace.id}" />
+					outcome="workplace.xhtml?workplace_id=#{workplace.id}"
+				/>
 			</h4>
 
 			<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
 			<c:forEach var="traincoach"
-				items="#{trainCoachController.findActiveTrainCoaches()}">
+				items="#{trainCoachController.findActiveTrainCoaches()}"
+			>
 				<c:choose>
 					<!-- GESELECTEERDE WAGON -->
 					<c:when
-						test="#{trainCoachController.currentTrainCoach.id == traincoach.id}">
+						test="#{trainCoachController.currentTrainCoach.id == traincoach.id}"
+					>
 						<div class="traincoach traincoach_active">
 							<h4 class="sidebar_text_traincoach">
 								<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
 								<h:link value="#{traincoach.type} - #{traincoach.name}"
-									outcome="traincoach.xhtml?id=#{traincoach.getId()}&amp;psdid=0" />
+									outcome="traincoach.xhtml?id=#{traincoach.getId()}&amp;psdid=0"
+								/>
 							</h4>
 							<!-- METADATA PER WAGON -->
 							<div class="traincoach_data">
+								<ui:fragment
+									rendered="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size() ge 1}">
+
+									<h5>
+
+										<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
+										<h:link value="Problemen"
+											outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
+										/>
+										<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
+									</h5>
+								</ui:fragment>
 								<h5>
-									<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
-									<h:link value="Problemen"
-										outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}" />
-									<span class="badge"></span>
+									<span
+										class="glyphicon glyphicon-dashboard sidebar_icon_metadata"
+									></span>
+									<h:link value="Geschiedenis"
+										outcome="traincoach_sensor.xhtml?id=#{traincoach.getId()}"
+									/>
 								</h5>
-								<h5>
-			                    	<span class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span>
-			                    	<h:link value="Geschiedenis" outcome="traincoach_sensor.xhtml?id=#{traincoach.getId()}"/>
-			                    </h5>
 							</div>
 						</div>
 					</c:when>
@@ -85,20 +101,30 @@
 							<h4 class="sidebar_text_traincoach">
 								<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
 								<h:link value="#{traincoach.type} - #{traincoach.name}"
-									outcome="traincoach.xhtml?id=#{traincoach.getId()}&amp;psdid=0" />
+									outcome="traincoach.xhtml?id=#{traincoach.id}&amp;psdid=0"
+								/>
 							</h4>
 							<!-- METADATA PER WAGON -->
 							<div class="traincoach_data">
-								<h5>
-									<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
-									<h:link value="Problemen"
-										outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}" />
-									<span class="badge"></span>
-								</h5>
+								<ui:fragment
+									rendered="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size() ge 1}">
+
+									<h5>
+
+										<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
+										<h:link value="Problemen"
+											outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
+										/>
+										<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
+									</h5>
+								</ui:fragment>
 								<h5>
 									<span
-										class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span>
-									Sensoren
+										class="glyphicon glyphicon-dashboard sidebar_icon_metadata"
+									></span>
+									<h:link value="Geschiedenis"
+										outcome="traincoach_sensor.xhtml?id=#{traincoach.getId()}"
+									/>
 								</h5>
 							</div>
 						</div>
@@ -110,71 +136,134 @@
 
 	<!-- MAINVIEW CONTENT -->
 	<ui:define name="mainview_content">
+		<div class="col-sm-10">
+			<h:messages styleClass="alert alert-warning" />
 
-		<!-- GRAFIEK BOVEN -->
-		<div class="mainview_panel col-sm-10">
-			<h:outputText value="Rit: #{trainCoachController.currentSensorData.track} - #{trainCoachController.sensorDataToPrettyTime()}" />
 		</div>
+
+		<h1 class="pad">
+			<h:outputText value="Rit: #{trainCoachController.currentSensorData.track} - #{trainCoachController.sensorDataToPrettyTime()}" />
+
+		</h1>
 		<input type="hidden"
 			value="#{trainCoachController.currentSensorData.id}"
-			id="current_traincoach" />
-		<div class="row">
-			<div class="col-sm-10 mainview_panel" id="graph">
-				<div id="graph_options">
-					<label class="radio-inline"><input type="radio"
-						name="optradio" id="radio_yaw" />Yaw</label> <label class="radio-inline"><input
-						type="radio" name="optradio" id="radio_roll" />Roll</label> <label
-						class="info_label" id="max">Max: Wordt geladen...</label> <label
-						class="info_label" id="min">Min: Wordt geladen...</label> <label
-						class="info_label" id="current_speed">Snelheid: 0</label> <label
-						class="info_label" id="current_accel">Versnelling: 0</label>
+			id="current_traincoach"
+		/>
+		<div class="row pad">
+
+			<div class="col-sm-12 mainview_panel_large" id="graph">
+
+				<!-- HEADER-->
+				<div class="row mainview_traincoach">
+					<div class="col-sm-12 pad mainview_traincoach_panelheader">
+						<h4>Sensordata</h4>
+					</div>
 				</div>
-				<div class="" id="topleft">
-					<h1>Data wordt geladen...</h1>
+				<!-- CONTENT-->
+				<div class="row content">
+					<div class="col-sm-12 pad">
+
+						<div id="graph_options">
+							<label class="radio-inline"><input type="radio"
+								name="optradio" id="radio_yaw"
+							/>Yaw</label> <label class="radio-inline"><input type="radio"
+								name="optradio" id="radio_roll"
+							/>Roll</label> <label class="info_label" id="max">Max: Wordt
+								geladen...</label> <label class="info_label" id="min">Min: Wordt
+								geladen...</label> <label class="info_label" id="current_speed">Snelheid:
+								0</label> <label class="info_label" id="current_accel">Versnelling:
+								0</label>
+						</div>
+						<div id="topleft">
+							<h2>Data wordt geladen...</h2>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 		
 		<!-- ISSUE OVERVIEW & ASSIGNMENT -->
 		<div class="row">
-			<div class="col-sm-5 mainview_panel">
-				<div class="mainview_issue row">
-					<div class="col-sm-12 issue_bar">
-						<h:form class="issue_bar">
-							<button 
-									id="create_issue_button"
-									type="button" 
-									name="button"
-									class="btn btn-danger btn-large" 
-									data-toggle="modal"
-									data-target="#assignModal"
-									onclick="setModal()">
-									Nieuwe herstelling
-							</button>
-							<h:commandButton name="buttonApprove"
-								class="btn btn-success btn-large"
-								action="#{trainCoachController.setTrainCoachReviewed()}"
-								type="submit" value="Goedkeuren"></h:commandButton>
-						</h:form>
-					</div>
-				</div>
-				<c:forEach var="mechanic" items="#{trainCoachController.mechanics}">
-					<div class="mainview_issue row">
-						<b class="col-sm-4 dont-break-out">#{mechanic.name}</b>
-						<div class="col-sm-8">
-							<c:forEach var="activeIssue"
-								items="#{trainCoachController.findActiveIssuesByMechanicId(mechanic.id)}">
-								<li><h:outputText
-										value="#{activeIssue.status}: #{activeIssue.descr}" /></li>
-							</c:forEach>
+			<div class="col-sm-6 ">
+				<div class="row">
+					<div class="col-sm-12 pad">
+						<div class="mainview_panel_large">
+							<!-- HEADER-->
+							<div class="row mainview_traincoach">
+								<div class="col-sm-12 pad mainview_traincoach_panelheader">
+									<h4>Problemen</h4>
+								</div>
+							</div>
+							<!-- CONTENT-->
+							<c:choose>
+								<c:when test="#{trainCoachController.currentpsdID != 0}">
+									<p>U bent niet de meest recente data aan het bekijken
+										waardoor u geen nieuwe herstellingen kunt aanmaken.</p>
+								</c:when>
+								<c:otherwise>
+									<div class="mainview_issue row">
+										<div class="col-sm-12 issue_bar">
+											<h:form class="issue_bar ">
+												<div class="btn-group center-block">
+													<button 
+									          id="create_issue_button"
+									          type="button" 
+									          name="button"
+									          class="btn btn-danger btn-large" 
+									          data-toggle="modal"
+									          data-target="#assignModal"
+									          onclick="setModal()">
+									          Nieuwe herstelling
+							            </button>
+													<h:commandButton name="buttonApprove"
+														class="btn btn-success btn-large"
+														action="#{trainCoachController.setTrainCoachReviewed()}"
+														type="submit" value="Goedkeuren"
+													></h:commandButton>
+												</div>
+											</h:form>
+										</div>
+									</div>
+									<c:forEach var="mechanic"
+										items="#{trainCoachController.mechanics}"
+									>
+										<div class="mainview_issue row">
+											<b class="col-sm-4 dont-break-out">#{mechanic.name}</b>
+											<div class="col-sm-8">
+												<c:forEach var="activeIssue"
+													items="#{trainCoachController.findActiveIssuesByMechanicId(mechanic.id)}"
+												>
+													<li><h:outputText
+															value="#{activeIssue.status}: #{activeIssue.descr}"
+														/></li>
+												</c:forEach>
+											</div>
+										</div>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
-				</c:forEach>
+				</div>
 			</div>
-				
-			<!-- MAP -->
-			<div class="col-sm-5 mainview_panel" id="map_size">
-				<div id="map"></div>
+			<div class="col-sm-6 ">
+				<div class="row">
+					<div class="col-sm-12 pad">
+						<div class="mainview_panel_large">
+
+							<!-- HEADER-->
+							<div class="row mainview_traincoach">
+								<div class="col-sm-12 pad mainview_traincoach_panelheader">
+									<h4>Kaart</h4>
+								</div>
+							</div>
+							<!-- CONTENT-->
+							<div id="map_size">
+								<div id="map"></div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 			
@@ -269,7 +358,8 @@
 
 		<script
 			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"
-			type="text/javascript"></script>
+			type="text/javascript"
+		></script>
 		<script src="js/bootstrap.min.js" type="text/javascript"></script>
 		<script src="https://code.highcharts.com/highcharts.js"></script>
 		<script src="https://code.highcharts.com/modules/exporting.js"></script>

@@ -1,155 +1,248 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html lang="eng"
-	xmlns="http://www.w3.org/1999/xhtml"
+<html lang="eng" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
 
 <ui:composition template="templates/main_layout.xhtml">
-	
+
 	<f:metadata>
-		<f:viewParam name="workplace_id" value="#{workplaceController.currentWorkplaceID}"/>
-		<f:viewAction action="#{workplaceController.loadPage()}"/>
+		<f:viewParam name="workplace_id"
+			value="#{workplaceController.currentWorkplaceID}"
+		/>
+		<f:viewAction action="#{workplaceController.loadPage()}" />
 	</f:metadata>
-	
+
 	<ui:define name="title">Workplace Manager</ui:define>
 
 	<!-- BREADCRUMB -->
 	<ui:define name="breadcrumb">
-		<ol class="breadcrumb breadcrumb_extra">
-			<li><h:link	outcome="index.xhtml"><span class="glyphicon glyphicon-home"></span></h:link></li>
-			<li>
-				<h:link class="active" value="#{workplaceController.currentWorkplace.name}" 
-					outcome="workplace.xhtml?workplace_id=#{workplaceController.currentWorkplace.id}"/>
-			</li>
+		<ol class="breadcrumb">
+			<li><h:link outcome="index.xhtml">
+					<span class="glyphicon glyphicon-home"></span>
+				</h:link></li>
+			<li><h:link class="active"
+					value="#{workplaceController.currentWorkplace.name}"
+					outcome="workplace.xhtml?workplace_id=#{workplaceController.currentWorkplace.id}"
+				/></li>
 		</ol>
 	</ui:define>
-	
+
 	<!-- SIDEBAR CONTENT -->
 	<ui:define name="sidebar_content">
-   		<div class="workplace workplace_active">	
-   			
-   			<!-- GESELECTEERDE STAANPLAATS -->	
-   			<c:set var="workplace" value="#{workplaceController.currentWorkplace}"/>
-            <h4>
-            	<span class="glyphicon glyphicon-unchecked"></span>
-            	<h:link value="#{workplace.name}" 
-            			outcome="workplace.xhtml?workplace_id=#{workplace.id}"/>
-            </h4>
-            
-	       	<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
-	       	<c:forEach var="traincoach" items="#{workplaceController.findActiveTrainCoaches()}">
-	            <div class="traincoach">
-	                <h4 class="sidebar_text_traincoach">
-	                	<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
-	                	<h:link value="#{traincoach.type} - #{traincoach.name}" outcome="traincoach.xhtml?id=#{traincoach.getId()}&amp;psdid=0"/>
-	                </h4>
-	                <!-- METADATA PER WAGON -->
-	                <div class="traincoach_data">
-	                    <h5>
-	                    	<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
-	                    	<h:link value="Problemen" outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"/>
-	                    	<span class="badge"></span>
-	                    </h5>
-	                    <h5>
-	                    	<span class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span>
-	                    	<h:link value="Geschiedenis" outcome="traincoach_sensor.xhtml?id=#{traincoach.getId()}"/>
-	                    </h5>
-	                </div>
-	            </div>
-			</c:forEach>
+		<div class="workplace workplace_active">
+
+			<!-- GESELECTEERDE STAANPLAATS -->
+			<c:set var="workplace"
+				value="#{workplaceController.currentWorkplace}"
+			/>
+			<h4>
+				<span class="glyphicon glyphicon-unchecked"></span>
+				<h:link value="#{workplace.name}"
+					outcome="workplace.xhtml?workplace_id=#{workplace.id}"
+				/>
+			</h4>
+
+			<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
+			<div class="nano">
+				<div class="nano-content">
+					<c:forEach var="traincoach"
+						items="#{workplaceController.findActiveTrainCoaches()}"
+					>
+						<div class="traincoach">
+							<h4 class="sidebar_text_traincoach">
+								<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
+								<h:link value="#{traincoach.type} - #{traincoach.name}"
+									outcome="traincoach.xhtml?id=#{traincoach.getId()}"
+								/>
+							</h4>
+							<!-- METADATA PER WAGON -->
+							<div class="traincoach_data">
+								<ui:fragment
+									rendered="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size() ge 1}">
+
+									<h5>
+
+										<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
+										<h:link value="Problemen"
+											outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
+										/>
+										<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
+									</h5>
+								</ui:fragment>
+
+								<h5>
+									<span
+										class="glyphicon glyphicon-dashboard sidebar_icon_metadata"
+									></span>
+									<h:link value="Geschiedenis"
+										outcome="traincoach_sensor.xhtml?id=#{traincoach.getId()}"
+									/>
+								</h5>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
 		</div>
+
 	</ui:define>
-		
+
 	<!-- MAINVIEW CONTENT -->
 	<ui:define name="mainview_content">
 		<!--MAIN ROW -->
 		<div class="row">
 			<!-- MAIN PANEL-LARGE-LEFT (descr=oplijsten wagons, incl. Actieve & afgewerkte problemen -->
-			<div class="col-sm-6 mainview_panel_large">
-				
-				<!-- WAGONS OVERZICHT HEADER -->
-				<div class="row mainview_traincoach">
-					<div class="row mainview_traincoach_panelheader">
-						 <h4>Actieve Wagons</h4>
-					</div>
-				</div>
-				<c:choose>
-				<c:when test="#{workplaceController.findActiveTrainCoaches().size() == 0}">
-					<em>Er zijn momenteel geen wagons die inspectie nodig hebben in deze staanplaats.</em>
-				</c:when>
-				<c:otherwise>
-					<!-- WAGONS OVERZICHT -->
-					<c:set var="workplace" value="#{workplaceController.currentWorkplace}"/>
-					<c:forEach var="traincoach" items="#{workplaceController.findActiveTrainCoaches()}">
-						<!-- WAGON OVERZICHT -->
-						<div class="row mainview_traincoach">
-							<div class="col-sm-4 mainview_wagon_header">
-								<h3>
-									<h:link value="#{traincoach.type} - #{traincoach.name}" 
-											outcome="traincoach.xhtml?id=#{traincoach.id}&amp;psdid=0"/>
-								</h3>
-							</div>
-							<div class="col-sm-8">
-								<h4>Actieve problemen</h4>
-								<ul>
-									<c:forEach var="issue" 
-											   items="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id)}">
-										<li><h:outputText value="#{issue.descr}"></h:outputText></li>
-									</c:forEach>
-								</ul>
-								<h4>Afgewerkte problemen</h4>
-								<ul>
-									<c:forEach var="issue" 
-											   items="#{workplaceController.findClosedIssuesByTraincoachId(traincoach.id)}">
-										<li><h:outputText value="#{issue.descr}"></h:outputText></li>
-									</c:forEach>
-								</ul>
-							</div>
-					    </div> <!-- END WAGON OVERZICHT -->
-				    </c:forEach> <!-- END WAGONS OVERZICHT -->
-			    </c:otherwise>
-				</c:choose>
-			    
-			</div> <!-- END MAIN PANEL-LARGE-LEFT -->
-                    
-                    <div class="col-sm-5"> <!-- TODO -->
-                        <div class="row">
-							<div class="col-sm-12 mainview_panel" id="map_size">
-								<div id="map">
+			<div class="col-sm-6 ">
+				<div class="row">
+					<div class="col-sm-12 pad">
+						<div class="mainview_panel_large">
+
+							<!-- HEADER -->
+							<div class="row mainview_traincoach">
+								<div class="col-sm-12 pad mainview_traincoach_panelheader">
+									<h4>Actieve Wagons</h4>
 								</div>
 							</div>
-							
-							<!-- OVERZICHT TECHNICI -->
-							<div class="col-sm-12 mainview_panel">
-								<c:forEach var="mechanic" items="#{workplaceController.findMechanicsOfCurrentWorkplace()}">
-								<!-- TECHNICUS -->
-								<div class="mainview_issue row">
-									<div class="col-sm-4 dont-break-out">
-										<b>#{mechanic.name}</b>
+
+							<c:choose>
+								<c:when
+									test="#{workplaceController.findActiveTrainCoaches().size() == 0}"
+								>
+									<em>Er zijn momenteel geen wagons die inspectie nodig
+										hebben in deze staanplaats.</em>
+								</c:when>
+								<c:otherwise>
+									<!-- WAGONS OVERZICHT -->
+									<div class="row content">
+										<div class="col-sm-12 pad">
+											<c:set var="workplace"
+												value="#{workplaceController.currentWorkplace}"
+											/>
+											<c:forEach var="traincoach"
+												items="#{workplaceController.findActiveTrainCoaches()}"
+											>
+												<!-- WAGON OVERZICHT -->
+												<div class="row mainview_traincoach">
+													<div class="col-sm-4 mainview_wagon_header">
+														<h3>
+															<h:link value="#{traincoach.type} - #{traincoach.name}"
+																outcome="traincoach.xhtml?id=#{traincoach.id}"
+															/>
+														</h3>
+													</div>
+													<div class="col-sm-8">
+														<h4>Actieve problemen</h4>
+														<ul>
+															<c:forEach var="issue"
+																items="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id)}"
+															>
+																<li><h:outputText value="#{issue.descr}"></h:outputText></li>
+															</c:forEach>
+														</ul>
+														<h4>Afgewerkte problemen</h4>
+														<ul>
+															<c:forEach var="issue"
+																items="#{workplaceController.findClosedIssuesByTraincoachId(traincoach.id)}"
+															>
+																<li><h:outputText value="#{issue.descr}"></h:outputText></li>
+															</c:forEach>
+														</ul>
+													</div>
+												</div>
+												<!-- END WAGON OVERZICHT -->
+											</c:forEach>
+											<!-- END WAGONS OVERZICHT -->
+										</div>
 									</div>
-		                            <div class="col-sm-8">
-									<c:forEach var="activeIssue"
-										items="#{workplaceController.findActiveIssuesByMechanicId(mechanic.id)}">
-										<li><h:outputText
-												value="#{activeIssue.status}: #{activeIssue.descr}" /></li>
-									</c:forEach>
-								</div>
-		                        </div> <!-- END TECHNICUS -->
-		                        </c:forEach>
-							</div> <!-- END OVERZICHT TECHNICI -->
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
-				</div> <!-- END MAIN ROW -->
-	
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" type="text/javascript"></script>
-		<script src="js/bootstrap.min.js" type="text/javascript" ></script>
-	    <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
+				</div>
+			</div>
+			<!-- END MAIN PANEL-LARGE-LEFT -->
+
+			<!-- MAINVIEW PANEL RIGHT SIDE -->
+			<div class="col-sm-6">
+				<div class="row">
+					<div class="col-sm-12 pad">
+						<div class="mainview_panel_large">
+
+							<!-- MAP HEADER & MAP -->
+
+							<div class="row mainview_traincoach">
+								<div class="col-sm-12 pad mainview_traincoach_panelheader">
+									<h4>Kaart</h4>
+								</div>
+							</div>
+							<div class="row">
+								<div id="map_size">
+									<div id="map"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-12 pad">
+							<div class="mainview_panel_large">
+
+								<!-- OVERZICHT TECHNICI -->
+
+								<!-- OVERZICHT TECHNICI HEADER-->
+								<div class="row mainview_traincoach">
+									<div class="col-sm-12 pad mainview_traincoach_panelheader">
+										<h4>Technici</h4>
+									</div>
+								</div>
+								<!-- OVERZICHT TECHNICI CONTENT-->
+								<div class="row content">
+									<div class="col-sm-12 pad">
+										<c:forEach var="mechanic"
+											items="#{workplaceController.findMechanicsOfCurrentWorkplace()}"
+										>
+											<!-- TECHNICUS -->
+											<div class="mainview_issue row">
+												<div class="col-sm-4 dont-break-out">
+													<b>#{mechanic.name}</b>
+												</div>
+												<div class="col-sm-8">
+													<c:forEach var="activeIssue"
+														items="#{workplaceController.findActiveIssuesByMechanicId(mechanic.id)}"
+													>
+														<li><h:outputText
+																value="#{activeIssue.status}: #{activeIssue.descr}"
+															/></li>
+													</c:forEach>
+												</div>
+											</div>
+											<!-- END TECHNICUS -->
+										</c:forEach>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- END OVERZICHT TECHNICI -->
+					</div>
+				</div>
+			</div>
+			<!-- MAINVIEW PANEL RIGHT SIDE END-->
+		</div>
+		<!-- END MAIN ROW -->
+
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"
+			type="text/javascript"
+		></script>
+		<script src="js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
 		<script src="js/underscore-min.js" type="text/javascript"></script>
-	    <script src="js/extra_javascript2.js" type="text/javascript"></script>
-	</ui:define>	
+		<script src="js/extra_javascript2.js" type="text/javascript"></script>
+	</ui:define>
 </ui:composition>
 </html>

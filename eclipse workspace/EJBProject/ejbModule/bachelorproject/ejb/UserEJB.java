@@ -128,30 +128,6 @@ public class UserEJB
 	}
 	
 	/**
-	 * Finds the user provided by it's id and update the other field if needed.
-	 * 
-	 * @author Pieter Delobelle
-	 * @param user The User object to be updated in persistence.
-	 */
-	public void updateUser(User user)
-	{
-		EntityManager em = ems.getEntityManager();
-		em.getTransaction().begin();
-
-		//User u = em.find(User.class, user.getId());
-		
-		//If the above find function returns a valid user (not null), we will remove (detach) it.
-		//if (u != null)
-		//{
-			em.merge(user);
-		//}
-		
-		em.getTransaction().commit();
-		
-		em.close();
-	}
-	
-	/**
 	 * Find all the users with a provided UserType
 	 * 
 	 * @author Pieter Delobelle
@@ -167,5 +143,25 @@ public class UserEJB
 					.collect(Collectors.toList());
 		return ls;	
 		
+	}
+	
+	/**
+	 * If for some reason your User object became detached from
+	 * the persistensce context, you can merge it here. 
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param user The user object to merge.
+	 */
+	public void updateUser(User user)
+	{
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+
+		em.merge(user);
+		
+		em.getTransaction().commit();
+		
+		em.close();
 	}
 }

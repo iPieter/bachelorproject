@@ -29,11 +29,10 @@
 					<ui:fragment
 						rendered="#{authenticationController.hasAdminAccess()}">
 						<li class="active"><a href="admin.xhtml">Gebruikers</a></li>
-						<li><a href="alter_workplaces.xhtml">Werkplaatsen</a></li>
+						<li><a href="alter_workplaces.xhtml">Stelplaats</a></li>
 					</ui:fragment>
 					<ui:fragment
 						rendered="#{authenticationController.hasOperatorAccess()}">
-
 						<li class="active"><a href="index.xhtml">Dashboard</a></li>
 						<li><a href="live_train_overview.xhtml">Live Tracking</a></li>
 					</ui:fragment>
@@ -53,11 +52,20 @@
 							class="caret"></span>
 					</a>
 						<ul class="dropdown-menu">
-							<li><a href="change_password.xhtml">Wachtwoord
-									veranderen</a></li>
+							<li><a href="change_account.xhtml">
+								<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+								Account
+							</a></li>	
+							<li><a href="change_password.xhtml">
+								<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+								Wachtwoord veranderen
+							</a></li>	
 							<li role="separator" class="divider"></li>
 							<li><h:commandLink
-									action="#{authenticationController.logout()}">Afmelden</h:commandLink></li>
+									action="#{authenticationController.logout()}">
+										<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+										Afmelden
+									</h:commandLink></li>
 						</ul></li>
 
 				</ul>

@@ -34,7 +34,7 @@ $.get( "rest/processed_data/" + id, function( data )
 	for( var i = 0; i < data.lat.length; i++ )
 		latlngs.push( [ (data.lat[i] + data.lat_off * 0 ) * 180.0 / Math.PI , (data.lng[i]  + data.lng_off * 0)  * 180.0 / Math.PI ] );
 
-	var polyline = L.polyline(latlngs, {color: 'black', smoothFactor:10}).addTo(map);
+	var polyline = L.polyline(latlngs, {color: 'black', smoothFactor:0.10}).addTo(map);
     map.fitBounds(polyline.getBounds());
 	
 }).fail( function( error )

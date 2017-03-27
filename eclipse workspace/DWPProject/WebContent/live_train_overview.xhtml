@@ -1,105 +1,88 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html 
-	xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
 
-<h:head>
-	<meta charset="utf-8"/>
-	
-	<!-- LOGIN REDIRECT -->
-    <ui:fragment rendered="#{!authenticationController.hasOperatorAccess()}">
-		<meta http-equiv="refresh" content="0; url=login.xhtml"/>
-    </ui:fragment>
-    
-    <f:metadata>
-		<f:viewAction action="#{liveTrainOverviewController.loadPage()}"/>
-	</f:metadata>
-	
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-	<link href="css/bootstrap.min.css" rel="stylesheet"/>
-	<link href="css/extra_layout.css" rel="stylesheet"/>
-	<link rel="stylesheet" href="css/leaflet.css" />
-	<link rel="stylesheet" href="css/extra_layout.css" />
-	<link rel="stylesheet" href="css/login.css" />
-	<title><ui:insert name="title">Live train tracking</ui:insert></title>
-</h:head>
+<ui:composition template="templates/user_layout.xhtml">
 
-<!-- Renders when logged in -->
-<h:body rendered="#{authenticationController.hasOperatorAccess()}">
+	<ui:define name="title">Live tracking</ui:define>
 
-	<!-- FIXED NAVBAR -->
-	<ui:include src="templates/navbar.xhtml"/>
-	
 	<ui:define name="nav_content">
 		<li><a href="index.xhtml">Dashboard</a></li>
-		<li class="active"><a href="live_train_overview.xhtml">Live Tracking</a></li>
-	</ui:define> 
-	
-	<div class="container-fluid">
-		<div class="col-sm-12 mainview_panel_large">
-	    	<div class="row mainview_traincoach">
-				<div class="row mainview_traincoach_panelheader">
-					<h4>Actieve ritten</h4>
-				</div>
-				<c:choose>
-				<c:when test="#{liveTrainOverviewController.liveTrains.size() == 0}">
-					<em>Er zijn momenteel geen actieve ritten</em>
-				</c:when>
-				<c:otherwise>
-				  <h:form>
-					<h:dataTable class="table"
-						value="#{liveTrainOverviewController.liveTrains}" var="sensordata">
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Model - Naam" />
-							</f:facet>
-							<h:outputText value="#{sensordata.traincoach.type} - #{sensordata.traincoach.name}" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Rit" />
-							</f:facet>
-							<h:outputText value="#{sensordata.track}" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Vertrektijd" />
-							</f:facet>
-							<h:outputText value="#{sensordata.date}" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Acties" />
-							</f:facet>
-							<h:outputLink value="live_train.xhtml" class="btn btn-default">
-								<h:outputText value="Volg live" />
-								<f:param name="id" value="#{sensordata.id}" />
-							</h:outputLink>
-						</h:column>
-					</h:dataTable>
-				</h:form>
-				</c:otherwise>
-				</c:choose>  
-			</div>
-		</div>
-    </div>
-</h:body>
+		<li class="active"><a href="live_train_overview.xhtml">Live
+				Tracking</a></li>
+	</ui:define>
 
-<!-- Renders when not logged in and redirect doesnt' work -->
-<h:body rendered="#{!authenticationController.hasOperatorAccess()}">
-	<div class="container-fluid main_view">
-		<div class="row">
+	<ui:define name="mainview_content">
+
+		<div class="container">
+		
 			<div class="col-sm-10 col-sm-offset-1">
-				<h1>You're not authorized for this page!</h1>
-				<h2>It seems like we failed to redirect you to the <a href="login.xhtml">login page</a>.</h2>
+				<div class="row">
+			
+					<div class="panel mainview_panel_large" style="margin-top: 20px;">
+
+						<!-- Default panel contents -->
+						<div class="panel-heading">
+							<span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
+							Live wagons
+						</div>
+					
+					<c:choose>
+						<c:when
+							test="#{liveTrainOverviewController.liveTrains.size() == 0}"
+						>
+							<em>Er zijn momenteel geen actieve ritten</em>
+						</c:when>
+						<c:otherwise>
+							<h:form>
+								<h:dataTable class="table"
+									value="#{liveTrainOverviewController.liveTrains}"
+									var="sensordata"
+								>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="Model - Naam" />
+										</f:facet>
+										<div class="breathing"></div>
+										<h:outputText
+											value="#{sensordata.traincoach.type} - #{sensordata.traincoach.name}"
+										/>
+									</h:column>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="Rit" />
+										</f:facet>
+										<h:outputText value="#{sensordata.track}" />
+									</h:column>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="Vertrektijd" />
+										</f:facet>
+										<h:outputText value="#{sensordata.date}" />
+									</h:column>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="Acties" />
+										</f:facet>
+										<h:outputLink value="live_train.xhtml" class="btn btn-default">
+											<h:outputText value="Volg live" />
+											<f:param name="id" value="#{sensordata.id}" />
+										</h:outputLink>
+									</h:column>
+								</h:dataTable>
+							</h:form>
+						</c:otherwise>
+					</c:choose>
+				</div>
 			</div>
 		</div>
-	</div>
-</h:body>
+</div>
+	</ui:define>
+</ui:composition>
 </html>
