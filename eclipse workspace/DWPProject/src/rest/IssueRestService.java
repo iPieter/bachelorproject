@@ -1,5 +1,7 @@
 package rest;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -37,5 +39,20 @@ public class IssueRestService
 			return Response.status( Status.NOT_FOUND ).build();
 		
 		return Response.ok( asset ).build();
+	}
+	
+	/**
+	 * 	Retrieves a list of active Issue objects for the user
+	 * */
+	@GET
+	@Path( "all_for_user/{userid}" )
+	@Produces( "text/json" )
+	public Response getActiveIssueList( @PathParam( "userid" ) int userID )
+	{
+		List<Issue> assignedIssues = issueEJB.findAssignedIssuesByMechanicId( userID );
+		List<Issue> inProgressIssues = issueEJB.findInProgressIssuesByMechanicId( userID );
+		assignedIssues.addAll( inProgressIssues );
+		
+		return Response.ok( assignedIssues ).build();
 	}
 }
