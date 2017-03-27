@@ -20,6 +20,7 @@ import javax.persistence.TypedQuery;
 
 import bachelorproject.model.TrainCoach;
 import bachelorproject.model.Workplace;
+import bachelorproject.model.issue.Issue;
 import bachelorproject.model.sensordata.LiveSensorData;
 import bachelorproject.model.sensordata.LiveSensorDataEntry;
 import bachelorproject.model.sensordata.ProcessedSensorData;
@@ -41,6 +42,8 @@ public class LiveSensorDataEJB
 	private EntityManagerSingleton ems;
 	@Inject
 	private WorkplaceEJB workplaceEJB;
+	@Inject
+	private IssueEJB issueEJB;
 	
 	/**
 	 * 	Persists a LiveSensorData object to the database if it is correct
@@ -216,7 +219,12 @@ public class LiveSensorDataEJB
 			
 			sensordata.getEntries().clear();
 			
-			//TODO: REMOVE ISSUES FROM LSD TO PSD ( CONSTRAINT_ENGINE )
+			List<Issue> issues = issueEJB.getIssuesBySensorDataID( sensordata.getId() );
+			for( Issue i : issues )
+			{
+				i.setData( data );
+				em.merge( i );
+			}
 			
 			em.merge( sensordata );
 			em.remove( sensordata );

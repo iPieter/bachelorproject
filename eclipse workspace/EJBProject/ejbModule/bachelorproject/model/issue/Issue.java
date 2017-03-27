@@ -166,7 +166,7 @@ public class Issue implements Serializable
 		return data;
 	}
 
-	public void setData( ProcessedSensorData data )
+	public void setData( SensorData data )
 	{
 		this.data = data;
 	}

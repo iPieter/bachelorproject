@@ -285,4 +285,25 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		
 		return success;
 	}
+	
+	/**
+	 * 	Sensor data can be coupled to different types: live & processed.
+	 *  When switching from live to processed, these must be transfer to the new object.
+	 *  This method allows to fetch those issues by sensordata ID.
+	 *  @param id The id of the sensordata ID.
+	 * */
+	public List<Issue> getIssuesBySensorDataID( int sensorDataID )
+	{
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+		
+		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_SENSOR_ID, Issue.class );
+		
+		List<Issue> result = query.getResultList();
+		
+		em.getTransaction().commit();
+		em.close();
+		
+		return result;
+	}
 }

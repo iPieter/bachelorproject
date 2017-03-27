@@ -82,8 +82,6 @@ public class MatlabProcessor
 	/** Stores the location of the matlab directory files. */
 	private File matlabDirectory = new File( System.getProperty( "user.home" ) + "/project_televic/matlab_files" );
 
-	private TrainCoach currentTraincoach;
-	
 	/**
 	 * 	Loads the script and tests the matlab folder on startup.
 	 *  @see testFolderAndDatabase()
@@ -266,10 +264,10 @@ public class MatlabProcessor
 
 			writer.flush();
 			writer.close();
-			writeToDatabase( name, em );
+			ProcessedSensorData result = writeToDatabase( name, em );
 			
 			ConstraintEngine ce = cef.getConstraintEngine();
-			ce.start( currentTraincoach );
+			ce.start( result );
 			for( int i = 0; i < roll.length; i++ )
 			{
 				ConstraintEngineData data = new ConstraintEngineData();
@@ -300,7 +298,7 @@ public class MatlabProcessor
 	 *  @param fileName A correct filename.
 	 *  @param em A valid(open) EntityManager object.
 	 * */
-	private void writeToDatabase( String fileName, EntityManager em )
+	private ProcessedSensorData writeToDatabase( String fileName, EntityManager em )
 	{
 		// System.out.println( "WRITING TO DB" );
 		String split[] = fileName.split( "\\." );
@@ -383,7 +381,7 @@ public class MatlabProcessor
 		
 		tx.commit();
 		
-		currentTraincoach = trainCoach;
+		return data;
 	}
 
 	/**

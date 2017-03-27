@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import bachelorproject.ejb.ConstraintEJB;
+import bachelorproject.ejb.IssueEJB;
 import bachelorproject.model.TrainCoach;
 import bachelorproject.model.constraint_engine.Constraint;
 import bachelorproject.model.constraint_engine.ConstraintElement;
@@ -14,6 +15,7 @@ import bachelorproject.model.constraint_engine.LocationConstraintElement;
 import bachelorproject.model.constraint_engine.ModelTypeConstraintElement;
 import bachelorproject.model.constraint_engine.ValueConstraintElement;
 import bachelorproject.model.issue.Issue;
+import bachelorproject.model.sensordata.SensorData;
 
 /**
  * 	This class tests the supplied data for all the constraints and generates new Issues
@@ -23,6 +25,7 @@ import bachelorproject.model.issue.Issue;
 public class ConstraintEngine
 {
 	private ConstraintEJB constraintEJB;
+	private IssueEJB issueEJB;
 	
 	//Objects needed for the constraint engine to work
 	private final int ID;
@@ -34,7 +37,7 @@ public class ConstraintEngine
 	private HashSet<Constraint> usedConstraints;
 	
 	//Objects from persistence context
-	private TrainCoach currentTraincoach;
+	private SensorData data;
 	private Issue currentIssue;
 	private List<Issue> issues;
 	private List<Constraint> constraints;
@@ -47,14 +50,15 @@ public class ConstraintEngine
 		valueTester = new ConstraintEngineValueTester();
 		currentIssueDescription = "";
 		constraintEJB = parent.getConstraintEJB();
+		issueEJB = parent.getIssueEJB();
 		issues = new ArrayList<>();
 		usedConstraints = new HashSet<>();
 	}
 	
 	@PostConstruct
-	public void start( TrainCoach trainCoach )
+	public void start( SensorData data )
 	{
-		currentTraincoach = trainCoach;
+		this.data = data;
 		constraints = constraintEJB.getAllConstraints();
 		currentIssue = null;
 		currentIssueDescription = "";
@@ -72,20 +76,25 @@ public class ConstraintEngine
 
 		for( Constraint c : constraints )
 		{
-			boolean isIssue = true;
-			currentIssue = new Issue();
-			currentIssueDescription = "";
-			for( ConstraintElement ce : c.getConstraints() )
-				isIssue = isIssue && ce.visit( this );
-
-			if( isIssue )
+			if( !usedConstraints.contains( c ) )
 			{
-				currentIssue.setDescr( currentIssueDescription );
-				issues.add( currentIssue );
-				
-				System.out.println( "============================================" );
-				System.out.println( currentIssueDescription );
-				System.out.println( "============================================" );
+				boolean isIssue = true;
+				currentIssue = new Issue();
+				currentIssueDescription = c.getName() + System.getProperty( "line.separator" );
+				for( ConstraintElement ce : c.getConstraints() )
+					isIssue = isIssue && ce.visit( this );
+
+				if( isIssue )
+				{
+					currentIssue.setDescr( currentIssueDescription );
+					issues.add( currentIssue );
+					issueEJB.createIssue( currentIssue );
+					
+					System.out.println( "============================================" );
+					System.out.println( currentIssueDescription );
+					System.out.println( "============================================" );
+					usedConstraints.add( c );
+				}
 			}
 		}
 	}
@@ -104,9 +113,9 @@ public class ConstraintEngine
 	
 	public boolean visit( ModelTypeConstraintElement mtce )
 	{
-		if( mtce.getModelType().equals( currentTraincoach.getType() ) )
+		if( mtce.getModelType().equals( data.getTraincoach().getType() ) )
 		{
-			currentIssueDescription += "Voor: " + currentTraincoach.getType() + "-" + currentTraincoach.getName() + System.getProperty( "line.separator" );
+			currentIssueDescription += "Voor: " + data.getTraincoach().getType() + "-" + data.getTraincoach().getName() + System.getProperty( "line.separator" );
 			return true;
 		}
 		return false;
@@ -165,7 +174,7 @@ public class ConstraintEngine
 	 * */
 	public void stop()
 	{
-		currentTraincoach = null;
+		data = null;
 		currentIssue = null;
 		ceData = null;
 		issues.clear();

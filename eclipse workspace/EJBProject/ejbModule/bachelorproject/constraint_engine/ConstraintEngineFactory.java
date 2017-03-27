@@ -8,6 +8,7 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 
 import bachelorproject.ejb.ConstraintEJB;
+import bachelorproject.ejb.IssueEJB;
 
 /**
  * 	This class is used to reliably supply multiple ConstraintEngine objects.
@@ -21,6 +22,8 @@ public class ConstraintEngineFactory
 {
 	@Inject
 	private ConstraintEJB constraintEJB;
+	@Inject
+	private IssueEJB issueEJB;
 	
 	public static final int CEF_SIZE = 100;
 	private ConstraintEngine [] constraintEngines;
@@ -97,5 +100,10 @@ public class ConstraintEngineFactory
 		if ( !Arrays.equals( constraintEngines, other.constraintEngines ) ) return false;
 		if ( !Arrays.equals( freeEngines, other.freeEngines ) ) return false;
 		return true;
+	}
+
+	public IssueEJB getIssueEJB()
+	{
+		return issueEJB;
 	}
 }
