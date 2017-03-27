@@ -147,10 +147,9 @@ function setModal(){
 	
 	if(datapointSelected == true){
 		/*Value to display in modal */
-		
 		$('#modal-form\\:selected_time_value').val(xTimeVal + " ms");
-		$('#modal-form\\:selected_lat_value').val(latlngs[selectedIndex][0].toFixed(3));
-		$('#modal-form\\:selected_lon_value').val(latlngs[selectedIndex][1].toFixed(3));
+		$('#modal-form\\:selected_lat_value').val(latlngs[selectedIndex][0].toFixed(4));
+		$('#modal-form\\:selected_lon_value').val(latlngs[selectedIndex][1].toFixed(4));
 		
 		/*Selecting Modal*/
 		$('#create_issue_button').attr("data-target","#assignModal");
