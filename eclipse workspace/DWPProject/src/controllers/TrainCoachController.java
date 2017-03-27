@@ -60,6 +60,8 @@ public class TrainCoachController implements Serializable
 	@NotNull
 	private String mechanicID = "";
 
+	private String lon;
+	private String lat;
 	/**
 	 * 	This method gets called when the page first loads.
 	 *  <p>
@@ -142,10 +144,10 @@ public class TrainCoachController implements Serializable
 		issue.setStatus( IssueStatus.ASSIGNED );
 		issue.setAssignedTime(now);
 		
-		//TODO set COORDINATES dynamicly
-		issue.setGpsLat(50);
-		issue.setGpsLon(50);
-		
+		//TODO TEST
+		issue.setGpsLat(Double.parseDouble(lat));
+		issue.setGpsLon(Double.parseDouble(lon));
+		System.out.println("Coordinates:"+lat+","+lon);
 		issueEJB.createIssue( issue );
 		
 		return "traincoach.xhtml?faces-redirect=true&id=" + currentTrainCoach.getId() + "&psdid=0";
@@ -200,81 +202,6 @@ public class TrainCoachController implements Serializable
 	public List<Issue> findAssignedIssuesByMechanicId( int mechanicId ){
 		return issueEJB.findAssignedIssuesByMechanicId(mechanicId);
 	}
-
-	// GETTERS & SETTERS
-	public Workplace getCurrentWorkplace()
-	{
-		return currentWorkplace;
-	}
-
-	public List<Workplace> getAllWorkplaces()
-	{
-		return workplaceEJB.getAllWorkplaces();
-	}
-
-	public TrainCoach getCurrentTrainCoach()
-	{
-		return currentTrainCoach;
-	}
-
-	public List<User> getMechanics()
-	{
-		return mechanics;
-	}
-	
-	public String getDescription()
-	{
-		return description;
-	}
-	
-	public void setDescription( String description )
-	{
-		this.description = description;
-	}
-
-	public String getMechanicID()
-	{
-		return mechanicID;
-	}
-
-	public void setMechanicID( String mechanicID )
-	{
-		this.mechanicID = mechanicID;
-	}
-
-	public ProcessedSensorData getCurrentSensorData()
-	{
-		return currentSensorData;
-	}
-
-	public void setCurrentSensorData( ProcessedSensorData currentSensorData )
-	{
-		this.currentSensorData = currentSensorData;
-	}
-	
-	public int getCurrentTrainCoachID() {
-		return currentTrainCoachID;
-	}
-
-	public void setCurrentTrainCoachID(int currentTrainCoachID) {
-		this.currentTrainCoachID = currentTrainCoachID;
-	}
-
-	/**
-	 * @return the currentpsdID
-	 */
-	public int getCurrentpsdID()
-	{
-		return currentpsdID;
-	}
-
-	/**
-	 * @param currentpsdID the currentpsdID to set
-	 */
-	public void setCurrentpsdID( int currentpsdID )
-	{
-		this.currentpsdID = currentpsdID;
-	}
 	
 	public String sensorDataToPrettyTime()
 	{
@@ -290,5 +217,108 @@ public class TrainCoachController implements Serializable
 	{
 		return currentpsdID != 0;
 	}
+	
+	// GETTERS & SETTERS
+		public Workplace getCurrentWorkplace()
+		{
+			return currentWorkplace;
+		}
+
+		public List<Workplace> getAllWorkplaces()
+		{
+			return workplaceEJB.getAllWorkplaces();
+		}
+
+		public TrainCoach getCurrentTrainCoach()
+		{
+			return currentTrainCoach;
+		}
+
+		public List<User> getMechanics()
+		{
+			return mechanics;
+		}
+		
+		public String getDescription()
+		{
+			return description;
+		}
+		
+		public void setDescription( String description )
+		{
+			this.description = description;
+		}
+
+		public String getMechanicID()
+		{
+			return mechanicID;
+		}
+
+		public void setMechanicID( String mechanicID )
+		{
+			this.mechanicID = mechanicID;
+		}
+
+		public ProcessedSensorData getCurrentSensorData()
+		{
+			return currentSensorData;
+		}
+
+		public void setCurrentSensorData( ProcessedSensorData currentSensorData )
+		{
+			this.currentSensorData = currentSensorData;
+		}
+		
+		public int getCurrentTrainCoachID() {
+			return currentTrainCoachID;
+		}
+
+		public void setCurrentTrainCoachID(int currentTrainCoachID) {
+			this.currentTrainCoachID = currentTrainCoachID;
+		}
+
+		/**
+		 * @return the currentpsdID
+		 */
+		public int getCurrentpsdID()
+		{
+			return currentpsdID;
+		}
+
+		/**
+		 * @param currentpsdID the currentpsdID to set
+		 */
+		public void setCurrentpsdID( int currentpsdID )
+		{
+			this.currentpsdID = currentpsdID;
+		}
+
+		/**
+		 * @return the lon
+		 */
+		public String getLon() {
+			return lon;
+		}
+
+		/**
+		 * @param lon the lon to set
+		 */
+		public void setLon(String lon) {
+			this.lon = lon;
+		}
+
+		/**
+		 * @return the lat
+		 */
+		public String getLat() {
+			return lat;
+		}
+
+		/**
+		 * @param lat the lat to set
+		 */
+		public void setLat(String lat) {
+			this.lat = lat;
+		}
 }
 

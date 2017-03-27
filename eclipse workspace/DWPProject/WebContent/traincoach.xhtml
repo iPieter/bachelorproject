@@ -136,9 +136,9 @@
 
 	<!-- MAINVIEW CONTENT -->
 	<ui:define name="mainview_content">
-
 		<div class="col-sm-10">
 			<h:messages styleClass="alert alert-warning" />
+
 		</div>
 
 		<h1 class="pad">
@@ -181,8 +181,9 @@
 				</div>
 			</div>
 		</div>
+		
+		<!-- ISSUE OVERVIEW & ASSIGNMENT -->
 		<div class="row">
-
 			<div class="col-sm-6 ">
 				<div class="row">
 					<div class="col-sm-12 pad">
@@ -204,10 +205,16 @@
 										<div class="col-sm-12 issue_bar">
 											<h:form class="issue_bar ">
 												<div class="btn-group center-block">
-													<button type="button" name="button"
-														class="btn btn-danger btn-large" data-toggle="modal"
-														data-target="#assignModal"
-													>Nieuwe herstelling</button>
+													<button 
+									          id="create_issue_button"
+									          type="button" 
+									          name="button"
+									          class="btn btn-danger btn-large" 
+									          data-toggle="modal"
+									          data-target="#assignModal"
+									          onclick="setModal()">
+									          Nieuwe herstelling
+							            </button>
 													<h:commandButton name="buttonApprove"
 														class="btn btn-success btn-large"
 														action="#{trainCoachController.setTrainCoachReviewed()}"
@@ -259,43 +266,89 @@
 				</div>
 			</div>
 		</div>
-
-		<div id="assignModal" class="modal fade" role="dialog" tabindex="10">
+			
+		<!-- MODAL ON NO POINT SELECTED -->
+		<div id="pickAPointModal" class="modal fade" role="dialog" tabindex="10">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<h:form class="form-group">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">Nieuwe herstelling</h4>
+							<h4 class="modal-title">Selecteer een punt!</h4>
 						</div>
 						<div class="modal-body">
-
-							<label class="control-label" for="description">Omschrijving
-								probleem:</label> <br />
-							<h:inputTextarea name="description" rows="8" cols="40" id="inputDescription"
-								class="form-control" value="#{trainCoachController.description}"></h:inputTextarea>
-							<br></br>
-							<label class="control-label" for="list_empl">Kies een
-								onderhoudstechnicus:</label>
-
-							<h:selectOneMenu value="#{trainCoachController.mechanicID}"
-								class="form-control"
-							>
-								<f:selectItems value="#{trainCoachController.mechanics}"
-									var="mechanic" itemValue="#{mechanic.id}"
-									itemLabel="#{mechanic.name} (#{mechanic.email})"
-								/>
-							</h:selectOneMenu>
-
+							
+							<div class="alert alert-danger" role="alert">
+								<p><b>Pas op!</b> Klik eerst op het punt in de grafiek waar het probleem zich voordoet.</p>
+								<p>Probeer dan opnieuw een herstelling te plaatsen.</p>
+							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default"
-								data-dismiss="modal"
-							>Sluit</button>
-							<h:commandButton class="btn btn-default btn-large"
-								action="#{trainCoachController.createIssue()}" type="submit"
-								value="Verstuur"
-							></h:commandButton>
+								data-dismiss="modal">Begrepen</button>
+						</div>
+					</h:form>
+				</div>
+
+			</div>
+		</div>
+		
+		<!-- MODAL ON SUCCESS -->
+		<div id="assignModal" class="modal fade" role="dialog" tabindex="10">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<h:form id="modal-form" class="form-group">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Nieuwe herstelling</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<label class="control-label" for="selected_time_value">Tijdstip van voorkomen</label>
+								<h:inputText id="selected_time_value">No Point Selected</h:inputText>
+							</div>
+							<div class="form-group">							
+								<label class="control-label" for="selected_lat_value">Locatie</label>
+								<div class="input-group">
+									<span class="input-group-addon">Lat</span>
+									<h:inputText 
+										value="#{trainCoachController.lat}"
+										id="selected_lat_value">No Point Selected
+									</h:inputText>
+									
+									<span class="input-group-addon">Lon</span>
+									<h:inputText 
+										value="#{trainCoachController.lon}"
+										id="selected_lon_value">No Point Selected
+									</h:inputText>
+								
+								</div>
+							</div>
+							<div class="form-group">							
+								<label class="control-label" for="description">Omschrijving probleem:</label>
+								<h:inputTextarea name="description" rows="8" cols="40"
+								class="form-control" value="#{trainCoachController.description}"></h:inputTextarea>
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="list_empl">Kies een onderhoudstechnicus:</label> 
+							
+								<h:selectOneMenu value="#{trainCoachController.mechanicID}"
+									class="form-control">
+									<f:selectItems value="#{trainCoachController.mechanics}"
+										var="mechanic" itemValue="#{mechanic.id}"
+										itemLabel="#{mechanic.name} (#{mechanic.email})" />
+								</h:selectOneMenu>
+							</div>
+							<h:messages />
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Sluit</button>
+								<h:commandButton 
+									class="btn btn-default btn-large"
+									action="#{trainCoachController.createIssue()}" 
+									type="submit"
+									value="Verstuur"/>
 						</div>
 					</h:form>
 				</div>

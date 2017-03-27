@@ -2,9 +2,13 @@ var SENSOR_DATA = null;
 var map = null;
 var marker = null;
 var latlngs = null;
-
+var index = null;
+var xTimeVal = null;
+var selectedIndex = null;
+var datapointSelected= false;
 var id = $("#current_traincoach").val();
 
+/* Map Setup */
 $.get( "rest/processed_data/" + id, function( data )
 {
 	SENSOR_DATA = data;
@@ -39,6 +43,7 @@ $.get( "rest/processed_data/" + id, function( data )
 	$( "#topleft" ).html( "<b>ERROR: Failed to load data</b>");
 });
 
+/* HighCharts Setup */
 function setView( input )
 {
 	var data = null;
@@ -60,7 +65,7 @@ function setView( input )
 	Highcharts.chart('topleft', 
 	{
         chart: {
-            zoomType: 'x'
+            zoomType: 'x',
         },
         title: {
             text: 'Gyroscoop: ' + title
@@ -92,7 +97,7 @@ function setView( input )
 	                       if( marker != null )
 	                    	   map.removeLayer( marker );
 	                       
-	                       var index = Math.round( (this.x / this.series.data.length) * latlngs.length );
+	                       index = Math.round( (this.x / this.series.data.length) * latlngs.length );
 	                       marker = L.circle( latlngs[ index ], 
 	                       { color: 'red',
                 	    	 fillColor: '#f03',
@@ -102,7 +107,13 @@ function setView( input )
 	                       marker.addTo( map );
 	                       $( "#current_speed" ).html( "<b>Snelheid: </b>" + SENSOR_DATA.speed[ index ].toFixed(3) );
 	                       $( "#current_accel" ).html( "<b>Versnelling: </b>" + SENSOR_DATA.accel[ index ].toFixed(3) );
-                        }
+                        },
+			    		click: function(e){
+							xTimeVal=e.point.x;
+							selectedIndex=index;
+							setDatapointSelected();
+							console.log("The graph value onClick:"+ xTimeVal + ", latlon: "+latlngs[selectedIndex]);
+						}
                     }
                 },
                 marker: {
@@ -117,13 +128,38 @@ function setView( input )
     });
 }
 
+/* Which data to display on Highcharts */
 $('input:radio').on('change', function()
 {
 	setView( $(this).context.id );
 });
 
+/*Set true if GPS time value of Issue is selected*/
+function setDatapointSelected(){
+	datapointSelected=true;
+	$('#isDatapointSelected').val("true");
+	console.log("datapointSelected="+datapointSelected);
+}
 
-
-
-
+/*Modal depends on Issue value selected*/
+function setModal(){
+	console.log("Entered setModal");
+	
+	if(datapointSelected == true){
+		/*Value to display in modal */
+		
+		$('#modal-form\\:selected_time_value').val(xTimeVal + " ms");
+		$('#modal-form\\:selected_lat_value').val(latlngs[selectedIndex][0].toFixed(3));
+		$('#modal-form\\:selected_lon_value').val(latlngs[selectedIndex][1].toFixed(3));
+		
+		/*Selecting Modal*/
+		$('#create_issue_button').attr("data-target","#assignModal");
+		console.log("Entered setModalHTML: if(true)");
+	}
+	else{
+		/*Selecting Modal*/
+		$('#create_issue_button').attr("data-target","#pickAPointModal");
+		console.log("Entered setModalHTML: if(false)");
+	}
+}
 
