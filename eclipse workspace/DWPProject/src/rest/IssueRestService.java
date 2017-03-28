@@ -10,6 +10,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import bachelorproject.ejb.IssueEJB;
 import bachelorproject.model.Issue;
 
@@ -43,6 +45,7 @@ public class IssueRestService
 	
 	/**
 	 * 	Retrieves a list of active Issue objects for the user
+	 *  @param userID The ID of a userID.
 	 * */
 	@GET
 	@Path( "all_for_user/{userid}" )
@@ -55,4 +58,20 @@ public class IssueRestService
 		
 		return Response.ok( assignedIssues ).build();
 	}
+	
+	/**
+	 * 	Retrieves a list of active Issue objects for the target TrainCoach
+	 *  @param traincoachID The ID of the TrainCoach
+	 * */
+	@GET
+	@Path( "get_by_traincoach_id/{traincoachID}" )
+	@Produces( "text/json" )
+	public Response getIssuesByTraincoachID( @PathParam( "traincoachID" ) int traincoachID )
+	{	
+		List<Issue> issues = issueEJB.findAssignedIssuesByTraincoachId( traincoachID );
+		issues.addAll( issueEJB.findInProgressIssuesByTraincoachId( traincoachID ) );
+		
+		return Response.ok( issues ).build();
+	}
+	
 }
