@@ -199,8 +199,8 @@ function loadData()
                     map.fitBounds(pathPolyline.getBounds(), 
                     	{
 
-                    		paddingTopLeft: [$("#left_panel").width(), $("#left_panel).height()"],
-                    		paddingBottomRight: [$("#right_panel").width(), $("#right_panel"").width()"]
+                    		paddingTopLeft: [$("#left_panel").width(), $("#left_panel").height()],
+                    		paddingBottomRight: [$("#right_panel").width(), $("#right_panel").width()]
 
                 		}); 
 
