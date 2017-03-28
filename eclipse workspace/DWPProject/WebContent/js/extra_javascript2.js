@@ -37,7 +37,8 @@ function setWorkplaceMapView( data )
 	//Marker Layout
 	var icon = L.icon({
 	    iconUrl: 'img/marker-icon.png',
-	    shadowUrl: 'img/marker-shadow.png'
+	    shadowUrl: 'img/marker-shadow.png',
+	    popupAnchor:  [16, 0] // point from which the popup should open relative to the iconAnchor
 	});
 	
 	//Adding Markers to Map
