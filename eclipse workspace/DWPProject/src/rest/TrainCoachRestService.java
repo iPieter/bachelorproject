@@ -1,5 +1,7 @@
 package rest;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -40,4 +42,15 @@ public class TrainCoachRestService
 		return Response.ok( traincoach ).build();
 	}
 	
+	/**
+	 * 	Retrieves a list of all traincoaches
+	 * */
+	@GET
+	@Path( "all" )
+	@Produces( "text/json" )
+	public Response getAllTrainCoaches( )
+	{
+		List<TrainCoach> traincoaches = traincoachEJB.getAllTraincoaches();
+		return Response.ok( traincoaches ).build();
+	}
 }
