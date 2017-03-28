@@ -142,10 +142,10 @@
 
 		</div>
 
-		<h1 class="pad">
+		<h2 class="pad">
 			<h:outputText value="Rit: #{trainCoachController.currentSensorData.track} - #{trainCoachController.sensorDataToPrettyTime()}" />
 
-		</h1>
+		</h2>
 		<input type="hidden"
 			value="#{trainCoachController.currentSensorData.id}"
 			id="current_traincoach"
@@ -235,7 +235,7 @@
 													items="#{trainCoachController.findActiveIssuesByMechanicId(mechanic.id)}"
 												>
 													<li><h:outputText
-															value="#{activeIssue.status}: #{activeIssue.descr}"
+															value="#{activeIssue.status.descr}: #{activeIssue.descr}"
 														/></li>
 												</c:forEach>
 											</div>
@@ -309,7 +309,8 @@
 								<h:inputText 
 									class="form-control" 
 									id="selected_time_value"
-									a:disabled="disabled">
+									>
+
 									No Point Selected
 								</h:inputText>
 							</div>
@@ -320,8 +321,7 @@
 									<h:inputText 
 										class="form-control"
 										value="#{trainCoachController.lat}"
-										id="selected_lat_value"
-										a:disabled="disabled">
+										id="selected_lat_value">
 										No Point Selected
 									</h:inputText>
 									
@@ -329,8 +329,7 @@
 									<h:inputText 
 										class="form-control"
 										value="#{trainCoachController.lon}"
-										id="selected_lon_value"
-										a:disabled="disabled">
+										id="selected_lon_value">
 										No Point Selected
 									</h:inputText>
 								

@@ -174,12 +174,15 @@
 						<div class="mainview_panel_large">
 
 							<!-- MAP HEADER & MAP -->
-
 							<div class="row mainview_traincoach">
 								<div class="col-sm-12 pad mainview_traincoach_panelheader">
 									<h4>Kaart</h4>
 								</div>
 							</div>
+							<input type="hidden"
+								value="#{workplaceController.currentWorkplace.id}"
+								id="current_workplace"
+							/>
 							<div class="row">
 								<div id="map_size">
 									<div id="map"></div>

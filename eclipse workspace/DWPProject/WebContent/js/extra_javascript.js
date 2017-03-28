@@ -34,7 +34,7 @@ $.get( "rest/processed_data/" + id, function( data )
 	for( var i = 0; i < data.lat.length; i++ )
 		latlngs.push( [ (data.lat[i] + data.lat_off * 0 ) * 180.0 / Math.PI , (data.lng[i]  + data.lng_off * 0)  * 180.0 / Math.PI ] );
 
-	var polyline = L.polyline(latlngs, {color: 'black', smoothFactor:0.10}).addTo(map);
+	var polyline = L.polyline(latlngs, {color: '#b0cb1b', smoothFactor:0.10}).addTo(map);
     map.fitBounds(polyline.getBounds());
 	
 }).fail( function( error )
@@ -147,10 +147,9 @@ function setModal(){
 	
 	if(datapointSelected == true){
 		/*Value to display in modal */
-		
 		$('#modal-form\\:selected_time_value').val(xTimeVal + " ms");
-		$('#modal-form\\:selected_lat_value').val(latlngs[selectedIndex][0].toFixed(3));
-		$('#modal-form\\:selected_lon_value').val(latlngs[selectedIndex][1].toFixed(3));
+		$('#modal-form\\:selected_lat_value').val(latlngs[selectedIndex][0].toFixed(4));
+		$('#modal-form\\:selected_lon_value').val(latlngs[selectedIndex][1].toFixed(4));
 		
 		/*Selecting Modal*/
 		$('#create_issue_button').attr("data-target","#assignModal");

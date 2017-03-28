@@ -26,7 +26,7 @@ public class WorkplaceEJB
 		
 		em.getTransaction().begin();
 
-		TypedQuery<Workplace> query = em.createNamedQuery( "Workplace.findAll", Workplace.class );
+		TypedQuery<Workplace> query = em.createNamedQuery( Workplace.FIND_ALL, Workplace.class );
 		List<Workplace> result = query.getResultList();
 
 		em.getTransaction().commit();

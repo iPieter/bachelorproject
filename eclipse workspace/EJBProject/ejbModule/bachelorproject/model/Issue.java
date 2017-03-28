@@ -34,9 +34,17 @@ import org.ocpsoft.prettytime.PrettyTime;
 	@NamedQuery( name = Issue.FIND_BY_MECHANIC_ID, query = "SELECT i FROM Issue i WHERE i.status = :status AND i.mechanic.id = :mechanic_id" ), 
 	@NamedQuery( name = Issue.FIND_BY_OPERATOR_ID, query = "SELECT i FROM Issue i WHERE i.status = :status AND i.operator.id = :operator_id" ),
 	@NamedQuery( name = Issue.FIND_BY_TRAINCOACH_ID, 
-				query = "SELECT i FROM Issue i WHERE EXISTS (SELECT d FROM ProcessedSensorData d WHERE d.traincoach.id = :traincoachId AND d.id = i.data.id ) AND i.status = :status"),				
-	@NamedQuery( name = Issue.COUNT_BY_OPERATOR_ID, query = "SELECT COUNT(i) FROM Issue i WHERE i.operator.id= :operatorId AND i.assignedTime BETWEEN :backTime AND CURRENT_TIMESTAMP AND i.status= :status"),
+				query = "SELECT i FROM Issue i "
+						+ "WHERE EXISTS (SELECT d FROM ProcessedSensorData d WHERE d.traincoach.id = :traincoachId AND d.id = i.data.id ) "
+						+ "AND i.status = :status"),				
+	@NamedQuery( name = Issue.COUNT_BY_OPERATOR_ID, query = "SELECT COUNT(i) FROM Issue i WHERE i.assignedTime BETWEEN CURRENT_TIMESTAMP and :backTime" ),
 	@NamedQuery( name = Issue.FIND_ALL_ACTIVE, query = "SELECT i FROM Issue i WHERE i.status= :status1 OR i.status= :status2" ),
+	@NamedQuery( name = Issue.FIND_BY_WORKPLACE_ID, 
+				query = "SELECT i FROM Issue i, "
+						+ "ProcessedSensorData d,"
+						+ "TrainCoach t,"
+						+ "Workplace w "
+						+ "WHERE t.needsReview = true AND w.id = :workplaceId AND d.traincoach.id= t.id AND i.data.id = d.id"),
 } )
 public class Issue implements Serializable
 {
@@ -48,6 +56,7 @@ public class Issue implements Serializable
 	public static final String FIND_BY_TRAINCOACH_ID = "Issue.findByTraincoachId";
 	public static final String COUNT_BY_OPERATOR_ID="Issue.countByOperatorId";
 	public static final String FIND_ALL_ACTIVE="Issue.findAllActive";
+	public static final String FIND_BY_WORKPLACE_ID = "Issue.findByWorkplaceId";
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
