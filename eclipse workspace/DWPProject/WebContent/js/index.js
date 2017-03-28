@@ -36,6 +36,13 @@ function setDonutView(data)
 		$("#display_when_empty_donut").html(display_msg);
 	}
 	else{
+		//Hide error msg
+		$("#display_when_empty_donut").hide();
+		
+		Highcharts.setOptions({
+		    colors: ['#FFFFFF', '#b54132','#c98818', '#50B432'] //Afgewerkt=Rood, In Behandeling=oranje, Closed=Groen
+		});
+		
 		Highcharts.chart('donut_graph', {
 		    chart: {
 		        plotBackgroundColor: null,

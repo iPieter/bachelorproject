@@ -198,7 +198,6 @@ function loadData()
                     pathPolyline = L.polyline(train_path, {color: '#b0cb1b'}).addTo(map);
                     map.fitBounds(pathPolyline.getBounds(), 
                     	{
-
                     		paddingTopLeft: [ $("#left_panel").width(), $("#left_panel").height() ],
                     		paddingBottomRight: [ $("#right_panel").width(), $("#right_panel").width() ]
 

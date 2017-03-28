@@ -5,7 +5,7 @@ var data    = JSON.parse( fs.readFileSync( 'test.json', 'utf8' ) );
 
 var index   = 700;
 
-request( 'http://10.108.16.203:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/register/M7/123987/Bombardier/Leuven-Oostende', function( error, response, body )
+request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/register/M7/123912/Bombardier/Brussel-Oostende', function( error, response, body )
 {
     if( error !== null )
         console.log( error );

@@ -306,12 +306,13 @@
 						<div class="modal-body">
 							<div class="form-group">
 								<label class="control-label" for="selected_time_value">Tijdstip</label>
-								<input 
+								<h:inputText 
 									class="form-control" 
 									id="selected_time_value"
-									disabled="disabled">
+									>
+
 									No Point Selected
-								</input>
+								</h:inputText>
 							</div>
 							<div class="form-group">							
 								<label class="control-label" for="selected_lat_value">Locatie</label>
@@ -320,8 +321,7 @@
 									<h:inputText 
 										class="form-control"
 										value="#{trainCoachController.lat}"
-										id="selected_lat_value"
-										>
+										id="selected_lat_value">
 										No Point Selected
 									</h:inputText>
 									
@@ -329,8 +329,7 @@
 									<h:inputText 
 										class="form-control"
 										value="#{trainCoachController.lon}"
-										id="selected_lon_value"
-										>
+										id="selected_lon_value">
 										No Point Selected
 									</h:inputText>
 								
