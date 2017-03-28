@@ -46,7 +46,7 @@ function setWorkplaceMapView( data )
 	var polygon_data = [];
 	for(var i=0; i< data.gpsLat.length;i++){
 		marker=L.marker([ data.gpsLat[i], data.gpsLon[i]],{icon: icon}).addTo(map);
-		marker.bindPopup(data.descr[i]);
+		marker.bindPopup("<b>"+data.traincoach[i]+ "</b></br>"+ data.descr[i]);
 		polygon_data.push([ Number(data.gpsLat[i]) , Number(data.gpsLon[i]) ]);
 	}
 	

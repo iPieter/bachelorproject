@@ -79,6 +79,23 @@ public class WorkplaceRestService {
 					result=result.concat(",");
 				}
 			}
+			result=result.concat("],");
+			
+			//Adding traincoach name
+			result=result.concat("\"traincoach\":");
+			result=result.concat("[");
+			for(int i=0;i<activeIssues.size();i++){
+				Issue issue=activeIssues.get(i);
+				String type=String.valueOf(issue.getData().getTraincoach().getType());
+				String name=String.valueOf(issue.getData().getTraincoach().getName());
+				
+				result=result.concat("\""+type+" - "+name+"\"");
+				
+				if(i<activeIssues.size()-1){
+					result=result.concat(",");
+				}
+			}
+			
 			result=result.concat("]");
 			result=result.concat("}");
 		}
