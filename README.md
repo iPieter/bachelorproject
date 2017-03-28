@@ -11,6 +11,8 @@ Ik heb de volgende onderdelen gemaakt:
   - De Constraint Engine backend: een modulair systeem waarbij de gebruiker beperkingen kan opletten bij een rit. bvb:
     - Op deze locatie, voor dit model van trein mag de roll maximaal 3 zijn en de snelheid maximaal 6 m/s
   - REST interface voor alle objecten
+
+
 Extra commentaar:
 Ik ben zeer tevreden over de medewerking in groep. Iedereen communiceerde goed & gaf goede feedback qua code. We hebben regelmatig code herschreven toen we vonden dat het beter kon. Iedereen heeft er ongeveer even veel tijd in gestoken.
     
