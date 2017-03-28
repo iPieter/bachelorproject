@@ -13,9 +13,29 @@ Ik heb de volgende onderdelen gemaakt:
   - REST interface voor alle objecten
 
 
-Extra commentaar:
+### Extra commentaar
 Ik ben zeer tevreden over de medewerking in groep. Iedereen communiceerde goed & gaf goede feedback qua code. We hebben regelmatig code herschreven toen we vonden dat het beter kon. Iedereen heeft er ongeveer even veel tijd in gestoken.
     
  ## Deel Matthias
  
- ## Deel 
+ ## Deel Pieter
+Ik heb de volgende onderdelen gemaakt:
+  - Initieel ontwerp van database
+  - Authorisatie: Controleren of een gebruiker de juiste rol (```ADMIN```, ```MECHANIC```, ```OPERATOR```) heeft voor een pagina.
+  - Gebruikersmanagement: 
+    - Aanmaken van gebruikers, toekennen van een rol. 
+    - Mechanics toekennen aan stelplaatsen.
+    - Wachtwoord en profielafbeelding veranderen.
+  - Rest services voor profielafbeeldingen.
+  - Layout afgewerkt
+    - Live tracking
+    - index
+    - workplace
+    - traincoach
+    - Sidebar afgewerkt
+  - Navigatiebalk op elke pagina toegevoegd.
+  
+  ### Extra commentaar
+  Ik ben ook zeer tevreden over de samenwerking. Ik kon mijn taken afwerken en erop vertrouwen dat andere gedeeltes ook vorderden. Door goed te communiceren waren we ook op de hoogte van elkaars voortgang. 
+  
+  
