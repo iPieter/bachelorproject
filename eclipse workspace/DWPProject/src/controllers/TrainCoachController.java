@@ -145,10 +145,14 @@ public class TrainCoachController implements Serializable
 		issue.setOperator( userService.getUser() );
 		issue.setStatus( IssueStatus.ASSIGNED );
 		issue.setAssignedTime(now);
-
+		
+		//TODO TEST
+		System.out.println("Coordinates:"+lat+","+lon);
+		System.out.println(Double.parseDouble(lat));
 		issue.setGpsLat(Double.parseDouble(lat));
+		
 		issue.setGpsLon(Double.parseDouble(lon));
-		//System.out.println("Coordinates:"+lat+","+lon);
+		System.out.println("Coordinates:"+lat+","+lon);
 		issueEJB.createIssue( issue );
 		
 		return "traincoach.xhtml?faces-redirect=true&id=" + currentTrainCoach.getId() + "&psdid=0";

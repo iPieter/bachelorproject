@@ -6,6 +6,7 @@ package rest;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Date;
@@ -145,7 +146,7 @@ public class UserAssetRestService
 					user.setImageHash(identifier);
 					userEJB.updateUser(user);
 					
-					return Response.status( Response.Status.OK ).build();
+					return Response.temporaryRedirect(new URI("../change_account.xhtml")).build();
 				}
 				else
 					return Response.status( Response.Status.BAD_REQUEST ).build();
