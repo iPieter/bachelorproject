@@ -1,4 +1,20 @@
-$(function ()
+
+/* AT DOCUMENT STARTUP*/
+$(document).ready(function() {
+	//Map setup
+	var id = $("#current_workplace").val();
+	console.log( "CURRENT USER ID: " + id );
+	$.get( "rest/workplace/map/" + id, function( data )
+			{ 
+				console.log(data);
+				setWorkplaceMapView( data );
+			}).fail( function( error )
+			{
+				console.log( "Failed to fetch workplacemap_data: " + error );
+			});	
+});
+
+function setWorkplaceMapView( data )
 {
     var map = L.map( "map" ).setView( [51.0499582, 3.7270672], 10 );
 	L.tileLayer( 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
@@ -17,16 +33,23 @@ $(function ()
 		timeout: 20000,
 		enableHighAccuracy: false
 	} );
-
-    var marker = L.marker([51.00, 3.73]).addTo(map);
-    marker.bindPopup("<b>Trein 1: Sensor 1</b><br>Afwijkende waarde x-as").openPopup();
-
-    var marker2 = L.marker([51.00, 3.75]).addTo(map);
-    marker2.bindPopup("<b>Trein 2: Sensor 10</b><br>Afwijkende waarde x-as").openPopup();
-
-    var marker3 = L.marker([51.00, 3.78]).addTo(map);
-    marker3.bindPopup("<b>Trein 3: Sensoren 1 en 3</b><br>Afwijkende waarde x-as").openPopup();
-
-    var marker4 = L.marker([51.10, 3.78]).addTo(map);
-    marker4.bindPopup("<b>Trein 4: Sensor 5</b><br>Afwijkende waarde x-as").openPopup();
-});
+	
+	//Marker Layout
+	var icon = L.icon({
+	    iconUrl: 'img/marker-icon.png',
+	    shadowUrl: 'img/marker-shadow.png'
+	});
+	
+	//Adding Markers to Map
+	var marker=null;
+	var polygon_data = [];
+	for(var i=0; i< data.gpsLat.length;i++){
+		marker=L.marker([ data.gpsLat[i], data.gpsLon[i]],{icon: icon}).addTo(map);
+		marker.bindPopup(data.descr[i]);
+		polygon_data.push([ Number(data.gpsLat[i]) , Number(data.gpsLon[i]) ]);
+	}
+	
+	//Fit to bounds of screen
+	var polygon = L.polygon( polygon_data );
+	map.fitBounds( polygon.getBounds() );
+};
