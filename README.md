@@ -17,7 +17,19 @@ Ik heb de volgende onderdelen gemaakt:
 Ik ben zeer tevreden over de medewerking in groep. Iedereen communiceerde goed & gaf goede feedback qua code. We hebben regelmatig code herschreven toen we vonden dat het beter kon. Iedereen heeft er ongeveer even veel tijd in gestoken.
     
  ## Deel Matthias
- 
+ -Index Pagina:
+  - Welcome tabs: dynamisch opvragen overzich van issues op status
+  - Heatmap: (REST, Back-end, javascript) Geeft overzicht weer waar de activiteit van de issues zich bevindt
+  - Highcharts donutgraph: (REST, Back-end, javascript) Geef een overzich van de gebruikersactiviteit de voorbije 30 dagen, ook wordt message weergegeven wanneer er nog geen activiteit van de gebruiker geregistreerd is in de voorbije 30 dagen.
+ -Dynamische Sidebar: Op indexpagina opvragen van alle workplaces, op andere paginas opvragen van alle traincoaches in die workplace
+ - Layout templating: Template gebruikt voor alle pagina's gerelateerd aan een workplace/traincoach
+ -Workplace pagina: 
+  -Map: Geeft overzicht van alle issues met bijhorende description
+  -Overzich wagons
+  -Overzicht technici
+ -Traincoach pagina: Javascript gedeelte waarbij geselecteerde punt in de grafiek wordt doorgegeven aan de modal voor een nieuwe herstelling
+ -Layout fixing, afgewerkt door Pieter
+  
  ## Deel Pieter
 Ik heb de volgende onderdelen gemaakt:
   - Initieel ontwerp van database
@@ -35,6 +47,7 @@ Ik heb de volgende onderdelen gemaakt:
     - traincoach
     - Sidebar afgewerkt
   - Navigatiebalk op elke pagina toegevoegd.
+  - Marker Traincoach voor kaart
   
   ### Extra commentaar
   Ik ben ook zeer tevreden over de samenwerking. Ik kon mijn taken afwerken en erop vertrouwen dat andere gedeeltes ook vorderden. Door goed te communiceren waren we ook op de hoogte van elkaars voortgang. 
