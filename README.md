@@ -22,6 +22,7 @@ Ik ben zeer tevreden over de medewerking in groep. Iedereen communiceerde goed &
 Ik heb de volgende onderdelen gemaakt:
   - Initieel ontwerp van database
   - Authorisatie: Controleren of een gebruiker de juiste rol (```ADMIN```, ```MECHANIC```, ```OPERATOR```) heeft voor een pagina.
+  - Layout constraint engine
   - Gebruikersmanagement: 
     - Aanmaken van gebruikers, toekennen van een rol. 
     - Mechanics toekennen aan stelplaatsen.
