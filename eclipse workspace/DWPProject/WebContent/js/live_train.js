@@ -113,7 +113,7 @@ function loadData()
 {
 	console.log( "loading..." );
 	var id = $( "#sensor_id" ).val();
-    var corePath = "http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/get/" + id + "/";
+    var corePath = "rest/live_data/get/" + id + "/";
 	
 	var path;
 	path = corePath + "2013-01-01_00-00-00";
