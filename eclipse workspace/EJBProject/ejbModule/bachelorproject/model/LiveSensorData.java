@@ -19,6 +19,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 @Entity
 @NamedQueries
 ({
@@ -157,5 +159,15 @@ public class LiveSensorData implements Serializable
 	{
 		this.date = date;
 	}
+	
+	/**
+	 * @return the date as a formatted string
+	 */
+	public String getPrettyDate()
+	{
+		PrettyTime p = new PrettyTime();
+		return p.format(this.date);	}
+
+	
 	
 }
