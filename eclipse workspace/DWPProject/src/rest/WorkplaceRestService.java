@@ -8,10 +8,15 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.Response.Status;
 
 import bachelorproject.ejb.IssueEJB;
+import bachelorproject.ejb.WorkplaceEJB;
 import bachelorproject.model.Issue;
+import bachelorproject.model.TrainCoach;
+import bachelorproject.model.Workplace;
 
 @Path( "/workplace" )
 public class WorkplaceRestService {
@@ -24,8 +29,11 @@ public class WorkplaceRestService {
 	@EJB
 	private IssueEJB issueEJB;
 	
+	@EJB
+	private WorkplaceEJB workplaceEJB;
+	
 	@GET
-	@Path( "map/{id}" )
+	@Path( "{id}/map" )
 	@Produces( "text/json" )
 	public String getWorkplaceMapData(@PathParam( "id" ) int workplaceId )
 	{
@@ -107,5 +115,36 @@ public class WorkplaceRestService {
 		System.out.println("WORKPLACEMAP_DATA: "+result);
 		
 		return result;
+	}
+	
+	/**
+	 * Returns a JSON response for a specific workplace id. 
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param id Id for the workplace to return
+	 * @return JSON response with the workplace of provided id
+	 */
+	@GET
+	@Path( "{id}" )
+	@Produces( "text/json" )
+	public Response getByWorkplaceId( @PathParam( "id" ) int id )
+	{
+		Workplace w = workplaceEJB.findWorkplaceByWorkplaceId(id);
+		
+		if( w == null )
+			return Response.status( Status.NOT_FOUND ).build();
+		
+		return Response.ok( w ).build();
+	}
+	
+
+	@GET
+	@Path( "all" )
+	@Produces( "text/json" )
+	public Response getAllWorkplaces( )
+	{
+		List<Workplace> workplaceList = workplaceEJB.getAllWorkplaces();
+		return Response.ok( workplaceList ).build();
 	}
 }

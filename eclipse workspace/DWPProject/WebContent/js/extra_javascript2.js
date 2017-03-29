@@ -4,7 +4,7 @@ $(document).ready(function() {
 	//Map setup
 	var id = $("#current_workplace").val();
 	console.log( "CURRENT USER ID: " + id );
-	$.get( "rest/workplace/map/" + id, function( data )
+	$.get( "rest/workplace/" + id + "/map/", function( data )
 			{ 
 				console.log(data);
 				setWorkplaceMapView( data );
