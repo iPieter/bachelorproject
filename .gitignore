@@ -36,6 +36,9 @@ management/~$dagboek.xlsx
 eclipse workspace\DWPProject\pom.xml
 eclipse workspace\DemoEAR\pom.xml
 eclipse workspace\.recommenders\*
+eclipse workspace/.recommenders/caches/*
+eclipse workspace/.recommenders/caches
+eclipse workspace/.recommenders/caches/
 *.xml
 
 eclipse workspace/EJBProject/bin/ejbModule/be/kuleuven/cs/gent/projectweek/logging/LoggingInterceptor.class

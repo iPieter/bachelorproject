@@ -10,6 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
+import bachelorproject.model.Issue;
 import bachelorproject.model.IssueAsset;
 
 /**
@@ -89,5 +90,23 @@ public class IssueAssetEJB
 
 		em.getTransaction().commit();
 		em.close();
+	}
+
+	/**
+	 * 	Retrieves a list of all issueassets
+	 * */
+	public List<IssueAsset> getAll()
+	{
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+		
+		TypedQuery<IssueAsset> query = em.createNamedQuery( IssueAsset.FIND_ALL, IssueAsset.class );
+		
+		List<IssueAsset> result = query.getResultList();
+
+		em.getTransaction().commit();
+		em.close();
+		
+		return result;
 	}
 }
