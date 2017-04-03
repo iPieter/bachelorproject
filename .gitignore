@@ -35,7 +35,14 @@ eclipse workspace/RemoteSystemsTempFiles/.project
 management/~$dagboek.xlsx
 eclipse workspace\DWPProject\pom.xml
 eclipse workspace\DemoEAR\pom.xml
+<<<<<<< HEAD
 log.txt
+=======
+eclipse workspace\.recommenders\*
+eclipse workspace/.recommenders/caches/*
+eclipse workspace/.recommenders/caches
+eclipse workspace/.recommenders/caches/
+>>>>>>> master
 *.xml
 
 eclipse workspace/EJBProject/bin/ejbModule/be/kuleuven/cs/gent/projectweek/logging/LoggingInterceptor.class
@@ -128,3 +135,5 @@ eclipse workspace/.recommenders/*
 eclipse workspace/EJBProject/.externalToolBuilders/org.hibernate.eclipse.console.hibernateBuilder.launch
 
 eclipse workspace/.idea/eclipse workspace.iml
+
+eclipse workspace/.recommenders/caches/identified-project-coordinates.json

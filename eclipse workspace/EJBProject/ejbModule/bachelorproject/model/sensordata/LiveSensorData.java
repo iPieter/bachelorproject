@@ -10,7 +10,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import org.ocpsoft.prettytime.PrettyTime;
 
+@Entity
 @NamedQueries
 ({
 	@NamedQuery( name=LiveSensorData.FIND_ALL, query="SELECT lsd FROM LiveSensorData lsd" ),
@@ -18,7 +20,6 @@ import javax.validation.constraints.NotNull;
 	@NamedQuery( name=LiveSensorData.FIND_ALL_ACTIVE, query="SELECT lsd FROM LiveSensorData lsd WHERE lsd.isLive = true" ),
 	@NamedQuery( name=LiveSensorData.FIND_ALL_AFTER_DATE, query="SELECT lsde FROM LiveSensorData lsd JOIN lsd.entries lsde WHERE lsde.time > :date AND lsd.id = :id ORDER BY lsde.time ASC" )
 })
-@Entity
 public class LiveSensorData extends SensorData implements Serializable
 {
 	public static final String FIND_ALL = "LiveSensorData.findAll";
@@ -69,5 +70,15 @@ public class LiveSensorData extends SensorData implements Serializable
 	{
 		this.entries = entries;
 	}
+	
+	/**
+	 * @return the date as a formatted string
+	 */
+	public String getPrettyDate()
+	{
+		PrettyTime p = new PrettyTime();
+		return p.format(this.date);	}
+
+	
 	
 }

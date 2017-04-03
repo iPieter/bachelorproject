@@ -20,6 +20,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.ocpsoft.prettytime.PrettyTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * The persistent class for the User database table.
  * 
@@ -51,18 +53,21 @@ public class User implements Serializable
 	@NotNull
 	@Email
 	private String email;
-
+	
 	@Lob
 	@NotNull
 	@Column( length = User.PASS_HASH_LENGTH )
+	@JsonIgnore
 	private byte[] pass;
 
 	@Lob
 	@NotNull
 	@Column( length = User.SALT_LENGTH )
+	@JsonIgnore
 	private byte[] salt;
 
 	@Temporal( TemporalType.TIMESTAMP )
+	@JsonIgnore
 	private Date lastLogin;
 
 	@Enumerated( EnumType.STRING )

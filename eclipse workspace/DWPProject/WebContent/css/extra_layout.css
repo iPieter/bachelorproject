@@ -46,6 +46,7 @@ body, html {
 	border-radius: 3px;
 	height: 100%;
 	background-color: white;
+	z-index: 11;
 }
 
 .mainview_panel_large {
@@ -56,6 +57,7 @@ body, html {
 	border-bottom: 1px solid #2c3e50;
 	border-right: 1px solid #2c3e50	;
 	border-radius: 3px;
+	z-index: 12;
 }
 
 .mainview_panel_large>.content {
@@ -98,8 +100,10 @@ body, html {
 
 
 #map_size{
-	height: 300px;	
+	height: 300px;
+	padding-left: 1px;	
 }
+
 .mainview_issue:last-child {
 	border: 0px;
 	overflow-x: hidden;
@@ -116,6 +120,13 @@ body, html {
 .mainview_traincoach_panelheader {
 	margin-top: auto;
 	margin-bottom: auto;
+	border-bottom: 2px solid #2c3e50;
+	border-top: 1px solid #2c3e50;
+	background-color: #2c3e50;
+	color: #ecf0f1;
+}
+
+.panel-heading {
 	border-bottom: 2px solid #2c3e50;
 	border-top: 1px solid #2c3e50;
 	background-color: #2c3e50;
@@ -301,4 +312,33 @@ body, html {
 .pad {
 	padding-left: 15px;
 	padding-right: 15px;
+}
+
+@keyframes breath {
+    0%   {background-color: #c0392b;}
+    50% {background-color: white;}
+    100% {background-color: #c0392b;}
+}
+
+.breathing {
+	display: inline-block;
+	background-color: #c0392b;
+	height: 6px;
+	width: 6px;
+	margin-right: 4px;
+	margin-bottom: 3px;
+	border-radius: 300px;
+	animation: breath 4s infinite;
+}
+
+#map_container {	
+	height: 100%;
+	z-index: 10;
+
+}
+
+.map_overlay {
+	position: fixed;
+	top: 0;
+	padding-top: 75px;
 }

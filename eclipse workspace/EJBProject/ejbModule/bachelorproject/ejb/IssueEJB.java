@@ -1,6 +1,8 @@
 package bachelorproject.ejb;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -84,6 +86,24 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		
 		return result;
 	}
+	
+	/**
+	 * Returns a List of Issue objects for a given traincoachId.
+	 * Therefore it queries Issues with issueStates IN_PROGRESS or ASSIGNED.
+	 *
+	 * @author Matthias De Lange
+	 * @version 0.0.1
+	 * @param traincoachId
+	 * @return List of Issue objects
+	 * @see findInProgressIssuesByTraincoachId(), findAssignedIssuesByTraincoachId()
+	 */
+	public List<Issue> findActiveIssuesByTraincoachId(int traincoachId){
+		List<Issue> result = new ArrayList<>();
+		result.addAll( findInProgressIssuesByTraincoachId( traincoachId ));
+		result.addAll( findAssignedIssuesByTraincoachId( traincoachId ));
+		return result;
+	}
+	
 
 	public List<Issue> findInProgressIssuesByTraincoachId( int traincoachId )
 	{
@@ -196,12 +216,18 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 	public int countOperatorIssues( int userId, IssueStatus issueStatus, int backTime ){
 		EntityManager em = ems.getEntityManager();
 		
-		Date now = new Date();
-		Timestamp thirtyDaysAgo = new Timestamp(now.getTime() - 86400000 * backTime);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.DAY_OF_WEEK, -backTime); //Subtracting 'backTime' days from now
+		Timestamp sqldate = new Timestamp(calendar.getTimeInMillis());
+		System.out.println("DONUT: Thirtydaysago = "+sqldate);
+		
 		
 		TypedQuery<Long> query = em.createNamedQuery( Issue.COUNT_BY_OPERATOR_ID, Long.class )
-									.setParameter("backTime", thirtyDaysAgo);
-		int result = query.getFirstResult();
+									.setParameter("backTime", sqldate)
+									.setParameter("operatorId", userId)
+									.setParameter("status", issueStatus);
+		int result =( (Integer) query.getSingleResult().intValue() );
 
 		return result;
 	}
@@ -303,6 +329,25 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		
 		em.getTransaction().commit();
 		em.close();
+		
+		return result;
+	}		
+
+	/**
+	 * Returns active issues (IssueStatus=IN_PROGRESS or IssueStatus=ASSIGNED) by workplaceId
+	 * 
+	 * @author Matthias De Lange
+	 * @version 0.0.1
+	 * @param workplaceId the id of the workplace
+	 * @return List<Issue> a list of issues
+	 * @see IndexController
+	 */
+	public List<Issue> findByWorkplaceId(int workplaceId){
+		EntityManager em = ems.getEntityManager();
+		
+		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_WORKPLACE_ID, Issue.class )
+				.setParameter("workplaceId", workplaceId);
+		List<Issue> result = query.getResultList();
 		
 		return result;
 	}

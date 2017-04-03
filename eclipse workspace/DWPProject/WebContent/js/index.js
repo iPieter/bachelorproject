@@ -36,6 +36,13 @@ function setDonutView(data)
 		$("#display_when_empty_donut").html(display_msg);
 	}
 	else{
+		//Hide error msg
+		$("#display_when_empty_donut").hide();
+		
+		Highcharts.setOptions({
+		    colors: ['#8e44ad', '#b54132','#c98818', '#50B432'] //Afgewerkt: Wiseria Toegewezen=Rood, In Behandeling=oranje, Closed=Groen
+		});
+		
 		Highcharts.chart('donut_graph', {
 		    chart: {
 		        plotBackgroundColor: null,
@@ -90,13 +97,20 @@ function setHeatMapView( data ){
 	if(data!=null)
 	{
 	map_entries = [];
-	var intensity= 0.2;
-	for( var i = 0; i < data.lat.length; i++ )
+	var intensity= 1;
+	var polygon_data = [];
+	for( var i = 0; i < data.gpsLat.length; i++ ){
 		map_entries.push( [ data.gpsLat[i] , data.gpsLon[i], intensity] );
+		polygon_data.push([ Number(data.gpsLat[i]) , Number(data.gpsLon[i]) ]);
+	}
 	
 	// lat, lng, intensity
 	var heat = L.heatLayer(
 		map_entries
 		, {radius: 25}).addTo(map);
 	}
+	
+	//Fit Issues to screen
+	var polygon = L.polygon( polygon_data );
+	map.fitBounds( polygon.getBounds() );
 }

@@ -68,20 +68,17 @@ public class WorkplaceController implements Serializable
 	//ISSUES BY TRAINCOACH_ID
 	/**
 	 * Returns a List of Issue objects for a given traincoachId.
-	 * Therefore it queries Issues with issueStates IN_PROGRESS or ASSIGNED.
+	 * Therefore it queries Issues with issueStates IN_PROGRESS or ASSIGNED through the IssueEJB.
 	 *
 	 * @author Matthias De Lange
 	 * @version 0.0.1
 	 * @param traincoachId
 	 * @return List of Issue objects
-	 * @see findActiveIssuesByTraincoachId(),findInProgressIssuesByTraincoachId()
+	 * @see IssueEJB
 	 */
 	public List<Issue> findActiveIssuesByTraincoachId( int traincoachId )
 	{
-		List<Issue> result = new ArrayList<>();
-		result.addAll( findInProgressIssuesByTraincoachId( traincoachId ));
-		result.addAll( findAssignedIssuesByTraincoachId( traincoachId ));
-		return result;
+		return issueEJB.findActiveIssuesByTraincoachId( traincoachId );
 	}
 	
 	/**

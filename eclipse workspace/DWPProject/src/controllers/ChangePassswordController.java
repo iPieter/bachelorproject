@@ -55,6 +55,10 @@ public class ChangePassswordController implements Serializable
 		if (!oldPassword.equals(newPassword)&& userService.veficatePassword(oldPassword))
 		{
 			UserService.populateUser(userService.getUser(), this.newPassword, "qwertyui");
+			
+			//For some reason, user is likely moved out of persistence context
+			userEJB.updateUser(userService.getUser());
+			
 			return userService.hasCurrentUserRequiredRole(UserRole.ADMIN) ? "admin.xhtml?faces-redirect=true"
 					: "index.xhtml?faces-redirect=true";		
 		}

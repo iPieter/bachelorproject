@@ -17,20 +17,23 @@ import bachelorproject.ejb.UserEJB;
 import bachelorproject.model.user.User;
 import bachelorproject.model.user.UserRole;
 
+/**
+ * The purpose of the UserService is to provide a User object for the duration
+ * of the session. The service will also provide:
+ * 
+ * - Login with credential checks - Logout - Verifying the permissions of the
+ * user for the current page
+ * 
+ * When initialized, there'll be no User associated with this service, but after
+ * login it'll be provided by the AuthenticationService.
+ * 
+ * @author Pieter Delobelle
+ * @version 1.0.0
+ */
 @SessionScoped
 public class UserService implements Serializable
 {
-	/*
-	 * The purpose of the UserService is to provide a User object for the
-	 * duration of the session. The service will also provide:
-	 * 
-	 * - Login with credential checks - Logout - Verifying the permissions of
-	 * the user for the current page
-	 * 
-	 * When initialized, there'll be no User associated with this service, but
-	 * after login it'll be provided by the AuthenticationService.
-	 * 
-	 */
+
 	private static final long serialVersionUID = -6239216717833742873L;
 
 	public static final String HASHING_METHOD = "SHA-256";
@@ -43,7 +46,7 @@ public class UserService implements Serializable
 	/**
 	 * Generate some fake users when none are present.
 	 * <p>
-	 * This is only ment for debugging.
+	 * This is only meant for debugging.
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 0.0.1
@@ -167,6 +170,10 @@ public class UserService implements Serializable
 					// set the lastLogin
 					u.setLastLogin(new Date());
 
+					// For some reason, user is likely moved out of persistence
+					// context
+					userEJB.updateUser(u);
+
 					return true;
 
 				} else
@@ -194,6 +201,9 @@ public class UserService implements Serializable
 	/**
 	 * Simple method to remove the user object, if there's one. This will result
 	 * in a logout.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
 	 */
 	public void tryLogout()
 	{
@@ -298,7 +308,7 @@ public class UserService implements Serializable
 		return s.toString();
 	}
 
-	//GETTERS & SETTERS
+	// GETTERS & SETTERS
 	public User getUser()
 	{
 		return user;
