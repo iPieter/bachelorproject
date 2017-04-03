@@ -95,12 +95,63 @@ map_modal.on( "click", function( ev )
  * Hack to make ajax redraw working ...
  * 
  */
-function redrawMapModal()
-{
-	map_modal.remove();
-	map_modal = L.map( "map_modal" ).setView( [51.0499582, 3.7270672], 10 );
-	
+function redrawModalMap(data) {
+    var status = data.status; // Can be "begin", "complete" or "success".
+    var source = data.source; // The parent HTML DOM element.
+
+    switch (status) {
+        case "begin": // Before the ajax request is sent.
+            // ...
+            break;
+
+        case "complete": // After the ajax response is arrived.
+            // ...
+            break;
+
+        case "success": // After update of HTML DOM based on ajax response.
+
+        	map_modal = L.map( "map_modal" ).setView( [51.0499582, 3.7270672], 10 );
+        	L.tileLayer( 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
+        	{
+        	    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        	    maxZoom: 18,
+        	    id: 'mapbox.streets',
+        	    accessToken: 'pk.eyJ1IjoiYW50b25kIiwiYSI6ImNpbXRkM2wwNDAwNmd2d20xNDJnN3RwYjMifQ.PtxXr8pyGM4qccCXDecL2A'
+        	} ).addTo( map_modal );
+        	
+        	map_modal.zoomControl.setPosition('bottomleft');
+
+        	polygon.addTo( map_modal );
+
+        	map_modal.fitBounds( polygon.getBounds() );
+        	
+        	map_modal.on( "click", function( ev )
+        			{
+        			    var type = document.getElementById( "checkbox" );
+        			    if( type.checked )
+        			    {
+        			        if( polygonData !== [] )
+        			        	map_modal.removeLayer( polygon );
+        			        
+        			        polygonData.push( [ ev.latlng.lat, ev.latlng.lng ] );
+        			        polygon = L.polygon( polygonData );
+        			        polygon.addTo( map_modal );
+        			    }
+        			    else
+        			    {
+        			        var status = document.getElementById( "click_status" );
+
+        			        if( isInPolygon( polygonData, ev.latlng.lat, ev.latlng.lng ) )
+        			            status.innerHTML = "IN";
+        			        else
+        			            status.innerHTML = "OUT";
+        			    }
+        			});
+
+            break;
+    }
 }
+
 
 function clearPolygon()
 {

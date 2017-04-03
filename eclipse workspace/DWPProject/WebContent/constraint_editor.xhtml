@@ -137,10 +137,10 @@
 <!--  -->
 							<h:commandLink class="btn btn-default" type="button"
 								action="#{constraintEditorController.createConstraintElement()}"
-								onclick="redrawMapModal()" immediate="true">
+								immediate="true">
 								<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
 								Voeg element toe
-								<f:ajax execute="@this" render="editConstraintForm" />
+								<f:ajax execute="@this" render="editConstraintForm" onevent="redrawModalMap" />
 							</h:commandLink>
 							<br></br>
 
