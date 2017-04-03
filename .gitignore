@@ -131,3 +131,5 @@ eclipse workspace/.recommenders/*
 eclipse workspace/EJBProject/.externalToolBuilders/org.hibernate.eclipse.console.hibernateBuilder.launch
 
 eclipse workspace/.idea/eclipse workspace.iml
+
+eclipse workspace/.recommenders/caches/identified-project-coordinates.json
