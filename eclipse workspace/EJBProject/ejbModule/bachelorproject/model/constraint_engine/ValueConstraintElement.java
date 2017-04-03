@@ -18,7 +18,7 @@ public class ValueConstraintElement extends ConstraintElement
 
 	@NotNull
 	@Column( name = "`max_value`" )
-	double maxValue;
+	private double maxValue;
 	
 	@NotNull
 	@Enumerated( EnumType.STRING )
