@@ -317,7 +317,7 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 	 *  When switching from live to processed, these must be transfer to the new object.
 	 *  This method allows to fetch those issues by sensordata ID.
 	 *  @param id The id of the sensordata ID.
-	 * */
+	 * 
 	public List<Issue> getIssuesBySensorDataID( int sensorDataID )
 	{
 		EntityManager em = ems.getEntityManager();
@@ -331,7 +331,8 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		em.close();
 		
 		return result;
-	}		
+	}
+	*/	
 
 	/**
 	 * Returns active issues (IssueStatus=IN_PROGRESS or IssueStatus=ASSIGNED) by workplaceId

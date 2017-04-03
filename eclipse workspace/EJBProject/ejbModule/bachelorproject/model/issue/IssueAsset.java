@@ -31,7 +31,8 @@ import bachelorproject.model.user.User;
 
 public class IssueAsset implements Serializable
 {
-	private static final long serialVersionUID = 1L;
+	
+	private static final long serialVersionUID = 6402270058460444125L;
 	
 	public static final String FIND_ALL = "IssueAsset.findAll";
 	public static final String FIND_BY_ID = "IssueAsset.findByID";

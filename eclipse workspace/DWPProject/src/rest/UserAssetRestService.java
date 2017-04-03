@@ -25,19 +25,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
-<<<<<<< HEAD
-import bachelorproject.model.issue.Issue;
-=======
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
-
 import bachelorproject.ejb.UserEJB;
-import bachelorproject.model.Issue;
-import bachelorproject.model.IssueAsset;
-import bachelorproject.model.User;
+import bachelorproject.model.user.User;
 import bachelorproject.services.UserService;
->>>>>>> master
 
 /**
  * Uploading and downloading of user avatars.

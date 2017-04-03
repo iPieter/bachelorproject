@@ -9,9 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -45,6 +47,7 @@ public class Constraint implements Serializable
 	public String name;
 	
 	@NotNull
+	@ManyToOne
 	public User creator;
 	
 	@OneToMany(  fetch = FetchType.LAZY  )
