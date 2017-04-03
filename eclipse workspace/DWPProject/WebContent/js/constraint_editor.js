@@ -1,11 +1,12 @@
 var map_modal = L.map( "map_modal" ).setView( [51.0499582, 3.7270672], 10 );
-L.tileLayer( 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
-{
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox.streets',
-    accessToken: 'pk.eyJ1IjoiYW50b25kIiwiYSI6ImNpbXRkM2wwNDAwNmd2d20xNDJnN3RwYjMifQ.PtxXr8pyGM4qccCXDecL2A'
-} ).addTo( map_modal );
+	L.tileLayer( 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
+	{
+	    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+	    maxZoom: 18,
+	    id: 'mapbox.streets',
+	    accessToken: 'pk.eyJ1IjoiYW50b25kIiwiYSI6ImNpbXRkM2wwNDAwNmd2d20xNDJnN3RwYjMifQ.PtxXr8pyGM4qccCXDecL2A'
+	} ).addTo( map_modal );
+
 
 var map_big = L.map( "map_big" ).setView( [51.0499582, 3.7270672], 10 );
 L.tileLayer( 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
@@ -38,6 +39,7 @@ $( "input" ).each( function(  )
 	}
 });
 
+
 map_big.on( "click", function( ev )
 {
 	for( var key in constraintPolygons )
@@ -59,7 +61,11 @@ $( ".constraint" ).on( "click", function()
 
 var polygonData = [ [51.05,3.72], [51.06,3.73], [51.06,3.72] ];
 var polygon = L.polygon( polygonData );
+
+map_modal.zoomControl.setPosition('bottomleft');
+
 polygon.addTo( map_modal );
+
 map_modal.fitBounds( polygon.getBounds() );
 
 map_modal.on( "click", function( ev )
@@ -84,6 +90,17 @@ map_modal.on( "click", function( ev )
             status.innerHTML = "OUT";
     }
 });
+
+/**
+ * Hack to make ajax redraw working ...
+ * 
+ */
+function redrawMapModal()
+{
+	map_modal.remove();
+	map_modal = L.map( "map_modal" ).setView( [51.0499582, 3.7270672], 10 );
+	
+}
 
 function clearPolygon()
 {

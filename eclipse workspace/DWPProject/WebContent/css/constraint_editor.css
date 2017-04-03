@@ -1,4 +1,7 @@
-.constraint:hover
-{
+.constraint:hover {
 	background-color: white;
+}
+
+#map_modal {
+	width: auto!important;
 }
