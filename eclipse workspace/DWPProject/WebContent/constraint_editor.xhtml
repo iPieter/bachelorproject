@@ -197,15 +197,19 @@
 								<ui:fragment
 									rendered="#{constraintEditorController.containsLocationConstaintElement()}">
 									<div id="map_modal" style="height: 500px"></div>
-								</ui:fragment>
-
-
-								<div id="click_status">Click on the map</div>
+									
+									<!-- Controls -->
+									<div id="click_status">Click on the map</div>
 								<label for="checkbox">Edit polygon</label> <input
 									type="checkbox" ame="checkbox" value="on" id="checkbox" /> <input
 									type="button" value="Clear polygon" onclick="clearPolygon()" />
 								<input type="button" name="button" value="Clear last point"
 									onclick="clearLast()" />
+									
+								</ui:fragment>
+
+
+								
 							</div>
 
 						</div>
