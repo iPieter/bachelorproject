@@ -5,3 +5,7 @@
 #map_modal {
 	width: auto!important;
 }
+
+.constraint-type {
+	width: 90px;
+}

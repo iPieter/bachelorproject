@@ -17,7 +17,10 @@ import bachelorproject.model.constraint_engine.Constraint;
 import bachelorproject.model.constraint_engine.ConstraintElement;
 import bachelorproject.model.constraint_engine.LocationConstraintElement;
 import bachelorproject.model.constraint_engine.LocationPoint;
+import bachelorproject.model.constraint_engine.ModelTypeConstraintElement;
+import bachelorproject.model.constraint_engine.ValueConstraintAttribute;
 import bachelorproject.model.constraint_engine.ValueConstraintElement;
+import bachelorproject.model.constraint_engine.ValueConstraintType;
 import bachelorproject.services.UserService;
 
 /**
@@ -36,38 +39,39 @@ public class ConstraintEditorController implements Serializable
 	private ConstraintElementEJB ceEJB;
 	@Inject
 	private UserService userService;
-	
+
 	private List<Constraint> constraints;
 	private List<ConstraintElement> currentConstraintElements = new LinkedList<>();
 	private HashMap<Integer, List<LocationPoint>> polygons;
-	
+
 	@PostConstruct
 	public void loadPage()
 	{
-		System.out.println( "Creating list." );
+		System.out.println("Creating list.");
 		constraints = cEJB.getAllConstraints();
 		polygons = new HashMap<>();
-		for( Constraint c : constraints )
+		for (Constraint c : constraints)
 		{
-			for( ConstraintElement ce : c.getConstraints() )
+			for (ConstraintElement ce : c.getConstraints())
 			{
-				if( ce instanceof LocationConstraintElement )
-					polygons.put( c.getId(), ( (LocationConstraintElement) ce ).getPolygon() );
+				if (ce instanceof LocationConstraintElement)
+					polygons.put(c.getId(), ((LocationConstraintElement) ce).getPolygon());
 			}
 		}
-		
-		//TODO: for testing
-		currentConstraintElements.add(new ValueConstraintElement());
+
+		// TODO: for testing
+		currentConstraintElements
+				.add(new ValueConstraintElement(10, ValueConstraintType.GREATER_THAN, ValueConstraintAttribute.ACCEL));
 
 	}
-	
+
 	public void createConstraint()
 	{
 	}
-	
+
 	/**
-	 * Add a default constraintElement (valueConstraintElement for now) to the list
-	 * with constraintElements.
+	 * Add a default constraintElement (valueConstraintElement for now) to the
+	 * list with constraintElements.
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
@@ -75,18 +79,68 @@ public class ConstraintEditorController implements Serializable
 	 */
 	public void createConstraintElement()
 	{
-		currentConstraintElements.add(new ValueConstraintElement());
+		currentConstraintElements
+				.add(new ValueConstraintElement(10, ValueConstraintType.GREATER_THAN, ValueConstraintAttribute.ACCEL));
 		System.out.println("Created new ContraintElement");
 	}
-	
+
+	/**
+	 * Analyses the given constraintElement and returns a string with the type
+	 * of constraintElement, like yaw, roll, accel, model, location.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param ce
+	 *            The contraintElement to be tested
+	 * @return A string with the type of contraintElement, as decribed.
+	 */
+	public String determineContraintElementType(ConstraintElement ce)
+	{
+		if (ce instanceof ValueConstraintElement)
+		{
+			return ((ValueConstraintElement) ce).getValueConstraintAttribute().getDescr();
+		} else if (ce instanceof ModelTypeConstraintElement)
+		{
+			return "Model";
+		}
+
+		return "Locatie";
+	}
+
+	/**
+	 * Removes the provided constraintElement from the list of currentContraintElements
+	 * and adds new one of the type ValueContraintElement with the ValueConstraintAttribute
+	 * provided as second parameter.
+	 * <p>
+	 * If no constraintElement is found that matches the provided constraintElement, nothing
+	 * will happen. So the list with current ConstraintElements will stay the same.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param ce The constraintElement object to be replaced
+	 * @param vca The ValueConstraintAttribute to use for the new ValueConstraintElement
+	 * @see ValueConstraintElement
+	 */
+	public void updateContraintElement(ConstraintElement ce, ValueConstraintAttribute vca)
+	{
+		int index = currentConstraintElements.indexOf(ce);
+		
+		if (index != -1)
+		{
+			currentConstraintElements.remove(index);
+			currentConstraintElements.add(index, new ValueConstraintElement(10, ValueConstraintType.GREATER_THAN, vca));
+		}
+		
+	}
+
 	public List<Constraint> getConstraints()
 	{
 		return constraints;
 	}
-	
-	public List<LocationPoint> getPolygon( int ID )
+
+	public List<LocationPoint> getPolygon(int ID)
 	{
-		return polygons.get( ID );
+		return polygons.get(ID);
 	}
 
 	/**
@@ -102,7 +156,8 @@ public class ConstraintEditorController implements Serializable
 	/**
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param currentConstraintElements the currentConstraintElements to set
+	 * @param currentConstraintElements
+	 *            the currentConstraintElements to set
 	 */
 	public void setCurrentConstraintElements(List<ConstraintElement> currentConstraintElements)
 	{
@@ -112,12 +167,32 @@ public class ConstraintEditorController implements Serializable
 	/**
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param constraints the constraints to set
+	 * @param constraints
+	 *            the constraints to set
 	 */
 	public void setConstraints(List<Constraint> constraints)
 	{
 		this.constraints = constraints;
 	}
-	
-	
+
+	/**
+	 * Returns a simple array with the defined attributes:
+	 * <ul>
+	 * <li>Yaw</li>
+	 * <li>Roll</li>
+	 * <li>Acceleration</li>
+	 * <li>Speed</li>
+	 * </ul>
+	 * 
+	 * These are returned as ValueConstraintAttribute objects.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return A list with all defined ValueConstraintAttributes.
+	 */
+	public ValueConstraintAttribute[] getValueConstraintAttributes()
+	{
+		return ValueConstraintAttribute.values();
+	}
+
 }

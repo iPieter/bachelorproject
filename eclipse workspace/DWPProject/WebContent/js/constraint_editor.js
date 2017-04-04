@@ -95,11 +95,13 @@ map_modal.on( "click", function( ev )
  * Hack to make ajax redraw working ...
  * 
  */
-function redrawModalMap(data) {
+function redrawModalMap(data) 
+{
     var status = data.status; // Can be "begin", "complete" or "success".
     var source = data.source; // The parent HTML DOM element.
 
-    switch (status) {
+    switch (status) 
+    {
         case "begin": // Before the ajax request is sent.
             // ...
             break;
