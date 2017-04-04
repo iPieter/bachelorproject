@@ -59,9 +59,8 @@ public class ConstraintEditorController implements Serializable
 			}
 		}
 
-		// TODO: for testing
 		currentConstraintElements
-				.add(new ValueConstraintElement(10, ValueConstraintType.GREATER_THAN, ValueConstraintAttribute.ACCEL));
+				.add(new LocationConstraintElement());
 
 	}
 
@@ -162,7 +161,12 @@ public class ConstraintEditorController implements Serializable
 	}
 	
 	/**
-	 * 
+	 * Set replace a constraintElement with a new one, determined by a string with the
+	 * following possibilities:
+	 * <ul>
+	 * 	<li>ModelTypeConstraintElement</li>
+	 * 	<li>LocationConstraintElement</li>
+	 * </ul>
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
@@ -181,8 +185,12 @@ public class ConstraintEditorController implements Serializable
 			case "ModelTypeConstraintElement":
 				currentConstraintElements.add(index, new ModelTypeConstraintElement("M7"));
 				break;
+				
 			case "LocationConstraintElement":
 				currentConstraintElements.add(index, new LocationConstraintElement());
+				break;
+				
+			default:
 				break;
 			}
 		}

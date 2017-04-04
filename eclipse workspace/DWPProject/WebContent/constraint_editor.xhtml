@@ -126,21 +126,54 @@
 															onevent="redrawModalMap" />
 													</h:commandLink></li>
 												<li role="separator" class="divider"></li>
-												<li><a href="#">locatie</a></li>
+												<li><h:commandLink
+														action="#{constraintEditorController.updateContraintElement(ce, 'LocationConstraintElement')}">
+													locatie
+													<f:ajax execute="@this" render="editConstraintForm"
+															onevent="redrawModalMap" />
+													</h:commandLink></li>
 											</ul>
 										</div>
 										<!-- /btn-group -->
+										<ui:fragment
+											rendered="#{constraintEditorController.isValueContraintElement(ce)}">
+											<!-- If ValueConstraintElement -->
+											<div class="input-group-addon">is</div>
+											<div class="input-group-btn">
+												<button type="button"
+													class="btn btn-default dropdown-toggle"
+													data-toggle="dropdown" aria-haspopup="true"
+													aria-expanded="false">
+													groter dan <span class="caret"></span>
+												</button>
+											</div>
+											<input type="text" class="form-control"
+												id="exampleInputAmount" placeholder="Waarde" />
+										</ui:fragment>
+										
+										<ui:fragment
+											rendered="#{constraintEditorController.isLocationConstraintElement(ce)}">
+											<!-- If LocationConstraintElement -->
+											<div class="input-group-addon form-control">ligt binnen onderstaande
+												gebied.</div>
+										</ui:fragment>
+										
+										<ui:fragment rendered="false">
+											<!-- If ModelTypeConstraintElement or other-->
+											<div class="input-group-addon">is</div>
+											<input type="text" class="form-control"
+												id="exampleInputAmount" placeholder="Model" />
 
-									 
-										<div class="input-group-addon">is</div>
-										<input type="text" class="form-control"
-											id="exampleInputAmount" placeholder="Amount" /> <span
-											class="input-group-btn">
+										</ui:fragment>
+										
+										<!-- Delete constraintElement btn -->
+										<span class="input-group-btn">
 											<button class="btn btn-default" type="button">
 												<span class="glyphicon glyphicon-remove-sign"
 													aria-hidden="true"></span>
 											</button>
 										</span>
+
 									</div>
 									<br></br>
 								</ui:repeat>
