@@ -97,7 +97,8 @@
 									<div class="input-group">
 
 										<div class="input-group-btn">
-											<button type="button" class="btn btn-default dropdown-toggle constraint-type"
+											<button type="button"
+												class="btn btn-default dropdown-toggle constraint-type"
 												data-toggle="dropdown" aria-haspopup="true"
 												aria-expanded="false">
 												#{constraintEditorController.determineContraintElementType(ce)}
@@ -110,22 +111,31 @@
 												<ui:repeat
 													value="#{constraintEditorController.valueConstraintAttributes}"
 													var="vca">
-													<li><h:commandLink action="#{constraintEditorController.updateContraintElement(ce, vca)}">#{vca.descr}</h:commandLink></li>
+													<li><h:commandLink
+															action="#{constraintEditorController.updateContraintElement(ce, vca)}">
+															#{vca.descr}
+															<f:ajax execute="@this" render="editConstraintForm"
+																onevent="redrawModalMap" />
+														</h:commandLink></li>
 												</ui:repeat>
 												<li role="separator" class="divider"></li>
-												<li><a href="#">model</a></li>
+												<li><h:commandLink
+														action="#{constraintEditorController.updateContraintElement(ce, 'ModelTypeConstraintElement')}">
+													model
+													<f:ajax execute="@this" render="editConstraintForm"
+															onevent="redrawModalMap" />
+													</h:commandLink></li>
 												<li role="separator" class="divider"></li>
 												<li><a href="#">locatie</a></li>
 											</ul>
 										</div>
 										<!-- /btn-group -->
 
-
-										<div class="input-group-addon">$</div>
+									 
+										<div class="input-group-addon">is</div>
 										<input type="text" class="form-control"
-											id="exampleInputAmount" placeholder="Amount" />
-
-										<span class="input-group-btn">
+											id="exampleInputAmount" placeholder="Amount" /> <span
+											class="input-group-btn">
 											<button class="btn btn-default" type="button">
 												<span class="glyphicon glyphicon-remove-sign"
 													aria-hidden="true"></span>

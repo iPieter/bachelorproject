@@ -101,12 +101,40 @@ public class ConstraintEditorController implements Serializable
 			return ((ValueConstraintElement) ce).getValueConstraintAttribute().getDescr();
 		} else if (ce instanceof ModelTypeConstraintElement)
 		{
-			return "Model";
+			return "model";
 		}
 
-		return "Locatie";
+		return "locatie";
 	}
 
+	/**
+	 * Simple boolean method to test if an ConstraintElement is a 
+	 * ValueConstraintElement.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param ce The ConstraintElement object to be tested.
+	 * @return True if it's a ValueContraintElement, false otherwise.
+	 */
+	public boolean isValueContraintElement(ConstraintElement ce)
+	{
+		return ce instanceof ValueConstraintElement;
+	}
+	
+	/**
+	 * Simple boolean method to test if an ConstraintElement is a 
+	 * LocationConstraintElement.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param ce The ConstraintElement object to be tested.
+	 * @return True if it's a LocationConstraintElement, false otherwise.
+	 */
+	public boolean isLocationConstraintElement(ConstraintElement ce)
+	{
+		return ce instanceof LocationConstraintElement;
+	}
+	
 	/**
 	 * Removes the provided constraintElement from the list of currentContraintElements
 	 * and adds new one of the type ValueContraintElement with the ValueConstraintAttribute
@@ -131,6 +159,33 @@ public class ConstraintEditorController implements Serializable
 			currentConstraintElements.add(index, new ValueConstraintElement(10, ValueConstraintType.GREATER_THAN, vca));
 		}
 		
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param ce The constraintElement to be replaced
+	 * @param futureConstraintElement A string with the future type of the constraintElement
+	 */
+	public void updateContraintElement(ConstraintElement ce, String futureConstraintElement)
+	{
+		int index = currentConstraintElements.indexOf(ce);
+		
+		if (index != -1)
+		{
+			currentConstraintElements.remove(index);
+			switch (futureConstraintElement)
+			{
+			case "ModelTypeConstraintElement":
+				currentConstraintElements.add(index, new ModelTypeConstraintElement("M7"));
+				break;
+			case "LocationConstraintElement":
+				currentConstraintElements.add(index, new LocationConstraintElement());
+				break;
+			}
+		}
 	}
 
 	public List<Constraint> getConstraints()
