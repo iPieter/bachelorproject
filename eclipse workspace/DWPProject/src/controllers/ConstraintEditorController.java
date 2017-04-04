@@ -59,13 +59,35 @@ public class ConstraintEditorController implements Serializable
 			}
 		}
 
-		currentConstraintElements
-				.add(new LocationConstraintElement());
+		currentConstraintElements.add(new LocationConstraintElement());
 
 	}
 
+	/**
+	 * Creates a new constraint object with all the created constraintElements
+	 * in the currentConstraintElement list. After creation, it will be saved to 
+	 * the database. 
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 */
 	public void createConstraint()
 	{
+		
+		//Persist current constraint elements to db
+		ceEJB.createConstraintElement(currentConstraintElements);
+		
+		//Create and persist new constraint
+		Constraint c = new Constraint("Boris", userService.getUser());
+		
+		constraints.add(c);
+
+		c.constraints = this.currentConstraintElements;
+
+		cEJB.createConstraint(c);
+		
+		//Link ConstraintElements and Constraint
+		
 	}
 
 	/**

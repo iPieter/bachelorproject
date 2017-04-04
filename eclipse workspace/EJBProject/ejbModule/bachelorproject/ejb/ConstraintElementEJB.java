@@ -1,5 +1,7 @@
 package bachelorproject.ejb;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -32,6 +34,27 @@ public class ConstraintElementEJB
 		em.getTransaction().begin();
 		
 		em.persist( ce );
+		
+		em.getTransaction().commit();
+		em.close();
+	}
+	
+	/**
+	 * Persisting lists of ConstraintElements
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param ces
+	 */
+	public void createConstraintElement(List<ConstraintElement> ces)
+	{
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+		
+		for (ConstraintElement ce : ces)
+		{
+			em.persist( ce );
+		}
 		
 		em.getTransaction().commit();
 		em.close();
