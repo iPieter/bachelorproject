@@ -168,11 +168,14 @@
 										</ui:fragment>
 
 										<!-- Delete constraintElement btn -->
-										<span class="input-group-btn">
-											<button class="btn btn-default" type="button">
+										<span class="input-group-btn"> <h:commandLink
+												class="btn btn-default" type="button"
+												action="#{constraintEditorController.currentConstraintElements.remove(ce)}">
 												<span class="glyphicon glyphicon-remove-sign"
 													aria-hidden="true"></span>
-											</button>
+												<f:ajax execute="@this" render="editConstraintForm"
+													onevent="redrawModalMap" />
+											</h:commandLink>
 										</span>
 
 									</div>

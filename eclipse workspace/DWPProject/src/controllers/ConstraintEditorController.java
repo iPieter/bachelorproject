@@ -229,7 +229,6 @@ public class ConstraintEditorController implements Serializable
 		return containsLCE;
 		
 	}
-	
 
 	public List<Constraint> getConstraints()
 	{
