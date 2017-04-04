@@ -182,8 +182,18 @@
 									<br></br>
 								</ui:repeat>
 
+								<!-- Add new constraintElement btn -->
+								<h:commandLink class="btn btn-default pull-right" type="button"
+									action="#{constraintEditorController.createConstraintElement()}"
+									immediate="true">
+									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+								Voeg element toe
+								<f:ajax execute="@this" render="editConstraintForm"
+										onevent="redrawModalMap" />
+								</h:commandLink>
 								<br></br>
-
+								<br></br>
+								
 								<ui:fragment
 									rendered="#{constraintEditorController.containsLocationConstaintElement()}">
 									<div id="map_modal" style="height: 500px"></div>
@@ -197,16 +207,6 @@
 								<input type="button" name="button" value="Clear last point"
 									onclick="clearLast()" />
 							</div>
-							<!--  -->
-							<h:commandLink class="btn btn-default" type="button"
-								action="#{constraintEditorController.createConstraintElement()}"
-								immediate="true">
-								<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-								Voeg element toe
-								<f:ajax execute="@this" render="editConstraintForm"
-									onevent="redrawModalMap" />
-							</h:commandLink>
-							<br></br>
 
 						</div>
 						<div class="modal-footer">
