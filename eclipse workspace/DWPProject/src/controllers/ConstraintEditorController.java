@@ -135,6 +135,20 @@ public class ConstraintEditorController implements Serializable
 	}
 	
 	/**
+	 * Simple boolean method to test if an ConstraintElement is a 
+	 * ModelTypeConstraintElement.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param ce The ConstraintElement object to be tested.
+	 * @return True if it's a ModelTypeConstraintElement, false otherwise.
+	 */
+	public boolean isModelTypeConstraintElement(ConstraintElement ce)
+	{
+		return ce instanceof ModelTypeConstraintElement;
+	}
+	
+	/**
 	 * Removes the provided constraintElement from the list of currentContraintElements
 	 * and adds new one of the type ValueContraintElement with the ValueConstraintAttribute
 	 * provided as second parameter.
@@ -195,6 +209,27 @@ public class ConstraintEditorController implements Serializable
 			}
 		}
 	}
+	
+	/**
+	 * Determines if the list with current constaintElements contains a locationConstaintElement.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return True if the list with current constaintElements contains a locationConstaintElement
+	 */
+	public boolean containsLocationConstaintElement()
+	{
+		boolean containsLCE = false;
+		
+		for (ConstraintElement ce : this.currentConstraintElements)
+		{
+			containsLCE = containsLCE || isLocationConstraintElement(ce);
+		}
+		
+		return containsLCE;
+		
+	}
+	
 
 	public List<Constraint> getConstraints()
 	{

@@ -150,22 +150,23 @@
 											<input type="text" class="form-control"
 												id="exampleInputAmount" placeholder="Waarde" />
 										</ui:fragment>
-										
+
 										<ui:fragment
 											rendered="#{constraintEditorController.isLocationConstraintElement(ce)}">
 											<!-- If LocationConstraintElement -->
-											<div class="input-group-addon form-control">ligt binnen onderstaande
-												gebied.</div>
+											<div class="input-group-addon form-control">ligt binnen
+												onderstaande gebied.</div>
 										</ui:fragment>
-										
-										<ui:fragment rendered="false">
+
+										<ui:fragment
+											rendered="#{constraintEditorController.isModelTypeConstraintElement(ce)}">
 											<!-- If ModelTypeConstraintElement or other-->
 											<div class="input-group-addon">is</div>
 											<input type="text" class="form-control"
 												id="exampleInputAmount" placeholder="Model" />
 
 										</ui:fragment>
-										
+
 										<!-- Delete constraintElement btn -->
 										<span class="input-group-btn">
 											<button class="btn btn-default" type="button">
@@ -179,7 +180,11 @@
 								</ui:repeat>
 
 								<br></br>
-								<div id="map_modal" style="height: 500px"></div>
+
+								<ui:fragment
+									rendered="#{constraintEditorController.containsLocationConstaintElement()}">
+									<div id="map_modal" style="height: 500px"></div>
+								</ui:fragment>
 
 
 								<div id="click_status">Click on the map</div>
