@@ -43,6 +43,8 @@ public class ConstraintEditorController implements Serializable
 	private List<Constraint> constraints;
 	private List<ConstraintElement> currentConstraintElements = new LinkedList<>();
 	private HashMap<Integer, List<LocationPoint>> polygons;
+	
+	private String polygonInput;
 
 	@PostConstruct
 	public void loadPage()
@@ -86,8 +88,7 @@ public class ConstraintEditorController implements Serializable
 
 		cEJB.createConstraint(c);
 		
-		//Link ConstraintElements and Constraint
-		
+		System.out.println(this.polygonInput);
 	}
 
 	/**
@@ -313,5 +314,27 @@ public class ConstraintEditorController implements Serializable
 	{
 		return ValueConstraintAttribute.values();
 	}
+
+	/**
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return the polygonInput
+	 */
+	public String getPolygonInput()
+	{
+		return polygonInput;
+	}
+
+	/**
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param polygonInput the polygonInput to set
+	 */
+	public void setPolygonInput(String polygonInput)
+	{
+		this.polygonInput = polygonInput;
+	}
+	
+	
 
 }

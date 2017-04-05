@@ -81,6 +81,8 @@ map_modal.on("click", function(ev)
 		polygonData.push([ ev.latlng.lat, ev.latlng.lng ]);
 		polygon = L.polygon(polygonData);
 		polygon.addTo(map_modal);
+		$("#location-data input").val(polygonData);
+
 	} else
 	{
 		var status = document.getElementById("click_status");
@@ -143,6 +145,7 @@ function redrawModalMap(data)
 					polygonData.push([ ev.latlng.lat, ev.latlng.lng ]);
 					polygon = L.polygon(polygonData);
 					polygon.addTo(map_modal);
+					$("#location-data input").val(polygonData);
 				} else
 				{
 					var status = document.getElementById("click_status");

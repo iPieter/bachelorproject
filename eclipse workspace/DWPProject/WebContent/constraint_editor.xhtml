@@ -148,8 +148,8 @@
 												</button>
 											</div>
 											<h:inputText type="number" class="form-control"
-												value="#{ce.maxValue}"
-												id="exampleInputAmount" placeholder="Waarde" />
+												value="#{ce.maxValue}" id="exampleInputAmount"
+												placeholder="Waarde" />
 										</ui:fragment>
 
 										<ui:fragment
@@ -157,6 +157,10 @@
 											<!-- If LocationConstraintElement -->
 											<div class="input-group-addon form-control">ligt binnen
 												onderstaande gebied.</div>
+											<div id="location-data">
+												<h:inputHidden type="text"
+													value="#{constraintEditorController.polygonInput}" />
+											</div>
 										</ui:fragment>
 
 										<ui:fragment
@@ -192,25 +196,25 @@
 								<f:ajax execute="@this" render="editConstraintForm"
 										onevent="redrawModalMap" />
 								</h:commandLink>
-								<br></br>
-								<br></br>
-								
+								<br></br> <br></br>
+
 								<ui:fragment
 									rendered="#{constraintEditorController.containsLocationConstaintElement()}">
 									<div id="map_modal" style="height: 500px"></div>
-									
+
 									<!-- Controls -->
 									<div id="click_status">Click on the map</div>
-								<label for="checkbox">Edit polygon</label> <input
-									type="checkbox" ame="checkbox" value="on" id="checkbox" /> <input
-									type="button" value="Clear polygon" onclick="clearPolygon()" />
-								<input type="button" name="button" value="Clear last point"
-									onclick="clearLast()" />
-									
+									<label for="checkbox">Edit polygon</label>
+									<input type="checkbox" ame="checkbox" value="on" id="checkbox" />
+									<input type="button" value="Clear polygon"
+										onclick="clearPolygon()" />
+									<input type="button" name="button" value="Clear last point"
+										onclick="clearLast()" />
+
 								</ui:fragment>
 
 
-								
+
 							</div>
 
 						</div>
