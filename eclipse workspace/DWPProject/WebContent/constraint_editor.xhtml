@@ -153,8 +153,9 @@
 											<div class="input-group-addon">${ce.getValueConstraintAttribute().unit}</div>
 										</ui:fragment>
 
-										<ui:fragment
+										<ui:fragment										
 											rendered="#{constraintEditorController.isLocationConstraintElement(ce)}">
+											
 											<!-- If LocationConstraintElement -->
 											<div class="input-group-addon form-control">ligt binnen
 												onderstaande gebied.</div>
@@ -166,10 +167,11 @@
 
 										<ui:fragment
 											rendered="#{constraintEditorController.isModelTypeConstraintElement(ce)}">
+											
 											<!-- If ModelTypeConstraintElement or other-->
 											<div class="input-group-addon">is</div>
-											<input type="text" class="form-control"
-												id="exampleInputAmount" placeholder="Model" />
+											<h:inputText type="text" class="form-control"
+												 placeholder="Model" value="#{ce.modelType}"/>
 
 										</ui:fragment>
 
