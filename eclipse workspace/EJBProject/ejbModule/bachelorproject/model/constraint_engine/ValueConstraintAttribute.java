@@ -13,13 +13,15 @@ package bachelorproject.model.constraint_engine;
  */
 public enum ValueConstraintAttribute
 {
-	YAW("yaw"), ROLL("roll"), ACCEL("versnelling"), SPEED("snelheid");
+	YAW("yaw", "rad/s"), ROLL("roll", "rad/s"), ACCEL("versnelling", "m/s^2"), SPEED("snelheid", "m/s");
 	
 	private String descr;
+	private String unit;
 	
-	private ValueConstraintAttribute( String descr )
+	private ValueConstraintAttribute( String descr, String unit)
 	{
 		this.descr = descr;
+		this.unit = unit;
 	}
 
 	/**
@@ -37,6 +39,27 @@ public enum ValueConstraintAttribute
 	{
 		this.descr = descr;
 	}
+
+	/**
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return the unit
+	 */
+	public String getUnit()
+	{
+		return unit;
+	}
+
+	/**
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param unit the unit to set
+	 */
+	public void setUnit(String unit)
+	{
+		this.unit = unit;
+	}
+	
 	
 	
 }

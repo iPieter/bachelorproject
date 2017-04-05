@@ -95,6 +95,6 @@ public class ValueConstraintElement extends ConstraintElement
 	
 	public String toString()
 	{
-		return "Beperking op " + valueConstraintAttribute.getDescr() + " ,mag niet " + valueConstraintType.getDescr() + " " + maxValue + " zijn.";
+		return "Beperking op " + valueConstraintAttribute.getDescr() + ", mag niet " + valueConstraintType.getDescr() + " " + maxValue + " zijn.";
 	}
 }

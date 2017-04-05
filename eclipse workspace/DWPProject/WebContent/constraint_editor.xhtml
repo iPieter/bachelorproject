@@ -148,8 +148,9 @@
 												</button>
 											</div>
 											<h:inputText type="number" class="form-control"
-												value="#{ce.maxValue}" id="exampleInputAmount"
+												value="#{ce.maxValue}"
 												placeholder="Waarde" />
+											<div class="input-group-addon">${ce.getValueConstraintAttribute().unit}</div>
 										</ui:fragment>
 
 										<ui:fragment
@@ -178,7 +179,7 @@
 												action="#{constraintEditorController.currentConstraintElements.remove(ce)}">
 												<span class="glyphicon glyphicon-remove-sign"
 													aria-hidden="true"></span>
-												<f:ajax execute="@this" render="editConstraintForm"
+												<f:ajax execute="@form" render="editConstraintForm"
 													onevent="redrawModalMap" />
 											</h:commandLink>
 										</span>
@@ -188,12 +189,12 @@
 								</ui:repeat>
 
 								<!-- Add new constraintElement btn -->
-								<h:commandLink class="btn btn-default pull-right" type="button"
+								<h:commandLink class="btn btn-default pull-right" type="submit"
 									action="#{constraintEditorController.createConstraintElement()}"
-									immediate="true">
+									>
 									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
 								Voeg element toe
-								<f:ajax execute="@this" render="editConstraintForm"
+								<f:ajax execute="@form" render="editConstraintForm"
 										onevent="redrawModalMap" />
 								</h:commandLink>
 								<br></br> <br></br>

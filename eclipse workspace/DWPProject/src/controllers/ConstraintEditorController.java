@@ -76,6 +76,11 @@ public class ConstraintEditorController implements Serializable
 	public void createConstraint()
 	{
 		
+		//Extract polygon from input and link it to locationConstraintElement
+		String [] points = polygonInput.split(",");
+		
+		
+		
 		//Persist current constraint elements to db
 		ceEJB.createConstraintElement(currentConstraintElements);
 		
@@ -83,7 +88,7 @@ public class ConstraintEditorController implements Serializable
 		Constraint c = new Constraint("Boris", userService.getUser());
 		
 		constraints.add(c);
-
+		
 		c.constraints = this.currentConstraintElements;
 
 		cEJB.createConstraint(c);
@@ -192,7 +197,7 @@ public class ConstraintEditorController implements Serializable
 		if (index != -1)
 		{
 			currentConstraintElements.remove(index);
-			currentConstraintElements.add(index, new ValueConstraintElement(10, ValueConstraintType.GREATER_THAN, vca));
+			currentConstraintElements.add(index, new ValueConstraintElement(0, ValueConstraintType.GREATER_THAN, vca));
 		}
 		
 	}
