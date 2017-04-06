@@ -53,8 +53,10 @@ public class ConstraintEditorController implements Serializable
 	private List<ConstraintElement> currentConstraintElements = new LinkedList<>();
 	private HashMap<Integer, List<LocationPoint>> polygons;
 
+	//variables for creating new constraint
 	private String polygonInput;
-
+	private String name;
+	
 	@PostConstruct
 	public void loadPage()
 	{
@@ -117,7 +119,7 @@ public class ConstraintEditorController implements Serializable
 		ceEJB.createConstraintElement(currentConstraintElements);
 		
 		//Create and persist new constraint
-		Constraint c = new Constraint("Boris", userService.getUser());
+		Constraint c = new Constraint(name, userService.getUser());
 		
 		constraints.add(c);
 		
@@ -125,8 +127,9 @@ public class ConstraintEditorController implements Serializable
 
 		cEJB.createConstraint(c);
 				
-		//Clear constraintElement list
+		//Clear constraintElement list and name
 		currentConstraintElements = new LinkedList<>();
+		name = "";
 	}
 
 	/**
@@ -385,5 +388,27 @@ public class ConstraintEditorController implements Serializable
 	{
 		this.polygonInput = polygonInput;
 	}
+
+	/**
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return the name
+	 */
+	public String getName()
+	{
+		return name;
+	}
+
+	/**
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param name the name to set
+	 */
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
+	
 
 }

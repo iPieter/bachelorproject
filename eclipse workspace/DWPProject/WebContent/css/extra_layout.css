@@ -342,3 +342,9 @@ body, html {
 	top: 0;
 	padding-top: 75px;
 }
+
+.form-group-margin {
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-bottom: 6px;
+}

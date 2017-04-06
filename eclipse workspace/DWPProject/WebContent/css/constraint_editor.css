@@ -2,10 +2,11 @@
 	background-color: white;
 }
 
-#map_modal {
-	width: auto!important;
-}
-
 .constraint-type {
 	width: 100px;
+}
+
+.form-group-margin {
+	margin-left: 0px;
+	margin-right: 0px;
 }
