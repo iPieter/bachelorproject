@@ -26,6 +26,8 @@
 	<link rel="stylesheet" href="css/leaflet.css" />
 	<link rel="stylesheet" href="css/sidebar.css" />
 	
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400&amp;subset=latin-ext" rel="stylesheet" />
+	
 	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="img/apple-touch-icon-120x120.png" />
 	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="img/apple-touch-icon-152x152.png" />
 	<link rel="icon" type="image/png" href="img/favicon-16x16.png" sizes="16x16" />
@@ -52,11 +54,11 @@
    			
 	   			<!-- STAANPLAATSEN -->	
 				<c:forEach var="workplace" items="#{workplaceController.getAllWorkplaces()}">
-	                <h4>
+	                <h3>
 	                	<span class="glyphicon glyphicon-unchecked sidebar_icon"></span>
 	                	<h:link value="#{workplace.name}" outcome="workplace.xhtml?workplace_id=#{workplace.id}"/>
 						<!--  <span class="badge">3</span> -->
-	                </h4>
+	                </h3>
 	   			</c:forEach>
    			</div> <!-- END SIDEBAR CONTENT -->
    		</div> <!-- END LEFT SIDEBAR -->
