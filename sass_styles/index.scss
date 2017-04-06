@@ -1,0 +1,59 @@
+.userdata_row{
+	border: 1px solid #95a5a6;
+	border-radius: 3px;
+	height: 50vh;
+	margin-left: 1vh;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	background-color: white;
+	overflow: hidden;
+}
+
+.graphics_row{
+	border: 1px solid #95a5a6;
+	border-radius: 3px;
+	min-height: 200px;
+	height:100%;
+	margin-left: 1vh;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	background-color: white;
+}
+
+.index_avatar {
+	display: inline-block;
+	position: relative;
+	margin-right: 3px;
+	margin-top:18px;
+	width: 36px;
+	height: 36px;
+	border: 2px solid rgb(189, 195, 199);
+	-webkit-border-radius: 200px;
+	-moz-border-radius: 200px;
+	border-radius: 200px;
+}
+
+.index_avatar img {
+	height: 32px;
+	width: 32px;
+	border-radius: 200px;
+}
+
+.alert_box{
+	margin-top: 20px;
+	margin-right: 10px;
+	vertical-align:middle;
+}
+
+#map_size {
+	height: 45vh;
+}
+
+.no_padding{
+	padding:0px;
+}
+
+#donut_graph{
+	height: 250px;
+}
+

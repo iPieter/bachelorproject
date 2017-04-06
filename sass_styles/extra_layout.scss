@@ -1,0 +1,84 @@
+// Colors
+$dark_red: #c0392b;
+$primary_color: #2c3e50;
+$accent: #b0cb1b;
+
+@mixin font($weight) {
+	font-family: 'Lato', sans-serif;
+	font-weight: $weight;
+}
+
+// MAIN LAYOUT
+body, html {
+	height: 100%;
+	margin-left: 0px;
+	width: 100%;
+	background-color: #ecf0f1;
+	@include font(400);
+}
+
+.status_bad {
+	color: red;
+}
+
+.status_good {
+	color: green;
+}
+
+
+.avatar {
+	display: inline-block;
+	position: relative;
+	margin-right: 6px;
+	width: 36px;
+	height: 36px;
+	border: 2px solid rgb(189, 195, 199);
+	-webkit-border-radius: 200px;
+	-moz-border-radius: 200px;
+	border-radius: 200px;
+}
+
+.avatar img {
+	height: 32px;
+	width: 32px;
+	border-radius: 200px;
+}
+
+@keyframes breath {
+    0%   {background-color: $dark_red;}
+    50% {background-color: white;}
+    100% {background-color: $dark_red;}
+}
+
+.breathing {
+	display: inline-block;
+	background-color: $dark_red;
+	height: 6px;
+	width: 6px;
+	margin-right: 4px;
+	margin-bottom: 3px;
+	border-radius: 300px;
+	animation: breath 4s infinite;
+}
+
+.navbar {
+	margin: {
+		left: -15px;
+		right: -15px;
+	}
+	height: 50px;
+
+	.container {
+		height: 50px;
+	}
+
+	#user {
+		padding-top: 7px;
+		padding-bottom: 7px;
+	}
+
+	#username {
+		padding-top: 15px;
+		padding-bottom: 15px
+	}
+}
