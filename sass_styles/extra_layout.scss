@@ -2,6 +2,9 @@
 $dark_red: #c0392b;
 $primary_color: #2c3e50;
 $accent: #b0cb1b;
+$white: rgb(252, 252, 253);
+$border-color: #e7e7e7;
+$grey-text: #777;
 
 @mixin font($weight) {
 	font-family: 'Lato', sans-serif;
@@ -62,12 +65,14 @@ body, html {
 }
 
 .navbar {
+	border-bottom: 2px solid $border-color;
 	margin: {
 		left: -15px;
 		right: -15px;
+		bottom: 0px;
 	}
 	height: 50px;
-
+	background-color: $white;
 	.container {
 		height: 50px;
 	}
@@ -81,4 +86,59 @@ body, html {
 		padding-top: 15px;
 		padding-bottom: 15px
 	}
+}
+
+.sidebar {
+	display: block;
+	height: 100vh;
+	background-color: $white;
+	border-right: 2px solid $border-color;
+	
+	//televic icon
+	.brand {
+		align-content: center;
+		height: 50px;
+		width: 100px;
+		display: block;
+
+		margin: {
+			left: auto;
+			right: auto;
+		}
+
+		img {
+			display: block;
+			height: 50px;
+		}
+	}
+
+	//first level
+	.level-1 {
+		@include font(300);
+		font-size: 18px;
+		color: $grey-text;
+	}
+
+	a {
+		color: $grey-text;	
+	}
+
+	.full-height {
+		height: 100%;
+	}
+}
+
+.panel {
+	.panel-footer {
+		height: 54px;
+	}
+}
+
+.admin-container {
+	padding-top: 18px;
+}
+
+#map-container {
+	height: 100%;
+	width: 100%;
 }

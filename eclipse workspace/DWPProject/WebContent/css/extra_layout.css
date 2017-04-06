@@ -46,9 +46,12 @@ body, html {
   animation: breath 4s infinite; }
 
 .navbar {
+  border-bottom: 2px solid #e7e7e7;
   margin-left: -15px;
   margin-right: -15px;
-  height: 50px; }
+  margin-bottom: 0px;
+  height: 50px;
+  background-color: #fcfcfd; }
   .navbar .container {
     height: 50px; }
   .navbar #user {
@@ -57,3 +60,38 @@ body, html {
   .navbar #username {
     padding-top: 15px;
     padding-bottom: 15px; }
+
+.sidebar {
+  display: block;
+  height: 100vh;
+  background-color: #fcfcfd;
+  border-right: 2px solid #e7e7e7; }
+  .sidebar .brand {
+    align-content: center;
+    height: 50px;
+    width: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto; }
+    .sidebar .brand img {
+      display: block;
+      height: 50px; }
+  .sidebar .level-1 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    color: #777; }
+  .sidebar a {
+    color: #777; }
+  .sidebar .full-height {
+    height: 100%; }
+
+.panel .panel-footer {
+  height: 54px; }
+
+.admin-container {
+  padding-top: 18px; }
+
+#map-container {
+  height: 100%;
+  width: 100%; }

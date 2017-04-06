@@ -45,31 +45,30 @@
 		<div class="row">
 
 			<!-- LEFT SIDEBAR -->
-			<div class="col-sm-2 sidebar_container">
+			<div class="col-sm-2 sidebar">
 
 
-				<!-- SIDEBAR CONTENT -->
-				<div class="workplace">
+				<a class="brand" href="index.xhtml"><img
+					src="http://rve2013.onyxrail.co.uk/img/televic_logo.png" /></a>
 
 					<!-- STAANPLAATSEN -->
 					<c:forEach var="workplace"
 						items="#{workplaceController.getAllWorkplaces()}">
-						<h3>
+						<div class="level-1">
 							<span class="glyphicon glyphicon-unchecked sidebar_icon"></span>
 							<h:link value="#{workplace.name}"
 								outcome="workplace.xhtml?workplace_id=#{workplace.id}" />
 							<!--  <span class="badge">3</span> -->
-						</h3>
+						</div>
 					</c:forEach>
 				</div>
 				<!-- END SIDEBAR CONTENT -->
-			</div>
 			<!-- END LEFT SIDEBAR -->
 
 			<!-- MAINVIEW CONTENT -->
 			<div class="col-sm-10">
 				<!-- FIXED NAVBAR -->
-				<ui:include src="templates/navbar.xhtml" />	
+				<ui:include src="templates/navbar.xhtml" />
 
 				<!-- USER DATA ROW -->
 				<div class="row userdata_row">
@@ -102,10 +101,10 @@
 								<div class="row">
 									<p>
 										Televic Managment tool biedt een overzicht van alle wagons met
-										bijhorende sensordata in heel België. <br /> Livestreaming van
-										wagons, visuele representaties van de data en nog veel meer
-										staat je te wachten. <br /> Kies een werkplaats om je rit te
-										starten!
+										bijhorende sensordata in heel België. <br /> Livestreaming
+										van wagons, visuele representaties van de data en nog veel
+										meer staat je te wachten. <br /> Kies een werkplaats om je
+										rit te starten!
 									</p>
 								</div>
 							</p:tab>
