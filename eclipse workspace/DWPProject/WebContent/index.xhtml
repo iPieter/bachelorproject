@@ -1,249 +1,279 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html 
-	xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
-	
+
 <h:head>
-	<meta charset="utf-8"/>
-	
+	<meta charset="utf-8" />
+
 	<!-- LOGIN REDIRECT -->
-    <ui:fragment rendered="#{!authenticationController.hasOperatorAccess()}">
-		<meta http-equiv="refresh" content="0; url=login.xhtml"/>
-    </ui:fragment>
-	
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-	<link href="css/bootstrap.min.css" rel="stylesheet"/>
-	<link href="css/extra_layout.css" rel="stylesheet"/>
-	<link href="css/index.css" rel="stylesheet"/>
-	<link href="css/login.css" rel="stylesheet"/>
+	<ui:fragment
+		rendered="#{!authenticationController.hasOperatorAccess()}">
+		<meta http-equiv="refresh" content="0; url=login.xhtml" />
+	</ui:fragment>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<link href="css/extra_layout.css" rel="stylesheet" />
 	<link rel="stylesheet" href="css/leaflet.css" />
-	<link rel="stylesheet" href="css/sidebar.css" />
-	
-	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="img/apple-touch-icon-120x120.png" />
-	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="img/apple-touch-icon-152x152.png" />
-	<link rel="icon" type="image/png" href="img/favicon-16x16.png" sizes="16x16" />
-	
-	
+
+	<link
+		href="https://fonts.googleapis.com/css?family=Lato:300,400&amp;subset=latin-ext"
+		rel="stylesheet" />
+
+	<link rel="apple-touch-icon-precomposed" sizes="120x120"
+		href="img/apple-touch-icon-120x120.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="152x152"
+		href="img/apple-touch-icon-152x152.png" />
+	<link rel="icon" type="image/png" href="img/favicon-16x16.png"
+		sizes="16x16" />
+
+
 	<title>Televic Managment Home</title>
 </h:head>
 
 <!-- Renders when logged in -->
-<h:body rendered="#{authenticationController.hasOperatorAccess()}">	
+<h:body rendered="#{authenticationController.hasOperatorAccess()}">
+	<!-- FIXED NAVBAR -->
+	<ui:include src="templates/navbar.xhtml" />
+	<div class="container-fluid i-need-room-above-my-head">
+		<div class="row">
 
-<!-- FIXED NAVBAR -->
-<ui:include src="templates/navbar.xhtml"/>
-			
-<div class="container-fluid">
-	<div class="row">
-	
-		<!-- LEFT SIDEBAR -->
-		<div class="col-sm-2 sidebar_container">
-			
-   			
-   			<!-- SIDEBAR CONTENT --> 	
-   			<div class="workplace">	
-   			
-	   			<!-- STAANPLAATSEN -->	
-				<c:forEach var="workplace" items="#{workplaceController.getAllWorkplaces()}">
-	                <h4>
-	                	<span class="glyphicon glyphicon-unchecked sidebar_icon"></span>
-	                	<h:link value="#{workplace.name}" outcome="workplace.xhtml?workplace_id=#{workplace.id}"/>
+
+			<!-- LEFT SIDEBAR -->
+			<div class="col-sm-2 sidebar">
+
+				<!-- STAANPLAATSEN -->
+				<c:forEach var="workplace"
+					items="#{workplaceController.getAllWorkplaces()}">
+					<div class="level-1">
+						<img class="icon" src="img/railway-station-100-777.png"></img>
+						<h:link value="#{workplace.name}"
+							outcome="workplace.xhtml?workplace_id=#{workplace.id}" />
 						<!--  <span class="badge">3</span> -->
-	                </h4>
-	   			</c:forEach>
-   			</div> <!-- END SIDEBAR CONTENT -->
-   		</div> <!-- END LEFT SIDEBAR -->
-	
-	<!-- MAINVIEW CONTENT -->
-	<div class="col-sm-10">			
-		<!-- USER DATA ROW -->
-		<div class="row userdata_row">
-			<div class="col-sm-12"></div>
-				<h:form id="form">
-	    			<p:growl id="msgs" showDetail="true" />
-	    			
-	    			<!-- TABS -->
-	    			<p:tabView dynamic="true" cache="true">
-	    			
-	    				<!--TAB: WELCOME -->
-	    				<p:tab title="Welcome">
-	    					<!-- Welcome Header -->
-	    					<div class="row">
-		    					<div class="media">
-								  <div class="media-left">
-								      <div class="media-object index_avatar">
-											<img src="rest/assets/user/#{indexController.avatar}"/>
-										</div>
-								  </div>
-								  <div class="media-body">
-								    <h2><h:outputText 
-								    	value="Welkom, #{indexController.userService.user.name}!"/>
-								    </h2>
-								  </div>
-								</div>
-							 </div>
-							 <!-- Welcome Content -->
-							 <div class="row">
-								 <p>Televic Managment tool biedt een overzicht van alle wagons met bijhorende sensordata in heel België.
-								 <br/>
-								 Livestreaming van wagons, visuele representaties van de data en nog veel meer staat je te wachten.
-								 <br/>
-								 Kies een werkplaats om je rit te starten!
-								 </p>
-							 </div>
-	    				</p:tab>
-	    				
-	    				<!--TAB: ASSIGNED ISSUES -->
-				        <p:tab title="Toegewezen">
-							<h:outputText value="Issues you assigned." />
-							<h:dataTable class="table" value="#{indexController.findOperatorAssignedIssues()}" var="issue">
-								<h:column>
-									<f:facet name="header">
-										<h:outputText value="Toegewezen" />
-									</f:facet>
-									<h:outputText value="#{issue.assignedPrettyTime}" />
-								</h:column>
-								<h:column>
-									<f:facet name="header">
-										<h:outputText value="Beschrijving" />
-									</f:facet>
-									<h:outputText value="#{issue.descr}" />
-								</h:column>
-								<h:column>
-									<f:facet name="header">
-										<h:outputText value="Toegewezen technicus" />
-									</f:facet>
-									<h:outputText value="#{issue.mechanic.name}" />
-								</h:column>	
-								<h:column>
-									<f:facet name="header">
-										<h:outputText value="Email technicus" />
-									</f:facet>
-									<h:outputText value="#{issue.mechanic.email}" />
-								</h:column>						
-							</h:dataTable>
-				        </p:tab>
-				        
-				        <!--TAB: IN_PROGRESS ISSUES -->
-				        <p:tab title="Bezig">
-							<h:outputText value="Issues you assigned, now in progress." />
-							<h:dataTable class="table" value="#{indexController.findOperatorInProgressIssues()}" var="issue">
-								<h:column>
-									<f:facet name="header">
-										<h:outputText value="Toegewezen" />
-									</f:facet>
-									<h:outputText value="#{issue.assignedPrettyTime}" />
-								</h:column>
-								<h:column>
-									<f:facet name="header">
-										<h:outputText value="Gestart" />
-									</f:facet>
-									<h:outputText value="#{issue.inProgressPrettyTime}" />
-								</h:column>
-								<h:column>
-									<f:facet name="header">
-										<h:outputText value="Beschrijving" />
-									</f:facet>
-									<h:outputText value="#{issue.descr}" />
-								</h:column>
-								<h:column>
-									<f:facet name="header">
-										<h:outputText value="Technicus" />
-									</f:facet>
-									<h:outputText value="#{issue.mechanic.name}" />
-								</h:column>	
-								<h:column>
-									<f:facet name="header">
-										<h:outputText value="Email technicus" />
-									</f:facet>
-									<h:outputText value="#{issue.mechanic.email}" />
-								</h:column>							
-							</h:dataTable>
-				        </p:tab>
-				        
-	    				<!--TAB: CLOSED ISSUES -->
-				        <p:tab title="Gesloten">
-							<h:outputText value="Issues you assigned, recently closed." />
-							<h:dataTable class="table" value="#{indexController.findOperatorClosedIssues()}" var="issue">
-								<h:column>
-									<f:facet name="header">
-										<h:outputText value="Toegewezen" />
-									</f:facet>
-									<h:outputText value="#{issue.assignedPrettyTime}" />
-								</h:column>
-								<h:column>
-									<f:facet name="header">
-										<h:outputText value="Gestart" />
-									</f:facet>
-									<h:outputText value="#{issue.inProgressPrettyTime}" />
-								</h:column>
-								<h:column>
-									<f:facet name="header">
-										<h:outputText value="Gesloten" />
-									</f:facet>
-									<h:outputText value="#{issue.closedPrettyTime}" />
-								</h:column>
-								<h:column>
-									<f:facet name="header">
-										<h:outputText value="Beschrijving" />
-									</f:facet>
-									<h:outputText value="#{issue.descr}" />
-								</h:column>
-								<h:column>
-									<f:facet name="header">
-										<h:outputText value="Technicus" />
-									</f:facet>
-									<h:outputText value="#{issue.mechanic.name}" />
-								</h:column>	
-								<h:column>
-									<f:facet name="header">
-										<h:outputText value="Email technicus" />
-									</f:facet>
-									<h:outputText value="#{issue.mechanic.email}" />
-								</h:column>							
-							</h:dataTable>
-				        </p:tab>
-				        
-				    </p:tabView>
-	    		</h:form>
-    		</div> <!-- END USER DATA ROW -->
-    		
-    		<!-- STATISTIC GRAPHICS ROW -->
-			<div class="row graphics_row">
-				<!-- HEATMAP -->
-				<div class="col-sm-8 no_padding">
-					<div id="map_size">
-						<div id="map"></div>
+					</div>
+				</c:forEach>
+			</div>
+			<!-- END SIDEBAR CONTENT -->
+			<!-- END LEFT SIDEBAR -->
+
+			<!-- MAINVIEW CONTENT -->
+			<div class="col-sm-10 i-need-room-above-my-head">
+
+
+				<!-- USER DATA ROW -->
+				<div class="row">
+					<div class="col-sm-7 ">
+
+						<div class="panel panel-default">
+							<!-- HEADER -->
+							<div class="panel-heading">
+								<h3 class="panel-title">Recente problemen</h3>
+							</div>
+							<div class="panel-body">
+
+								<h:form id="form">
+									<p:growl id="msgs" showDetail="true" />
+
+									<!-- TABS -->
+									<p:tabView dynamic="true" cache="true">
+
+										<!--TAB: WELCOME -->
+										<p:tab title="Welcome">
+											<!-- Welcome Header -->
+											<div class="row">
+												<div class="media">
+													<div class="media-left">
+														<div class="media-object avatar">
+															<img src="rest/assets/user/#{indexController.avatar}" />
+														</div>
+													</div>
+													<div class="media-body">
+														<h2>
+															<h:outputText
+																value="Welkom, #{indexController.userService.user.name}!" />
+														</h2>
+													</div>
+												</div>
+											</div>
+											<!-- Welcome Content -->
+											<div class="row">
+												<p>
+													Televic Managment tool biedt een overzicht van alle wagons
+													met bijhorende sensordata in heel België. <br />
+													Livestreaming van wagons, visuele representaties van de
+													data en nog veel meer staat je te wachten. <br /> Kies een
+													werkplaats om je rit te starten!
+												</p>
+											</div>
+										</p:tab>
+
+										<!--TAB: ASSIGNED ISSUES -->
+										<p:tab title="Toegewezen">
+											<h:outputText value="Issues you assigned." />
+											<h:dataTable class="table"
+												value="#{indexController.findOperatorAssignedIssues()}"
+												var="issue">
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Toegewezen" />
+													</f:facet>
+													<h:outputText value="#{issue.assignedPrettyTime}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Beschrijving" />
+													</f:facet>
+													<h:outputText value="#{issue.descr}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Toegewezen technicus" />
+													</f:facet>
+													<h:outputText value="#{issue.mechanic.name}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Email technicus" />
+													</f:facet>
+													<h:outputText value="#{issue.mechanic.email}" />
+												</h:column>
+											</h:dataTable>
+										</p:tab>
+
+										<!--TAB: IN_PROGRESS ISSUES -->
+										<p:tab title="Bezig">
+											<h:outputText value="Issues you assigned, now in progress." />
+											<h:dataTable class="table"
+												value="#{indexController.findOperatorInProgressIssues()}"
+												var="issue">
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Toegewezen" />
+													</f:facet>
+													<h:outputText value="#{issue.assignedPrettyTime}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Gestart" />
+													</f:facet>
+													<h:outputText value="#{issue.inProgressPrettyTime}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Beschrijving" />
+													</f:facet>
+													<h:outputText value="#{issue.descr}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Technicus" />
+													</f:facet>
+													<h:outputText value="#{issue.mechanic.name}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Email technicus" />
+													</f:facet>
+													<h:outputText value="#{issue.mechanic.email}" />
+												</h:column>
+											</h:dataTable>
+										</p:tab>
+
+										<!--TAB: CLOSED ISSUES -->
+										<p:tab title="Gesloten">
+											<h:outputText value="Issues you assigned, recently closed." />
+											<h:dataTable class="table"
+												value="#{indexController.findOperatorClosedIssues()}"
+												var="issue">
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Toegewezen" />
+													</f:facet>
+													<h:outputText value="#{issue.assignedPrettyTime}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Gestart" />
+													</f:facet>
+													<h:outputText value="#{issue.inProgressPrettyTime}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Gesloten" />
+													</f:facet>
+													<h:outputText value="#{issue.closedPrettyTime}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Beschrijving" />
+													</f:facet>
+													<h:outputText value="#{issue.descr}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Technicus" />
+													</f:facet>
+													<h:outputText value="#{issue.mechanic.name}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Email technicus" />
+													</f:facet>
+													<h:outputText value="#{issue.mechanic.email}" />
+												</h:column>
+											</h:dataTable>
+										</p:tab>
+
+									</p:tabView>
+								</h:form>
+							</div>
+						</div>
+					</div>
+					<!-- END USER DATA ROW -->
+
+					<!-- STATISTIC GRAPHICS ROW -->
+
+					<!-- HEATMAP -->
+					<div class="col-sm-5">
+						<!-- HALF-DONUT STATISTICS-->
+						<div id="donut_graph"></div>
+						<div id="display_when_empty_donut"
+							class="alert alert-info alert_box" role="alert"></div>
+
+						<div class="panel panel-default">
+							<div id="map_size">
+								<div id="map"></div>
+							</div>
+						</div>
+
 					</div>
 				</div>
-				
-				<!-- HALF-DONUT STATISTICS--> 						
-				<div class="col-sm-4">
-					<div id="donut_graph"></div>
-						<div id="display_when_empty_donut" class="alert alert-info alert_box" role="alert"></div>
-				</div>
-			</div> <!-- END STATISTIC GRAPHICS ROW -->
-		
-		</div> <!-- END MAINVIEW CONTENT -->
-	</div> <!-- END MASTER ROW -->
-</div> <!-- END MASTER CONTAINER -->
+				<!-- END STATISTIC GRAPHICS ROW -->
 
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"
+			</div>
+			<!-- END MAINVIEW CONTENT -->
+		</div>
+		<!-- END MASTER ROW -->
+	</div>
+	<!-- END MASTER CONTAINER -->
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"
 		type="text/javascript">
 </script>
-<script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
-<script src="js/leaflet-heat.js" type="text/javascript"></script>
-<script src="js/bootstrap.min.js" type="text/javascript"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="js/index.js" type="text/javascript"></script>
+	<script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
+	<script src="js/leaflet-heat.js" type="text/javascript"></script>
+	<script src="js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="js/index.js" type="text/javascript"></script>
 </h:body>
 
 <!-- Renders when not logged in and redirect doesnt' work -->
@@ -252,9 +282,12 @@
 		<div class="row">
 			<div class="col-sm-10 col-sm-offset-1">
 				<h1>You're not authorized for this page!</h1>
-				<h2>It seems like we failed to redirect you to the <a href="login.xhtml">login page</a>.</h2>
+				<h2>
+					It seems like we failed to redirect you to the <a
+						href="login.xhtml">login page</a>.
+				</h2>
 			</div>
 		</div>
 	</div>
 </h:body>
-</html>	
+</html>

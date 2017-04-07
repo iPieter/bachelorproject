@@ -47,12 +47,12 @@
 			<c:set var="workplace"
 				value="#{trainCoachController.currentWorkplace}"
 			/>
-			<h4>
+			<h3>
 				<span class="glyphicon glyphicon-unchecked"></span>
 				<h:link value="#{workplace.name}"
 					outcome="workplace.xhtml?workplace_id=#{workplace.id}"
 				/>
-			</h4>
+			</h3>
 
 			<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
 			<c:forEach var="traincoach"
@@ -167,7 +167,7 @@
 							<f:facet name="header">
 								<h:outputText value="Vertrektijd" />
 							</f:facet>
-							<h:outputText value="#{sensordata.time}" />
+							<h:outputText value="#{sensordata.date}" />
 						</h:column>
 						<h:column>
 							<f:facet name="header">

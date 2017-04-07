@@ -1,0 +1,226 @@
+// Colors
+$dark_red: #c0392b;
+$primary_color: #2c3e50;
+$accent: #b0cb1b;
+$white: rgb(252, 252, 253);
+$border: 2px solid #e7e7e7;
+$background-grey: #f5f5f5;
+$grey-text: #777;
+@mixin font($weight) {
+    font-family: 'Lato', sans-serif;
+    font-weight: $weight;
+} // MAIN LAYOUT
+body,
+html {
+    height: 100%;
+    margin-left: 0px;
+    width: 100%;
+    background-color: $background-grey;
+    @include font(400);
+}
+
+.status_bad {
+    color: red;
+}
+
+.status_good {
+    color: green;
+}
+
+.avatar {
+    display: inline-block;
+    position: relative;
+    margin-right: 6px;
+    width: 36px;
+    height: 36px;
+    border: 2px solid rgb(189, 195, 199);
+    -webkit-border-radius: 200px;
+    -moz-border-radius: 200px;
+    border-radius: 200px;
+    img {
+        height: 32px;
+        width: 32px;
+        border-radius: 200px;
+    }
+}
+
+.big-avatar {
+	width: 196px;
+    height: 196px;
+	display: block;
+	margin-right: auto;
+    img {
+        height: 192px;
+        width: 192px;
+	}
+}
+@keyframes breath {
+    0% {
+        background-color: $dark_red;
+    }
+    50% {
+        background-color: white;
+    }
+    100% {
+        background-color: $dark_red;
+    }
+}
+
+.breathing {
+    display: inline-block;
+    background-color: $dark_red;
+    height: 6px;
+    width: 6px;
+    margin-right: 4px;
+    margin-bottom: 3px;
+    border-radius: 300px;
+    animation: breath 4s infinite;
+} // ---- NAVBAR ----
+.navbar {
+    z-index: 9999;
+    border-bottom: $border;
+    margin: {
+        bottom: 0px;
+    }
+    height: 50px;
+    background-color: $white;
+    opacity: 0.98;
+    .container-fluid {
+        height: 50px;
+    }
+    #user {
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+    #username {
+        padding-top: 15px;
+        padding-bottom: 15px
+    } //wrapper televic icon
+    .col-sm-2 {
+        border-right: $border;
+    } //televic icon
+    .brand {
+        align-content: center;
+        height: 50px;
+        width: 100px;
+        display: block;
+        margin: {
+            left: auto;
+            right: auto;
+        }
+        img {
+            display: block;
+            height: 50px;
+        }
+    }
+    .navbar-right {
+        margin-right: 0px;
+    }
+} // ---- SIDEBAR ----
+.sidebar {
+    display: block;
+    height: 100vh;
+    background-color: $white;
+    border-right: $border;
+    padding-top: 18px; //first level
+    .level-1 {
+        @include font(300);
+        font-size: 18px;
+        color: $grey-text;
+        .icon {
+            height: 24px;
+        }
+    } //second level 
+    .level-2 {
+        @include font(300);
+        font-size: 16px;
+        margin-left: 8px;
+        padding: {
+            left: 8px;
+            top: 3px;
+            bottom: 3px;
+        }
+        .title {
+            margin-top: 2px;
+            margin-bottom: 6px;
+        }
+        &.active {
+            border-left: 2px solid $accent;
+            background-color: $background-grey;
+            margin-right: -15px;
+        }
+        .icon {
+            height: 22px;
+        }
+    } //third level
+    .level-3 {
+        margin: {
+            left: 16px;
+            bottom: 3px;
+        }
+        @include font(400);
+        font-size: 14px;
+    }
+    a {
+        color: $grey-text;
+    }
+    .full-height {
+        height: 100%;
+    }
+    .icon {
+        padding: {
+            right: 6px;
+            bottom: 3px;
+        }
+    }
+}
+
+.panel {
+    .panel-footer {
+        height: 54px;
+    }
+}
+
+.admin-container {
+    padding-top: 18px;
+}
+
+#map-container {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    #map {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+#map_size {
+    height: 400px;
+    width: 100%;
+    #map {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.i-need-room-above-my-head {
+    padding-top: 50px;
+}
+
+.map-overlay {
+    padding-top: 70px;
+}
+
+#loading_modal {
+    margin-top: 70px;
+}
+
+.modal {
+	margin-top: 70px;
+}
+
+.realtime_chart {
+	height: 30vh;
+}
