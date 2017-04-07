@@ -40,8 +40,8 @@
 
 <!-- Renders when logged in -->
 <h:body rendered="#{authenticationController.hasOperatorAccess()}">
-			<!-- FIXED NAVBAR -->
-			<ui:include src="templates/navbar.xhtml" />
+	<!-- FIXED NAVBAR -->
+	<ui:include src="templates/navbar.xhtml" />
 	<div class="container-fluid">
 		<div class="row">
 
@@ -70,175 +70,178 @@
 				<!-- USER DATA ROW -->
 				<div class="row">
 					<div class="col-sm-7 ">
-					
-					<div class="panel panel-default">
-					<h:form id="form">
-						<p:growl id="msgs" showDetail="true" />
 
-						<!-- TABS -->
-						<p:tabView dynamic="true" cache="true">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<h:form id="form">
+									<p:growl id="msgs" showDetail="true" />
 
-							<!--TAB: WELCOME -->
-							<p:tab title="Welcome">
-								<!-- Welcome Header -->
-								<div class="row">
-									<div class="media">
-										<div class="media-left">
-											<div class="media-object avatar">
-												<img src="rest/assets/user/#{indexController.avatar}" />
+									<!-- TABS -->
+									<p:tabView dynamic="true" cache="true">
+
+										<!--TAB: WELCOME -->
+										<p:tab title="Welcome">
+											<!-- Welcome Header -->
+											<div class="row">
+												<div class="media">
+													<div class="media-left">
+														<div class="media-object avatar">
+															<img src="rest/assets/user/#{indexController.avatar}" />
+														</div>
+													</div>
+													<div class="media-body">
+														<h2>
+															<h:outputText
+																value="Welkom, #{indexController.userService.user.name}!" />
+														</h2>
+													</div>
+												</div>
 											</div>
-										</div>
-										<div class="media-body">
-											<h2>
-												<h:outputText
-													value="Welkom, #{indexController.userService.user.name}!" />
-											</h2>
-										</div>
-									</div>
-								</div>
-								<!-- Welcome Content -->
-								<div class="row">
-									<p>
-										Televic Managment tool biedt een overzicht van alle wagons met
-										bijhorende sensordata in heel België. <br /> Livestreaming
-										van wagons, visuele representaties van de data en nog veel
-										meer staat je te wachten. <br /> Kies een werkplaats om je
-										rit te starten!
-									</p>
-								</div>
-							</p:tab>
+											<!-- Welcome Content -->
+											<div class="row">
+												<p>
+													Televic Managment tool biedt een overzicht van alle wagons
+													met bijhorende sensordata in heel België. <br />
+													Livestreaming van wagons, visuele representaties van de
+													data en nog veel meer staat je te wachten. <br /> Kies een
+													werkplaats om je rit te starten!
+												</p>
+											</div>
+										</p:tab>
 
-							<!--TAB: ASSIGNED ISSUES -->
-							<p:tab title="Toegewezen">
-								<h:outputText value="Issues you assigned." />
-								<h:dataTable class="table"
-									value="#{indexController.findOperatorAssignedIssues()}"
-									var="issue">
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="Toegewezen" />
-										</f:facet>
-										<h:outputText value="#{issue.assignedPrettyTime}" />
-									</h:column>
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="Beschrijving" />
-										</f:facet>
-										<h:outputText value="#{issue.descr}" />
-									</h:column>
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="Toegewezen technicus" />
-										</f:facet>
-										<h:outputText value="#{issue.mechanic.name}" />
-									</h:column>
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="Email technicus" />
-										</f:facet>
-										<h:outputText value="#{issue.mechanic.email}" />
-									</h:column>
-								</h:dataTable>
-							</p:tab>
+										<!--TAB: ASSIGNED ISSUES -->
+										<p:tab title="Toegewezen">
+											<h:outputText value="Issues you assigned." />
+											<h:dataTable class="table"
+												value="#{indexController.findOperatorAssignedIssues()}"
+												var="issue">
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Toegewezen" />
+													</f:facet>
+													<h:outputText value="#{issue.assignedPrettyTime}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Beschrijving" />
+													</f:facet>
+													<h:outputText value="#{issue.descr}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Toegewezen technicus" />
+													</f:facet>
+													<h:outputText value="#{issue.mechanic.name}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Email technicus" />
+													</f:facet>
+													<h:outputText value="#{issue.mechanic.email}" />
+												</h:column>
+											</h:dataTable>
+										</p:tab>
 
-							<!--TAB: IN_PROGRESS ISSUES -->
-							<p:tab title="Bezig">
-								<h:outputText value="Issues you assigned, now in progress." />
-								<h:dataTable class="table"
-									value="#{indexController.findOperatorInProgressIssues()}"
-									var="issue">
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="Toegewezen" />
-										</f:facet>
-										<h:outputText value="#{issue.assignedPrettyTime}" />
-									</h:column>
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="Gestart" />
-										</f:facet>
-										<h:outputText value="#{issue.inProgressPrettyTime}" />
-									</h:column>
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="Beschrijving" />
-										</f:facet>
-										<h:outputText value="#{issue.descr}" />
-									</h:column>
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="Technicus" />
-										</f:facet>
-										<h:outputText value="#{issue.mechanic.name}" />
-									</h:column>
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="Email technicus" />
-										</f:facet>
-										<h:outputText value="#{issue.mechanic.email}" />
-									</h:column>
-								</h:dataTable>
-							</p:tab>
+										<!--TAB: IN_PROGRESS ISSUES -->
+										<p:tab title="Bezig">
+											<h:outputText value="Issues you assigned, now in progress." />
+											<h:dataTable class="table"
+												value="#{indexController.findOperatorInProgressIssues()}"
+												var="issue">
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Toegewezen" />
+													</f:facet>
+													<h:outputText value="#{issue.assignedPrettyTime}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Gestart" />
+													</f:facet>
+													<h:outputText value="#{issue.inProgressPrettyTime}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Beschrijving" />
+													</f:facet>
+													<h:outputText value="#{issue.descr}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Technicus" />
+													</f:facet>
+													<h:outputText value="#{issue.mechanic.name}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Email technicus" />
+													</f:facet>
+													<h:outputText value="#{issue.mechanic.email}" />
+												</h:column>
+											</h:dataTable>
+										</p:tab>
 
-							<!--TAB: CLOSED ISSUES -->
-							<p:tab title="Gesloten">
-								<h:outputText value="Issues you assigned, recently closed." />
-								<h:dataTable class="table"
-									value="#{indexController.findOperatorClosedIssues()}"
-									var="issue">
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="Toegewezen" />
-										</f:facet>
-										<h:outputText value="#{issue.assignedPrettyTime}" />
-									</h:column>
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="Gestart" />
-										</f:facet>
-										<h:outputText value="#{issue.inProgressPrettyTime}" />
-									</h:column>
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="Gesloten" />
-										</f:facet>
-										<h:outputText value="#{issue.closedPrettyTime}" />
-									</h:column>
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="Beschrijving" />
-										</f:facet>
-										<h:outputText value="#{issue.descr}" />
-									</h:column>
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="Technicus" />
-										</f:facet>
-										<h:outputText value="#{issue.mechanic.name}" />
-									</h:column>
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="Email technicus" />
-										</f:facet>
-										<h:outputText value="#{issue.mechanic.email}" />
-									</h:column>
-								</h:dataTable>
-							</p:tab>
+										<!--TAB: CLOSED ISSUES -->
+										<p:tab title="Gesloten">
+											<h:outputText value="Issues you assigned, recently closed." />
+											<h:dataTable class="table"
+												value="#{indexController.findOperatorClosedIssues()}"
+												var="issue">
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Toegewezen" />
+													</f:facet>
+													<h:outputText value="#{issue.assignedPrettyTime}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Gestart" />
+													</f:facet>
+													<h:outputText value="#{issue.inProgressPrettyTime}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Gesloten" />
+													</f:facet>
+													<h:outputText value="#{issue.closedPrettyTime}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Beschrijving" />
+													</f:facet>
+													<h:outputText value="#{issue.descr}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Technicus" />
+													</f:facet>
+													<h:outputText value="#{issue.mechanic.name}" />
+												</h:column>
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Email technicus" />
+													</f:facet>
+													<h:outputText value="#{issue.mechanic.email}" />
+												</h:column>
+											</h:dataTable>
+										</p:tab>
 
-						</p:tabView>
-					</h:form>
+									</p:tabView>
+								</h:form>
+							</div>
+						</div>
 					</div>
-					</div>
-				<!-- END USER DATA ROW -->
+					<!-- END USER DATA ROW -->
 
-				<!-- STATISTIC GRAPHICS ROW -->
+					<!-- STATISTIC GRAPHICS ROW -->
 					<!-- HEATMAP -->
 					<div class="col-sm-5 no_padding">
-						<div id="map_size">
-							<div id="map"></div>
+						<div class="panel panel-default">
+								<div id="map_size">
+									<div id="map"></div>
+							</div>
 						</div>
-
-					<!-- HALF-DONUT STATISTICS-->
+						<!-- HALF-DONUT STATISTICS-->
 						<div id="donut_graph"></div>
 						<div id="display_when_empty_donut"
 							class="alert alert-info alert_box" role="alert"></div>
