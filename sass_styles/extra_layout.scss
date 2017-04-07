@@ -54,6 +54,18 @@ html {
         width: 192px;
 	}
 }
+
+.small-avatar {
+	width: 24px;
+    height: 24px;
+	display: inline-block;
+    img {
+		margin-top: -4px;
+        height: 20px;
+        width: 20px;
+	}
+}
+
 @keyframes breath {
     0% {
         background-color: $dark_red;
@@ -131,9 +143,12 @@ html {
             height: 24px;
         }
     } //second level 
-    .level-2 {
+    .level-2, .descr {
         @include font(300);
         font-size: 16px;
+	}
+
+	.level-2 {
         margin-left: 8px;
         padding: {
             left: 8px;
