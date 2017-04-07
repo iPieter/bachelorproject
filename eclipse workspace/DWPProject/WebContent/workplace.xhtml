@@ -5,15 +5,13 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
->
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="templates/main_layout.xhtml">
 
 	<f:metadata>
 		<f:viewParam name="workplace_id"
-			value="#{workplaceController.currentWorkplaceID}"
-		/>
+			value="#{workplaceController.currentWorkplaceID}" />
 		<f:viewAction action="#{workplaceController.loadPage()}" />
 	</f:metadata>
 
@@ -27,39 +25,34 @@
 				</h:link></li>
 			<li><h:link class="active"
 					value="#{workplaceController.currentWorkplace.name}"
-					outcome="workplace.xhtml?workplace_id=#{workplaceController.currentWorkplace.id}"
-				/></li>
+					outcome="workplace.xhtml?workplace_id=#{workplaceController.currentWorkplace.id}" /></li>
 		</ol>
 	</ui:define>
 
 	<!-- SIDEBAR CONTENT -->
 	<ui:define name="sidebar_content">
-				
-		<div class="level-1 full-height">
+
+		<div class="level-1 full-height active">
 
 			<!-- GESELECTEERDE STAANPLAATS -->
 			<c:set var="workplace"
-				value="#{workplaceController.currentWorkplace}"
-			/>
+				value="#{workplaceController.currentWorkplace}" />
 			<div>
 				<img class="icon" src="img/railway-station-100-777.png"></img>
 				<h:link value="#{workplace.name}"
-					outcome="workplace.xhtml?workplace_id=#{workplace.id}"
-				/>
+					outcome="workplace.xhtml?workplace_id=#{workplace.id}" />
 			</div>
 
 			<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
 			<div class="nano">
 				<div class="nano-content">
 					<c:forEach var="traincoach"
-						items="#{workplaceController.findActiveTrainCoaches()}"
-					>
+						items="#{workplaceController.findActiveTrainCoaches()}">
 						<div class="level-2">
 							<div class="title">
-								<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
+								<img class="icon" src="img/train-100.png"></img>
 								<h:link value="#{traincoach.type} - #{traincoach.name}"
-									outcome="traincoach.xhtml?id=#{traincoach.id}&amp;psdid=0"
-								/>
+									outcome="traincoach.xhtml?id=#{traincoach.id}&amp;psdid=0" />
 							</div>
 							<!-- METADATA PER WAGON -->
 							<div class="traincoach_data">
@@ -70,18 +63,15 @@
 
 										<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
 										<h:link value="Problemen"
-											outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
-										/>
+											outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}" />
 										<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
 									</div>
 								</ui:fragment>
 								<div class="level-3">
 									<span
-										class="glyphicon glyphicon-dashboard sidebar_icon_metadata"
-									></span>
+										class="glyphicon glyphicon-dashboard sidebar_icon_metadata"></span>
 									<h:link value="Geschiedenis"
-										outcome="traincoach_sensor.xhtml?id=#{traincoach.getId()}"
-									/>
+										outcome="traincoach_sensor.xhtml?id=#{traincoach.getId()}" />
 								</div>
 							</div>
 						</div>
@@ -111,8 +101,7 @@
 
 							<c:choose>
 								<c:when
-									test="#{workplaceController.findActiveTrainCoaches().size() == 0}"
-								>
+									test="#{workplaceController.findActiveTrainCoaches().size() == 0}">
 									<em>Er zijn momenteel geen wagons die inspectie nodig
 										hebben in deze staanplaats.</em>
 								</c:when>
@@ -121,34 +110,29 @@
 									<div class="row content">
 										<div class="col-sm-12 pad">
 											<c:set var="workplace"
-												value="#{workplaceController.currentWorkplace}"
-											/>
+												value="#{workplaceController.currentWorkplace}" />
 											<c:forEach var="traincoach"
-												items="#{workplaceController.findActiveTrainCoaches()}"
-											>
+												items="#{workplaceController.findActiveTrainCoaches()}">
 												<!-- WAGON OVERZICHT -->
 												<div class="row mainview_traincoach">
 													<div class="col-sm-4 mainview_wagon_header">
 														<h3>
 															<h:link value="#{traincoach.type} - #{traincoach.name}"
-																outcome="traincoach.xhtml?id=#{traincoach.id}"
-															/>
+																outcome="traincoach.xhtml?id=#{traincoach.id}" />
 														</h3>
 													</div>
 													<div class="col-sm-8">
 														<h4>Actieve problemen</h4>
 														<ul>
 															<c:forEach var="issue"
-																items="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id)}"
-															>
+																items="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id)}">
 																<li><h:outputText value="#{issue.descr}"></h:outputText></li>
 															</c:forEach>
 														</ul>
 														<h4>Afgewerkte problemen</h4>
 														<ul>
 															<c:forEach var="issue"
-																items="#{workplaceController.findClosedIssuesByTraincoachId(traincoach.id)}"
-															>
+																items="#{workplaceController.findClosedIssuesByTraincoachId(traincoach.id)}">
 																<li><h:outputText value="#{issue.descr}"></h:outputText></li>
 															</c:forEach>
 														</ul>
@@ -181,8 +165,7 @@
 							</div>
 							<input type="hidden"
 								value="#{workplaceController.currentWorkplace.id}"
-								id="current_workplace"
-							/>
+								id="current_workplace" />
 							<div class="row">
 								<div id="map_size">
 									<div id="map"></div>
@@ -207,8 +190,7 @@
 								<div class="row content">
 									<div class="col-sm-12 pad">
 										<c:forEach var="mechanic"
-											items="#{workplaceController.findMechanicsOfCurrentWorkplace()}"
-										>
+											items="#{workplaceController.findMechanicsOfCurrentWorkplace()}">
 											<!-- TECHNICUS -->
 											<div class="mainview_issue row">
 												<div class="col-sm-4 dont-break-out">
@@ -216,11 +198,9 @@
 												</div>
 												<div class="col-sm-8">
 													<c:forEach var="activeIssue"
-														items="#{workplaceController.findActiveIssuesByMechanicId(mechanic.id)}"
-													>
+														items="#{workplaceController.findActiveIssuesByMechanicId(mechanic.id)}">
 														<li><h:outputText
-																value="#{activeIssue.status}: #{activeIssue.descr}"
-															/></li>
+																value="#{activeIssue.status}: #{activeIssue.descr}" /></li>
 													</c:forEach>
 												</div>
 											</div>
@@ -240,14 +220,13 @@
 
 		<script
 			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"
-			type="text/javascript"
-		></script>
+			type="text/javascript"></script>
 		<script src="js/bootstrap.min.js" type="text/javascript"></script>
 		<script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
 		<script src="js/underscore-min.js" type="text/javascript"></script>
 		<script src="js/extra_javascript2.js" type="text/javascript"></script>
 		<script src="js/nanoscroller.js" type="text/javascript"></script>
-		
+
 	</ui:define>
 </ui:composition>
 </html>

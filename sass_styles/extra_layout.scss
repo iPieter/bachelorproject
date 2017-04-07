@@ -4,6 +4,7 @@ $primary_color: #2c3e50;
 $accent: #b0cb1b;
 $white: rgb(252, 252, 253);
 $border: 2px solid #e7e7e7;
+$background-grey: #f5f5f5;
 $grey-text: #777;
 
 @mixin font($weight) {
@@ -16,7 +17,7 @@ body, html {
 	height: 100%;
 	margin-left: 0px;
 	width: 100%;
-	background-color: #ecf0f1;
+	background-color: $background-grey;
 	@include font(400);
 }
 
@@ -64,6 +65,7 @@ body, html {
 	animation: breath 4s infinite;
 }
 
+// ---- NAVBAR ----
 .navbar {
 	border-bottom: $border;
 	margin: {
@@ -114,6 +116,7 @@ body, html {
 	}
 }
 
+// ---- SIDEBAR ----
 .sidebar {
 	display: block;
 	height: 100vh;
@@ -126,6 +129,46 @@ body, html {
 		@include font(300);
 		font-size: 18px;
 		color: $grey-text;
+
+		.icon {
+			height: 24px;
+		}
+	}
+	//second level 
+	.level-2 {
+		@include font(300);
+		font-size: 16px;
+		margin-left: 8px;
+		padding: {
+			left: 8px;
+			top: 3px;
+			bottom: 3px;
+		}
+
+		.title {
+			margin-top: 2px;
+			margin-bottom: 6px;
+		}
+
+		&.active {
+			border-left: 2px solid $accent;
+			background-color: $background-grey;
+			margin-right: -15px;
+		}
+
+		.icon {
+			height: 22px;
+		}
+	}
+
+	//third level
+	.level-3 {
+		margin: {
+			left: 16px;
+			bottom: 3px;
+		} 
+		@include font(400);
+		font-size: 14px;
 	}
 
 	a {
@@ -137,7 +180,6 @@ body, html {
 	}
 
 	.icon {
-		height: 24px;
 		padding: {
 			right: 6px;
 			bottom: 3px;

@@ -42,17 +42,15 @@
 
 	<!-- SIDEBAR CONTENT -->
 	<ui:define name="sidebar_content">
-	<a class="brand" href="index.xhtml"><img
-				src="http://rve2013.onyxrail.co.uk/img/televic_logo.png" /></a>
 				
-		<div class="level-1">
+		<div class="level-1 full-height active">
 
 			<!-- GESELECTEERDE STAANPLAATS -->
 			<c:set var="workplace"
 				value="#{trainCoachController.currentWorkplace}"
 			/>
 			<div>
-				<span class="glyphicon glyphicon-unchecked"></span>
+				<img class="icon" src="img/railway-station-100-777.png"></img>
 				<h:link value="#{workplace.name}"
 					outcome="workplace.xhtml?workplace_id=#{workplace.id}"
 				/>
@@ -69,7 +67,7 @@
 					>
 						<div class="level-2 active">
 							<div class="title">
-								<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
+								<img class="icon" src="img/train-100.png"></img>
 								<h:link value="#{traincoach.type} - #{traincoach.name}"
 									outcome="traincoach.xhtml?id=#{traincoach.getId()}&amp;psdid=0"
 								/>
@@ -103,7 +101,7 @@
 					<c:otherwise>
 						<div class="level-2">
 							<div class="title">
-								<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
+								<img class="icon" src="img/train-100.png"></img>
 								<h:link value="#{traincoach.type} - #{traincoach.name}"
 									outcome="traincoach.xhtml?id=#{traincoach.id}&amp;psdid=0"
 								/>

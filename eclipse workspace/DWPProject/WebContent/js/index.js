@@ -40,12 +40,12 @@ function setDonutView(data)
 		$("#display_when_empty_donut").hide();
 		
 		Highcharts.setOptions({
-		    colors: ['#8e44ad', '#b54132','#c98818', '#50B432'] //Afgewerkt: Wiseria Toegewezen=Rood, In Behandeling=oranje, Closed=Groen
+		    colors: ['#c0392b','#e67e22', '#27ae60'] // Toegewezen=Rood, In Behandeling=oranje, Closed=Groen
 		});
 		
 		Highcharts.chart('donut_graph', {
 		    chart: {
-		        plotBackgroundColor: null,
+		        plotBackgroundColor: false,
 		        plotBorderWidth: 0,
 		        plotShadow: false
 		    },
