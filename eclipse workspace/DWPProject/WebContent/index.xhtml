@@ -72,7 +72,12 @@
 					<div class="col-sm-7 ">
 
 						<div class="panel panel-default">
+							<!-- HEADER -->
+							<div class="panel-heading">
+								<h3 class="panel-title">Recente problemen</h3>
+							</div>
 							<div class="panel-body">
+
 								<h:form id="form">
 									<p:growl id="msgs" showDetail="true" />
 
@@ -234,17 +239,20 @@
 					<!-- END USER DATA ROW -->
 
 					<!-- STATISTIC GRAPHICS ROW -->
+
 					<!-- HEATMAP -->
-					<div class="col-sm-5 no_padding">
-						<div class="panel panel-default">
-								<div id="map_size">
-									<div id="map"></div>
-							</div>
-						</div>
+					<div class="col-sm-5">
 						<!-- HALF-DONUT STATISTICS-->
 						<div id="donut_graph"></div>
 						<div id="display_when_empty_donut"
 							class="alert alert-info alert_box" role="alert"></div>
+
+						<div class="panel panel-default">
+							<div id="map_size">
+								<div id="map"></div>
+							</div>
+						</div>
+
 					</div>
 				</div>
 				<!-- END STATISTIC GRAPHICS ROW -->

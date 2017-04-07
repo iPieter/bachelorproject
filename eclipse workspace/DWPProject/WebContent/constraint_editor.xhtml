@@ -22,26 +22,38 @@
 
 		<div class="container-fluid pad">
 			<div class="row">
-				<div class="col-sm-2">
+
+				<!-- LEFT SIDEBAR -->
+				<div class="col-sm-2 sidebar">
+					<button type="button" onclick="openModal()">Nieuwe
+						beperking</button>
+					<!-- STAANPLAATSEN -->
 					<c:forEach var="constraint"
 						items="#{constraintEditorController.constraints}">
 						<div id="constraint_#{constraint.id}" class="constraint">
-							<h:outputText value="#{constraint.getName()}" />
-							<h:inputHidden
-								value="#{constraintEditorController.getPolygon(constraint.id)}"
-								id="constraint_input_#{constraint.id}" class="loc_constraint" />
-							<br />
-							<c:forEach var="constraint_element"
-								items="#{constraint.constraints}">
-								<h:outputText value="#{constraint_element}"
-									rendered="#{constraint_element.toString().length() != 0}" />
-								<br />
-							</c:forEach>
+							<div class="level-1">
+								<img class="icon" src="img/geofence-100.png"></img>
+								<h:link value="#{constraint.getName()}"
+									outcome="workplace.xhtml?workplace_id=#{workplace.id}" />
+								<h:inputHidden
+									value="#{constraintEditorController.getPolygon(constraint.id)}"
+									id="constraint_input_#{constraint.id}" class="loc_constraint" />
+								<c:forEach var="constraint_element"
+									items="#{constraint.constraints}">
+									<h:outputText value="#{constraint_element}"
+										rendered="#{constraint_element.toString().length() != 0}" />
+									<br />
+								</c:forEach>
+							</div>
 						</div>
 					</c:forEach>
-					<button type="button" onclick="openModal()">Nieuwe
-						beperking</button>
 				</div>
+				<!-- END SIDEBAR CONTENT -->
+				<!-- END LEFT SIDEBAR -->
+
+
+
+
 				<div class="col-sm-10" id="map_big" style="height: 75vh"></div>
 			</div>
 			<div class="row">
@@ -66,11 +78,10 @@
 
 								<div class="form-horizontal">
 									<div class="form-group-margin">
-									
+
 										<label for="title">Naam van beperking</label>
-										<h:inputText class="form-control" name="title"
-											type="text" placeholder="Naam"
-											value="#{constraintEditorController.name}" />
+										<h:inputText class="form-control" name="title" type="text"
+											placeholder="Naam" value="#{constraintEditorController.name}" />
 									</div>
 									<label for="input-group">Beperkingen</label>
 									<ui:repeat
@@ -215,8 +226,8 @@
 					</h:form>
 				</div>
 			</div>
-
 		</div>
+
 
 		<script
 			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"

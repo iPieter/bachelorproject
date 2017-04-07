@@ -45,7 +45,7 @@ function setDonutView(data)
 		
 		Highcharts.chart('donut_graph', {
 		    chart: {
-		        plotBackgroundColor: false,
+		        backgroundColor: "#f5f5f5",
 		        plotBorderWidth: 0,
 		        plotShadow: false
 		    },
