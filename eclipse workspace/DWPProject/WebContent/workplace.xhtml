@@ -34,8 +34,6 @@
 
 	<!-- SIDEBAR CONTENT -->
 	<ui:define name="sidebar_content">
-	<a class="brand" href="index.xhtml"><img
-				src="http://rve2013.onyxrail.co.uk/img/televic_logo.png" /></a>
 				
 		<div class="level-1 full-height">
 
@@ -44,7 +42,7 @@
 				value="#{workplaceController.currentWorkplace}"
 			/>
 			<div>
-				<span class="glyphicon glyphicon-unchecked"></span>
+				<img class="icon" src="img/railway-station-100-777.png"></img>
 				<h:link value="#{workplace.name}"
 					outcome="workplace.xhtml?workplace_id=#{workplace.id}"
 				/>

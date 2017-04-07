@@ -3,7 +3,7 @@ $dark_red: #c0392b;
 $primary_color: #2c3e50;
 $accent: #b0cb1b;
 $white: rgb(252, 252, 253);
-$border-color: #e7e7e7;
+$border: 2px solid #e7e7e7;
 $grey-text: #777;
 
 @mixin font($weight) {
@@ -65,10 +65,9 @@ body, html {
 }
 
 .navbar {
-	border-bottom: 2px solid $border-color;
+	border-bottom: $border;
 	margin: {
-		left: -15px;
-		right: -15px;
+
 		bottom: 0px;
 	}
 	height: 50px;
@@ -86,14 +85,12 @@ body, html {
 		padding-top: 15px;
 		padding-bottom: 15px
 	}
-}
 
-.sidebar {
-	display: block;
-	height: 100vh;
-	background-color: $white;
-	border-right: 2px solid $border-color;
-	
+	//wrapper televic icon
+	.col-sm-2 {
+		border-right: $border;
+	}
+
 	//televic icon
 	.brand {
 		align-content: center;
@@ -112,6 +109,18 @@ body, html {
 		}
 	}
 
+	.navbar-right {
+		margin-right: 0px;
+	}
+}
+
+.sidebar {
+	display: block;
+	height: 100vh;
+	background-color: $white;
+	border-right: $border;
+	padding-top: 18px;
+
 	//first level
 	.level-1 {
 		@include font(300);
@@ -125,6 +134,14 @@ body, html {
 
 	.full-height {
 		height: 100%;
+	}
+
+	.icon {
+		height: 24px;
+		padding: {
+			right: 6px;
+			bottom: 3px;
+		}
 	}
 }
 
