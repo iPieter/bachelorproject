@@ -158,3 +158,9 @@ html {
 
 #loading_modal {
   margin-top: 70px; }
+
+.modal {
+  margin-top: 70px; }
+
+.realtime_chart {
+  height: 30vh; }
