@@ -102,3 +102,13 @@ body, html {
 #map-container {
   height: 100%;
   width: 100%; }
+
+#map_size {
+  height: 400px;
+  width: 100%; }
+  #map_size #map {
+    width: 100%;
+    height: 100%; }
+
+.i-need-room-above-my-head {
+  padding-top: 20px; }
