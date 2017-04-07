@@ -31,20 +31,20 @@
 					<c:forEach var="constraint"
 						items="#{constraintEditorController.constraints}">
 						<div id="constraint_#{constraint.id}" class="constraint">
+							
 							<div class="level-1">
 								<img class="icon" src="img/geofence-100.png"></img>
-								<h:link value="#{constraint.getName()}"
+								<h:link value="#{constraint.name}"
 									outcome="workplace.xhtml?workplace_id=#{workplace.id}" />
 								<h:inputHidden
 									value="#{constraintEditorController.getPolygon(constraint.id)}"
 									id="constraint_input_#{constraint.id}" class="loc_constraint" />
-								<c:forEach var="constraint_element"
-									items="#{constraint.constraints}">
-									<h:outputText value="#{constraint_element}"
-										rendered="#{constraint_element.toString().length() != 0}" />
-									<br />
-								</c:forEach>
+									<div class="descr">
+										<h:outputText value="#{constraint.creator.name}"></h:outputText>
+										
+									</div>
 							</div>
+							<div class="line"></div>
 						</div>
 					</c:forEach>
 				</div>

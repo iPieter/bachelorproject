@@ -145,6 +145,7 @@ html {
 
 #map_size {
   height: 400px;
+  max-height: 40vh;
   width: 100%; }
   #map_size #map {
     width: 100%;
@@ -164,3 +165,7 @@ html {
 
 .realtime_chart {
   height: 30vh; }
+
+#donut_graph {
+  height: 400px;
+  max-height: 40vh; }
