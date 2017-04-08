@@ -41,18 +41,17 @@
 
 	<!-- SIDEBAR CONTENT -->
 	<ui:define name="sidebar_content">
-		<div class="workplace workplace_active">
+		<div class="level-1 full-height active">
 
 			<!-- GESELECTEERDE STAANPLAATS -->
 			<c:set var="workplace"
-				value="#{trainCoachController.currentWorkplace}"
+				value="#{trainCoachSensorController.currentWorkplace}"
 			/>
-			<h3>
-				<span class="glyphicon glyphicon-unchecked"></span>
+			<div>
+				<img class="icon" src="img/railway-station-100-777.png"></img>
 				<h:link value="#{workplace.name}"
-					outcome="workplace.xhtml?workplace_id=#{workplace.id}"
-				/>
-			</h3>
+					outcome="workplace.xhtml?workplace_id=#{workplace.id}" />
+			</div>
 
 			<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
 			<c:forEach var="traincoach"
@@ -61,71 +60,64 @@
 				<c:choose>
 					<!-- GESELECTEERDE WAGON -->
 					<c:when
-						test="#{trainCoachController.currentTrainCoach.id == traincoach.id}"
+						test="#{trainCoachSensorController.currentTrainCoach.id == traincoach.id}"
 					>
-						<div class="traincoach traincoach_active">
-							<h4 class="sidebar_text_traincoach">
-								<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
+						<div class="level-2 active">
+							<div class="title">
+								<img class="icon" src="img/train-100.png"></img>
 								<h:link value="#{traincoach.type} - #{traincoach.name}"
 									outcome="traincoach.xhtml?id=#{traincoach.getId()}&amp;psdid=0"
 								/>
-							</h4>
+							</div>
 							<!-- METADATA PER WAGON -->
-							<div class="traincoach_data">
+							<div class="descr">
 								<ui:fragment
 									rendered="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size() ge 1}">
 
-									<h5>
-
-										<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
+									<div class="level-3">
+										<img class="icon" src="img/error-100.png"></img>
 										<h:link value="Problemen"
 											outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
 										/>
 										<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
-									</h5>
+									</div>
 								</ui:fragment>
-								<h5>
-									<span
-										class="glyphicon glyphicon-dashboard sidebar_icon_metadata"
-									></span>
+								<div class="level-3">
+									<img class="icon" src="img/gyroscope-100.png"></img>
+
 									<h:link value="Geschiedenis"
-										outcome="traincoach_sensor.xhtml?id=#{traincoach.getId()}"
-									/>
-								</h5>
+										outcome="traincoach_sensor.xhtml?id=#{traincoach.getId()}" />
+								</div>
 							</div>
 						</div>
 					</c:when>
 					<!-- NIET-GESELECTEERDE WAGONS -->
 					<c:otherwise>
-						<div class="traincoach">
-							<h4 class="sidebar_text_traincoach">
-								<span class="glyphicon glyphicon-phone sidebar_icon_traincoach"></span>
+						<div class="level-2">
+							<div class="title">
+								<img class="icon" src="img/train-100.png"></img>
 								<h:link value="#{traincoach.type} - #{traincoach.name}"
 									outcome="traincoach.xhtml?id=#{traincoach.id}&amp;psdid=0"
 								/>
-							</h4>
+							</div>
 							<!-- METADATA PER WAGON -->
-							<div class="traincoach_data">
+							<div class="descr">
 								<ui:fragment
 									rendered="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size() ge 1}">
-
-									<h5>
-
-										<span class="glyphicon glyphicon-alert sidebar_icon_metadata"></span>
+									<div class="level-3">
+										<img class="icon" src="img/error-100.png"></img>
 										<h:link value="Problemen"
 											outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
 										/>
 										<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
-									</h5>
+									</div>
 								</ui:fragment>
-								<h5>
-									<span
-										class="glyphicon glyphicon-dashboard sidebar_icon_metadata"
-									></span>
+								<div class="level-3">
+									<img class="icon" src="img/gyroscope-100.png"></img>
+
 									<h:link value="Geschiedenis"
-										outcome="traincoach_sensor.xhtml?id=#{traincoach.getId()}"
-									/>
-								</h5>
+										outcome="traincoach_sensor.xhtml?id=#{traincoach.getId()}" />
+								</div>
 							</div>
 						</div>
 					</c:otherwise>
