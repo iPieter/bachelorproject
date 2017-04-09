@@ -20,11 +20,11 @@
 
 	<ui:define name="mainview_content">
 
-		<div class="container-fluid i-need-room-above-my-head ">
+		<div class="container-fluid">
 			<div class="row">
 
 				<!-- LEFT SIDEBAR -->
-									<div class="col-sm-2 sidebar">
+				<div class="col-sm-2 sidebar i-need-room-above-my-head">
 				
 					<c:forEach var="constraint"
 						items="#{constraintEditorController.constraints}">
@@ -59,18 +59,13 @@
 
 
 
-				<div class="col-sm-10" style="height: 100vh">
+				<div class="col-sm-10" style="height: 100vh; padding:0;">
 				<div id="map-container">
 					<div id="map"></div>
 				</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-sm-12" id="current_constraint" style="height: 75vh">
-					Klik op de kaart of in de sidebar om de info van een beperking te
-					tonen of te bewerken.</div>
-			</div>
-
+	
 			<!-- Modal -->
 			<div id="new_constraint_modal" class="modal fade" role="dialog">
 				<div class="modal-dialog  modal-lg ">
