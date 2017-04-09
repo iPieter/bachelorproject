@@ -185,3 +185,9 @@ html {
 #donut_graph {
   height: 400px;
   max-height: 40vh; }
+
+.fill-height {
+  height: 100vh;
+  padding: 0; }
+  .fill-height .leaflet-top {
+    margin-top: 50px; }
