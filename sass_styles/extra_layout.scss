@@ -188,6 +188,16 @@ html {
             bottom: 3px;
         }
     }
+
+	.line {
+		border-bottom: $border;
+		margin: { 
+			top: 6px;
+			bottom: 6px;
+			left: -15px;
+			right: -15px;
+		}
+	}
 }
 
 .panel {

@@ -8,7 +8,7 @@ L.tileLayer(
 					accessToken : 'pk.eyJ1IjoiYW50b25kIiwiYSI6ImNpbXRkM2wwNDAwNmd2d20xNDJnN3RwYjMifQ.PtxXr8pyGM4qccCXDecL2A'
 				}).addTo(map_modal);
 
-var map_big = L.map("map_big").setView([ 51.0499582, 3.7270672 ], 10);
+var map_big = L.map("map").setView([ 51.0499582, 3.7270672 ], 10);
 L
 		.tileLayer(
 				'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',

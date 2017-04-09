@@ -24,18 +24,17 @@
 			<div class="row">
 
 				<!-- LEFT SIDEBAR -->
-				<div class="col-sm-2 sidebar">
-					<button type="button" onclick="openModal()">Nieuwe
-						beperking</button>
-					<!-- STAANPLAATSEN -->
+									<div class="col-sm-2 sidebar">
+				
 					<c:forEach var="constraint"
 						items="#{constraintEditorController.constraints}">
 						<div id="constraint_#{constraint.id}" class="constraint">
 							
 							<div class="level-1">
 								<img class="icon" src="img/geofence-100.png"></img>
-								<h:link value="#{constraint.name}"
-									outcome="workplace.xhtml?workplace_id=#{workplace.id}" />
+								<h:commandLink value="#{constraint.name}"
+									action="#{constraintEditorController.setCurrentConstraint(constraint)}">
+									</h:commandLink>
 								<h:inputHidden
 									value="#{constraintEditorController.getPolygon(constraint.id)}"
 									id="constraint_input_#{constraint.id}" class="loc_constraint" />
@@ -51,6 +50,8 @@
 							<div class="line"></div>
 						</div>
 					</c:forEach>
+					<button type="button" class="btn btn-default " onclick="openModal()">Nieuwe
+						beperking</button>
 				</div>
 				<!-- END SIDEBAR CONTENT -->
 				<!-- END LEFT SIDEBAR -->
@@ -58,7 +59,11 @@
 
 
 
-				<div class="col-sm-10" id="map_big" style="height: 75vh"></div>
+				<div class="col-sm-10" style="height: 100vh">
+				<div id="map-container">
+					<div id="map"></div>
+				</div>
+				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12" id="current_constraint" style="height: 75vh">

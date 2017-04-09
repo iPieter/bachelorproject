@@ -50,6 +50,7 @@ public class ConstraintEditorController implements Serializable
 	private LocationPointEJB lpEJB;
 	
 	private List<Constraint> constraints;
+	private Constraint currentConstraint;
 	private List<ConstraintElement> currentConstraintElements = new LinkedList<>();
 	private HashMap<Integer, List<LocationPoint>> polygons;
 
@@ -59,7 +60,7 @@ public class ConstraintEditorController implements Serializable
 	
 	@PostConstruct
 	public void loadPage()
-	{
+	{ 
 		System.out.println("Creating list.");
 		constraints = cEJB.getAllConstraints();
 		polygons = new HashMap<>();
@@ -407,6 +408,26 @@ public class ConstraintEditorController implements Serializable
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+
+	/**
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return the currentConstraint
+	 */
+	public Constraint getCurrentConstraint()
+	{
+		return currentConstraint;
+	}
+
+	/**
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param currentConstraint the currentConstraint to set
+	 */
+	public void setCurrentConstraint(Constraint currentConstraint)
+	{
+		this.currentConstraint = currentConstraint;
 	}
 	
 	
