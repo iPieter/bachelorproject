@@ -106,6 +106,8 @@ html {
     color: #777; }
     .sidebar .level-1 .icon {
       height: 24px; }
+    .sidebar .level-1:first-child {
+      padding-top: 6px; }
   .sidebar .level-2, .sidebar .descr {
     font-family: 'Lato', sans-serif;
     font-weight: 300;

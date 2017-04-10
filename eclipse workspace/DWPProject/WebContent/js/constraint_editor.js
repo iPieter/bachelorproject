@@ -49,16 +49,12 @@ map_big.on("click", function(ev)
 		var polygon = constraintPolygons[key];
 		if (isInPolygon(polygon, ev.latlng.lat, ev.latlng.lng))
 		{
-			setCurrentConstraint(key);
+			//Need to call jsf from here, so jquery with click function.
+			console.log("#constraints-list\\:link_" + key);
+			$("#constraints-list\\:link_" + key).click();
 			break;
 		}
 	}
-});
-
-$(".constraint").on("click", function()
-{
-	var id = this.id.substr(11, this.id.length);
-	setCurrentConstraint(id);
 });
 
 var polygonData = [ [ 51.05, 3.72 ], [ 51.06, 3.73 ], [ 51.06, 3.72 ] ];

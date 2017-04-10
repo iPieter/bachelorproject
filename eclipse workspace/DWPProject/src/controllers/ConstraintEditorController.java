@@ -50,7 +50,7 @@ public class ConstraintEditorController implements Serializable
 	private LocationPointEJB lpEJB;
 	
 	private List<Constraint> constraints;
-	private Constraint currentConstraint;
+	private Constraint currentConstraint = null;
 	private List<ConstraintElement> currentConstraintElements = new LinkedList<>();
 	private HashMap<Integer, List<LocationPoint>> polygons;
 
@@ -421,6 +421,8 @@ public class ConstraintEditorController implements Serializable
 	}
 
 	/**
+	 * Set the currentConstraint variable by providing a constraint object.
+	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
 	 * @param currentConstraint the currentConstraint to set
@@ -428,8 +430,20 @@ public class ConstraintEditorController implements Serializable
 	public void setCurrentConstraint(Constraint currentConstraint)
 	{
 		this.currentConstraint = currentConstraint;
+		this.currentConstraintElements = currentConstraint.constraints;
 	}
 	
+	/**
+	 * Set the currentConstraint variable by providing a constraint id.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param currentConstraintId the Id of the currentConstraint to set
+	 */
+	public void setCurrentConstraint(int currentConstraintId)
+	{
+		this.currentConstraint = this.constraints.get(currentConstraintId);
+	}
 	
 
 }
