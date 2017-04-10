@@ -35,7 +35,8 @@
 
 								<div class="level-1">
 									<img class="icon" src="img/geofence-100.png"></img>
-									<h:commandLink value="#{constraint.name}" id="link_constraint_input_#{constraint.id}"
+									<h:commandLink value="#{constraint.name}"
+										id="link_constraint_input_#{constraint.id}"
 										action="#{constraintEditorController.setCurrentConstraint(constraint)}">
 
 										<div class="descr">
@@ -79,17 +80,17 @@
 
 			<!-- Selected constraint -->
 			<div class="col-sm-9 col-sm-offset-2 leaflet-bottom map-overlay">
-				
-					<h:form id="map-overlay">
+
+				<h:form id="map-overlay">
 					<ui:fragment
-					rendered="#{constraintEditorController.currentConstraint ne null}">
+						rendered="#{constraintEditorController.currentConstraint ne null}">
 						<div class="dropup leaflet-control">
 							<ui:include src="templates/constraint_elements.xhtml">
 							</ui:include>
 						</div>
-				</ui:fragment>
-									</h:form>
-				
+					</ui:fragment>
+				</h:form>
+
 			</div>
 
 

@@ -173,7 +173,8 @@ html {
   padding-top: 50px; }
 
 .map-overlay {
-  padding-top: 70px; }
+  padding-top: 70px;
+  z-index: 9999; }
 
 #loading_modal {
   margin-top: 70px; }
