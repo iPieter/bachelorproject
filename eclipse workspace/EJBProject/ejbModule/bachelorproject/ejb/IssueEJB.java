@@ -13,9 +13,9 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import bachelorproject.model.Issue;
-import bachelorproject.model.IssueAsset;
-import bachelorproject.model.IssueStatus;
+import bachelorproject.model.issue.Issue;
+import bachelorproject.model.issue.IssueAsset;
+import bachelorproject.model.issue.IssueStatus;
 
 /**
  * Defines the Entity Java Bean for the Issue Entity.
@@ -313,6 +313,34 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 	}
 	
 	/**
+	 * Sensor data can be coupled to different types: live & processed.
+	 * When switching from live to processed, these must be transfer to the new object.
+	 * This method allows to fetch those issues by sensordata ID.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param sensorDataId The id of the sensordata id.
+	 * @return A list with issues for the provided sensordata id;
+	 */
+	public List<Issue> getIssuesBySensorDataID( int sensorDataId )
+	{
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+		
+		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_SENSOR_ID, Issue.class );
+		
+		query.setParameter("id", sensorDataId);
+		
+		List<Issue> result = query.getResultList();
+		
+		em.getTransaction().commit();
+		em.close();
+		
+		return result;
+	}
+	
+
+	/**
 	 * Returns active issues (IssueStatus=IN_PROGRESS or IssueStatus=ASSIGNED) by workplaceId
 	 * 
 	 * @author Matthias De Lange
@@ -327,6 +355,7 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_WORKPLACE_ID, Issue.class )
 				.setParameter("workplaceId", workplaceId);
 		List<Issue> result = query.getResultList();
+		
 		return result;
 	}
 }

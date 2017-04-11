@@ -11,7 +11,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link href="css/bootstrap.min.css" rel="stylesheet" />
 	<link href="css/login.css" rel="stylesheet" />
-	<title>Manager Log In</title>
+	<title>Televic login</title>
 </h:head>
 <h:body>
 	<!-- FIXED NAVBAR TOP -->
@@ -44,21 +44,21 @@
 			</div>
 
 			<div class="col-sm-4 col-sm-offset-4">
-				<h2 class="form-signin-heading">Please sign in</h2>
+				<h2 class="form-signin-heading">Inloggen</h2>
 
 				<div class="input-group-lg">
 					<h:form class="form-signin">
-						<label for="inputEmail" class="sr-only">Email address</label>
+						<label for="inputEmail" class="sr-only">Emailadres</label>
 						<h:inputText type="email" id="inputEmail" class="form-control"
 							placeholder="Email address"
 							value="#{authenticationController.email}" />
-						<label for="inputPassword" class="sr-only">Password</label>
+						<label for="inputPassword" class="sr-only">Wachtwoord</label>
 						<h:inputSecret type="password" id="inputPassword"
 							class="form-control" placeholder="Password"
 							value="#{authenticationController.password}" />
 						<div class="checkbox">
 							<label> <h:selectBooleanCheckbox type="checkbox"
-									value="remember-me" /> Remember me
+									value="remember-me" /> Log mij automatisch in
 							</label>
 						</div>
 						<h:commandButton

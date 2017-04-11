@@ -9,10 +9,10 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
-import bachelorproject.model.User;
-import bachelorproject.model.UserRole;
 import bachelorproject.services.UserService;
 import bachelorproject.ejb.UserEJB;
+import bachelorproject.model.user.User;
+import bachelorproject.model.user.UserRole;
 
 /**
  * The AdminController is intended for the admin.xhtml page, where users can be

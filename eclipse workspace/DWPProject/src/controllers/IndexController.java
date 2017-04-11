@@ -9,9 +9,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import bachelorproject.ejb.IssueEJB;
-import bachelorproject.model.Issue;
-import bachelorproject.model.IssueStatus;
-import bachelorproject.model.User;
+import bachelorproject.model.issue.Issue;
+import bachelorproject.model.issue.IssueStatus;
+import bachelorproject.model.user.User;
 import bachelorproject.services.UserService;
 
 @Named

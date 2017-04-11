@@ -5,7 +5,7 @@ var data    = JSON.parse( fs.readFileSync( 'test.json', 'utf8' ) );
 
 var index   = 700;
 
-request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/register/M7/123912/Bombardier/Brussel-Oostende', function( error, response, body )
+request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/register/M7/15963/Bombardier/Oostende-Luik', function( error, response, body )
 {
     if( error !== null )
         console.log( error );
@@ -28,13 +28,13 @@ request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/registe
 
         console.log( content );
 
-        request.post( 'http://10.108.16.203:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/add_entry/' + content, function( error, response, body )
+        request.post( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/add_entry/' + content, function( error, response, body )
         {
         });
 
-        if( index >= 2700 || index > data.yaw.length )
+        if( index >= 750 || index > data.yaw.length )
         {
-            request( 'http://10.108.16.203:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/stop/' + lsdID, function( error, response, body )
+            request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/stop/' + lsdID, function( error, response, body )
             {
                 clearInterval( timer );
             } );

@@ -9,7 +9,6 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.Validator;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
@@ -21,12 +20,12 @@ import bachelorproject.ejb.IssueEJB;
 import bachelorproject.ejb.ProcessedSensorDataEJB;
 import bachelorproject.ejb.TrainCoachEJB;
 import bachelorproject.ejb.WorkplaceEJB;
-import bachelorproject.model.Issue;
-import bachelorproject.model.IssueStatus;
-import bachelorproject.model.ProcessedSensorData;
 import bachelorproject.model.TrainCoach;
-import bachelorproject.model.User;
 import bachelorproject.model.Workplace;
+import bachelorproject.model.issue.Issue;
+import bachelorproject.model.issue.IssueStatus;
+import bachelorproject.model.sensordata.ProcessedSensorData;
+import bachelorproject.model.user.User;
 import bachelorproject.services.UserService;
 
 @Named
@@ -211,7 +210,7 @@ public class TrainCoachController implements Serializable
 	public String sensorDataToPrettyTime()
 	{
 		PrettyTime pt = new PrettyTime( );
-		return pt.format( currentSensorData.getTime() );
+		return pt.format( currentSensorData.getDate() );
 	}
 	
 	/**

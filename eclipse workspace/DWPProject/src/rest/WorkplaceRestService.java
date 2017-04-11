@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response.Status;
 
 import bachelorproject.ejb.IssueEJB;
 import bachelorproject.ejb.WorkplaceEJB;
-import bachelorproject.model.Issue;
+import bachelorproject.model.issue.*;
 import bachelorproject.model.TrainCoach;
 import bachelorproject.model.Workplace;
 

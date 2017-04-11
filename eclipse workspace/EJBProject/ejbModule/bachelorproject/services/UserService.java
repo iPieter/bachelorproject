@@ -14,8 +14,8 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 
 import bachelorproject.ejb.UserEJB;
-import bachelorproject.model.User;
-import bachelorproject.model.UserRole;
+import bachelorproject.model.user.User;
+import bachelorproject.model.user.UserRole;
 
 /**
  * The purpose of the UserService is to provide a User object for the duration

@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import bachelorproject.ejb.LiveSensorDataEJB;
-import bachelorproject.model.LiveSensorData;
+import bachelorproject.model.sensordata.LiveSensorData;
 
 /**
  * 	The controller for live_train_overview.xhtml and live_train.xhtml

@@ -1,6 +1,5 @@
 package bachelorproject.ejb;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,8 +10,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
-import bachelorproject.model.LiveSensorData;
-import bachelorproject.model.LiveSensorDataEntry;
+import bachelorproject.constraint_engine.ConstraintEngine;
+import bachelorproject.constraint_engine.ConstraintEngineData;
+import bachelorproject.constraint_engine.ConstraintEngineFactory;
+import bachelorproject.constraint_engine.OutOfConstraintEngineException;
+import bachelorproject.model.sensordata.LiveSensorData;
+import bachelorproject.model.sensordata.LiveSensorDataEntry;
 
 /**
  * Defines the Entity Java Bean for the LiveSensorDataEntry Entity.
@@ -32,6 +35,9 @@ public class LiveSensorDataEntryEJB
 	
 	@Inject
 	private LiveSensorDataEJB lsdEJB;
+	
+	@Inject
+	private ConstraintEngineFactory cef;
 	
 	/**
 	 * 	If the specified LiveSensorData object is valid ( the ride is live ),
@@ -55,6 +61,27 @@ public class LiveSensorDataEntryEJB
 			
 			em.getTransaction().commit();
 			em.close();
+			
+			try
+			{
+				ConstraintEngine ce = cef.getConstraintEngine();
+				ConstraintEngineData ceData = new ConstraintEngineData();
+				ceData.setAccel( entry.getAccel() );
+				ceData.setSpeed( entry.getSpeed() );
+				ceData.setLat( entry.getLat() );
+				ceData.setLng( entry.getLng() );
+				ceData.setRoll( entry.getRoll() );
+				ceData.setYaw( entry.getYaw() );
+				
+				ce.start( lsd );
+				ce.addData( ceData );
+				ce.stop();
+			}
+			catch ( OutOfConstraintEngineException e )
+			{
+				e.printStackTrace();
+			}
+			
 			
 			return true;
 		}

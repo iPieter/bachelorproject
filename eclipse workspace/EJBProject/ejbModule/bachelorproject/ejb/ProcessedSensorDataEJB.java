@@ -10,7 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-import bachelorproject.model.ProcessedSensorData;
+import bachelorproject.model.sensordata.ProcessedSensorData;
 
 /**
  * 	Defines the Entity Java Bean for the ProcessedSensorData Entity.

@@ -21,20 +21,23 @@
 		<li><a href="index.xhtml">Dashboard</a></li>
 		<li class="active"><a href="live_train_overview.xhtml">Live
 				Tracking</a></li>
+		<li><a href="constraint_editor.xhtml">Constraint Engine</a></li>
 	</ui:define>
 
 	<ui:define name="mainview_content">
 
-		<div class="" id="map_container">
+		<div class="" id="map-container">
 			<div id="map"></div>
 		</div>
-		<div class="container map_overlay">
 
-			<div class="row">
+		<div class="col-sm-3 leaflet-top leaflet-left map-overlay">
+			<div class="panel panel-default" id="left-panel">
+				<!-- HEADER -->
+				<div class="panel-heading">
+					<h3 class="panel-title">Informatie</h3>
+				</div>
+				<div class="panel-body">
 
-				<!-- Data table -->
-				<div class="col-sm-3 mainview_panel" id="left_panel">
-					<h1>Rit info</h1>
 					<table class="table">
 						<thead></thead>
 						<tbody>
@@ -64,23 +67,31 @@
 						</tbody>
 					</table>
 				</div>
+
 				<!-- End data table -->
+			</div>
+		</div>
 
-				<!-- Graphs -->
-				<input type="hidden" id="sensor_id"
-					value="#{liveTrainOverviewController.currentTrainID}" />
+		<!-- Graphs -->
+		<input type="hidden" id="sensor_id"
+			value="#{liveTrainOverviewController.currentTrainID}" />
 
-				<div class="col-sm-4 col-sm-offset-5 mainview_panel" id="right_panel">
-					<div id="realtime_chart_yaw">
+		<div class="col-sm-4 leaflet-top leaflet-right map-overlay">
+			<div class="panel panel-default" id="right-panel">
+				<!-- HEADER -->
+				<div class="panel-heading">
+					<h3 class="panel-title">Sensordata</h3>
+				</div>
+				<div class="panel-body">
+					<div class="realtime_chart" id="realtime_chart_yaw">
 						<h1>Data wordt geladen...</h1>
 					</div>
-					<div id="realtime_chart_roll">
+					<div class="realtime_chart" id="realtime_chart_roll">
 						<h1>Data wordt geladen...</h1>
 					</div>
 
 				</div>
 			</div>
-
 		</div>
 
 		<div id="loading_modal" class="modal fade" role="dialog">

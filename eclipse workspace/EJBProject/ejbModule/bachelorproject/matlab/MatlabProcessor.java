@@ -12,18 +12,24 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.DependsOn;
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-import bachelorproject.model.ProcessedSensorData;
+import bachelorproject.constraint_engine.ConstraintEngine;
+import bachelorproject.constraint_engine.ConstraintEngineData;
+import bachelorproject.constraint_engine.ConstraintEngineFactory;
+import bachelorproject.constraint_engine.OutOfConstraintEngineException;
 import bachelorproject.model.TrainCoach;
 import bachelorproject.model.Workplace;
+import bachelorproject.model.sensordata.ProcessedSensorData;
 import matlabcontrol.MatlabConnectionException;
 import matlabcontrol.MatlabInvocationException;
 import matlabcontrol.MatlabProxy;
@@ -65,8 +71,12 @@ import matlabcontrol.extensions.MatlabTypeConverter;
  * */
 @Singleton
 @Startup
+@DependsOn( "ConstraintEngineFactory" )
 public class MatlabProcessor
 {
+	@Inject
+	private ConstraintEngineFactory cef;
+	
 	/** Stores the matlab script which will be executed, loaded on startup. */
 	private String script = "";
 	/** Stores the location of the matlab directory files. */
@@ -220,7 +230,6 @@ public class MatlabProcessor
 		double minute = time_out.getRealValue( 4 );
 		double second = time_out.getRealValue( 5 );
 		
-
 		try
 		{
 			String outputPath = matlabDirectory + "/" + name.split( "\\." )[0] + ".json";
@@ -255,9 +264,25 @@ public class MatlabProcessor
 
 			writer.flush();
 			writer.close();
-			writeToDatabase( name, em );
+			ProcessedSensorData result = writeToDatabase( name, em );
+			
+			ConstraintEngine ce = cef.getConstraintEngine();
+			ce.start( result );
+			for( int i = 0; i < roll.length; i++ )
+			{
+				ConstraintEngineData data = new ConstraintEngineData();
+				data.setRoll( roll[i][0] );
+				data.setYaw( yaw[i][0] );
+				data.setAccel( accel_out.getRealValue( (int)Math.floor( (double)i / roll.length * ( accel_out.getLength() - 1 ) ) ) );
+				data.setSpeed( speed_out.getRealValue( (int)Math.floor( (double)i / roll.length * ( speed_out.getLength() - 1 ) ) ) );
+				data.setLat( lat_out.getRealValue( (int)Math.floor( (double)i / roll.length * ( lat_out.getLength() - 1 ) ) ) );
+				data.setLat( lng_out.getRealValue( (int)Math.floor( (double)i / roll.length * ( lng_out.getLength() - 1 ) ) ) );
+				ce.addData( data );
+			}
+			ce.printStatusReport();
+			ce.stop();
 		}
-		catch ( IOException io )
+		catch ( IOException | OutOfConstraintEngineException io )
 		{
 			io.printStackTrace();
 		}
@@ -273,7 +298,7 @@ public class MatlabProcessor
 	 *  @param fileName A correct filename.
 	 *  @param em A valid(open) EntityManager object.
 	 * */
-	private void writeToDatabase( String fileName, EntityManager em )
+	private ProcessedSensorData writeToDatabase( String fileName, EntityManager em )
 	{
 		// System.out.println( "WRITING TO DB" );
 		String split[] = fileName.split( "\\." );
@@ -338,7 +363,7 @@ public class MatlabProcessor
 
 		ProcessedSensorData data = new ProcessedSensorData();
 		data.setLocation( outputPath );
-		data.setTime( new Date() );
+		data.setDate( new Date() );
 		data.setTrack( nameSplit[4] );
 		data.setTraincoach( trainCoach );
 		
@@ -355,13 +380,12 @@ public class MatlabProcessor
 			em.merge( workplace );
 		
 		tx.commit();
+		
+		return data;
 	}
 
 	/**
 	 * 	Writes a JSON line to an open BufferedWriter.
-	 *  <p>
-	 *  Based on the line and comma parameters this method will write
-	 *  a line to a BufferedWriter object.
 	 *  @param line The line to be written
 	 *  @param comma Indicates whether or not the line should be appended with a comma
 	 *  @param writer An open BufferedWriter.
@@ -375,8 +399,6 @@ public class MatlabProcessor
 
 	/**
 	 * 	Writes a JSON array to an open BufferedWriter.
-	 *  <p>
-	 *  Writes a 2 dimensional array in JSON format to a BufferedWriter.
 	 *  @param name The name of the array that should be written.
 	 *  @param array A 2 dimensional array.
 	 *  @param comma Indicates whether or not the line should be appended with a comma
@@ -396,8 +418,6 @@ public class MatlabProcessor
 
 	/**
 	 * 	Writes a MatlabNumericArray in JSON format to an open BufferedWriter.
-	 *  <p>
-	 *  Writes a MatlabNumericArray in JSON format to an open BufferedWriter.
 	 *  @param name The name of the array that should be written.
 	 *  @param array A numeric MatLab array.
 	 *  @param comma Indicates whether or not the line should be appended with a comma
@@ -418,8 +438,6 @@ public class MatlabProcessor
 
 	/**
 	 * 	Writes a double value in JSON format to an open BufferedWriter.
-	 *  <p>
-	 *  Writes a double value in JSON format to an open BufferedWriter.
 	 *  @param name The name of the value that should be written.
 	 *  @param value The actual value that should be written.
 	 * */

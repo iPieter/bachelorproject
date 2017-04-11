@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response.Status;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import bachelorproject.ejb.IssueEJB;
-import bachelorproject.model.Issue;
+import bachelorproject.model.issue.Issue;;
 
 /**
  * 	A REST endpoint to fetch issues.

@@ -35,10 +35,14 @@ eclipse workspace/RemoteSystemsTempFiles/.project
 management/~$dagboek.xlsx
 eclipse workspace\DWPProject\pom.xml
 eclipse workspace\DemoEAR\pom.xml
+<<<<<<< HEAD
+log.txt
+=======
 eclipse workspace\.recommenders\*
 eclipse workspace/.recommenders/caches/*
 eclipse workspace/.recommenders/caches
 eclipse workspace/.recommenders/caches/
+>>>>>>> master
 *.xml
 
 eclipse workspace/EJBProject/bin/ejbModule/be/kuleuven/cs/gent/projectweek/logging/LoggingInterceptor.class

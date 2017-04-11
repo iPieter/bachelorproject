@@ -14,10 +14,10 @@ import bachelorproject.ejb.IssueAssetEJB;
 import bachelorproject.ejb.IssueEJB;
 import bachelorproject.ejb.TrainCoachEJB;
 import bachelorproject.ejb.WorkplaceEJB;
-import bachelorproject.model.Issue;
-import bachelorproject.model.IssueAsset;
 import bachelorproject.model.TrainCoach;
 import bachelorproject.model.Workplace;
+import bachelorproject.model.issue.Issue;
+import bachelorproject.model.issue.IssueAsset;
 import bachelorproject.services.UserService;
 
 /**

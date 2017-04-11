@@ -1,0 +1,368 @@
+body, html {
+  height: 100%;
+  margin-left: 0px;
+  width: 100%;
+  background-color: #ecf0f1;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400; }
+
+.info_label {
+  text-decoration: none;
+  font-weight: normal;
+  padding-left: 5px; }
+
+.asset_image {
+  width: 500px;
+  height: auto;
+  display: block; }
+
+.issue_list {
+  list-style: none;
+  margin-left: 0px;
+  margin-right: 0px; }
+
+.glyphicon-unchecked {
+  margin-left: 5px;
+  margin-right: 5px; }
+
+.container-fluid {
+  margin-left: 0px;
+  width: 100%;
+  background-color: #ecf0f1; }
+
+.breadcrumb a {
+  color: #344951; }
+
+/**** MAINVIEW PANELS ****/
+.mainview_panel {
+  border: 1px solid #95a5a6;
+  margin-top: 5px;
+  border-radius: 3px;
+  height: 100%;
+  background-color: white;
+  z-index: 11; }
+
+.mainview_panel_large {
+  border-radius: 3px;
+  margin-bottom: 5px;
+  margin-left: 0px;
+  border-left: 1px solid #2c3e50;
+  border-bottom: 1px solid #2c3e50;
+  border-right: 1px solid #2c3e50;
+  border-radius: 3px;
+  z-index: 12; }
+
+.mainview_panel_large > .content {
+  background-color: white; }
+
+.mainview_panel_large_right {
+  height: 91vh;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  margin-right: 10px; }
+
+.main_view {
+  height: 100vh;
+  overflow: hidden;
+  padding: 0px; }
+
+#topright img {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; }
+
+#realtime_chart_yaw, #realtime_chart_roll {
+  height: 45vh;
+  overflow: hidden; }
+
+.mainview_issue {
+  border-bottom: 1px solid #2c3e50;
+  overflow-x: hidden;
+  padding: 3px 0px 3px 0px;
+  background-color: white; }
+
+#map_size {
+  height: 300px;
+  padding-left: 1px; }
+
+.mainview_issue:last-child {
+  border: 0px;
+  overflow-x: hidden; }
+
+.mainview_traincoach {
+  border-bottom: 1px solid #2c3e50; }
+
+.mainview_traincoach:last-child {
+  border: 0px; }
+
+.mainview_traincoach_panelheader {
+  margin-top: auto;
+  margin-bottom: auto;
+  border-bottom: 2px solid #2c3e50;
+  border-top: 1px solid #2c3e50;
+  background-color: #2c3e50;
+  color: #ecf0f1; }
+
+.panel-heading {
+  border-bottom: 2px solid #2c3e50;
+  border-top: 1px solid #2c3e50;
+  background-color: #2c3e50;
+  color: #ecf0f1; }
+
+.mainview_traincoach_header {
+  margin-top: 1vh; }
+
+.create_issue {
+  margin: 5px; }
+
+.status_bad {
+  color: red; }
+
+.status_good {
+  color: green; }
+
+.padding-top {
+  padding-top: 65px; }
+
+.topright {
+  padding: 0px; }
+
+#map {
+  padding: 0px;
+  width: 100%;
+  height: 100%; }
+
+.issue_bar {
+  margin-top: 3px;
+  margin-bottom: 3px; }
+
+.sensor_active {
+  background-color: #293A40;
+  padding: 2px; }
+
+.sidebar_icon {
+  margin-left: 3px;
+  margin-right: 4px; }
+
+.sidebar_icon_traincoach {
+  margin-right: 4px;
+  font-size: 14px;
+  top: -1px; }
+
+.sidebar_icon_metadata {
+  margin-left: 4px;
+  margin-right: 1px;
+  font-size: 12px; }
+
+.sidebar_text_traincoach {
+  font-size: 100%; }
+
+.dont-break-out {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-word;
+  /* Adds a hyphen where the word breaks, if supported */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto; }
+
+.vertical-center {
+  display: inline-block;
+  vertical-align: middle;
+  float: none; }
+
+#topleft {
+  border-radius: 3px;
+  height: 230px; }
+
+#graph_options {
+  height: 10%; }
+
+.avatar {
+  display: inline-block;
+  position: relative;
+  margin-right: 6px;
+  width: 36px;
+  height: 36px;
+  border: 2px solid #bdc3c7;
+  -webkit-border-radius: 200px;
+  -moz-border-radius: 200px;
+  border-radius: 200px; }
+
+.avatar img {
+  height: 32px;
+  width: 32px;
+  border-radius: 200px; }
+
+#user {
+  padding-top: 7px;
+  padding-bottom: 7px; }
+
+#user #name {
+  padding-top: 15px;
+  padding-bottom: 15px; }
+
+.userTable > tbody > tr > td
+.workplaceTable > tbody > tr > td {
+  vertical-align: middle; }
+
+.userTable > tbody > tr > td:first-child {
+  width: 36px; }
+
+.panel-footer {
+  height: 55px; }
+
+.form-group select {
+  height: 32px; }
+
+.big-avatar {
+  margin-left: auto;
+  margin-right: auto;
+  width: 196px;
+  height: 196px;
+  border: 2px solid #bdc3c7;
+  -webkit-border-radius: 200px;
+  -moz-border-radius: 200px;
+  border-radius: 200px; }
+
+.big-avatar img {
+  height: 192px;
+  width: 192px;
+  border-radius: 200px; }
+
+.admin-container {
+  margin-top: 20px; }
+
+.container-fluid {
+  padding-left: 0px;
+  padding-right: 0px; }
+
+.col-sm-6 {
+  padding: 0px; }
+
+.col-sm-12 {
+  padding-left: 0px;
+  padding-right: 0px; }
+
+.pad {
+  padding-left: 15px;
+  padding-right: 15px; }
+
+@keyframes breath {
+  0% {
+    background-color: #c0392b; }
+  50% {
+    background-color: white; }
+  100% {
+    background-color: #c0392b; } }
+.breathing {
+  display: inline-block;
+  background-color: #c0392b;
+  height: 6px;
+  width: 6px;
+  margin-right: 4px;
+  margin-bottom: 3px;
+  border-radius: 300px;
+  animation: breath 4s infinite; }
+
+#map_container {
+  height: 100%;
+  z-index: 10; }
+
+.map_overlay {
+  position: fixed;
+  top: 0;
+  padding-top: 75px; }
+
+.form-group-margin {
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-bottom: 6px; }
+
+/*****SIDEBAR ELEMENTS*****/
+/* WORKPLACE */
+.workplace {
+  padding-left: 3px;
+  height: 100vh;
+  background-color: #2c3e50; }
+
+.workplace h3 {
+  margin-top: 8px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-size: 16px; }
+
+.workplace h4 {
+  margin-top: 5px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-size: 14px; }
+
+.workplace a {
+  color: #FFFFFF;
+  text-decoration: none; }
+
+.workplace_text {
+  border-top: 1px solid #293A40; }
+
+/* TRAINCOACH */
+.traincoach {
+  border-left: 3px solid #ecf0f1;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  margin-left: 12px;
+  margin-bottom: 6px;
+  padding-left: 15px;
+  padding-top: 1px;
+  padding-bottom: 1px; }
+
+.traincoach a {
+  text-decoration: none;
+  color: #ecf0f1; }
+
+.traincoach_active {
+  background-color: #34495e;
+  border-left: 3px solid #b0cb1b; }
+
+/* TRAINCOACH ISSUES */
+.traincoach_data {
+  padding-left: 4px;
+  border-left: 2px solid #ecf0f1;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  margin-left: 6px; }
+
+/* SENSOR DATA */
+.sensor_active {
+  background-color: #293A40;
+  padding: 2px; }
+
+/* SIDEBAR EXTRA*/
+.sidebar_container {
+  border-right: 2px solid #5b6d7e;
+  min-height: 100%;
+  height: 100vh;
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  padding-right: 0px;
+  padding-left: 3px;
+  overflow: hidden; }
+
+.sidebar_icon {
+  margin-left: 3px;
+  margin-right: 4px; }
+
+.sidebar_icon_traincoach {
+  margin-right: 4px;
+  font-size: 14px;
+  top: -1px; }
+
+.sidebar_icon_metadata {
+  margin-left: 4px;
+  margin-right: 1px;
+  font-size: 12px; }
+
+.sidebar_text_traincoach {
+  font-size: 100%; }

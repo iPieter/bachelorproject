@@ -10,7 +10,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 import bachelorproject.ejb.IssueEJB;
-import bachelorproject.model.IssueStatus;
+import bachelorproject.model.issue.IssueStatus;
 import bachelorproject.services.UserService;
 
 @Path( "/statistics_data" )
