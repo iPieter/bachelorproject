@@ -6,8 +6,8 @@ package bachelorproject.constraint_engine;
  *  <p>
  *  More specifically this class contains:
  *  <ul>
- *  	<li>Latitude</li>
- *  	<li>Longitude</li>
+ *  	<li>Latitude in degrees</li>
+ *  	<li>Longitude in degrees</li>
  * 		<li>Yaw</li>
  * 		<li>Roll</li>
  * 		<li>Acceleration</li>

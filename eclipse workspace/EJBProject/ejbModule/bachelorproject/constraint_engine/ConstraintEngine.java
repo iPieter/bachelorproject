@@ -1,6 +1,7 @@
 package bachelorproject.constraint_engine;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -73,7 +74,9 @@ public class ConstraintEngine
 			for( Constraint c : constraints )
 			{
 				if( i.getDescr().contains( c.getName() ) )
+				{
 					usedConstraints.add( c );
+				}
 			}
 		}
 	}
@@ -94,10 +97,15 @@ public class ConstraintEngine
 			{
 				boolean isIssue = true;
 				currentIssue = new Issue();
+				currentIssue.setGpsLat( 0 );
+				currentIssue.setGpsLon( 0 );
+				currentIssue.setAssignedTime( new Date() );
+				currentIssue.setData( this.data );
 				currentIssueDescription = c.getName() + System.getProperty( "line.separator" );
+				
 				for( ConstraintElement ce : c.getConstraints() )
 					isIssue = isIssue && ce.visit( this );
-
+				
 				if( isIssue )
 				{
 					currentIssue.setDescr( currentIssueDescription );

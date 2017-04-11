@@ -65,6 +65,7 @@ public class LocationPointEJB
 		for (LocationPoint lp : lps)
 		{
 			em.persist( lp );
+			em.flush();
 		}
 		
 		em.getTransaction().commit();

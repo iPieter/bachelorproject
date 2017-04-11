@@ -5,7 +5,7 @@ var data    = JSON.parse( fs.readFileSync( 'test.json', 'utf8' ) );
 
 var index   = 700;
 
-request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/register/M7/123912/Bombardier/Brussel-Oostende', function( error, response, body )
+request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/register/M7/147/Bombardier/Oostende-Luik', function( error, response, body )
 {
     if( error !== null )
         console.log( error );
@@ -32,7 +32,7 @@ request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/registe
         {
         });
 
-        if( index >= 2700 || index > data.yaw.length )
+        if( index >= 750 || index > data.yaw.length )
         {
             request( 'http://localhost:8080/DWPProject-0.0.1-SNAPSHOT/rest/live_data/stop/' + lsdID, function( error, response, body )
             {

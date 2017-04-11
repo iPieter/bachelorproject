@@ -14,6 +14,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import bachelorproject.constraint_engine.ConstraintEngine;
+import bachelorproject.constraint_engine.ConstraintEngineData;
+import bachelorproject.constraint_engine.ConstraintEngineFactory;
+import bachelorproject.constraint_engine.OutOfConstraintEngineException;
 import bachelorproject.ejb.LiveSensorDataEJB;
 import bachelorproject.ejb.LiveSensorDataEntryEJB;
 import bachelorproject.ejb.TrainCoachEJB;
@@ -44,6 +48,9 @@ public class LiveSensorDataRestService
 	
 	@Inject
 	private LiveSensorDataEntryEJB lsdeEJB;
+	
+	@Inject
+	private ConstraintEngineFactory cef;
 	
 	/**
 	 * 	Creates a new LiveSensorData object and allows the sensor to add entries
@@ -100,10 +107,32 @@ public class LiveSensorDataRestService
 		lsde.setYaw( yaw );
 		lsde.setRoll( roll );
 		lsde.setTime( new Date() );
-		
-		if( !lsdeEJB.addEntry( lsdID, lsde ) )
+				
+		if( !lsdeEJB.addEntry( lsdID, lsde ) )	
 			return Response.status( Status.BAD_REQUEST ).build();
 			
+		try
+		{
+			ConstraintEngine ce = cef.getConstraintEngine();
+			ce.start( lsdEJB.findLSDByID( lsdID ) );
+			
+			ConstraintEngineData data = new ConstraintEngineData();
+			data.setLat( lat * 180.0 / Math.PI );
+			data.setLng( lng * 180.0 / Math.PI );
+			data.setSpeed( speed );
+			data.setAccel( accel );
+			data.setYaw( yaw );
+			data.setRoll( roll );
+			
+			ce.addData( data );
+			ce.printStatusReport();
+			ce.stop();
+		}
+		catch ( OutOfConstraintEngineException e )
+		{
+			e.printStackTrace();
+		}
+		
 		return Response.ok().build();
 	}
 	
