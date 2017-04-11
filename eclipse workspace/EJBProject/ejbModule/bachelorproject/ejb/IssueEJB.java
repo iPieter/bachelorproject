@@ -123,13 +123,13 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 	public List<Issue> findAssignedIssuesByTraincoachId( int traincoachId )
 	{
 		EntityManager em = ems.getEntityManager();
-		em.getTransaction().begin();
 
 		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_TRAINCOACH_ID, Issue.class )
 				.setParameter( "status", IssueStatus.ASSIGNED ).setParameter( "traincoachId", traincoachId );
 		List<Issue> result = query.getResultList();
 		
-		em.getTransaction().commit();
+		System.out.println(result.size());
+		
 		em.close();
 
 		return result;
