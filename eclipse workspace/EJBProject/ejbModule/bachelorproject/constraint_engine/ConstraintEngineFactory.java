@@ -3,11 +3,12 @@ package bachelorproject.constraint_engine;
 import java.util.Arrays;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.inject.Inject;
 
 import bachelorproject.ejb.ConstraintEJB;
+import bachelorproject.ejb.IssueAssetEJB;
 import bachelorproject.ejb.IssueEJB;
 
 /**
@@ -20,10 +21,12 @@ import bachelorproject.ejb.IssueEJB;
 @Singleton
 public class ConstraintEngineFactory
 {
-	@Inject
+	@EJB
 	private ConstraintEJB constraintEJB;
-	@Inject
+	@EJB
 	private IssueEJB issueEJB;
+	@EJB
+	private IssueAssetEJB issueAssetEJB;
 	
 	public static final int CEF_SIZE = 100;
 	private ConstraintEngine [] constraintEngines;
@@ -105,5 +108,10 @@ public class ConstraintEngineFactory
 	public IssueEJB getIssueEJB()
 	{
 		return issueEJB;
+	}
+	
+	public IssueAssetEJB getIssueAssetEJB()
+	{
+		return issueAssetEJB;
 	}
 }

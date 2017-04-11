@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import bachelorproject.ejb.ConstraintEJB;
+import bachelorproject.ejb.IssueAssetEJB;
 import bachelorproject.ejb.IssueEJB;
 import bachelorproject.model.constraint_engine.Constraint;
 import bachelorproject.model.constraint_engine.ConstraintElement;
@@ -15,6 +16,8 @@ import bachelorproject.model.constraint_engine.LocationConstraintElement;
 import bachelorproject.model.constraint_engine.ModelTypeConstraintElement;
 import bachelorproject.model.constraint_engine.ValueConstraintElement;
 import bachelorproject.model.issue.Issue;
+import bachelorproject.model.issue.IssueAsset;
+import bachelorproject.model.issue.IssueStatus;
 import bachelorproject.model.sensordata.SensorData;
 
 /**
@@ -26,6 +29,7 @@ public class ConstraintEngine
 {
 	private ConstraintEJB constraintEJB;
 	private IssueEJB issueEJB;
+	private IssueAssetEJB assetEJB;
 	
 	//Objects needed for the constraint engine to work
 	private final int ID;
@@ -51,6 +55,7 @@ public class ConstraintEngine
 		currentIssueDescription = "";
 		constraintEJB = parent.getConstraintEJB();
 		issueEJB = parent.getIssueEJB();
+		assetEJB = parent.getIssueAssetEJB();
 		issues = new ArrayList<>();
 		usedConstraints = new HashSet<>();
 	}
@@ -101,6 +106,8 @@ public class ConstraintEngine
 				currentIssue.setGpsLon( 0 );
 				currentIssue.setAssignedTime( new Date() );
 				currentIssue.setData( this.data );
+				currentIssue.setStatus( IssueStatus.ASSIGNED );
+				currentIssue.setOperator( c.getCreator() );
 				currentIssueDescription = c.getName() + System.getProperty( "line.separator" );
 				
 				for( ConstraintElement ce : c.getConstraints() )
@@ -108,9 +115,17 @@ public class ConstraintEngine
 				
 				if( isIssue )
 				{
-					currentIssue.setDescr( currentIssueDescription );
+					currentIssue.setDescr( c.getName() );
+					IssueAsset asset = new IssueAsset();
+					asset.setDescr( currentIssueDescription );
+					asset.setLocation( "" );
+					asset.setTime( new Date() );
+					asset.setUser( c.getCreator() );
+					
 					issues.add( currentIssue );
 					issueEJB.createIssue( currentIssue );
+					assetEJB.createIssueAsset( asset );
+					issueEJB.addAsset( asset, currentIssue.getId() );
 					
 					System.out.println( "============================================" );
 					System.out.println( currentIssueDescription );
