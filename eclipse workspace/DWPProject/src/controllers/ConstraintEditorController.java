@@ -284,6 +284,13 @@ public class ConstraintEditorController implements Serializable
 			}
 		}
 	}
+	
+	public void updateValueContraintType(ConstraintElement ce, ValueConstraintType vct)
+	{
+		
+		ValueConstraintElement vce = (ValueConstraintElement) ce;
+		vce.setValueConstraintType(vct);
+	}
 
 	/**
 	 * Determines if the list with current constaintElements contains a
@@ -367,6 +374,11 @@ public class ConstraintEditorController implements Serializable
 	public ValueConstraintAttribute[] getValueConstraintAttributes()
 	{
 		return ValueConstraintAttribute.values();
+	}
+	
+	public ValueConstraintType[] getValueConstraintTypes()
+	{
+		return ValueConstraintType.values();
 	}
 
 	/**

@@ -4,100 +4,113 @@
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
-<ui:repeat
-	value="#{constraintEditorController.currentConstraintElements}"
-	var="ce">
-	<div class="form-group-margin">
+	<ui:repeat
+		value="#{constraintEditorController.currentConstraintElements}"
+		var="ce">
+		<div class="form-group-margin">
 
-		<div class="input-group">
+			<div class="input-group">
 
-			<div class="input-group-btn">
-				<button type="button"
-					class="btn btn-default dropdown-toggle constraint-type"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					#{constraintEditorController.determineContraintElementType(ce)} <span
-						class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-					<!-- Drowndown menu with all the contraint elements -->
+				<div class="input-group-btn">
+					<button type="button"
+						class="btn btn-default dropdown-toggle constraint-type"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						#{constraintEditorController.determineContraintElementType(ce)} <span
+							class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<!-- Drowndown menu with all the contraint elements -->
 
-					<!-- Value constraint elements -->
-					<ui:repeat
-						value="#{constraintEditorController.valueConstraintAttributes}"
-						var="vca">
-						<li><h:commandLink
-								action="#{constraintEditorController.updateContraintElement(ce, vca)}">
+						<!-- Value constraint elements -->
+						<ui:repeat
+							value="#{constraintEditorController.valueConstraintAttributes}"
+							var="vca">
+							<li><h:commandLink
+									action="#{constraintEditorController.updateContraintElement(ce, vca)}">
 															#{vca.descr}
 															<f:ajax execute="@this" render="editConstraintForm"
-									onevent="redrawModalMap" />
-							</h:commandLink></li>
-					</ui:repeat>
-					<li role="separator" class="divider"></li>
-					<li><h:commandLink
-							action="#{constraintEditorController.updateContraintElement(ce, 'ModelTypeConstraintElement')}">
+										onevent="redrawModalMap" />
+								</h:commandLink></li>
+						</ui:repeat>
+						<li role="separator" class="divider"></li>
+						<li><h:commandLink
+								action="#{constraintEditorController.updateContraintElement(ce, 'ModelTypeConstraintElement')}">
 													model
 													<f:ajax execute="@this" render="editConstraintForm"
-								onevent="redrawModalMap" />
-						</h:commandLink></li>
-					<li role="separator" class="divider"></li>
-					<li><h:commandLink
-							action="#{constraintEditorController.updateContraintElement(ce, 'LocationConstraintElement')}">
+									onevent="redrawModalMap" />
+							</h:commandLink></li>
+						<li role="separator" class="divider"></li>
+						<li><h:commandLink
+								action="#{constraintEditorController.updateContraintElement(ce, 'LocationConstraintElement')}">
 													locatie
 													<f:ajax execute="@this" render="editConstraintForm"
-								onevent="redrawModalMap" />
-						</h:commandLink></li>
-				</ul>
+									onevent="redrawModalMap" />
+							</h:commandLink></li>
+					</ul>
+				</div>
+				<!-- /btn-group -->
+				<ui:fragment
+					rendered="#{constraintEditorController.isValueContraintElement(ce)}">
+					<!-- If ValueConstraintElement -->
+					<div class="input-group-addon">is</div>
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default dropdown-toggle"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							#{ce.valueConstraintType.descr} <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+
+							<ui:repeat
+								value="#{constraintEditorController.valueConstraintTypes}"
+								var="vct">
+								<li><h:commandLink
+										action="#{constraintEditorController.updateValueContraintType(ce, vct)}">
+															#{vct.descr}
+															<f:ajax execute="@this" render="editConstraintForm"
+											onevent="redrawModalMap" />
+									</h:commandLink></li>
+							</ui:repeat>
+						</ul>
+					</div>
+					<h:inputText type="number" class="form-control"
+						value="#{ce.maxValue}" placeholder="Waarde" />
+					<div class="input-group-addon">${ce.getValueConstraintAttribute().unit}</div>
+				</ui:fragment>
+
+				<ui:fragment
+					rendered="#{constraintEditorController.isLocationConstraintElement(ce)}">
+
+					<!-- If LocationConstraintElement -->
+					<div class="input-group-addon form-control">ligt binnen
+						onderstaande gebied.</div>
+					<div id="location-data">
+						<h:inputHidden type="text"
+							value="#{constraintEditorController.polygonInput}" />
+					</div>
+				</ui:fragment>
+
+				<ui:fragment
+					rendered="#{constraintEditorController.isModelTypeConstraintElement(ce)}">
+
+					<!-- If ModelTypeConstraintElement or other-->
+					<div class="input-group-addon">is</div>
+					<h:inputText type="text" class="form-control" placeholder="Model"
+						value="#{ce.modelType}" />
+
+				</ui:fragment>
+
+				<!-- Delete constraintElement btn -->
+				<span class="input-group-btn"> <h:commandLink
+						class="btn btn-default" type="button"
+						action="#{constraintEditorController.currentConstraintElements.remove(ce)}">
+						<span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+						<f:ajax execute="@form" render="editConstraintForm"
+							onevent="redrawModalMap" />
+					</h:commandLink>
+				</span>
+
 			</div>
-			<!-- /btn-group -->
-			<ui:fragment
-				rendered="#{constraintEditorController.isValueContraintElement(ce)}">
-				<!-- If ValueConstraintElement -->
-				<div class="input-group-addon">is</div>
-				<div class="input-group-btn">
-					<button type="button" class="btn btn-default dropdown-toggle"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						groter dan <span class="caret"></span>
-					</button>
-				</div>
-				<h:inputText type="number" class="form-control"
-					value="#{ce.maxValue}" placeholder="Waarde" />
-				<div class="input-group-addon">${ce.getValueConstraintAttribute().unit}</div>
-			</ui:fragment>
-
-			<ui:fragment
-				rendered="#{constraintEditorController.isLocationConstraintElement(ce)}">
-
-				<!-- If LocationConstraintElement -->
-				<div class="input-group-addon form-control">ligt binnen
-					onderstaande gebied.</div>
-				<div id="location-data">
-					<h:inputHidden type="text"
-						value="#{constraintEditorController.polygonInput}" />
-				</div>
-			</ui:fragment>
-
-			<ui:fragment
-				rendered="#{constraintEditorController.isModelTypeConstraintElement(ce)}">
-
-				<!-- If ModelTypeConstraintElement or other-->
-				<div class="input-group-addon">is</div>
-				<h:inputText type="text" class="form-control" placeholder="Model"
-					value="#{ce.modelType}" />
-
-			</ui:fragment>
-
-			<!-- Delete constraintElement btn -->
-			<span class="input-group-btn"> <h:commandLink
-					class="btn btn-default" type="button"
-					action="#{constraintEditorController.currentConstraintElements.remove(ce)}">
-					<span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-					<f:ajax execute="@form" render="editConstraintForm"
-						onevent="redrawModalMap" />
-				</h:commandLink>
-			</span>
-
 		</div>
-	</div>
-	<br></br>
-</ui:repeat>
+		<br></br>
+	</ui:repeat>
 </ui:composition>
