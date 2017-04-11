@@ -105,6 +105,11 @@ public class Issue implements Serializable
 	
 	public Issue()
 	{
+		assignedTime = new Date();
+		inProgressTime = new Date();
+		closedTime = new Date();
+		gpsLat = 0.0;
+		gpsLon = 0.0;
 	}
 
 	// GETTERS & SETTERS
