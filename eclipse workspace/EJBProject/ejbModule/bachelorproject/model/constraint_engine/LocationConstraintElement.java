@@ -1,5 +1,6 @@
 package bachelorproject.model.constraint_engine;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import bachelorproject.constraint_engine.ConstraintEngine;
  *  @author Anton Danneels
  * */
 @Entity
-public class LocationConstraintElement extends ConstraintElement
+public class LocationConstraintElement extends ConstraintElement implements Serializable
 {
 	private static final long serialVersionUID = -5790355500796825408L;
 

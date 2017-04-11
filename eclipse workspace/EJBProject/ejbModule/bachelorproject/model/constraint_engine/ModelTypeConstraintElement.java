@@ -1,5 +1,7 @@
 package bachelorproject.model.constraint_engine;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
@@ -11,7 +13,7 @@ import bachelorproject.constraint_engine.ConstraintEngine;
  *  @author Anton Danneels
  * */
 @Entity
-public class ModelTypeConstraintElement extends ConstraintElement
+public class ModelTypeConstraintElement extends ConstraintElement implements Serializable
 {
 	private static final long serialVersionUID = -4632676131576240262L;
 

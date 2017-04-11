@@ -1,5 +1,7 @@
 package bachelorproject.model.constraint_engine;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,7 +14,7 @@ import bachelorproject.constraint_engine.ConstraintEngine;
  * 	This class stores a value constraint: a max value and a condition.
  * */
 @Entity
-public class ValueConstraintElement extends ConstraintElement
+public class ValueConstraintElement extends ConstraintElement implements Serializable
 {
 	private static final long serialVersionUID = 9149375801125492782L;
 
