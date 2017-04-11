@@ -23,6 +23,8 @@ import javax.validation.constraints.NotNull;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import bachelorproject.model.sensordata.SensorData;
 import bachelorproject.model.user.User;
 
@@ -253,18 +255,21 @@ public class Issue implements Serializable
 		this.gpsLon = gpsLon;
 	}
 	
+	@JsonIgnore
 	public String getAssignedPrettyTime()
 	{
 		PrettyTime p = new PrettyTime();
 		return p.format(this.assignedTime);	
 	}
 	
+	@JsonIgnore
 	public String getClosedPrettyTime()
 	{
 		PrettyTime p = new PrettyTime();
 		return p.format(this.closedTime);	
 	}
 	
+	@JsonIgnore
 	public String getInProgressPrettyTime()
 	{
 		PrettyTime p = new PrettyTime();

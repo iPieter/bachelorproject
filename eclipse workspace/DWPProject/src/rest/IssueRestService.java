@@ -71,6 +71,8 @@ public class IssueRestService
 		List<Issue> issues = issueEJB.findAssignedIssuesByTraincoachId( traincoachID );
 		issues.addAll( issueEJB.findInProgressIssuesByTraincoachId( traincoachID ) );
 		
+		System.out.println( issues );
+		
 		return Response.ok( issues ).build();
 	}
 	
