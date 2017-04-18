@@ -71,6 +71,11 @@ public class AccountController implements Serializable
 	{
 		return userService.getUser().getImageHash();
 	}
+	
+	public String getToken() 
+	{
+		return userService.getToken().getToken();
+	}
 
 	
 }

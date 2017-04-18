@@ -43,8 +43,8 @@
 						</ui:fragment>
 					</ui:insert>
 				</ul>
-				<h:form>
-
+				<h:form id="navbar-form">
+					<h:inputHidden id="token" value="#{accountController.token}" />
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="#"> <span class="glyphicon glyphicon-search"
 								aria-hidden="true"></span>

@@ -4,14 +4,23 @@ $(document).ready(function() {
 	//Map setup
 	var id = $("#current_workplace").val();
 	console.log( "CURRENT USER ID: " + id );
-	$.get( "rest/workplace/" + id + "/map/", function( data )
-			{ 
-				console.log(data);
-				setWorkplaceMapView( data );
-			}).fail( function( error )
-			{
-				console.log( "Failed to fetch workplacemap_data: " + error );
-			});	
+	
+	$.ajax({
+        url: "rest/workplace/" + id + "/map/",
+        type: "GET",
+        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer ' + $("#navbar-form\\:token").val());},
+        success: function( data )
+		{ 
+			console.log(data);
+			setWorkplaceMapView( data );
+		},
+        fail: function( error )
+		{
+			console.log( "Failed to fetch workplacemap_data: " + error );
+		},
+     });
+	
+	
 });
 
 function setWorkplaceMapView( data )

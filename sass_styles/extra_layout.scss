@@ -3,7 +3,8 @@ $dark_red: #c0392b;
 $primary_color: #2c3e50;
 $accent: #b0cb1b;
 $white: rgb(252, 252, 253);
-$border: 2px solid #e7e7e7;
+$border_color: #e7e7e7;
+$border: 2px solid $border_color;
 $background-grey: #f5f5f5;
 $grey-text: #777;
 @mixin font($weight) {
@@ -45,25 +46,25 @@ html {
 }
 
 .big-avatar {
-	width: 196px;
+    width: 196px;
     height: 196px;
-	display: block;
-	margin-right: auto;
+    display: block;
+    margin-right: auto;
     img {
         height: 192px;
         width: 192px;
-	}
+    }
 }
 
 .small-avatar {
-	width: 24px;
+    width: 24px;
     height: 24px;
-	display: inline-block;
+    display: inline-block;
     img {
-		margin-top: -4px;
+        margin-top: -4px;
         height: 20px;
         width: 20px;
-	}
+    }
 }
 
 @keyframes breath {
@@ -97,11 +98,6 @@ html {
     height: 50px;
     background-color: $white;
     opacity: 0.97;
-	/*
-	-webkit-backdrop-filter: saturate(180%) blur(20px);
-backdrop-filter: saturate(180%) blur(20px);
-background-color: rgba(255, 255, 255, .65);
-*/
     .container-fluid {
         height: 50px;
     }
@@ -135,6 +131,8 @@ background-color: rgba(255, 255, 255, .65);
     }
 } // ---- SIDEBAR ----
 .sidebar {
+    position: fixed;
+    top: 50px;
     display: block;
     height: 100vh;
     background-color: $white;
@@ -147,17 +145,16 @@ background-color: rgba(255, 255, 255, .65);
         .icon {
             height: 24px;
         }
-
-		&:first-child {
-			padding-top: 6px;
-		}
+        &:first-child {
+            padding-top: 6px;
+        }
     } //second level 
-    .level-2, .descr {
+    .level-2,
+    .descr {
         @include font(300);
         font-size: 16px;
-	}
-
-	.level-2 {
+    }
+    .level-2 {
         margin-left: 8px;
         padding: {
             left: 8px;
@@ -197,16 +194,15 @@ background-color: rgba(255, 255, 255, .65);
             bottom: 3px;
         }
     }
-
-	.line {
-		border-bottom: $border;
-		margin: { 
-			top: 6px;
-			bottom: 6px;
-			left: -15px;
-			right: -15px;
-		}
-	}
+    .line {
+        border-bottom: $border;
+        margin: {
+            top: 6px;
+            bottom: 6px;
+            left: -15px;
+            right: -15px;
+        }
+    }
 }
 
 .panel {
@@ -232,7 +228,7 @@ background-color: rgba(255, 255, 255, .65);
 
 #map_size {
     height: 400px;
-	max-height: 40vh;
+    max-height: 40vh;
     width: 100%;
     #map {
         width: 100%;
@@ -246,7 +242,7 @@ background-color: rgba(255, 255, 255, .65);
 
 .map-overlay {
     padding-top: 70px;
-	z-index: 9999;
+    z-index: 9999;
 }
 
 #loading_modal {
@@ -254,22 +250,33 @@ background-color: rgba(255, 255, 255, .65);
 }
 
 .modal {
-	margin-top: 70px;
+    margin-top: 70px;
 }
 
 .realtime_chart {
-	height: 30vh;
+    height: 30vh;
 }
 
 #donut_graph {
-	height: 400px;
-	max-height: 40vh;
+    height: 400px;
+    max-height: 40vh;
+}
+
+#topleft {
+    height: 400px;
+    max-height: 30vh;
 }
 
 .fill-height {
-	height: 100vh; 
-	padding:0;
-	.leaflet-top {
-		margin-top: 50px;
-	}
+    height: 100vh;
+    padding: 0;
+    .leaflet-top {
+        margin-top: 50px;
+    }
+}
+
+.blur {
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    background-color: transparentize( $border_color, 0.35);
 }

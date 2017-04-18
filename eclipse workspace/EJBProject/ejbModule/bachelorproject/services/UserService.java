@@ -6,6 +6,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.Base64;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
@@ -13,7 +15,9 @@ import javax.ejb.EJB;
 //import javax.faces.bean.SessionScoped;
 import javax.enterprise.context.SessionScoped;
 
+import bachelorproject.ejb.TokenEJB;
 import bachelorproject.ejb.UserEJB;
+import bachelorproject.model.user.Token;
 import bachelorproject.model.user.User;
 import bachelorproject.model.user.UserRole;
 
@@ -40,9 +44,13 @@ public class UserService implements Serializable
 
 	@EJB
 	private UserEJB userEJB;
-
+	
+	@EJB
+	private TokenEJB tokenEJB;
+	
 	private User user;
-
+	private Token token;
+	
 	/**
 	 * Generate some fake users when none are present.
 	 * <p>
@@ -173,7 +181,12 @@ public class UserService implements Serializable
 					// For some reason, user is likely moved out of persistence
 					// context
 					userEJB.updateUser(u);
-
+					
+					//generate a token
+					this.token = issueToken(u);
+					
+					tokenEJB.createToken(this.token);
+					
 					return true;
 
 				} else
@@ -357,4 +370,46 @@ public class UserService implements Serializable
 
 		return false;
 	}
+
+	/**
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return the token
+	 */
+	public Token getToken()
+	{
+		return token;
+	}
+
+	/**
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param token the token to set
+	 */
+	public void setToken(Token token)
+	{
+		this.token = token;
+	}
+	
+	public static Token issueToken(User user)
+	{
+		//Generate token
+		String token = Base64.getEncoder().encodeToString(UserService.salt(256)).substring(0, 256);
+		System.out.println(token);
+		
+		//create and persist token object
+		Token t = new Token();
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_YEAR, 14);
+		Date date = calendar.getTime();
+
+		t.setExpires(date);
+		t.setOwner(user);
+		t.setToken(token);
+				
+		return t;
+		
+	}
+	
 }
