@@ -205,4 +205,4 @@ html {
 .blur {
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
-  background-color: rgba(231, 231, 231, 0.65); }
+  background-color: rgba(252, 252, 253, 0.65); }

@@ -278,5 +278,5 @@ html {
 .blur {
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     backdrop-filter: saturate(180%) blur(20px);
-    background-color: transparentize( $border_color, 0.35);
+    background-color: transparentize( $white, 0.35);
 }
