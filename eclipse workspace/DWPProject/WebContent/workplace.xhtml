@@ -184,7 +184,7 @@
 									<c:forEach var="activeIssue"
 										items="#{workplaceController.findActiveIssuesByMechanicId(mechanic.id)}">
 										<li><h:outputText
-												value="#{activeIssue.status}: #{activeIssue.descr}" /></li>
+												value="#{activeIssue.status.descr}: #{activeIssue.descr}" /></li>
 									</c:forEach>
 								</div>
 							</div>
