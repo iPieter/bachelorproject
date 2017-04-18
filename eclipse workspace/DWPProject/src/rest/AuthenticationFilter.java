@@ -1,8 +1,10 @@
 package rest;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.annotation.Priority;
+import javax.ejb.EJB;
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -11,40 +13,56 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
+import bachelorproject.ejb.TokenEJB;
+import bachelorproject.model.user.Token;
+
 @Secured
 @Provider
 @Priority(Priorities.AUTHENTICATION)
-public class AuthenticationFilter implements ContainerRequestFilter {
+public class AuthenticationFilter implements ContainerRequestFilter
+{
 
-    @Override
-    public void filter(ContainerRequestContext requestContext) throws IOException {
+	@EJB
+	private TokenEJB tokenEJB;
 
-        // Get the HTTP Authorization header from the request
-        String authorizationHeader = 
-            requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+	@Override
+	public void filter(ContainerRequestContext requestContext) throws IOException
+	{
 
-        // Check if the HTTP Authorization header is present and formatted correctly 
-        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            throw new NotAuthorizedException("Authorization header must be provided");
-        }
+		// Get the HTTP Authorization header from the request
+		String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
-        // Extract the token from the HTTP Authorization header
-        String token = authorizationHeader.substring("Bearer".length()).trim();
+		// Check if the HTTP Authorization header is present and formatted
+		// correctly
+		if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer "))
+		{
+			throw new NotAuthorizedException("Authorization header must be provided");
+		}
 
-        try {
+		// Extract the token from the HTTP Authorization header
+		String token = authorizationHeader.substring("Bearer".length()).trim();
 
-            // Validate the token
-            validateToken(token);
+		try
+		{
 
-        } catch (Exception e) {
-            requestContext.abortWith(
-                Response.status(Response.Status.UNAUTHORIZED).build());
-        }
-    }
+			// Validate the token
+			validateToken(token);
 
-    private void validateToken(String token) throws Exception {
-        // Check if it was issued by the server and if it's not expired
-        // Throw an Exception if the token is invalid
-    }
+		} catch (Exception e)
+		{
+			requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+		}
+	}
+
+	private void validateToken(String token) throws Exception
+	{
+		Token t = tokenEJB.findTokenByToken(token);
+
+		if (t == null || t.getExpires().before(new Date()) )
+		{
+			throw new Exception("Not a known token.");
+		} 
+		
+	}
 
 }

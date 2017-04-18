@@ -25,6 +25,13 @@ public class TokenEJB
 	@Inject
 	private EntityManagerSingleton ems;
 
+	/**
+	 * Persist a token object.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param t The token object to persist
+	 */
 	public void createToken(Token t)
 	{
 		EntityManager em = ems.getEntityManager();
@@ -36,6 +43,15 @@ public class TokenEJB
 		em.close();
 	}
 
+	/**
+	 * Finds a token object by it's token string. If no token object is
+	 * found in the database, a null object is returned. 
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param token The token string.
+	 * @return The token object if found, null otherwise.
+	 */
 	public Token findTokenByToken(String token)
 	{
 		EntityManager em = ems.getEntityManager();
