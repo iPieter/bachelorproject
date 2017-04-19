@@ -1,6 +1,6 @@
-#REST authentication
+# REST authentication
 
-##Obtaining a login token
+# Obtaining a login token
 The user can obtain a token by making a ```POST```-request to the following url:
 ```
 $(base_url)/rest/login
@@ -11,7 +11,7 @@ with two request body parameters:
 - The password as ```password```.
 
 If the login is correct, the return body will be something like:
-```json
+```(json)
 {
 "id": 76,
 "owner": {
@@ -32,7 +32,7 @@ If the login is incorrect, the service will return:
 HTTP 401 Unauthorized
 ```
 
-##Using the token
+## Using the token
 You can use the token on the secured api endpoints by including the ```Autorization``` paramater in your request header. It's important to notice we use the header, not the body.
 
 Your header value consists of ```Bearer $(token)```, so it might look something like this:
@@ -42,5 +42,5 @@ Bearer PiKeoTAzP0+gVSBNAxqCNpqLpI87ohR298LLf4SP09YtDNiDYTAwCZ4M7sfkVmOLiobnTXsF3
 
 If succesful, you should see a ```HTTP 200``` response.
 
-##Token expiration
+## Token expiration
 The tokens will last 14 days by default.
