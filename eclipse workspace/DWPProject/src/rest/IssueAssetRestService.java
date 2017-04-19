@@ -2,11 +2,13 @@ package rest;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -141,8 +143,11 @@ public class IssueAssetRestService
 	public Response addIssueAsset( MultipartFormDataInput input )
 	{		
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
-        List<InputPart> inputParts = uploadForm.get("attachment");
- 
+        List<InputPart> inputParts = uploadForm.get("file");
+        
+        if( inputParts == null )
+        	return Response.status( Status.BAD_REQUEST ).build();
+        
         for (InputPart inputPart : inputParts)
         {
             try
