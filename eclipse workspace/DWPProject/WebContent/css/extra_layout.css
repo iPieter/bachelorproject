@@ -203,6 +203,6 @@ html {
     margin-top: 50px; }
 
 .blur {
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(80%) blur(20px);
+  backdrop-filter: saturate(80%) blur(20px);
   background-color: rgba(252, 252, 253, 0.65); }

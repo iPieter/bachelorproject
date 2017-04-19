@@ -276,7 +276,7 @@ html {
 }
 
 .blur {
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(80%) blur(20px);
+    backdrop-filter: saturate(80%) blur(20px);
     background-color: transparentize( $white, 0.35);
 }
