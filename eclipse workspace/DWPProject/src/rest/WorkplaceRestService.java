@@ -24,7 +24,7 @@ import bachelorproject.model.Workplace;
 public class WorkplaceRestService
 {
 
-	/** Allows acces to request info */
+	/** Allows access to request info */
 	@Context
 	private UriInfo context;
 

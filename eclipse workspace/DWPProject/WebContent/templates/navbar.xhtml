@@ -8,7 +8,7 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:fragment>
 	<!-- FIXED NAVBAR TOP -->
-	<nav class="navbar navbar-default navbar-fixed-top">
+	<nav class="navbar blur navbar-default navbar-fixed-top">
 	<div class="container-fluid">
 		<div class="row">
 
@@ -43,8 +43,8 @@
 						</ui:fragment>
 					</ui:insert>
 				</ul>
-				<h:form>
-
+				<h:form id="navbar-form">
+					<h:inputHidden id="token" value="#{accountController.token}" />
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="#"> <span class="glyphicon glyphicon-search"
 								aria-hidden="true"></span>

@@ -69,12 +69,7 @@ html {
   margin-bottom: 0px;
   height: 50px;
   background-color: #fcfcfd;
-  opacity: 0.97;
-  	/*
-  	-webkit-backdrop-filter: saturate(180%) blur(20px);
-  backdrop-filter: saturate(180%) blur(20px);
-  background-color: rgba(255, 255, 255, .65);
-  */ }
+  opacity: 0.97; }
   .navbar .container-fluid {
     height: 50px; }
   .navbar #user {
@@ -99,6 +94,8 @@ html {
     margin-right: 0px; }
 
 .sidebar {
+  position: fixed;
+  top: 50px;
   display: block;
   height: 100vh;
   background-color: #fcfcfd;
@@ -113,7 +110,8 @@ html {
       height: 24px; }
     .sidebar .level-1:first-child {
       padding-top: 6px; }
-  .sidebar .level-2, .sidebar .descr {
+  .sidebar .level-2,
+  .sidebar .descr {
     font-family: 'Lato', sans-serif;
     font-weight: 300;
     font-size: 16px; }
@@ -194,8 +192,17 @@ html {
   height: 400px;
   max-height: 40vh; }
 
+#topleft {
+  height: 400px;
+  max-height: 30vh; }
+
 .fill-height {
   height: 100vh;
   padding: 0; }
   .fill-height .leaflet-top {
     margin-top: 50px; }
+
+.blur {
+  -webkit-backdrop-filter: saturate(80%) blur(20px);
+  backdrop-filter: saturate(80%) blur(20px);
+  background-color: rgba(252, 252, 253, 0.65); }

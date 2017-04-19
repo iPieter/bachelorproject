@@ -52,10 +52,12 @@ public class LoginRestService
 			authenticate(email, password);
 
 			// Issue a token for the user
-			String token = issueToken(email);
-
+			Token token = UserService.issueToken(userService.getUser());
+			
+			tokenEJB.createToken(token);
+			
 			// Return the token on the response
-			return Response.ok(token).build();
+			return Response.ok(token.getToken()).build();
 
 		} catch (Exception e)
 		{
@@ -71,26 +73,5 @@ public class LoginRestService
 		}
 	}
 
-	private String issueToken(String email)
-	{
-		//Generate token
-		String token = Base64.getEncoder().encodeToString(UserService.salt(256)).substring(0, 256);
-		System.out.println(token);
-		
-		//create and persist token object
-		Token t = new Token();
-		
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.DAY_OF_YEAR, 14);
-		Date date = calendar.getTime();
-
-		t.setExpires(date);
-		t.setOwner(userService.getUser());
-		t.setToken(token);
-		
-		tokenEJB.createToken(t);
-		
-		return token;
-		
-	}
+	
 }

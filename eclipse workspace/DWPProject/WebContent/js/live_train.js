@@ -200,12 +200,7 @@ function loadData()
             	if( train_path.length > 0 )
         		{
                     pathPolyline = L.polyline(train_path, {color: '#b0cb1b'}).addTo(map);
-                    map.fitBounds(pathPolyline.getBounds(), 
-                    	{
-                    		paddingTopLeft: [ $("#left-panel").width(), $("#left-panel").height() ],
-                    		paddingBottomRight: [ $("#right-panel").width(), $("#right-panel").width() ]
-
-                		}); 
+                    
 
 
         		}
