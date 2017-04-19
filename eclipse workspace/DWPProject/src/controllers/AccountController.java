@@ -76,6 +76,17 @@ public class AccountController implements Serializable
 	{
 		return userService.getToken().getToken();
 	}
+	
+	/**
+	 * False setter so JSF doesn't complain.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 */
+	public void setToken()
+	{
+		//Empty
+	}
 
 	
 }
