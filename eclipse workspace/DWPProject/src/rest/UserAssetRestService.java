@@ -89,7 +89,6 @@ public class UserAssetRestService
 	 * */
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	@Secured({UserRole.MECHANIC, UserRole.OPERATOR})
 	public Response addUserAsset( MultipartFormDataInput input )
 	{		
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();

@@ -11,9 +11,11 @@ import javax.ws.rs.core.UriInfo;
 
 import bachelorproject.ejb.IssueEJB;
 import bachelorproject.model.issue.IssueStatus;
+import bachelorproject.model.user.UserRole;
 import bachelorproject.services.UserService;
 
 @Path( "/statistics_data" )
+@Secured({UserRole.MECHANIC, UserRole.OPERATOR})
 public class StatisticsRestService {
 	
 	/** Allows acces to request info */
