@@ -1,9 +1,11 @@
 package rest;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -57,7 +59,7 @@ public class LoginRestService
 			tokenEJB.createToken(token);
 			
 			// Return the token on the response
-			return Response.ok(token.getToken()).build();
+			return Response.ok(token).build();
 
 		} catch (Exception e)
 		{

@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response.Status;
 
 import bachelorproject.ejb.TrainCoachEJB;
 import bachelorproject.model.issue.Issue;
+import bachelorproject.model.user.UserRole;
 import bachelorproject.model.TrainCoach;
 
 /**
@@ -21,6 +22,7 @@ import bachelorproject.model.TrainCoach;
  *  @see Issue
  * */
 @Path( "/traincoach" )
+@Secured({UserRole.MECHANIC, UserRole.OPERATOR})
 public class TrainCoachRestService
 {
 	@Inject

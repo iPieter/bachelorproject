@@ -20,7 +20,7 @@ import bachelorproject.model.TrainCoach;
 import bachelorproject.model.Workplace;
 
 @Path("/workplace")
-@Secured(UserRole.MECHANIC)
+@Secured({UserRole.MECHANIC, UserRole.OPERATOR})
 public class WorkplaceRestService
 {
 

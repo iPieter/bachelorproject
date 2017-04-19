@@ -11,8 +11,10 @@ import javax.ws.rs.core.UriInfo;
 
 import bachelorproject.ejb.IssueEJB;
 import bachelorproject.model.issue.Issue;
+import bachelorproject.model.user.UserRole;
 
 @Path( "/heatmap_data" )
+@Secured({UserRole.MECHANIC, UserRole.OPERATOR})
 public class HeatmapRestService {
 
 	/** Allows acces to request info */

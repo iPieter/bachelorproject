@@ -32,6 +32,7 @@ import bachelorproject.ejb.IssueEJB;
 import bachelorproject.ejb.UserEJB;
 import bachelorproject.model.issue.Issue;
 import bachelorproject.model.issue.IssueAsset;
+import bachelorproject.model.user.UserRole;
 
 /**
  * 	A REST endpoint to fetch issue asset Images.
@@ -140,6 +141,7 @@ public class IssueAssetRestService
 	 * */
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Secured({UserRole.MECHANIC, UserRole.OPERATOR})
 	public Response addIssueAsset( MultipartFormDataInput input )
 	{		
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
