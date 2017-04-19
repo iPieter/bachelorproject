@@ -128,8 +128,6 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 				.setParameter( "status", IssueStatus.ASSIGNED ).setParameter( "traincoachId", traincoachId );
 		List<Issue> result = query.getResultList();
 		
-		System.out.println(result.size());
-		
 		em.close();
 
 		return result;

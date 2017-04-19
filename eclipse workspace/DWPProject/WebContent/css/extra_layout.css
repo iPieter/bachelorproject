@@ -69,7 +69,12 @@ html {
   margin-bottom: 0px;
   height: 50px;
   background-color: #fcfcfd;
-  opacity: 0.97; }
+  opacity: 0.97;
+  	/*
+  	-webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  background-color: rgba(255, 255, 255, .65);
+  */ }
   .navbar .container-fluid {
     height: 50px; }
   .navbar #user {
