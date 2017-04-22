@@ -13,16 +13,16 @@ with two request body parameters:
 If the login is correct, the return body will be something like:
 ```(json)
 {
-"id": 76,
-"owner": {
-"email": "john3@test.be",
-"id": 44,
-"lastPrettyLogin": "een ogenblik geleden",
-"imageHash": "qwertyui",
-"name": "John Doe",
-"role": "MECHANIC"
-},
-"token": "PiKeoTAzP0+gVSBNAxqCNpqLpI87ohR298LLf4SP09YtDNiDYTAwCZ4M7sfkVmOLiobnTXsF3AvfeqbzAJZc0TGlWcZgkOq63sgtEG41h3b4/nFsG/tUAjKgbNSxTml3NJ3A3DLP9HJuCRFXJPWv9/PKA5vKOvQibog6ZdYbsx9VFpH71g1/ZJ1K176q0uP+Ot8MEySihBr8vnye4jRYgGEbL/XKL8qYNQOZkpdMVyN0XhJ9mwqw6m2LAvRpFwLv"
+    "id": 76,
+    "owner": {
+        "email": "john3@test.be",
+        "id": 44,
+        "lastPrettyLogin": "een ogenblik geleden",
+        "imageHash": "qwertyui",
+        "name": "John Doe",
+        "role": "MECHANIC"
+    },
+    "token": "PiKeoTAzP0+gVSBNAxqCNpqLpI87ohR298LLf4SP09YtDNiDYTAwCZ4M7sfkVmOLiobnTXsF3AvfeqbzAJZc0TGlWcZgkOq63sgtEG41h3b4/nFsG/tUAjKgbNSxTml3NJ3A3DLP9HJuCRFXJPWv9/PKA5vKOvQibog6ZdYbsx9VFpH71g1/ZJ1K176q0uP+Ot8MEySihBr8vnye4jRYgGEbL/XKL8qYNQOZkpdMVyN0XhJ9mwqw6m2LAvRpFwLv"
 }
 ```
 Notice the token id is returned, as well as the user id of the owner. 
@@ -61,34 +61,34 @@ Location:
 Example response:
 ```json
 [
-{
-"mechanics": [
-{
-"email": "john0@test.be",
-"id": 41,
-"imageHash": "qwertyui",
-"name": "John Doe",
-"role": "MECHANIC"
-}
-],
-"id": 1,
-"name": "Gent-Sint-Pieters",
-"traincoaches": [
-{
-"id": 7,
-"needsReview": true,
-"constructor": "BOMBARDIER",
-"name": "78558",
-"type": "M7"
-},
-{
-"id": 8,
-"needsReview": true,
-"constructor": "BOMBARDIER",
-"name": "78559",
-"type": "M7"
-}
-]
-}
+  {
+    "mechanics": [
+      {
+        "email": "john0@test.be",
+        "id": 41,
+        "imageHash": "qwertyui",
+        "name": "John Doe",
+        "role": "MECHANIC"
+      }
+    ],
+    "id": 1,
+    "name": "Gent-Sint-Pieters",
+    "traincoaches": [
+      {
+        "id": 7,
+        "needsReview": true,
+        "constructor": "BOMBARDIER",
+        "name": "78558",
+        "type": "M7"
+      },
+      {
+        "id": 8,
+        "needsReview": true,
+        "constructor": "BOMBARDIER",
+        "name": "78559",
+        "type": "M7"
+      }
+    ]
+  }
 ]
 ```
