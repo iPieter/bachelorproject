@@ -1,6 +1,6 @@
 # REST authentication
 
-# Obtaining a login token
+## Obtaining a login token
 The user can obtain a token by making a ```POST```-request to the following url:
 ```
 $(base_url)/rest/login
