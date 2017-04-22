@@ -13,6 +13,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
 
 import bachelorproject.ejb.IssueEJB;
+import bachelorproject.ejb.UserEJB;
 import bachelorproject.ejb.WorkplaceEJB;
 import bachelorproject.model.issue.*;
 import bachelorproject.model.user.UserRole;
@@ -37,7 +38,7 @@ public class WorkplaceRestService
 
 	@EJB
 	private WorkplaceEJB workplaceEJB;
-
+		
 	@GET
 	@Path("{id}/map")
 	@Produces("text/json")
@@ -146,13 +147,36 @@ public class WorkplaceRestService
 	public Response getByWorkplaceId(@PathParam("id") int id)
 	{
 		Workplace w = workplaceEJB.findWorkplaceByWorkplaceId(id);
-
+		
 		if (w == null)
 			return Response.status(Status.NOT_FOUND).build();
 
 		return Response.ok(w).build();
 	}
 
+	/**
+	 * Returns a workplace list for a provided user id.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param userId The userid for the workplace
+	 * @return The workplace or workplaces that houses the provided user
+	 */
+	@GET
+	@Path("get_by_user_id/{id}")
+	@Produces("text/json")
+	public Response getByUserId(@PathParam("id") int userId)
+	{
+		List<Workplace> workplaces = workplaceEJB.findWorkplaceByUserId(userId);
+		
+		if (workplaces == null)
+		{
+			return Response.status(Status.NOT_FOUND).build();
+		}
+		
+		return Response.ok(workplaces).build();
+	}
+	
 	@GET
 	@Path("all")
 	@Produces("text/json")

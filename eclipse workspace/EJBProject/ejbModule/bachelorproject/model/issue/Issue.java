@@ -74,16 +74,16 @@ public class Issue implements Serializable
 	@Enumerated( EnumType.STRING )
 	private IssueStatus status;
 
-	@OneToMany( fetch = FetchType.LAZY )
+	@OneToMany( fetch = FetchType.EAGER )
 	private List<IssueAsset> assets = new ArrayList<IssueAsset>();
 
-	@OneToOne( fetch = FetchType.LAZY )
+	@OneToOne( fetch = FetchType.EAGER )
 	private User mechanic;
 
-	@OneToOne( fetch = FetchType.LAZY )
+	@OneToOne( fetch = FetchType.EAGER )
 	private User operator;
 
-	@OneToOne( fetch = FetchType.LAZY )
+	@OneToOne( fetch = FetchType.EAGER )
 	private SensorData data;
 	
 	/** Date when the issue was created & assigned */

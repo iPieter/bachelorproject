@@ -44,3 +44,51 @@ If succesful, you should see a ```HTTP 200``` response.
 
 ## Token expiration
 The tokens will last 14 days by default.
+
+# REST endpoints
+Location:
+```$(base_url)/rest/```
+
+## Workplace
+Location:
+```$(base_url)/rest/workplace```
+
+#### List of **workplaces** by user id
+Obtain a list of workplaces by providing a user id.
+Location:
+```$(base_url)/rest/workplace/rest/workplace/get_by_user_id/$(id)```
+
+Example response:
+```json
+[
+{
+"mechanics": [
+{
+"email": "john0@test.be",
+"id": 41,
+"imageHash": "qwertyui",
+"name": "John Doe",
+"role": "MECHANIC"
+}
+],
+"id": 1,
+"name": "Gent-Sint-Pieters",
+"traincoaches": [
+{
+"id": 7,
+"needsReview": true,
+"constructor": "BOMBARDIER",
+"name": "78558",
+"type": "M7"
+},
+{
+"id": 8,
+"needsReview": true,
+"constructor": "BOMBARDIER",
+"name": "78559",
+"type": "M7"
+}
+]
+}
+]
+```

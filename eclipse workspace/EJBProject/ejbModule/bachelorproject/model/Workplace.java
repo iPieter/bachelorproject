@@ -27,7 +27,8 @@ import bachelorproject.model.user.User;
 	@NamedQuery( name = Workplace.FIND_ALL, query = "SELECT w FROM Workplace w" ),
 	@NamedQuery( name = Workplace.FIND_BY_TRAINCOACH_ID, query = "SELECT w FROM Workplace w JOIN w.traincoaches t WHERE t.id = :id" ),
 	@NamedQuery( name = Workplace.FIND_BY_WORKPLACE_ID, query = "SELECT m FROM Workplace w JOIN w.mechanics m WHERE w.id = :id " ),
-	@NamedQuery( name = Workplace.FIND_BY_DATA, query = "SELECT w FROM Workplace w WHERE w.name = :name" ) 
+	@NamedQuery( name = Workplace.FIND_BY_DATA, query = "SELECT w FROM Workplace w WHERE w.name = :name" ),
+	@NamedQuery( name = Workplace.FIND_BY_USER_ID, query = "SELECT w FROM Workplace w JOIN w.mechanics m WHERE m.id = :id" ),
 } )
 public class Workplace implements Serializable
 {
@@ -35,6 +36,7 @@ public class Workplace implements Serializable
 	public static final String FIND_BY_TRAINCOACH_ID = "Workplace.findWorkplaceByTraincoachID";
 	public static final String FIND_BY_WORKPLACE_ID = "Workplace.findMechanicsByWorkplaceId";
 	public static final String FIND_BY_DATA = "Workplace.findByData";
+	public static final String FIND_BY_USER_ID = "Workplace.findByUserId";
 	
 	private static final long serialVersionUID = 1L;
 

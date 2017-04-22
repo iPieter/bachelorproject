@@ -145,6 +145,7 @@ public class User implements Serializable
 		this.role = role;
 	}
 
+	@JsonIgnore
 	public Date getLastLogin()
 	{
 		return this.lastLogin;
@@ -155,6 +156,7 @@ public class User implements Serializable
 		this.lastLogin = lastLogin;
 	}
 	
+	@JsonIgnore
 	public String getLastPrettyLogin()
 	{
 		PrettyTime p = new PrettyTime();

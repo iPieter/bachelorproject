@@ -55,7 +55,7 @@ public class WorkplaceEJB
 		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 
-		TypedQuery<Workplace> query = em.createNamedQuery( "Workplace.findWorkplaceByTraincoachID", Workplace.class );
+		TypedQuery<Workplace> query = em.createNamedQuery( Workplace.FIND_BY_TRAINCOACH_ID, Workplace.class );
 		query.setParameter( "id", id );
 		List<Workplace> result = query.getResultList();
 
@@ -65,6 +65,26 @@ public class WorkplaceEJB
 		return result;
 	}
 
+	/**
+	 * Searches for all workplaces by mechanic id in the persistence context;
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param id The user id
+	 * @return
+	 */
+	public List<Workplace> findWorkplaceByUserId( int id )
+	{
+		EntityManager em = ems.getEntityManager();
+
+		TypedQuery<Workplace> query = em.createNamedQuery( Workplace.FIND_BY_USER_ID, Workplace.class );
+		query.setParameter( "id", id );
+		List<Workplace> result = query.getResultList();
+
+		em.close();
+		return result;
+	}
+	
 	/**
 	 * Searches for all mechanics by workplace id in the persistence context.
 	 * 
