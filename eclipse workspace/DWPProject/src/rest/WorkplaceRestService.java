@@ -155,7 +155,8 @@ public class WorkplaceRestService
 	}
 
 	/**
-	 * Returns a workplace list for a provided user id.
+	 * Returns a workplace list for a provided user id. If no matching
+	 * workplace is found, a 404 NOT FOUND status is returned.
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
@@ -169,7 +170,7 @@ public class WorkplaceRestService
 	{
 		List<Workplace> workplaces = workplaceEJB.findWorkplaceByUserId(userId);
 		
-		if (workplaces == null)
+		if (workplaces == null || workplaces.size() == 0)
 		{
 			return Response.status(Status.NOT_FOUND).build();
 		}

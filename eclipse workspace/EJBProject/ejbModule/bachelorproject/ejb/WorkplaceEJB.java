@@ -66,7 +66,8 @@ public class WorkplaceEJB
 	}
 
 	/**
-	 * Searches for all workplaces by mechanic id in the persistence context;
+	 * Searches for all workplaces by mechanic id in the persistence context.
+	 * If not a single workplace is found, an empty list is returned.
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
