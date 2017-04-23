@@ -240,10 +240,10 @@ function loadData()
                 			for( var i = 0; i < data.length; i++ )
             	            {
             	            	var issue = data[i];
-            	            	issue_html += issue["descr"]; 	
+            	            	issue_html += "<li>" + issue["descr"] + "</li>"; 	
             	            }
                 			
-        	            	$("#issue_panel .panel-body").html(issue_html);
+        	            	$("#issue_panel .panel-body").html("<ul>" + issue_html + "</ul>");
 
                 		}
                 	},
