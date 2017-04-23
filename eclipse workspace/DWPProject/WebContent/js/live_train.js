@@ -233,7 +233,7 @@ function loadData()
                 		//check if the size of the data array is bigger than zero, so if there's at least one issue
                 		if (data.length > 0)
                 		{
-                			$("#issue_panel").show();
+                			$("#issue_panel").fadeIn(75);
                 			
                 			var issue_html = "";
                 			
