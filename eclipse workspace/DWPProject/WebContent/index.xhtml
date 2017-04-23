@@ -45,7 +45,7 @@
 	<div class="container-fluid i-need-room-above-my-head">
 		<div class="row">
 
-
+			
 			<!-- LEFT SIDEBAR -->
 			<div class="col-sm-2 sidebar">
 
@@ -89,6 +89,12 @@
 										<h:outputText value="Technicus" />
 									</f:facet>
 									<h:outputText value="#{issue.mechanic.name}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Wagon" />
+									</f:facet>
+									<h:outputText value="#{issue.data.traincoach.type} - #{issue.data.traincoach.name}" />
 								</h:column>
 								<h:column>
 									<f:facet name="header">
