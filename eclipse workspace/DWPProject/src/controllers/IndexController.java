@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -25,6 +26,28 @@ public class IndexController implements Serializable{
 	
 	@Inject
 	private UserService userService;
+	
+	/**
+	 * Returnes a list with all the issue objects for the current user, assuming
+	 * he/she is a operator. 
+	 * 
+	 * If no issues are found, an empty list is returned.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return A list object with all issues for an operator.
+	 */
+	public List<Issue> findOperatorAllIssues()
+	{
+		List<Issue> issues = new ArrayList<>();
+		
+		for (IssueStatus is : IssueStatus.values())
+		{
+			issues.addAll( issueEJB.findOperatorIssues( userService.getUser().getId(), is) );
+		}
+		
+		return issues;
+	}
 	
 	/**
 	 * Returns a List of Issue objects for the current User(UserRole=OPERATOR).
