@@ -235,11 +235,16 @@ function loadData()
                 		{
                 			$("#issue_panel").show();
                 			
+                			var issue_html = "";
+                			
                 			for( var i = 0; i < data.length; i++ )
             	            {
             	            	var issue = data[i];
-            	            	$("#issue_panel .panel-body").html(issue["descr"]);
+            	            	issue_html += issue["descr"]; 	
             	            }
+                			
+        	            	$("#issue_panel .panel-body").html(issue_html);
+
                 		}
                 	},
                 	fail: function(error)
