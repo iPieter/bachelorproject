@@ -54,9 +54,9 @@
 			</div>
 
 			<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
-			<c:forEach var="traincoach"
-				items="#{trainCoachController.findActiveTrainCoaches()}"
-			>
+			<c:set var="traincoach"
+				value="#{trainCoachSensorController.currentTrainCoach}"
+			/>
 				<c:choose>
 					<!-- GESELECTEERDE WAGON -->
 					<c:when
@@ -122,7 +122,6 @@
 						</div>
 					</c:otherwise>
 				</c:choose>
-			</c:forEach>
 		</div>
 	</ui:define>
 
