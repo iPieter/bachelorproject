@@ -148,4 +148,5 @@ public class IssueAsset implements Serializable
 	{
 		return descr + ":" + location;
 	}
+	
 }

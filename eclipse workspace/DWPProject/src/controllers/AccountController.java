@@ -83,7 +83,7 @@ public class AccountController implements Serializable
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
 	 */
-	public void setToken()
+	public void setToken(String s)
 	{
 		//Empty
 	}

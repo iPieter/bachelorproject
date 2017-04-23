@@ -133,10 +133,11 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h4 class="panel-title">
-									<a data-toggle="collapse" href="##{issue.id}"> <h:outputText
-											value="#{issue.descr}">
+									<a data-toggle="collapse" href="##{issue.id}"> 
+									<h:outputText value="#{issue.descr} ">
 										</h:outputText>
-									</a> <span class="label label-danger">#{issue.status.descr}</span>
+									</a>
+									<div class="label label-${issue.status.color}">#{issue.status.descr}</div>
 
 								</h4>
 							</div>
