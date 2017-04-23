@@ -7,7 +7,7 @@ $(document).ready(function() {
 	
 	//DonutGraphic setup
 	$.ajax({
-        url: "rest/statistics_data",
+        url: "rest/statistics_data/" ,
         type: "GET",
         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer ' + $("#navbar-form\\:token").val());},
         success: function( data )
@@ -43,9 +43,7 @@ $(document).ready(function() {
 function setDonutView(data)
 {
 	
-	console.log(data);
-	console.log(data.issue_counts[0][1]);
-	if(data.issue_counts[0][1]==0 && data.issue_counts[1][1]==0 && data.issue_counts[2][1]==0){
+	if(data["Gesloten"]==0 && data["In behandeling"]==0 && data["Toegewezen"]==0){
 		var display_msg="<b>Welcome back!</b> Laatste 30 dagen nog geen activiteit geregistreerd, let's get started.";
 		$("#display_when_empty_donut").html(display_msg);
 	}
@@ -91,7 +89,13 @@ function setDonutView(data)
 		        type: 'pie',
 		        name: 'Percentage',
 		        innerSize: '60%',
-		        data: data.issue_counts
+		        data: 
+		        	[ /*hack*/
+		        		["Toegewezen problemen", data["Toegewezen"]],
+		        		["Problemen in  behandeling", data["In behandeling"]],
+		        		["Gesloten problemen", data["Gesloten"]],	    
+		        	],
+		        
 		    }]
 		});
 	}

@@ -14,13 +14,15 @@ package bachelorproject.model.issue;
  */
 public enum IssueStatus
 {
-	ASSIGNED("Toegewezen"), IN_PROGRESS("In behandeling"), CLOSED("Gesloten");
+	ASSIGNED("Toegewezen", "danger"), IN_PROGRESS("In behandeling", "warning"), CLOSED("Gesloten", "success");
 	
 	private String descr;
+	private String color;
 	
-	IssueStatus(String descr)
+	IssueStatus(String descr, String color)
 	{
 		this.descr = descr;
+		this.color = color;
 	}
 
 	/**
@@ -43,5 +45,23 @@ public enum IssueStatus
 	public void setDescr(String descr)
 	{
 		this.descr = descr;
+	}
+	
+	/**
+	 * Getter to generate a color description for each status. Uses the 
+	 * following values
+	 * <ul>
+	 *   <li>danger</li>
+	 *   <li>warning</li>
+	 *   <li>success</li>
+	 * </ul>
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return a 
+	 */
+	public String getColor()
+	{
+		return color;
 	}
 }

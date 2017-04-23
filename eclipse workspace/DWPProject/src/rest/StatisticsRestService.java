@@ -1,15 +1,23 @@
 package rest;
 
 
+import java.util.Map;
+import java.util.TreeMap;
+
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import bachelorproject.ejb.IssueEJB;
+import bachelorproject.ejb.TokenEJB;
 import bachelorproject.model.issue.IssueStatus;
 import bachelorproject.model.user.UserRole;
 import bachelorproject.services.UserService;
@@ -18,7 +26,7 @@ import bachelorproject.services.UserService;
 @Secured({UserRole.MECHANIC, UserRole.OPERATOR})
 public class StatisticsRestService {
 	
-	/** Allows acces to request info */
+	/** Allows access to request info */
 	@Context
 	private UriInfo context;
 
@@ -26,34 +34,33 @@ public class StatisticsRestService {
 	@EJB
 	private IssueEJB issueEJB;
 	
-	@Inject
-	private UserService userService;
+	@EJB
+	private TokenEJB tokenEJB;
 	
+	/**
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param id
+	 * @return A json file with the count of each issue.
+	 */
 	@GET
 	@Produces( "text/json" )
-	public String getDonutData()
+	public Response getDonutData(@HeaderParam("Authorization") String authorizationHeader )
 	{
-		String result="";
-		int id=userService.getUser().getId();
+		String token = authorizationHeader.substring("Bearer".length()).trim();
+		int id = tokenEJB.findTokenByToken(token).getOwner().getId();
+		System.out.println(token);
+		Map<String, Integer> results = new TreeMap<>();
 		
 		final int DAYS_BACK_FROM_NOW = 30;
-		int closedIssueCount=issueEJB.countOperatorIssues(id, IssueStatus.CLOSED, DAYS_BACK_FROM_NOW);
-		int assignedIssueCount=issueEJB.countOperatorIssues(id, IssueStatus.ASSIGNED, DAYS_BACK_FROM_NOW);
-		int inProgressIssueCount=issueEJB.countOperatorIssues(id, IssueStatus.IN_PROGRESS, DAYS_BACK_FROM_NOW);
 		
-		result=result.concat(
-				"{"
-				+ "\"issue_counts\":"
-				+ "["
-				+"[\"Afgewerkte Problemen\","+closedIssueCount+"],"
-				+"[\"Toegewezen Problemen\","+assignedIssueCount+"],"
-				+"[\"Problemen In Behandeling\","+inProgressIssueCount+"]"
-				+ "]"
-				+"}");
+		for (IssueStatus is : IssueStatus.values())
+		{
+			int count = issueEJB.countOperatorIssues(id, is, DAYS_BACK_FROM_NOW);
+			results.put(is.getDescr(), count);
+		}
 		
-		System.out.println("DONUT_DATA: "+result);
-		System.out.println("DONUT_DATA: USER_ID="+id);
 		
-		return result;
+		return Response.ok( results ).build();
 	}
 }
