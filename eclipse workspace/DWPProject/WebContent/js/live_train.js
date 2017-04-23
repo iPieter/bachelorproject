@@ -123,89 +123,106 @@ function loadData()
 	map.zoomControl.setPosition('bottomleft');
 	
 	$( "#loading_modal" ).modal({backdrop: 'static', keyboard: false, show:true});
-	
-    $.get( path, function(data)
-    {
-    	
-		var initialDataYaw = [];
-		var initialDataRoll = [];
-		
-		for( var i = 0; i < data.data.length; i++ )
-		{
-			var dateTime = data.data[i].time;
-			
-			var split = dateTime.split("_");
-        	var ymd = split[0].split("-");
-        	var hms = split[1].split("-");
-        	var date = new Date( ymd[0], ymd[1] - 1, ymd[2], hms[0], hms[1], hms[2] );
-			
-        	initialDataYaw.push( [date, data.data[i].yaw] );
-        	initialDataRoll.push( [date, data.data[i].roll] );
-        	
-			train_path.push( [ data.data[i].lat * 180.0 / Math.PI, data.data[i].lng * 180.0 / Math.PI ] );
-			lastDate = data.data[i].time;
-			
-			$( "#current_speed" ).html( data.data[i].speed.toFixed(4) + " m/s" );
-            $( "#current_accel" ).html( data.data[i].accel.toFixed(4) + " m/s²" );
-		}
-			
-		yawSeries.setData( initialDataYaw );
-		rollSeries.setData( initialDataRoll );
-		
-    	if( pathPolyline != null )
-            map.removeLayer( pathPolyline );
-        
-    	if( train_path.length > 0 )
-		{
-            pathPolyline = L.polyline(train_path, {color: '#b0cb1b'}).addTo(map);
-            map.fitBounds(pathPolyline.getBounds(), 
-            		{
-        		paddingTopLeft: [ $("#left-panel").width(), $("#left-panel").height() ],
-        		paddingBottomRight: [ $("#right-panel").width(), $("#right-panel").width() ]
 
-    		});
-		}
-    	
-    	$( "#loading_modal" ).modal("hide");
-	
-    	setInterval(function () 
-        {
-    		path = corePath + lastDate;
+	$.ajax({
+        url: path,
+        type: "GET",
+        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer ' + $("#navbar-form\\:token").val());},
+        success: function( data )
+		{ 
+        	var initialDataYaw = [];
+    		var initialDataRoll = [];
     		
-            $.get( path, function(data)
+    		for( var i = 0; i < data.data.length; i++ )
+    		{
+    			var dateTime = data.data[i].time;
+    			
+    			var split = dateTime.split("_");
+            	var ymd = split[0].split("-");
+            	var hms = split[1].split("-");
+            	var date = new Date( ymd[0], ymd[1] - 1, ymd[2], hms[0], hms[1], hms[2] );
+    			
+            	initialDataYaw.push( [date, data.data[i].yaw] );
+            	initialDataRoll.push( [date, data.data[i].roll] );
+            	
+    			train_path.push( [ data.data[i].lat * 180.0 / Math.PI, data.data[i].lng * 180.0 / Math.PI ] );
+    			lastDate = data.data[i].time;
+    			
+    			$( "#current_speed" ).html( data.data[i].speed.toFixed(4) + " m/s" );
+                $( "#current_accel" ).html( data.data[i].accel.toFixed(4) + " m/s²" );
+    		}
+    			
+    		yawSeries.setData( initialDataYaw );
+    		rollSeries.setData( initialDataRoll );
+    		
+        	if( pathPolyline != null )
+                map.removeLayer( pathPolyline );
+            
+        	if( train_path.length > 0 )
+    		{
+                pathPolyline = L.polyline(train_path, {color: '#b0cb1b'}).addTo(map);
+                map.fitBounds(pathPolyline.getBounds(), 
+                		{
+            		paddingTopLeft: [ $("#left-panel").width(), $("#left-panel").height() ],
+            		paddingBottomRight: [ $("#right-panel").width(), $("#right-panel").width() ]
+
+        		});
+    		}
+        	
+        	$( "#loading_modal" ).modal("hide");
+    	
+        	setInterval(function () 
             {
-            	console.log( data.data.length );
-        		for( var i = 0; i < data.data.length; i++ )
-                {
-                	var dataPoint = data.data[i];
-                	lastDate = dataPoint.time;
-                	
-                	var split = lastDate.split("_");
-                	var ymd = split[0].split("-");
-                	var hms = split[1].split("-");
-                	var date = new Date( ymd[0], ymd[1] - 1, ymd[2], hms[0], hms[1], hms[2] );
+        		path = corePath + lastDate;
+        		
+        		$.ajax({
+        	        url: path,
+        	        type: "GET",
+        	        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer ' + $("#navbar-form\\:token").val());},
+        	        success: function( data )
+        			{ 
+        	        	console.log( data.data.length );
+                		for( var i = 0; i < data.data.length; i++ )
+                        {
+                        	var dataPoint = data.data[i];
+                        	lastDate = dataPoint.time;
+                        	
+                        	var split = lastDate.split("_");
+                        	var ymd = split[0].split("-");
+                        	var hms = split[1].split("-");
+                        	var date = new Date( ymd[0], ymd[1] - 1, ymd[2], hms[0], hms[1], hms[2] );
 
-                	yawSeries.addPoint( [ date, dataPoint.yaw ] );
-                	rollSeries.addPoint( [ date, dataPoint.roll ] );
-					
-                    train_path.push( [ dataPoint.lat * 180.0 / Math.PI, dataPoint.lng * 180.0 / Math.PI ] );
-                    
-                    $( "#current_speed" ).html( dataPoint.speed.toFixed(4) + " m/s" );
-                    $( "#current_accel" ).html( dataPoint.accel.toFixed(4) + " m/s²" );
-                }
-                    
-            	if( pathPolyline != null )
-                    map.removeLayer( pathPolyline );
-                
-            	if( train_path.length > 0 )
-        		{
-                    pathPolyline = L.polyline(train_path, {color: '#b0cb1b'}).addTo(map);
-                    
+                        	yawSeries.addPoint( [ date, dataPoint.yaw ] );
+                        	rollSeries.addPoint( [ date, dataPoint.roll ] );
+        					
+                            train_path.push( [ dataPoint.lat * 180.0 / Math.PI, dataPoint.lng * 180.0 / Math.PI ] );
+                            
+                            $( "#current_speed" ).html( dataPoint.speed.toFixed(4) + " m/s" );
+                            $( "#current_accel" ).html( dataPoint.accel.toFixed(4) + " m/s²" );
+                        }
+                            
+                    	if( pathPolyline != null )
+                            map.removeLayer( pathPolyline );
+                        
+                    	if( train_path.length > 0 )
+                		{
+                            pathPolyline = L.polyline(train_path, {color: '#b0cb1b'}).addTo(map);
+                       
+                		}
+        			},
+        	        fail: function( error )
+        			{
+        				console.log( "Failed to fetch workplacemap_data: " + error );
+        			},
+        	     });
+        		
+               
 
-
-        		}
-            } );
-
-        }, 1000);
-    });
+            }, 1000);
+		},
+        fail: function( error )
+		{
+			console.log( "Failed to fetch workplacemap_data: " + error );
+		},
+     });
 }

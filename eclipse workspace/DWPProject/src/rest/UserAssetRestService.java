@@ -29,6 +29,7 @@ import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import bachelorproject.ejb.UserEJB;
 import bachelorproject.model.user.User;
+import bachelorproject.model.user.UserRole;
 import bachelorproject.services.UserService;
 
 /**
@@ -88,7 +89,7 @@ public class UserAssetRestService
 	 * */
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public Response addIssueAsset( MultipartFormDataInput input )
+	public Response addUserAsset( MultipartFormDataInput input )
 	{		
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
         System.out.println(uploadForm);

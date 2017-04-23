@@ -24,6 +24,7 @@ import bachelorproject.ejb.TrainCoachEJB;
 import bachelorproject.model.TrainCoach;
 import bachelorproject.model.sensordata.LiveSensorData;
 import bachelorproject.model.sensordata.LiveSensorDataEntry;
+import bachelorproject.model.user.UserRole;
 
 /**
  * 	A REST endpoint to allow the sensors to communicate with the server.
@@ -144,6 +145,7 @@ public class LiveSensorDataRestService
 	@GET
 	@Path( "get/{lsdID}/{date}" )
 	@Produces( "text/json" )
+	@Secured({UserRole.MECHANIC, UserRole.OPERATOR})
 	public Response getSensorDataEntries( @PathParam("lsdID") int lsdID, @PathParam("date") String from )
 	{
 		SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd_HH-mm-ss" );

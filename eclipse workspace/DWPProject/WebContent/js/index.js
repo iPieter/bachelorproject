@@ -6,23 +6,37 @@ var data_donut=null;
 $(document).ready(function() {
 	
 	//DonutGraphic setup
-	$.get( "rest/statistics_data", function( data )
-	{ 
-		setDonutView(data);
-	}).fail( function( error )
-	{
-		console.log( "Failed to fetch donut_data: " + error );
-	});
+	$.ajax({
+        url: "rest/statistics_data",
+        type: "GET",
+        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer ' + $("#navbar-form\\:token").val());},
+        success: function( data )
+		{ 
+    		setDonutView(data);
+		},
+        fail: function( error )
+		{
+    		console.log( "Failed to fetch donut_data: " + error );
+		},
+     });
+	
 	
 	//Heatmap setup
-	$.get( "rest/heatmap_data", function( data )
-			{ 
-				console.log(data);
-				setHeatMapView( data );
-			}).fail( function( error )
-			{
-				console.log( "Failed to fetch heatmap_data: " + error );
-			});	
+	$.ajax({
+        url: "rest/heatmap_data",
+        type: "GET",
+        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer ' + $("#navbar-form\\:token").val());},
+        success: function( data )
+		{ 
+        	console.log(data);
+			setHeatMapView( data );
+		},
+        fail: function( error )
+		{
+			console.log( "Failed to fetch heatmap_data: " + error );
+		},
+     });
+	
 });
 
 /* DONUTVIEW HIGHCHARTS*/

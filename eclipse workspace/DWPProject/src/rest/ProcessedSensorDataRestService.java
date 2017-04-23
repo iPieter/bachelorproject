@@ -22,6 +22,7 @@ import javax.ws.rs.core.UriInfo;
 
 import bachelorproject.ejb.ProcessedSensorDataEJB;
 import bachelorproject.model.sensordata.ProcessedSensorData;
+import bachelorproject.model.user.UserRole;
 
 /**
  * 	A REST endpoint to fetch processed sensor data in JSON format.
@@ -34,6 +35,7 @@ import bachelorproject.model.sensordata.ProcessedSensorData;
  *  @see ProcessedSensorDataEJB
  * */
 @Path( "/processed_data" )
+@Secured({UserRole.MECHANIC, UserRole.OPERATOR})
 public class ProcessedSensorDataRestService
 {
 	/** Allows acces to request info */

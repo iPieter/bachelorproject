@@ -13,7 +13,8 @@ import javax.ws.rs.core.Response.Status;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import bachelorproject.ejb.IssueEJB;
-import bachelorproject.model.issue.Issue;;
+import bachelorproject.model.issue.Issue;
+import bachelorproject.model.user.UserRole;;
 
 /**
  * 	A REST endpoint to fetch issues.
@@ -22,6 +23,7 @@ import bachelorproject.model.issue.Issue;;
  *  @see Issue
  * */
 @Path( "/issues" )
+@Secured({UserRole.MECHANIC, UserRole.OPERATOR})
 public class IssueRestService
 {
 	@Inject

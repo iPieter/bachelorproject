@@ -9,39 +9,44 @@ var datapointSelected= false;
 var id = $("#current_traincoach").val();
 
 /* Map Setup */
-$.get( "rest/processed_data/" + id, function( data )
-{
-	SENSOR_DATA = data;
-	setView( "radio_yaw" );
-	
-	var radiobtn = document.getElementById("radio_yaw");
-	console.log( radiobtn );
-	radiobtn.checked = true;
-	
-	$( "#max" ).html( "<b>Max yaw: </b>" + data.max_yaw.toFixed(3) );
-	$( "#min" ).html( "<b>Min yaw: </b>" + data.min_yaw.toFixed(3) );
+$.ajax({
+    url: "rest/processed_data/" + id,
+    type: "GET",
+    beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer ' + $("#navbar-form\\:token").val());},
+    success: function( data )
+	{ 
+    	SENSOR_DATA = data;
+    	setView( "radio_yaw" );
+    	
+    	var radiobtn = document.getElementById("radio_yaw");
+    	console.log( radiobtn );
+    	radiobtn.checked = true;
+    	
+    	$( "#max" ).html( "<b>Max yaw: </b>" + data.max_yaw.toFixed(3) );
+    	$( "#min" ).html( "<b>Min yaw: </b>" + data.min_yaw.toFixed(3) );
 
-    map = L.map( "map" ).setView( [51.0499582, 3.7270672], 10 );
-	L.tileLayer( 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
+        map = L.map( "map" ).setView( [51.0499582, 3.7270672], 10 );
+    	L.tileLayer( 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
+    	{
+    		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    		maxZoom: 18,
+    		id: 'mapbox.streets',
+    		accessToken: 'pk.eyJ1IjoiYW50b25kIiwiYSI6ImNpbXRkM2wwNDAwNmd2d20xNDJnN3RwYjMifQ.PtxXr8pyGM4qccCXDecL2A'
+    	} ).addTo( map );
+
+    	latlngs = [];
+    	for( var i = 0; i < data.lat.length; i++ )
+    		latlngs.push( [ (data.lat[i] + data.lat_off * 0 ) * 180.0 / Math.PI , (data.lng[i]  + data.lng_off * 0)  * 180.0 / Math.PI ] );
+
+    	var polyline = L.polyline(latlngs, {color: '#b0cb1b', smoothFactor:0.10}).addTo(map);
+        map.fitBounds(polyline.getBounds());;
+	},
+    fail: function( error )
 	{
-		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-		maxZoom: 18,
-		id: 'mapbox.streets',
-		accessToken: 'pk.eyJ1IjoiYW50b25kIiwiYSI6ImNpbXRkM2wwNDAwNmd2d20xNDJnN3RwYjMifQ.PtxXr8pyGM4qccCXDecL2A'
-	} ).addTo( map );
-
-	latlngs = [];
-	for( var i = 0; i < data.lat.length; i++ )
-		latlngs.push( [ (data.lat[i] + data.lat_off * 0 ) * 180.0 / Math.PI , (data.lng[i]  + data.lng_off * 0)  * 180.0 / Math.PI ] );
-
-	var polyline = L.polyline(latlngs, {color: '#b0cb1b', smoothFactor:0.10}).addTo(map);
-    map.fitBounds(polyline.getBounds());
-	
-}).fail( function( error )
-{
-	console.log( "Failed to fetch data: " + error );
-	$( "#topleft" ).html( "<b>ERROR: Failed to load data</b>");
-});
+    	console.log( "Failed to fetch data: " + error );
+    	$( "#topleft" ).html( "<b>ERROR: Failed to load data</b>");
+	},
+ });
 
 /* HighCharts Setup */
 function setView( input )
