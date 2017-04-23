@@ -5,15 +5,13 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
->
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 <ui:composition template="templates/main_layout.xhtml">
 
 	<f:metadata>
 		<f:viewParam name="id"
-			value="#{trainCoachSensorController.currentTrainCoachID}"
-		/>
+			value="#{trainCoachSensorController.currentTrainCoachID}" />
 		<f:viewAction action="#{trainCoachSensorController.loadPage()}" />
 	</f:metadata>
 
@@ -27,15 +25,12 @@
 				</h:link></li>
 			<li><h:link class="active"
 					value="#{trainCoachSensorController.currentWorkplace.name}"
-					outcome="workplace.xhtml?workplace_id=#{trainCoachSensorController.currentWorkplace.id}"
-				/></li>
+					outcome="workplace.xhtml?workplace_id=#{trainCoachSensorController.currentWorkplace.id}" /></li>
 			<li><h:link class="active"
 					value="#{trainCoachSensorController.currentTrainCoach.type} - #{trainCoachSensorController.currentTrainCoach.name}"
-					outcome="traincoach.xhtml?id=#{trainCoachSensorController.currentTrainCoach.id}&amp;psdid=0"
-				/></li>
+					outcome="traincoach.xhtml?id=#{trainCoachSensorController.currentTrainCoach.id}&amp;psdid=0" /></li>
 			<li><h:link class="active" value="Geschiedenis"
-					outcome="traincoach_sensor.xhtml?id=#{trainCoachSensorController.currentTrainCoach.id}"
-				/></li>
+					outcome="traincoach_sensor.xhtml?id=#{trainCoachSensorController.currentTrainCoach.id}" /></li>
 		</ol>
 	</ui:define>
 
@@ -45,8 +40,7 @@
 
 			<!-- GESELECTEERDE STAANPLAATS -->
 			<c:set var="workplace"
-				value="#{trainCoachSensorController.currentWorkplace}"
-			/>
+				value="#{trainCoachSensorController.currentWorkplace}" />
 			<div>
 				<img class="icon" src="img/railway-station-100-777.png"></img>
 				<h:link value="#{workplace.name}"
@@ -55,129 +49,117 @@
 
 			<!-- WAGONS VAN GESELECTEERDE STAANPLAATS -->
 			<c:set var="traincoach"
-				value="#{trainCoachSensorController.currentTrainCoach}"
-			/>
-				<c:choose>
-					<!-- GESELECTEERDE WAGON -->
-					<c:when
-						test="#{trainCoachSensorController.currentTrainCoach.id == traincoach.id}"
-					>
-						<div class="level-2 active">
-							<div class="title">
-								<img class="icon" src="img/train-100.png"></img>
-								<h:link value="#{traincoach.type} - #{traincoach.name}"
-									outcome="traincoach.xhtml?id=#{traincoach.getId()}&amp;psdid=0"
-								/>
-							</div>
-							<!-- METADATA PER WAGON -->
-							<div class="descr">
-								<ui:fragment
-									rendered="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size() ge 1}">
+				value="#{trainCoachSensorController.currentTrainCoach}" />
+			<c:choose>
+				<!-- GESELECTEERDE WAGON -->
+				<c:when
+					test="#{trainCoachSensorController.currentTrainCoach.id == traincoach.id}">
+					<div class="level-2 active">
+						<div class="title">
+							<img class="icon" src="img/train-100.png"></img>
+							<h:link value="#{traincoach.type} - #{traincoach.name}"
+								outcome="traincoach.xhtml?id=#{traincoach.getId()}&amp;psdid=0" />
+						</div>
+						<!-- METADATA PER WAGON -->
+						<div class="descr">
+							<ui:fragment
+								rendered="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size() ge 1}">
 
-									<div class="level-3">
-										<img class="icon" src="img/error-100.png"></img>
-										<h:link value="Problemen"
-											outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
-										/>
-										<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
-									</div>
-								</ui:fragment>
 								<div class="level-3">
-									<img class="icon" src="img/gyroscope-100.png"></img>
-
-									<h:link value="Geschiedenis"
-										outcome="traincoach_sensor.xhtml?id=#{traincoach.getId()}" />
+									<img class="icon" src="img/error-100.png"></img>
+									<h:link value="Problemen"
+										outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}" />
+									<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
 								</div>
+							</ui:fragment>
+							<div class="level-3">
+								<img class="icon" src="img/gyroscope-100.png"></img>
+
+								<h:link value="Geschiedenis"
+									outcome="traincoach_sensor.xhtml?id=#{traincoach.getId()}" />
 							</div>
 						</div>
-					</c:when>
-					<!-- NIET-GESELECTEERDE WAGONS -->
-					<c:otherwise>
-						<div class="level-2">
-							<div class="title">
-								<img class="icon" src="img/train-100.png"></img>
-								<h:link value="#{traincoach.type} - #{traincoach.name}"
-									outcome="traincoach.xhtml?id=#{traincoach.id}&amp;psdid=0"
-								/>
-							</div>
-							<!-- METADATA PER WAGON -->
-							<div class="descr">
-								<ui:fragment
-									rendered="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size() ge 1}">
-									<div class="level-3">
-										<img class="icon" src="img/error-100.png"></img>
-										<h:link value="Problemen"
-											outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}"
-										/>
-										<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
-									</div>
-								</ui:fragment>
+					</div>
+				</c:when>
+				<!-- NIET-GESELECTEERDE WAGONS -->
+				<c:otherwise>
+					<div class="level-2">
+						<div class="title">
+							<img class="icon" src="img/train-100.png"></img>
+							<h:link value="#{traincoach.type} - #{traincoach.name}"
+								outcome="traincoach.xhtml?id=#{traincoach.id}&amp;psdid=0" />
+						</div>
+						<!-- METADATA PER WAGON -->
+						<div class="descr">
+							<ui:fragment
+								rendered="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size() ge 1}">
 								<div class="level-3">
-									<img class="icon" src="img/gyroscope-100.png"></img>
-
-									<h:link value="Geschiedenis"
-										outcome="traincoach_sensor.xhtml?id=#{traincoach.getId()}" />
+									<img class="icon" src="img/error-100.png"></img>
+									<h:link value="Problemen"
+										outcome="traincoach_issues.xhtml?id=#{traincoach.getId()}" />
+									<span class="badge">#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id).size()}</span>
 								</div>
+							</ui:fragment>
+							<div class="level-3">
+								<img class="icon" src="img/gyroscope-100.png"></img>
+
+								<h:link value="Geschiedenis"
+									outcome="traincoach_sensor.xhtml?id=#{traincoach.getId()}" />
 							</div>
 						</div>
-					</c:otherwise>
-				</c:choose>
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</ui:define>
 
 	<!-- MAINVIEW CONTENT -->
 	<ui:define name="mainview_content">
-		<div class="row pad">
-			<div class="mainview_panel col-sm-12">
-				<!-- HEADER -->
-				<div class="row mainview_traincoach">
-					<div class="col-sm-12 pad mainview_traincoach_panelheader">
-						<h4>Actieve Wagons</h4>
-					</div>
-				</div>
-				
-				<h:form>
-					<h:dataTable class="table"
-						value="#{trainCoachSensorController.data}" var="sensordata"
-					>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Model - Naam" />
-							</f:facet>
-							<h:outputText
-								value="#{sensordata.traincoach.type} - #{sensordata.traincoach.name}"
-							/>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Rit" />
-							</f:facet>
-							<h:outputText value="#{sensordata.track}" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Vertrektijd" />
-							</f:facet>
-							<h:outputText value="#{sensordata.date}" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Acties" />
-							</f:facet>
-							<h:outputLink value="traincoach.xhtml" class="btn btn-default">
-								<h:outputText value="Bekijk data" />
-								<f:param name="id" value="#{sensordata.traincoach.id}" />
-								<f:param name="psdid" value="#{sensordata.id}" />
-							</h:outputLink>
-						</h:column>
-					</h:dataTable>
-				</h:form>
+		<div class="panel panel-default" id="left-panel">
+
+			<!-- HEADER -->
+			<div class="panel-heading">
+				<h3 class="panel-title">Actieve wagons</h3>
 			</div>
+
+			<h:form>
+				<h:dataTable class="table"
+					value="#{trainCoachSensorController.data}" var="sensordata">
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Model - Naam" />
+						</f:facet>
+						<h:outputText
+							value="#{sensordata.traincoach.type} - #{sensordata.traincoach.name}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Rit" />
+						</f:facet>
+						<h:outputText value="#{sensordata.track}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Vertrektijd" />
+						</f:facet>
+						<h:outputText value="#{sensordata.date}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Acties" />
+						</f:facet>
+						<h:outputLink value="traincoach.xhtml" class="btn btn-default">
+							<h:outputText value="Bekijk data" />
+							<f:param name="id" value="#{sensordata.traincoach.id}" />
+							<f:param name="psdid" value="#{sensordata.id}" />
+						</h:outputLink>
+					</h:column>
+				</h:dataTable>
+			</h:form>
 		</div>
 		<script
 			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"
-			type="text/javascript"
-		></script>
+			type="text/javascript"></script>
 		<script src="js/bootstrap.min.js" type="text/javascript"></script>
 		<script src="js/underscore-min.js" type="text/javascript"></script>
 		<script type="text/javascript" src="js/traincoach_issues.js"></script>
