@@ -167,6 +167,7 @@ public class IssueAssetRestService
 	               
 	                SimpleDateFormat format = new SimpleDateFormat( "yyyy_mm_dd_hh_mm_ss" );
 	                Date now = new Date();
+	                
 	                String path = System.getProperty( "user.home" ) + "/project_televic/issue_assets/" + format.format( now ) + "_" + userID + ".png";
 	                
 	                boolean hasFile = false;
