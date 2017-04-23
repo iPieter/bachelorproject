@@ -30,26 +30,25 @@ Ik ben zeer tevreden over de medewerking in groep. Iedereen communiceerde goed &
  - Traincoach pagina: Javascript gedeelte waarbij geselecteerde punt in de grafiek wordt doorgegeven aan de modal voor een nieuwe herstelling
  - Layout fixing, afgewerkt door Pieter
   
- ## Deel Pieter
+## Deel Pieter
 Ik heb de volgende onderdelen gemaakt:
   - Initieel ontwerp van database
   - Authorisatie: Controleren of een gebruiker de juiste rol (```ADMIN```, ```MECHANIC```, ```OPERATOR```) heeft voor een pagina.
-  - Layout constraint engine
+  - Tokens
   - Gebruikersmanagement: 
     - Aanmaken van gebruikers, toekennen van een rol. 
     - Mechanics toekennen aan stelplaatsen.
     - Wachtwoord en profielafbeelding veranderen.
-  - Rest services voor profielafbeeldingen.
+  - REST services voor profielafbeeldingen.
+  - Verschillende andere REST endpoints gemaakt, afgewerkt of aangepast, zoals het statistics endpoint, workplace etc.
   - Layout afgewerkt
     - Live tracking
-    - index
+    - index: Compact overzicht van alle issues met een status en mogelijkheid om deze onmiddelijk te bekijken. 
     - workplace
     - traincoach
     - Sidebar afgewerkt
   - Navigatiebalk op elke pagina toegevoegd.
   - Marker Traincoach voor kaart
-  
-  ### Extra commentaar
-  Ik ben ook zeer tevreden over de samenwerking. Ik kon mijn taken afwerken en erop vertrouwen dat andere gedeeltes ook vorderden. Door goed te communiceren waren we ook op de hoogte van elkaars voortgang. 
-  
-  
+  - Frontend Constraint Engine
+  - Tokens en authenticatie REST api
+  - Stylesheets geport naar SASS voor toekomstig gebruik.
