@@ -171,6 +171,7 @@ function loadData()
         	
         	$( "#loading_modal" ).modal("hide");
     	
+        	// Load data
         	setInterval(function () 
             {
         		path = corePath + lastDate;
@@ -180,36 +181,36 @@ function loadData()
         	        type: "GET",
         	        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer ' + $("#navbar-form\\:token").val());},
         	        success: function( data )
-        			{ 
+        	        { 
         	        	console.log( data.data.length );
-                		for( var i = 0; i < data.data.length; i++ )
-                        {
-                        	var dataPoint = data.data[i];
-                        	lastDate = dataPoint.time;
-                        	
-                        	var split = lastDate.split("_");
-                        	var ymd = split[0].split("-");
-                        	var hms = split[1].split("-");
-                        	var date = new Date( ymd[0], ymd[1] - 1, ymd[2], hms[0], hms[1], hms[2] );
+        	        	for( var i = 0; i < data.data.length; i++ )
+        	            {
+        	            	var dataPoint = data.data[i];
+        	            	lastDate = dataPoint.time;
+        	            	
+        	            	var split = lastDate.split("_");
+        	            	var ymd = split[0].split("-");
+        	            	var hms = split[1].split("-");
+        	            	var date = new Date( ymd[0], ymd[1] - 1, ymd[2], hms[0], hms[1], hms[2] );
 
-                        	yawSeries.addPoint( [ date, dataPoint.yaw ] );
-                        	rollSeries.addPoint( [ date, dataPoint.roll ] );
-        					
-                            train_path.push( [ dataPoint.lat * 180.0 / Math.PI, dataPoint.lng * 180.0 / Math.PI ] );
-                            
-                            $( "#current_speed" ).html( dataPoint.speed.toFixed(4) + " m/s" );
-                            $( "#current_accel" ).html( dataPoint.accel.toFixed(4) + " m/s²" );
-                        }
-                            
-                    	if( pathPolyline != null )
-                            map.removeLayer( pathPolyline );
-                        
-                    	if( train_path.length > 0 )
-                		{
-                            pathPolyline = L.polyline(train_path, {color: '#b0cb1b'}).addTo(map);
-                       
-                		}
-        			},
+        	            	yawSeries.addPoint( [ date, dataPoint.yaw ] );
+        	            	rollSeries.addPoint( [ date, dataPoint.roll ] );
+        	        		
+        	                train_path.push( [ dataPoint.lat * 180.0 / Math.PI, dataPoint.lng * 180.0 / Math.PI ] );
+        	                
+        	                $( "#current_speed" ).html( dataPoint.speed.toFixed(4) + " m/s" );
+        	                $( "#current_accel" ).html( dataPoint.accel.toFixed(4) + " m/s²" );
+        	            }
+        	                
+        	        	if( pathPolyline != null )
+        	                map.removeLayer( pathPolyline );
+        	            
+        	        	if( train_path.length > 0 )
+        	        	{
+        	                pathPolyline = L.polyline(train_path, {color: '#b0cb1b'}).addTo(map);
+        	           
+        	        	}
+        	        },
         	        fail: function( error )
         			{
         				console.log( "Failed to fetch workplacemap_data: " + error );
@@ -219,6 +220,34 @@ function loadData()
                
 
             }, 1000);
+        	
+        	// load issues
+        	setInterval(function () 
+            {                		
+        		$.ajax({
+        			url: "rest/issues/get_by_data_id/" + id,
+                	type: "GET",
+                	beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer ' + $("#navbar-form\\:token").val());},
+                	success: function( data )
+                	{
+                		//check if the size of the data array is bigger than zero, so if there's at least one issue
+                		if (data.length > 0)
+                		{
+                			$("#issue_panel").show();
+                			
+                			for( var i = 0; i < data.length; i++ )
+            	            {
+            	            	var issue = data[i];
+            	            	$("#issue_panel .panel-body").html(issue["descr"]);
+            	            }
+                		}
+                	},
+                	fail: function(error)
+                	{
+                		console.log( "Failed to fetch issue data: " + error );
+                	},
+                });
+            }, 4000);
 		},
         fail: function( error )
 		{
@@ -226,3 +255,6 @@ function loadData()
 		},
      });
 }
+
+
+
