@@ -78,4 +78,25 @@ public class IssueRestService
 		return Response.ok( issues ).build();
 	}
 	
+	
+	/**
+	 * Generates a json array of all the know issues for a provided sensor data id. This can be
+	 * from either a live or a processes sensor data object. 
+	 * <p>
+	 * If no issues are found, an empty json array is returned.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param dataId The id of the sensor data (processed or live, doesn't matter).
+	 * @return A json array with 0 or more issues.
+	 */
+	@GET
+	@Path( "get_by_data_id/{dataId}" )
+	@Produces( "text/json" )
+	public Response getIssuesByDataId( @PathParam( "dataId" ) int dataId )
+	{	
+		List<Issue> issues = issueEJB.findIssuesByDataId(dataId);
+				
+		return Response.ok( issues ).build();
+	}
 }

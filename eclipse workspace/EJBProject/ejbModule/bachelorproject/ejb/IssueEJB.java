@@ -88,6 +88,31 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 	}
 	
 	/**
+	 * Generates a list of all the know issues for a provided sensor data id. This can be
+	 * from either a live or a processes sensor data object. 
+	 * <p>
+	 * If no issues are found, an empty list is returned.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param dataId The id of the sensor data (processed or live, doesn't matter).
+	 * @return A list object with 0 or more issue objects.
+	 * @see Issue
+	 */
+	public List<Issue> findIssuesByDataId (int dataId )
+	{
+		EntityManager em = ems.getEntityManager();
+
+		TypedQuery<Issue> query = em.createNamedQuery( Issue.FIND_BY_SENSOR_ID, Issue.class );
+		query.setParameter( "id", dataId );
+		List<Issue> result = query.getResultList();
+
+		em.close();
+		
+		return result;
+	}
+	
+	/**
 	 * Returns a List of Issue objects for a given traincoachId.
 	 * Therefore it queries Issues with issueStates IN_PROGRESS or ASSIGNED.
 	 *
