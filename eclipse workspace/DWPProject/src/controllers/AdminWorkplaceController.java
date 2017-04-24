@@ -59,7 +59,28 @@ public class AdminWorkplaceController implements Serializable
 		}
 	}
 	
-	
+	/**
+	 * Get the current workplace object.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return The current workplace object
+	 */
+	public Workplace getCurrentWorkplace()
+	{
+		return currentWorkplace;
+	}
+
+	/**
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param currentWorkplace the currentWorkplace to set
+	 */
+	public void setCurrentWorkplace(Workplace currentWorkplace)
+	{
+		this.currentWorkplace = currentWorkplace;
+	}
+
 	/**
 	 * Returns all the mechanics in the database
 	 * 
