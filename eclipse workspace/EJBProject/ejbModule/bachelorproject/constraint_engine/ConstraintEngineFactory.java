@@ -32,6 +32,9 @@ public class ConstraintEngineFactory
 	private ConstraintEngine [] constraintEngines;
 	private boolean [] freeEngines;
 	
+	/**
+	 * 	Initializes all the constraint engines and sets up this class. 
+	 * */
 	@PostConstruct
 	public void init()
 	{
@@ -72,11 +75,6 @@ public class ConstraintEngineFactory
 		freeEngines[ ID ] = true;
 	}
 
-	public ConstraintEJB getConstraintEJB()
-	{
-		return constraintEJB;
-	}
-
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -113,5 +111,10 @@ public class ConstraintEngineFactory
 	public IssueAssetEJB getIssueAssetEJB()
 	{
 		return issueAssetEJB;
+	}
+	
+	public ConstraintEJB getConstraintEJB()
+	{
+		return constraintEJB;
 	}
 }
