@@ -209,3 +209,6 @@ html {
 
 .userTable > tbody > tr > td:first-child {
   width: 36px; }
+
+.label-created {
+  background-color: #8e44ad; }
