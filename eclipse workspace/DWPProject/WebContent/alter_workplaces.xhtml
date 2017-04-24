@@ -73,7 +73,7 @@
 											<span class="glyphicon glyphicon-list" aria-hidden="false"
 												aria-lable="Add user to workplace"></span>
 											Bekijk technici
-											<f:ajax execute="@this" render=":addForm" />
+											<f:ajax execute="@this" render=":mechanics" />
 										</h:commandLink>
 									</div>
 								</h:column>
@@ -146,7 +146,7 @@
 							<h4 class="modal-title" id="myModalLabel">Technici</h4>
 						</div>
 							
-							<h:dataTable class="table userTable"
+							<h:dataTable class="table userTable" id="mechanics"
 								value="#{adminWorkplaceController.currentWorkplace.mechanics}" var="mechanic">
 								<h:column>
 									<div class="avatar">
