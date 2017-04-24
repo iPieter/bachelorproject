@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import bachelorproject.ejb.IssueEJB;
 import bachelorproject.model.issue.Issue;
+import bachelorproject.model.issue.IssueStatus;
 import bachelorproject.model.user.UserRole;;
 
 /**
@@ -98,5 +100,31 @@ public class IssueRestService
 		List<Issue> issues = issueEJB.findIssuesByDataId(dataId);
 				
 		return Response.ok( issues ).build();
+	}
+	
+	/**
+	 * Update an issue status using one of the issue status enum values:
+	 * <ul>
+	 * 	<li>ASSIGNED</li>
+	 * 	<li>IN_PROGRESS</li>
+	 * 	<li>CLOSED</li>
+	 * 	<li>CREATED</li>
+	 * </ul>
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param id The id of the issue
+	 * @param status One of the listed issue status enum values
+	 * @return A HTTP response, 200 OK if everything went ok. Duh...
+	 * @see IssueStatus
+	 */
+	@PUT
+	@Path( "{id}/{status}" )
+	@Produces( "text/json" )
+	public Response putIssueStatusByIssueId(@PathParam( "id" ) int id, @PathParam("status") IssueStatus status)
+	{
+		System.out.println(status.getDescr());
+		return Response.ok().build();
+	
 	}
 }
