@@ -38,7 +38,10 @@ public class WorkplaceRestService
 
 	@EJB
 	private WorkplaceEJB workplaceEJB;
-		
+	
+	/**
+	 * 	Returns the issues based on the Workplace so that they can be displayed on the workplace overview.
+	 * */
 	@GET
 	@Path("{id}/map")
 	@Produces("text/json")
