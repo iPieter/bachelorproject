@@ -36,6 +36,9 @@ public class LocationConstraintElement extends ConstraintElement implements Seri
 		this.polygon = polygon;
 	}
 	
+	/**
+	 *  The ConstraintEngine uses a visitor pattern to implemented evaluating ConstraintElements.
+	 * */
 	public boolean visit( ConstraintEngine ce )
 	{
 		return ce.visit( this );

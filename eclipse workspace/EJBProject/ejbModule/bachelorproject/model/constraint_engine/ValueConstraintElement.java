@@ -43,6 +43,9 @@ public class ValueConstraintElement extends ConstraintElement implements Seriali
 		this.valueConstraintAttribute = attr;
 	}
 	
+	/**
+	 *  The ConstraintEngine uses a visitor pattern to implemented evaluating ConstraintElements.
+	 * */
 	public boolean visit( ConstraintEngine ce )
 	{
 		return ce.visit( this );

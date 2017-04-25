@@ -25,6 +25,9 @@ public abstract class ConstraintElement  implements Serializable
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	protected int id;
 	
+	/**
+	 *  The ConstraintEngine uses a visitor pattern to implemented evaluating ConstraintElements.
+	 * */
 	@Transient
 	public abstract boolean visit( ConstraintEngine ceVisitor );
 	
