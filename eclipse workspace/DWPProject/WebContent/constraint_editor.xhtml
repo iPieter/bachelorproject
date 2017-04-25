@@ -85,8 +85,18 @@
 					<ui:fragment
 						rendered="#{constraintEditorController.currentConstraint ne null}">
 						<div class="dropup leaflet-control">
-							<ui:include src="templates/constraint_elements.xhtml">
-							</ui:include>
+							<div class="panel panel-default blur">
+
+								<!-- Default panel contents -->
+								<div class="panel-heading">
+									<span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span>
+									#{constraintEditorController.currentConstraint.name}
+								</div>
+								<div class="panel-body">
+								<ui:include src="templates/constraint_elements.xhtml">
+								</ui:include>
+								</div>
+							</div>
 						</div>
 					</ui:fragment>
 				</h:form>
