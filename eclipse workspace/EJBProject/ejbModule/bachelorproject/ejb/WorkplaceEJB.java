@@ -13,6 +13,15 @@ import javax.persistence.TypedQuery;
 import bachelorproject.model.Workplace;
 import bachelorproject.model.user.User;
 
+/**
+ * 	Defines the Entity Java Bean for the Workplace Entity.
+ *  <p>
+ *  This class allows for the controller to manipulate and fetch specific
+ *  Workplace instances. It validates new objects and handles 
+ *  errors when, for example, no entries in the database exist.
+ *  @author Anton Danneels
+ *  @version 1.0.0
+ * */
 @Named
 @Stateless
 public class WorkplaceEJB
@@ -20,6 +29,10 @@ public class WorkplaceEJB
 	@Inject
 	private EntityManagerSingleton ems;
 	
+	/**
+	 * Retrieves a list of all workplaces.
+	 * @return A List of all workplaces	
+	 * */
 	public List<Workplace> getAllWorkplaces()
 	{
 		EntityManager em = ems.getEntityManager();
@@ -36,6 +49,11 @@ public class WorkplaceEJB
 		return result;
 	}
 
+	/**
+	 * 	Finds a workplace based on it's ID.
+	 *  @param id The ID of the workplace to fetch
+	 *  @return A Workplace if found, null otherwise
+	 * */
 	public Workplace findWorkplaceByWorkplaceId( int id )
 	{
 		EntityManager em = ems.getEntityManager();
@@ -50,6 +68,11 @@ public class WorkplaceEJB
 		return result;
 	}
 
+	/**
+	 * 	Finds a workplace based on a traincoach ID. This method will return a list which may be empty.
+	 *  @param id The traincoach id who's workplace to fetch
+	 *  @return A List of workplaces based on the traincoach ID 
+	 * */
 	public List<Workplace> findWorkplaceByTraincoachID( int id )
 	{
 		EntityManager em = ems.getEntityManager();
