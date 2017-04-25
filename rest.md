@@ -53,7 +53,9 @@ Location:
 
 #### List of **workplaces** by user id
 Obtain a list of workplaces by providing a user id.
+
 Request type: ```GET```
+
 Location:     ```$(base_url)/rest/workplace/rest/workplace/get_by_user_id/$(id)```
 
 Example response:
@@ -95,12 +97,16 @@ Example response:
 
 #### List of **issues** by issue id
 Obtain a list of issues by providing a issue id.
+
 Request type: ```GET```
+
 Location:     ```$(base_url)/rest/workplace/rest/issues/$(id)```
 
 #### List of **issues** by user id
 Obtain a list of issues by providing a user id.
+
 Request type: ```GET```
+
 Location:     ```$(base_url)/rest/workplace/rest/issues/all_for_user/$(id)```
 
 #### Update status
@@ -109,5 +115,7 @@ Update the issue status to one of the following:
   - IN_PROGRESS
   - COMPLETED
   - CREATED
+
 Request type: ```PUT```
-Location:     ``$(base_url)/rest/workplace/rest/issues/$(id)/${status}```
+
+Location:     ```$(base_url)/rest/workplace/rest/issues/$(id)/${status}```

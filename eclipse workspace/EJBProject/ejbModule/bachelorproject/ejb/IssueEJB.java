@@ -16,6 +16,7 @@ import javax.persistence.TypedQuery;
 import bachelorproject.model.issue.Issue;
 import bachelorproject.model.issue.IssueAsset;
 import bachelorproject.model.issue.IssueStatus;
+import bachelorproject.model.user.User;
 
 /**
  * Defines the Entity Java Bean for the Issue Entity.
@@ -404,5 +405,25 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		List<Issue> result = query.getResultList();
 		
 		return result;
+	}
+	
+	/**
+	 * If for some reason your Issue object became detached from
+	 * the persistense context, you can merge it here. 
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param issue The issue object to merge.
+	 */
+	public void updateIssue(Issue issue)
+	{
+		EntityManager em = ems.getEntityManager();
+		em.getTransaction().begin();
+
+		em.merge(issue);
+		
+		em.getTransaction().commit();
+		
+		em.close();
 	}
 }

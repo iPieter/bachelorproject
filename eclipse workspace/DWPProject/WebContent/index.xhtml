@@ -6,7 +6,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
 <h:head>
 	<meta charset="utf-8" />
@@ -77,12 +78,15 @@
 								<h3 class="panel-title">Recente problemen</h3>
 							</div>
 
-							<h:dataTable class="table userTable"
+							<h:dataTable class="table userTable" id="issueTable"
 								value="#{indexController.findOperatorAllIssues()}" var="issue">
 								<h:column>
-									<div class="avatar">
-										<img src="rest/assets/user/#{issue.mechanic.imageHash}" />
-									</div>
+									<ui:fragment rendered="#{issue.mechanic ne null}">
+										<div class="avatar">
+											<img src="rest/assets/user/#{issue.mechanic.imageHash}" />
+										</div>
+									</ui:fragment>
+
 								</h:column>
 								<h:column>
 									<f:facet name="header">
@@ -110,13 +114,33 @@
 									<f:facet name="header">
 										<h:outputText value="Acties" />
 									</f:facet>
-									<div class="btn-group" role="group" aria-label="action buttons">
-										<h:link type="button" class="btn btn-default"
-											outcome="/traincoach_issues.xhtml?id=${issue.data.traincoach.id}">
-											<span class="glyphicon glyphicon-fullscreen"
-												aria-hidden="false" aria-label="View issue"></span>
-										</h:link>
-									</div>
+									<h:form>
+
+										<div class="btn-group" role="group"
+											aria-label="action buttons">
+
+											<!-- view issue -->
+											<h:link type="button" class="btn btn-default"
+												outcome="/traincoach_issues.xhtml?id=${issue.data.traincoach.id}"
+												immediate="true">
+												<span class="glyphicon glyphicon-fullscreen"
+													aria-hidden="false" aria-label="View issue"></span>
+											</h:link>
+
+											<ui:fragment rendered="#{issue.mechanic eq null}">
+												<!-- assign mechanic -->
+												<h:commandLink type="button" class="btn btn-default"
+													onclick="$('#assignMechanic').modal('show');"
+													action="#{indexController.setCurrentIssue(issue)}">
+													<span class="glyphicon glyphicon-tasks" aria-hidden="false"
+														aria-label="View issue"></span>
+													<f:ajax execute="@this" render=":addForm" />
+
+												</h:commandLink>
+											</ui:fragment>
+
+										</div>
+									</h:form>
 
 								</h:column>
 							</h:dataTable>
@@ -150,6 +174,54 @@
 		<!-- END MASTER ROW -->
 	</div>
 	<!-- END MASTER CONTAINER -->
+
+	<!-- Modal add user -->
+	<div class="modal fade" id="assignMechanic" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<h:form id="addForm">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">x</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">Technicus toevoegen</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-horizontal">
+							<div class="form-group">
+
+								<label for="inputName" class="col-sm-2 control-label">Technicus</label>
+								<div class="col-sm-10">
+									<h:selectOneMenu
+										value="#{indexController.currentIssueMechanic}"
+										class="form-control">
+										<f:selectItems
+											value="#{indexController.mechanicsOfWorkplaceByCurrentIssue}"
+											var="mechanic" itemValue="#{mechanic.id}"
+											itemLabel="#{mechanic.name} (#{mechanic.email})" />
+									</h:selectOneMenu>
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Sluit</button>
+						<h:commandButton type="submit" class="btn btn-primary" a:data-dismiss="modal"
+							action="#{indexController.assignIssue()}" value="Opslaan">
+							<f:ajax execute="@this" render=":issueTable" />
+
+						</h:commandButton>
+					</div>
+				</h:form>
+			</div>
+		</div>
+	</div>
+
+
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"
