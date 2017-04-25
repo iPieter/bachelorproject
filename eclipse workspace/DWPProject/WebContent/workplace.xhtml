@@ -183,8 +183,11 @@
 								<div class="col-sm-8">
 									<c:forEach var="activeIssue"
 										items="#{workplaceController.findActiveIssuesByMechanicId(mechanic.id)}">
-										<li><h:outputText
-												value="#{activeIssue.status.descr}: #{activeIssue.descr}" /></li>
+										<li>
+											<h:outputText
+												value="#{activeIssue.descr}" />
+											<div class="label label-${activeIssue.status.color}">#{activeIssue.status.descr}</div>
+										</li>
 									</c:forEach>
 								</div>
 							</div>

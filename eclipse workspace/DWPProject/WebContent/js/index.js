@@ -52,7 +52,7 @@ function setDonutView(data)
 		$("#display_when_empty_donut").hide();
 		
 		Highcharts.setOptions({
-		    colors: ['#c0392b','#e67e22', '#27ae60'] // Toegewezen=Rood, In Behandeling=oranje, Closed=Groen
+		    colors: ['#8e44ad', '#c0392b','#e67e22', '#27ae60'] //Created: wistansera of zoiets, Toegewezen=Rood, In Behandeling=oranje, Closed=Groen
 		});
 		
 		Highcharts.chart('donut_graph', {
@@ -91,6 +91,7 @@ function setDonutView(data)
 		        innerSize: '60%',
 		        data: 
 		        	[ /*hack*/
+		        		["Aangemaakte problemen", data["Aangemaakt"]],
 		        		["Toegewezen problemen", data["Toegewezen"]],
 		        		["Problemen in  behandeling", data["In behandeling"]],
 		        		["Gesloten problemen", data["Gesloten"]],	    

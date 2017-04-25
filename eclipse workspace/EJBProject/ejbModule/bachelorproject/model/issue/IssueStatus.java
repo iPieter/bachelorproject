@@ -14,7 +14,7 @@ package bachelorproject.model.issue;
  */
 public enum IssueStatus
 {
-	ASSIGNED("Toegewezen", "danger"), IN_PROGRESS("In behandeling", "warning"), CLOSED("Gesloten", "success");
+	CREATED("Aangemaakt", "created"), ASSIGNED("Toegewezen", "danger"), IN_PROGRESS("In behandeling", "warning"), CLOSED("Gesloten", "success");
 	
 	private String descr;
 	private String color;

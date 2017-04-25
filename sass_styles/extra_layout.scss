@@ -280,3 +280,11 @@ html {
     backdrop-filter: saturate(80%) blur(20px);
     background-color: transparentize( $white, 0.35);
 }
+
+.userTable>tbody>tr>td:first-child {
+    width: 36px;
+}
+
+.label-created {
+    background-color: #8e44ad;
+}
