@@ -58,6 +58,11 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		em.close();
 	}
 
+	/**
+	 * 	Retrieves a list of issues that are in progress based on the specified mechanic ID.
+	 *  @param mechanicId The ID of the mechanic who's in progress issues to fetch
+	 *  @return A List of issues for the target mechanic
+	 * */
 	public List<Issue> findInProgressIssuesByMechanicId( int mechanicId )
 	{
 		EntityManager em = ems.getEntityManager();
@@ -72,6 +77,11 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		return result;
 	}
 
+	/**
+	 * 	Retrieves a list of issues that are in assigned based on the specified mechanic ID.
+	 *  @param mechanicId The ID of the mechanic who's assigned issues to fetch
+	 *  @return A List of issues for the target mechanic
+	 * */
 	public List<Issue> findAssignedIssuesByMechanicId( int mechanicId )
 	{
 		EntityManager em = ems.getEntityManager();
@@ -129,7 +139,11 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		return result;
 	}
 	
-
+	/**
+	 * 	Retrieves a list of issues that are in progress based on the specified traincoach ID.
+	 *  @param traincoachId The ID of the traincoach who's in progress issues to fetch
+	 *  @return A List of issues for the target traincoach
+	 * */
 	public List<Issue> findInProgressIssuesByTraincoachId( int traincoachId )
 	{
 		EntityManager em = ems.getEntityManager();
@@ -145,6 +159,11 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		return result;
 	}
 
+	/**
+	 * 	Retrieves a list of issues that are assigned based on the specified traincoach ID.
+	 *  @param traincoachId The ID of the traincoach who's in progress issues to fetch
+	 *  @return A List of issues for the target traincoach
+	 * */
 	public List<Issue> findAssignedIssuesByTraincoachId( int traincoachId )
 	{
 		EntityManager em = ems.getEntityManager();
@@ -158,6 +177,11 @@ public class IssueEJB //TODO: when changing issue status, timestamp must be take
 		return result;
 	}
 
+	/**
+	 * 	Retrieves a list of issues that are closed based on the specified mechanic ID.
+	 *  @param traincoachId The ID of the mechanic who's closed issues to fetch
+	 *  @return A List of issues for the target traincaoch
+	 * */
 	public List<Issue> findClosedIssuesByTraincoachId(int traincoachId)
 	{
 		EntityManager em = ems.getEntityManager();
