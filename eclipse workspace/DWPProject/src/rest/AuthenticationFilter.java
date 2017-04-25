@@ -16,6 +16,11 @@ import javax.ws.rs.ext.Provider;
 import bachelorproject.ejb.TokenEJB;
 import bachelorproject.model.user.Token;
 
+/**
+ * 	This class allows us to secure the REST API by using tokens to validate a user's request
+ *  @author Pieter Delobelle
+ *  @version 1.0.0
+ * */
 @Secured
 @Provider
 @Priority(Priorities.AUTHENTICATION)
@@ -25,6 +30,12 @@ public class AuthenticationFilter implements ContainerRequestFilter
 	@EJB
 	private TokenEJB tokenEJB;
 
+	/**
+	 * 	Tests if a request has a valid token.
+	 *  @param requestContext The request.
+	 *  @throws NotAuthorizedException
+	 *  @throws IOException
+	 * */
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException
 	{
@@ -54,6 +65,11 @@ public class AuthenticationFilter implements ContainerRequestFilter
 		}
 	}
 
+	/**
+	 * 	Validates the token by testing if it exists and is not expired
+	 *  @param token The token to be tested
+	 *  @throws Exception
+	 * */
 	private void validateToken(String token) throws Exception
 	{
 		Token t = tokenEJB.findTokenByToken(token);

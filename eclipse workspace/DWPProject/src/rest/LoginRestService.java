@@ -41,6 +41,13 @@ public class LoginRestService
 	@Inject
 	private UserService userService;
 	
+	/**
+	 * 	A REST endpoint for authentication a user. This method creates & returns a token if the user's credentials 
+	 *  are correct.
+	 *  @param email The users email
+	 *  @param password The users plaintext password (use SSL to encrypt requests)
+	 *  @return Unauthorized if the user's credentials are invalid, OK otherwise.
+	 * */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -67,6 +74,9 @@ public class LoginRestService
 		}
 	}
 
+	/**
+	 * 	Link into the userservice to authenticate users.
+	 * */
 	private void authenticate(String email, String password) throws Exception
 	{
 		if (!userService.verificateLogin(email, password)) 

@@ -32,6 +32,9 @@ public class ModelTypeConstraintElement extends ConstraintElement implements Ser
 		this.modelType = type;
 	}
 
+	/**
+	 *  The ConstraintEngine uses a visitor pattern to implemented evaluating ConstraintElements.
+	 * */
 	public boolean visit( ConstraintEngine ce )
 	{
 		return ce.visit( this );

@@ -93,6 +93,9 @@ public class LiveSensorDataEntryEJB
 	
 	/**
 	 * 	Returns a list of all LiveSensorDataEntry objects after the specified date
+	 *  @param lsdID The ID of the LiveSensorData object to fetch
+	 *  @param The date after which to fetch the entries
+	 *  @return A list of all entries after a date
 	 * */
 	public List<LiveSensorDataEntry> getAllEntriesAfterDate( int lsdID, Date date )
 	{

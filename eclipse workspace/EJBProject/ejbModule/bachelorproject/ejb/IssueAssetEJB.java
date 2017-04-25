@@ -94,6 +94,7 @@ public class IssueAssetEJB
 
 	/**
 	 * 	Retrieves a list of all issueassets
+	 *  @return A list of all issue assets.
 	 * */
 	public List<IssueAsset> getAll()
 	{

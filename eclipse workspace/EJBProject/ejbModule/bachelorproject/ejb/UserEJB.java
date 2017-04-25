@@ -16,6 +16,15 @@ import javax.persistence.TypedQuery;
 import bachelorproject.model.user.User;
 import bachelorproject.model.user.UserRole;
 
+/**
+ * 	Defines the Entity Java Bean for the User Entity.
+ *  <p>
+ *  This class allows for the controller to manipulate and fetch specific
+ *  User instances. It validates new objects and handles 
+ *  errors when, for example, no entries in the database exist.
+ *  @author Pieter Delobelle
+ *  @version 1.0.0
+ * */
 @Stateless
 @Local
 public class UserEJB
@@ -23,6 +32,10 @@ public class UserEJB
 	@Inject
 	private EntityManagerSingleton ems;
 
+	/**
+	 * Persists a User object to the database.
+	 * @param u A valid User object
+	 * */
 	public void createUser( User u )
 	{
 		EntityManager em = ems.getEntityManager();
@@ -38,6 +51,7 @@ public class UserEJB
 	 * This function returns all users in the database. If there are none, an
 	 * empty List object is returned. To provide at least some security, the
 	 * results are limited to 20.
+	 * @return A List of 20 users to limit databases load
 	 */
 	public List<User> findAllUsers()
 	{
