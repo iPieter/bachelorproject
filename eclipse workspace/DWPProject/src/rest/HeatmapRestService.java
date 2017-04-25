@@ -13,6 +13,9 @@ import bachelorproject.ejb.IssueEJB;
 import bachelorproject.model.issue.Issue;
 import bachelorproject.model.user.UserRole;
 
+/**
+ * 	Provides a REST endpoint for the issue heatmap
+ * */
 @Path( "/heatmap_data" )
 @Secured({UserRole.MECHANIC, UserRole.OPERATOR})
 public class HeatmapRestService {
@@ -25,6 +28,9 @@ public class HeatmapRestService {
 	@EJB
 	private IssueEJB issueEJB;
 	
+	/**
+	 * Returns a JSON file with the positional data of the issues.
+	 * */
 	@GET
 	@Produces( "text/json" )
 	public String getHeatmapData( )
