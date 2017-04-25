@@ -65,7 +65,7 @@ public class UserAssetRestService
 	@GET
 	@Path( "{resource}" )
 	@Produces( "image/png" )
-	public Response getIssueAsset( @PathParam( "resource" ) String resource )
+	public Response getUserAsset( @PathParam( "resource" ) String resource )
 	{
 		File f = new File( System.getProperty( "user.home" ) + "/project_televic/user_assets/" + resource + ".png" );
 		
