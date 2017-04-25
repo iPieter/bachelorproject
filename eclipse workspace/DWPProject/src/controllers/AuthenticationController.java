@@ -57,8 +57,16 @@ public class AuthenticationController implements Serializable
 		
 		if (userService.verificateLogin(email, password))
 		{
-			return userService.hasCurrentUserRequiredRole(UserRole.ADMIN) ? "admin.xhtml?faces-redirect=true"
-					: "index.xhtml?faces-redirect=true";
+			switch (userService.getUser().getRole())
+			{
+			case ADMIN:
+				return "admin.xhtml?faces-redirect=true";
+			case OPERATOR:
+				return "index.xhtml?faces-redirect=true";
+			default:
+				return "change_account.xhtml?faces-redirect=true";
+			}
+			
 		} else
 		{
 			FacesContext.getCurrentInstance().addMessage("inputPassword",  new FacesMessage("Invalid login", 
