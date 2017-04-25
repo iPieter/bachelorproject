@@ -234,6 +234,9 @@ public class LiveSensorDataEJB
 		em.close();
 	}
 	
+	/**
+	 * 	Utility method for writing a json array list
+	 * */
 	//Note( Anton) this method should probably be in a seperate util package.
 	private String writeArrayList( String name, List<Double> list, boolean comma )
 	{
@@ -255,6 +258,9 @@ public class LiveSensorDataEJB
 		return buffer.toString();
 	}
 	
+	/**
+	 * 	Utility method for writing a json value
+	 * */
 	private String writeValue( String name, double value, boolean comma )
 	{
 		String result = "";
