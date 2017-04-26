@@ -156,7 +156,7 @@ public class IssueRestService
 		issueEJB.updateIssue(issue);
 
 		System.out.println("Status updated to " + status.getDescr());
-		return Response.ok().build();
+		return Response.ok( "{ \"status\" : \"OK\" }" ).build();
 
 	}
 }
