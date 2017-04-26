@@ -141,6 +141,7 @@ public class IssueAssetRestService
 	 * */
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
 	@Secured({UserRole.MECHANIC, UserRole.OPERATOR})
 	public Response addIssueAsset( MultipartFormDataInput input )
 	{		
@@ -201,7 +202,7 @@ public class IssueAssetRestService
 					issueAssetEJB.createIssueAsset( asset );
 					issueEJB.addAsset( asset, issueID );
 					
-					return Response.status( Response.Status.OK ).build();
+					return Response.ok( asset ).build();
 				}
 				else
 					return Response.status( Response.Status.BAD_REQUEST ).build();
