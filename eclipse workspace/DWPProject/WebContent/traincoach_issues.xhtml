@@ -158,10 +158,12 @@
 											<div id="issue_asset_#{issueAsset.id}"
 												class="panel-collapse collapse">
 												<div class="panel-body">
-													<h:outputText value="#{issueAsset.descr}"></h:outputText>
+													<p>
+													<h:outputText value="#{issueAsset.descr}" ></h:outputText>
+													</p>
 													<c:if test="#{issueAsset.location != ''}">
 														<img src="rest/assets/issue/#{issueAsset.id}"
-															class="asset_image" />
+															class="asset_image"  />
 													</c:if>
 												</div>
 											</div>

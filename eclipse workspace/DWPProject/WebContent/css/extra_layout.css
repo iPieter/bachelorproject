@@ -202,6 +202,11 @@ html {
   .fill-height .leaflet-top {
     margin-top: 50px; }
 
+.asset_image {
+	display:block;
+	width: 300px;
+}
+
 .blur {
   -webkit-backdrop-filter: saturate(80%) blur(20px);
   backdrop-filter: saturate(80%) blur(20px);
