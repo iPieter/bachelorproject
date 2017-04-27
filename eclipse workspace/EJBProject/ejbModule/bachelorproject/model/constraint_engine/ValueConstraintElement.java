@@ -11,8 +11,8 @@ import javax.validation.constraints.NotNull;
 import bachelorproject.constraint_engine.ConstraintEngine;
 
 /**
- * 	This class stores a value constraint: a max value and a condition.
- * */
+ * This class stores a value constraint: a max value and a condition.
+ */
 @Entity
 public class ValueConstraintElement extends ConstraintElement implements Serializable
 {
@@ -21,7 +21,7 @@ public class ValueConstraintElement extends ConstraintElement implements Seriali
 	@NotNull
 	@Column( name = "`max_value`" )
 	private double maxValue;
-	
+
 	@NotNull
 	@Enumerated( EnumType.STRING )
 	ValueConstraintType valueConstraintType;
@@ -29,23 +29,24 @@ public class ValueConstraintElement extends ConstraintElement implements Seriali
 	@NotNull
 	@Enumerated( EnumType.STRING )
 	ValueConstraintAttribute valueConstraintAttribute;
-	
-	public ValueConstraintElement( )
+
+	public ValueConstraintElement()
 	{
 		super();
 	}
-	
-	public ValueConstraintElement(double maxValue, ValueConstraintType type, ValueConstraintAttribute attr )
+
+	public ValueConstraintElement(double maxValue, ValueConstraintType type, ValueConstraintAttribute attr)
 	{
 		super();
 		this.maxValue = maxValue;
 		this.valueConstraintType = type;
 		this.valueConstraintAttribute = attr;
 	}
-	
+
 	/**
-	 *  The ConstraintEngine uses a visitor pattern to implemented evaluating ConstraintElements.
-	 * */
+	 * The ConstraintEngine uses a visitor pattern to implemented evaluating
+	 * ConstraintElements.
+	 */
 	public boolean visit( ConstraintEngine ce )
 	{
 		return ce.visit( this );
@@ -60,12 +61,14 @@ public class ValueConstraintElement extends ConstraintElement implements Seriali
 	}
 
 	/**
-	 * @param maxValue the maxValue to set
+	 * @param maxValue
+	 *            the maxValue to set
 	 */
 	public void setMaxValue( double maxValue )
 	{
 		this.maxValue = maxValue;
 	}
+
 	/**
 	 * @return the valueConstraintType
 	 */
@@ -75,7 +78,8 @@ public class ValueConstraintElement extends ConstraintElement implements Seriali
 	}
 
 	/**
-	 * @param valueConstraintType the valueConstraintType to set
+	 * @param valueConstraintType
+	 *            the valueConstraintType to set
 	 */
 	public void setValueConstraintType( ValueConstraintType valueConstraintType )
 	{
@@ -91,15 +95,17 @@ public class ValueConstraintElement extends ConstraintElement implements Seriali
 	}
 
 	/**
-	 * @param valueConstraintAttribute the valueConstraintAttribute to set
+	 * @param valueConstraintAttribute
+	 *            the valueConstraintAttribute to set
 	 */
 	public void setValueConstraintAttribute( ValueConstraintAttribute valueConstraintAttribute )
 	{
 		this.valueConstraintAttribute = valueConstraintAttribute;
 	}
-	
+
 	public String toString()
 	{
-		return "Beperking op " + valueConstraintAttribute.getDescr() + ", mag niet " + valueConstraintType.getDescr() + " " + maxValue + " zijn.";
+		return "Beperking op " + valueConstraintAttribute.getDescr() + ", mag niet " + valueConstraintType.getDescr()
+				+ " " + maxValue + " zijn.";
 	}
 }

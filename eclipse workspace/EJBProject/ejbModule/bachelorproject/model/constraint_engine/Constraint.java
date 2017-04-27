@@ -20,44 +20,42 @@ import javax.validation.constraints.NotNull;
 import bachelorproject.model.user.User;
 
 /**
- * 	This class is the general collection of constraints.
- *  When the train is riding, certain conditions may not be met 
- *  or the driving is unsafe.
- *  @author Anton Danneels
- * */
+ * This class is the general collection of constraints. When the train is
+ * riding, certain conditions may not be met or the driving is unsafe.
+ * 
+ * @author Anton Danneels
+ */
 
 @Entity
 @NamedQueries(
-{
-	@NamedQuery( name= Constraint.FIND_ALL, query = "SELECT c FROM Constraint c" )
-})
+{ @NamedQuery( name = Constraint.FIND_ALL, query = "SELECT c FROM Constraint c" ) } )
 @Table( name = "constraint_table" )
 public class Constraint implements Serializable
 {
 	private static final long serialVersionUID = -4700824709631898631L;
 
 	public static final String FIND_ALL = "Constraint.findAll";
-	
+
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private int id;
-	
+
 	@NotNull
 	@Lob
 	public String name;
-	
+
 	@NotNull
 	@ManyToOne
 	public User creator;
-	
-	@OneToMany(  fetch = FetchType.LAZY  )
+
+	@OneToMany( fetch = FetchType.LAZY )
 	public List<ConstraintElement> constraints;
-	
+
 	public Constraint()
 	{
 	}
 
-	public Constraint( String name, User creator )
+	public Constraint(String name, User creator)
 	{
 		this.name = name;
 		this.creator = creator;
@@ -72,7 +70,8 @@ public class Constraint implements Serializable
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId( int id )
 	{
@@ -88,7 +87,8 @@ public class Constraint implements Serializable
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName( String name )
 	{
@@ -104,7 +104,8 @@ public class Constraint implements Serializable
 	}
 
 	/**
-	 * @param creator the creator to set
+	 * @param creator
+	 *            the creator to set
 	 */
 	public void setCreator( User creator )
 	{
@@ -120,14 +121,17 @@ public class Constraint implements Serializable
 	}
 
 	/**
-	 * @param constraints the constraints to set
+	 * @param constraints
+	 *            the constraints to set
 	 */
 	public void setConstraints( List<ConstraintElement> constraints )
 	{
 		this.constraints = constraints;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -140,7 +144,9 @@ public class Constraint implements Serializable
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

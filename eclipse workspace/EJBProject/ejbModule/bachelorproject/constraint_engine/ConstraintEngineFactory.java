@@ -12,11 +12,12 @@ import bachelorproject.ejb.IssueAssetEJB;
 import bachelorproject.ejb.IssueEJB;
 
 /**
- * 	This class is used to reliably supply multiple ConstraintEngine objects.
- *  It manages a pool of ConstraintEngine objects so that these objects are reused
- *  and the impact on the garbage collector is reduced
- *  @author Anton Danneels
- * */
+ * This class is used to reliably supply multiple ConstraintEngine objects. It
+ * manages a pool of ConstraintEngine objects so that these objects are reused
+ * and the impact on the garbage collector is reduced
+ * 
+ * @author Anton Danneels
+ */
 @Startup
 @Singleton
 public class ConstraintEngineFactory
@@ -27,36 +28,37 @@ public class ConstraintEngineFactory
 	private IssueEJB issueEJB;
 	@EJB
 	private IssueAssetEJB issueAssetEJB;
-	
+
 	public static final int CEF_SIZE = 100;
-	private ConstraintEngine [] constraintEngines;
-	private boolean [] freeEngines;
-	
+	private ConstraintEngine[] constraintEngines;
+	private boolean[] freeEngines;
+
 	/**
-	 * 	Initializes all the constraint engines and sets up this class. 
-	 * */
+	 * Initializes all the constraint engines and sets up this class.
+	 */
 	@PostConstruct
 	public void init()
 	{
-		constraintEngines = new ConstraintEngine[ CEF_SIZE ];
-		freeEngines = new boolean[ CEF_SIZE ];
-		for( int i = 0; i < CEF_SIZE; i++ )
+		constraintEngines = new ConstraintEngine[CEF_SIZE];
+		freeEngines = new boolean[CEF_SIZE];
+		for ( int i = 0; i < CEF_SIZE; i++ )
 		{
-			constraintEngines[ i ] = new ConstraintEngine( this, i );
-			freeEngines[ i ] = true;
+			constraintEngines[i] = new ConstraintEngine( this, i );
+			freeEngines[i] = true;
 		}
 	}
-	
+
 	/**
-	 * 	Returns the first free ConstraintEngine if one is free.
-	 *  @throws OutOfConstraintEngineException
-	 *  @return A free ContraintEngine object.
-	 * */
+	 * Returns the first free ConstraintEngine if one is free.
+	 * 
+	 * @throws OutOfConstraintEngineException
+	 * @return A free ContraintEngine object.
+	 */
 	public ConstraintEngine getConstraintEngine() throws OutOfConstraintEngineException
 	{
-		for( int i = 0; i < freeEngines.length; i++ )
+		for ( int i = 0; i < freeEngines.length; i++ )
 		{
-			if( freeEngines[i] )
+			if ( freeEngines[i] )
 			{
 				freeEngines[i] = false;
 				return constraintEngines[i];
@@ -64,18 +66,20 @@ public class ConstraintEngineFactory
 		}
 		throw new OutOfConstraintEngineException();
 	}
-	
+
 	/**
-	 *  Returns a ConstraintEngine object to the free pool. 
-	 *  This method should not be called by any outside objects but is
-	 *  intended for ConstraintEngine's to return themselves.
+	 * Returns a ConstraintEngine object to the free pool. This method should
+	 * not be called by any outside objects but is intended for
+	 * ConstraintEngine's to return themselves.
 	 */
 	public void returnConstraintEngine( int ID )
 	{
-		freeEngines[ ID ] = true;
+		freeEngines[ID] = true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -88,7 +92,9 @@ public class ConstraintEngineFactory
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -107,12 +113,12 @@ public class ConstraintEngineFactory
 	{
 		return issueEJB;
 	}
-	
+
 	public IssueAssetEJB getIssueAssetEJB()
 	{
 		return issueAssetEJB;
 	}
-	
+
 	public ConstraintEJB getConstraintEJB()
 	{
 		return constraintEJB;

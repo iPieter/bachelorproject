@@ -10,7 +10,6 @@ import org.hibernate.validator.constraints.Email;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 /**
  * Authentication tokens for REST service.
  * 
@@ -19,14 +18,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @NamedQueries(
-{ 
-	@NamedQuery( name = Token.FIND_BY_TOKEN, query = "SELECT t FROM Token t WHERE t.token = :token" ),
-	} )
-public class Token implements Serializable {
+{ @NamedQuery( name = Token.FIND_BY_TOKEN, query = "SELECT t FROM Token t WHERE t.token = :token" ), } )
+public class Token implements Serializable
+{
 
-	//Queries
+	// Queries
 	public final static String FIND_BY_TOKEN = "Token.findByToken";
-	
+
 	@Id
 	@GeneratedValue( strategy = GenerationType.AUTO )
 	private int id;
@@ -38,14 +36,15 @@ public class Token implements Serializable {
 	@Lob
 	@NotNull
 	private String token;
-	
+
 	@Temporal( TemporalType.TIMESTAMP )
 	@JsonIgnore
 	private Date expires;
-	
+
 	private static final long serialVersionUID = 7660243869003371055L;
 
-	public Token() {
+	public Token()
+	{
 		super();
 	}
 
@@ -62,9 +61,10 @@ public class Token implements Serializable {
 	/**
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
-	public void setId(int id)
+	public void setId( int id )
 	{
 		this.id = id;
 	}
@@ -82,9 +82,10 @@ public class Token implements Serializable {
 	/**
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param owner the owner user object to set
+	 * @param owner
+	 *            the owner user object to set
 	 */
-	public void setOwner(User owner)
+	public void setOwner( User owner )
 	{
 		this.owner = owner;
 	}
@@ -102,9 +103,10 @@ public class Token implements Serializable {
 	/**
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param token the token to set
+	 * @param token
+	 *            the token to set
 	 */
-	public void setToken(String token)
+	public void setToken( String token )
 	{
 		this.token = token;
 	}
@@ -122,11 +124,12 @@ public class Token implements Serializable {
 	/**
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param expires the expires time and date to set
+	 * @param expires
+	 *            the expires time and date to set
 	 */
-	public void setExpires(Date expires)
+	public void setExpires( Date expires )
 	{
 		this.expires = expires;
-	}	
-   
+	}
+
 }

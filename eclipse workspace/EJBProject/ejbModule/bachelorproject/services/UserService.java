@@ -44,13 +44,13 @@ public class UserService implements Serializable
 
 	@EJB
 	private UserEJB userEJB;
-	
+
 	@EJB
 	private TokenEJB tokenEJB;
-	
+
 	private User user;
 	private Token token;
-	
+
 	/**
 	 * Generate some fake users when none are present.
 	 * <p>
@@ -64,36 +64,36 @@ public class UserService implements Serializable
 	{
 
 		// TODO: generate a bunch of users
-		if (userEJB.findAllUsers().size() == 0)
+		if ( userEJB.findAllUsers().size() == 0 )
 		{
-			for (int i = 0; i < 10; i++)
+			for ( int i = 0; i < 10; i++ )
 			{
 				User u = new User();
 
-				u.setName("John Doe");
-				u.setEmail("john" + i + "@test.be");
+				u.setName( "John Doe" );
+				u.setEmail( "john" + i + "@test.be" );
 
-				populateUser(u, "password123", "qwertyui");
+				populateUser( u, "password123", "qwertyui" );
 
-				u.setRole(i > 5 ? UserRole.OPERATOR : UserRole.MECHANIC);
+				u.setRole( i > 5 ? UserRole.OPERATOR : UserRole.MECHANIC );
 
-				userEJB.createUser(u);
+				userEJB.createUser( u );
 
-				System.out.println("Saved user ..." + u.getEmail());
+				System.out.println( "Saved user ..." + u.getEmail() );
 			}
 
 			User u = new User();
 
-			u.setName("Jane Doe");
-			u.setEmail("admin@test.be");
+			u.setName( "Jane Doe" );
+			u.setEmail( "admin@test.be" );
 
-			populateUser(u, "password123", "qwertyui");
+			populateUser( u, "password123", "qwertyui" );
 
-			u.setRole(UserRole.ADMIN);
+			u.setRole( UserRole.ADMIN );
 
-			userEJB.createUser(u);
+			userEJB.createUser( u );
 
-			System.out.println("Saved user ..." + u.getEmail());
+			System.out.println( "Saved user ..." + u.getEmail() );
 
 		}
 
@@ -110,14 +110,14 @@ public class UserService implements Serializable
 	 *            UserRole to check.
 	 * @return True if the user has the required role, false otherwise.
 	 */
-	public boolean hasCurrentUserRequiredRole(UserRole ur)
+	public boolean hasCurrentUserRequiredRole( UserRole ur )
 	{
-		if (this.user == null)
+		if ( this.user == null )
 		{
 			return false;
 		}
 
-		return this.user.getRole().equals(ur);
+		return this.user.getRole().equals( ur );
 
 	}
 
@@ -131,13 +131,14 @@ public class UserService implements Serializable
 	 * @param user
 	 * @param password
 	 */
-	public static void setPassword(User user, String password)
+	public static void setPassword( User user, String password )
 	{
-		user.setSalt(salt(User.SALT_LENGTH));
+		user.setSalt( salt( User.SALT_LENGTH ) );
 		try
 		{
-			user.setPass(generateHash(password, user.getSalt()));
-		} catch (Exception e)
+			user.setPass( generateHash( password, user.getSalt() ) );
+		}
+		catch ( Exception e )
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -163,45 +164,48 @@ public class UserService implements Serializable
 	 *            A string with the password used as login credential
 	 * @return True if the user has correct credentials, false otherwise.
 	 */
-	public boolean verificateLogin(String email, String password)
+	public boolean verificateLogin( String email, String password )
 	{
-		User u = userEJB.findUserByEmail(email);
+		User u = userEJB.findUserByEmail( email );
 
-		if (u != null)
+		if ( u != null )
 		{
 			try
 			{
-				if (Arrays.equals(u.getPass(), (generateHash(password, u.getSalt()))))
+				if ( Arrays.equals( u.getPass(), ( generateHash( password, u.getSalt() ) ) ) )
 				{
 					this.user = u;
 
 					// set the lastLogin
-					u.setLastLogin(new Date());
+					u.setLastLogin( new Date() );
 
 					// For some reason, user is likely moved out of persistence
 					// context
-					userEJB.updateUser(u);
-					
-					//generate a token
-					this.token = issueToken(u);
-					
-					tokenEJB.createToken(this.token);
-					
+					userEJB.updateUser( u );
+
+					// generate a token
+					this.token = issueToken( u );
+
+					tokenEJB.createToken( this.token );
+
 					return true;
 
-				} else
+				}
+				else
 				{
 
 					return false;
 				}
 
-			} catch (UnsupportedEncodingException e)
+			}
+			catch ( UnsupportedEncodingException e )
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 
 				return false;
-			} catch (NoSuchAlgorithmException e)
+			}
+			catch ( NoSuchAlgorithmException e )
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -242,13 +246,13 @@ public class UserService implements Serializable
 	 * @throws UnsupportedEncodingException
 	 * @see MesageDigest
 	 */
-	public static byte[] generateHash(String password, byte[] salt)
+	public static byte[] generateHash( String password, byte[] salt )
 			throws NoSuchAlgorithmException, UnsupportedEncodingException
 	{
-		MessageDigest sha = MessageDigest.getInstance(UserService.HASHING_METHOD);
+		MessageDigest sha = MessageDigest.getInstance( UserService.HASHING_METHOD );
 		sha.reset();
-		sha.update(salt);
-		return sha.digest(password.getBytes("UTF-8"));
+		sha.update( salt );
+		return sha.digest( password.getBytes( "UTF-8" ) );
 	}
 
 	/**
@@ -263,18 +267,18 @@ public class UserService implements Serializable
 	 * @param password
 	 *            The password intender for the linked User object
 	 */
-	public static void populateUser(User user, String password, String image)
+	public static void populateUser( User user, String password, String image )
 	{
 
 		// set password
-		setPassword(user, password);
+		setPassword( user, password );
 
 		// Set the lastLogin to the current date/time
-		user.setLastLogin(new Date());
+		user.setLastLogin( new Date() );
 
 		// Set to default profile avatar
 		// TODO: change this
-		user.setImageHash(image);
+		user.setImageHash( image );
 
 	}
 
@@ -288,13 +292,13 @@ public class UserService implements Serializable
 	 * @return A byte array with random bytes.
 	 * @see SecureRandom
 	 */
-	public static byte[] salt(int length)
+	public static byte[] salt( int length )
 	{
 
 		SecureRandom sRnd = new SecureRandom();
 		byte[] salt = new byte[length];
 
-		sRnd.nextBytes(salt);
+		sRnd.nextBytes( salt );
 
 		return salt;
 
@@ -309,13 +313,13 @@ public class UserService implements Serializable
 	 *            The byte array to be converted to a string.
 	 * @return A string representing the byte array as ASCII.
 	 */
-	public static String bytesToString(byte[] bs)
+	public static String bytesToString( byte[] bs )
 	{
 		StringBuilder s = new StringBuilder();
 
-		for (byte b : bs)
+		for ( byte b : bs )
 		{
-			s.append(b);
+			s.append( b );
 		}
 
 		return s.toString();
@@ -327,7 +331,7 @@ public class UserService implements Serializable
 		return user;
 	}
 
-	public void setUser(User user)
+	public void setUser( User user )
 	{
 		this.user = user;
 	}
@@ -344,25 +348,29 @@ public class UserService implements Serializable
 	 * @return True if a match, false otherwise.
 	 * @see verificateLogin
 	 */
-	public boolean veficatePassword(String password)
+	public boolean veficatePassword( String password )
 	{
 		try
 		{
-			if (this.user != null && Arrays.equals(this.user.getPass(), (generateHash(password, this.user.getSalt()))))
+			if ( this.user != null
+					&& Arrays.equals( this.user.getPass(), ( generateHash( password, this.user.getSalt() ) ) ) )
 			{
 				return true;
 
-			} else
+			}
+			else
 			{
 				return false;
 			}
-		} catch (UnsupportedEncodingException e)
+		}
+		catch ( UnsupportedEncodingException e )
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 			return false;
-		} catch (NoSuchAlgorithmException e)
+		}
+		catch ( NoSuchAlgorithmException e )
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -384,32 +392,33 @@ public class UserService implements Serializable
 	/**
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param token the token to set
+	 * @param token
+	 *            the token to set
 	 */
-	public void setToken(Token token)
+	public void setToken( Token token )
 	{
 		this.token = token;
 	}
-	
-	public static Token issueToken(User user)
+
+	public static Token issueToken( User user )
 	{
-		//Generate token
-		String token = Base64.getEncoder().encodeToString(UserService.salt(256)).substring(0, 256);
-		System.out.println(token);
-		
-		//create and persist token object
+		// Generate token
+		String token = Base64.getEncoder().encodeToString( UserService.salt( 256 ) ).substring( 0, 256 );
+		System.out.println( token );
+
+		// create and persist token object
 		Token t = new Token();
-		
+
 		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.DAY_OF_YEAR, 14);
+		calendar.add( Calendar.DAY_OF_YEAR, 14 );
 		Date date = calendar.getTime();
 
-		t.setExpires(date);
-		t.setOwner(user);
-		t.setToken(token);
-				
+		t.setExpires( date );
+		t.setOwner( user );
+		t.setToken( token );
+
 		return t;
-		
+
 	}
-	
+
 }

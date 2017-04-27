@@ -14,38 +14,36 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@NamedQueries
-({
-	@NamedQuery( name=LiveSensorDataEntry.FIND_ALL, query="SELECT lsd FROM LiveSensorData lsd" )
-})
+@NamedQueries(
+{ @NamedQuery( name = LiveSensorDataEntry.FIND_ALL, query = "SELECT lsd FROM LiveSensorData lsd" ) } )
 public class LiveSensorDataEntry implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_ALL = "LiveSensorDataEntry.findAll";
-	
+
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private int id;
 
 	@NotNull
 	private double lat;
-	
+
 	@NotNull
 	private double lng;
-	
+
 	@NotNull
 	private double yaw;
-	
+
 	@NotNull
 	private double roll;
-	
+
 	@NotNull
 	private double speed;
-	
+
 	@NotNull
 	private double accel;
-	
+
 	@Temporal( TemporalType.TIMESTAMP )
 	private Date time;
 
@@ -58,7 +56,8 @@ public class LiveSensorDataEntry implements Serializable
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId( int id )
 	{
@@ -74,7 +73,8 @@ public class LiveSensorDataEntry implements Serializable
 	}
 
 	/**
-	 * @param lat the lat to set
+	 * @param lat
+	 *            the lat to set
 	 */
 	public void setLat( double lat )
 	{
@@ -90,7 +90,8 @@ public class LiveSensorDataEntry implements Serializable
 	}
 
 	/**
-	 * @param lng the lng to set
+	 * @param lng
+	 *            the lng to set
 	 */
 	public void setLng( double lng )
 	{
@@ -106,7 +107,8 @@ public class LiveSensorDataEntry implements Serializable
 	}
 
 	/**
-	 * @param yaw the yaw to set
+	 * @param yaw
+	 *            the yaw to set
 	 */
 	public void setYaw( double yaw )
 	{
@@ -122,7 +124,8 @@ public class LiveSensorDataEntry implements Serializable
 	}
 
 	/**
-	 * @param roll the roll to set
+	 * @param roll
+	 *            the roll to set
 	 */
 	public void setRoll( double roll )
 	{
@@ -138,7 +141,8 @@ public class LiveSensorDataEntry implements Serializable
 	}
 
 	/**
-	 * @param speed the speed to set
+	 * @param speed
+	 *            the speed to set
 	 */
 	public void setSpeed( double speed )
 	{
@@ -154,7 +158,8 @@ public class LiveSensorDataEntry implements Serializable
 	}
 
 	/**
-	 * @param accel the accel to set
+	 * @param accel
+	 *            the accel to set
 	 */
 	public void setAccel( double accel )
 	{
@@ -170,7 +175,8 @@ public class LiveSensorDataEntry implements Serializable
 	}
 
 	/**
-	 * @param time the time to set
+	 * @param time
+	 *            the time to set
 	 */
 	public void setTime( Date time )
 	{

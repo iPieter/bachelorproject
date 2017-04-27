@@ -13,13 +13,11 @@ import javax.validation.constraints.NotNull;
 import org.ocpsoft.prettytime.PrettyTime;
 
 @Entity
-@NamedQueries
-({
-	@NamedQuery( name=LiveSensorData.FIND_ALL, query="SELECT lsd FROM LiveSensorData lsd" ),
-	@NamedQuery( name=LiveSensorData.FIND_BY_DATE, query="SELECT lsd FROM LiveSensorData lsd WHERE lsd.date = :date" ),
-	@NamedQuery( name=LiveSensorData.FIND_ALL_ACTIVE, query="SELECT lsd FROM LiveSensorData lsd WHERE lsd.isLive = true" ),
-	@NamedQuery( name=LiveSensorData.FIND_ALL_AFTER_DATE, query="SELECT lsde FROM LiveSensorData lsd JOIN lsd.entries lsde WHERE lsde.time > :date AND lsd.id = :id ORDER BY lsde.time ASC" )
-})
+@NamedQueries(
+{ @NamedQuery( name = LiveSensorData.FIND_ALL, query = "SELECT lsd FROM LiveSensorData lsd" ),
+		@NamedQuery( name = LiveSensorData.FIND_BY_DATE, query = "SELECT lsd FROM LiveSensorData lsd WHERE lsd.date = :date" ),
+		@NamedQuery( name = LiveSensorData.FIND_ALL_ACTIVE, query = "SELECT lsd FROM LiveSensorData lsd WHERE lsd.isLive = true" ),
+		@NamedQuery( name = LiveSensorData.FIND_ALL_AFTER_DATE, query = "SELECT lsde FROM LiveSensorData lsd JOIN lsd.entries lsde WHERE lsde.time > :date AND lsd.id = :id ORDER BY lsde.time ASC" ) } )
 public class LiveSensorData extends SensorData implements Serializable
 {
 	public static final String FIND_ALL = "LiveSensorData.findAll";
@@ -28,17 +26,18 @@ public class LiveSensorData extends SensorData implements Serializable
 	public static final String FIND_ALL_ACTIVE = "LiveSensorData.findAllActive";
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@NotNull
 	private boolean isLive;
-	
+
 	@OneToMany( fetch = FetchType.LAZY )
 	private List<LiveSensorDataEntry> entries = new ArrayList<LiveSensorDataEntry>();
-		
+
 	public LiveSensorData()
 	{
 		super();
 	}
+
 	/**
 	 * @return the isLive
 	 */
@@ -48,7 +47,8 @@ public class LiveSensorData extends SensorData implements Serializable
 	}
 
 	/**
-	 * @param isLive the isLive to set
+	 * @param isLive
+	 *            the isLive to set
 	 */
 	public void setLive( boolean isLive )
 	{
@@ -64,21 +64,21 @@ public class LiveSensorData extends SensorData implements Serializable
 	}
 
 	/**
-	 * @param entries the entries to set
+	 * @param entries
+	 *            the entries to set
 	 */
 	public void setEntries( List<LiveSensorDataEntry> entries )
 	{
 		this.entries = entries;
 	}
-	
+
 	/**
 	 * @return the date as a formatted string
 	 */
 	public String getPrettyDate()
 	{
 		PrettyTime p = new PrettyTime();
-		return p.format(this.date);	}
+		return p.format( this.date );
+	}
 
-	
-	
 }

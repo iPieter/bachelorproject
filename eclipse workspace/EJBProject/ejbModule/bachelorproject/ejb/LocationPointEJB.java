@@ -25,49 +25,51 @@ public class LocationPointEJB
 	@Inject
 	private EntityManagerSingleton ems;
 
-	LocationPointEJB() 
+	LocationPointEJB()
 	{
-		
+
 	}
-	
+
 	/**
 	 * Persist a single locationPoint to the database
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param lp The locationPoint to persist
+	 * @param lp
+	 *            The locationPoint to persist
 	 * @see LocationPoint
 	 */
-	public void persistLocationPoint(LocationPoint lp)
+	public void persistLocationPoint( LocationPoint lp )
 	{
 		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
-		
+
 		em.persist( lp );
-		
+
 		em.getTransaction().commit();
 		em.close();
 	}
-	
+
 	/**
 	 * Persist a list of locationPoints to the database
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param lp The locationPoint list to persist
+	 * @param lp
+	 *            The locationPoint list to persist
 	 * @see LocationPoint
 	 */
-	public void persistLocationPoint(List<LocationPoint> lps)
+	public void persistLocationPoint( List<LocationPoint> lps )
 	{
 		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
-		
-		for (LocationPoint lp : lps)
+
+		for ( LocationPoint lp : lps )
 		{
 			em.persist( lp );
 			em.flush();
 		}
-		
+
 		em.getTransaction().commit();
 		em.close();
 	}

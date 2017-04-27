@@ -12,9 +12,10 @@ import javax.validation.constraints.NotNull;
 import bachelorproject.constraint_engine.ConstraintEngine;
 
 /**
- * 	Allows the operator to define constraints for a specific area.
- *  @author Anton Danneels
- * */
+ * Allows the operator to define constraints for a specific area.
+ * 
+ * @author Anton Danneels
+ */
 @Entity
 public class LocationConstraintElement extends ConstraintElement implements Serializable
 {
@@ -30,15 +31,16 @@ public class LocationConstraintElement extends ConstraintElement implements Seri
 		polygon = new ArrayList<LocationPoint>();
 	}
 
-	public LocationConstraintElement( List<LocationPoint> polygon )
+	public LocationConstraintElement(List<LocationPoint> polygon)
 	{
 		super();
 		this.polygon = polygon;
 	}
-	
+
 	/**
-	 *  The ConstraintEngine uses a visitor pattern to implemented evaluating ConstraintElements.
-	 * */
+	 * The ConstraintEngine uses a visitor pattern to implemented evaluating
+	 * ConstraintElements.
+	 */
 	public boolean visit( ConstraintEngine ce )
 	{
 		return ce.visit( this );
@@ -53,7 +55,8 @@ public class LocationConstraintElement extends ConstraintElement implements Seri
 	}
 
 	/**
-	 * @param polygon the polygon to set
+	 * @param polygon
+	 *            the polygon to set
 	 */
 	public void setPolygon( List<LocationPoint> polygon )
 	{

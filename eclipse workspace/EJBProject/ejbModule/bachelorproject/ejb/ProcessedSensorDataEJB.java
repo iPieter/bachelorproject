@@ -13,29 +13,33 @@ import javax.persistence.TypedQuery;
 import bachelorproject.model.sensordata.ProcessedSensorData;
 
 /**
- * 	Defines the Entity Java Bean for the ProcessedSensorData Entity.
- *  <p>
- *  This class allows for the controller to manipulate and fetch specific
- *  ProcessedSensorData instances. It validates new objects and handles 
- *  errors when, for example, no entries in the database exist.
- *  @author Anton Danneels
- *  @version 0.1.0
- * */
+ * Defines the Entity Java Bean for the ProcessedSensorData Entity.
+ * <p>
+ * This class allows for the controller to manipulate and fetch specific
+ * ProcessedSensorData instances. It validates new objects and handles errors
+ * when, for example, no entries in the database exist.
+ * 
+ * @author Anton Danneels
+ * @version 0.1.0
+ */
 @Named
 @Stateless
 public class ProcessedSensorDataEJB
 {
 	@Inject
 	private EntityManagerSingleton ems;
-	
+
 	/**
-	 * 	Fetches a ProcessedSensorData from the database if it exists.
-	 *  <p>
-	 *  Uses an EntityManager to fetch the specified object from the database.
-	 *  This method will return null if no object is found or if another error occures.
-	 *  @param id The ID of the ProcessedSensorData object thats needed.
-	 *  @return A ProcessedSensorData object if found, null otherwise.
-	 * */
+	 * Fetches a ProcessedSensorData from the database if it exists.
+	 * <p>
+	 * Uses an EntityManager to fetch the specified object from the database.
+	 * This method will return null if no object is found or if another error
+	 * occures.
+	 * 
+	 * @param id
+	 *            The ID of the ProcessedSensorData object thats needed.
+	 * @return A ProcessedSensorData object if found, null otherwise.
+	 */
 	public ProcessedSensorData getProcessedSensorDataByID( int id )
 	{
 		EntityManager em = ems.getEntityManager();
@@ -48,15 +52,17 @@ public class ProcessedSensorDataEJB
 
 		return psd;
 	}
-	
+
 	/**
-	 * 	Gets the latest processed sensordata for the traincoach.
-	 *  <p>
-	 *  Based on the ID parameter, this method searches and returns the 
-	 *  latest processedsensordata.
-	 *  @param id The ID of the TrainCoach.
-	 *  @return The ProcessedSensorData if found, null otherwise.
-	 * */
+	 * Gets the latest processed sensordata for the traincoach.
+	 * <p>
+	 * Based on the ID parameter, this method searches and returns the latest
+	 * processedsensordata.
+	 * 
+	 * @param id
+	 *            The ID of the TrainCoach.
+	 * @return The ProcessedSensorData if found, null otherwise.
+	 */
 	public ProcessedSensorData getProcessedSensorDataByTrainCoachID( int id )
 	{
 		EntityManager em = ems.getEntityManager();
@@ -72,19 +78,20 @@ public class ProcessedSensorDataEJB
 		em.getTransaction().commit();
 		em.close();
 
-		if( resultList.size() == 0 )
-			return null;
+		if ( resultList.size() == 0 ) return null;
 		return resultList.get( 0 );
 	}
-	
+
 	/**
-	 * 	Gets a list of all processed sensordata objects for the traincoach.
-	 *  <p>
-	 *  Based on the ID parameter, this method searches and returns the 
-	 *  latest processedsensordata.
-	 *  @param id The ID of the TrainCoach.
-	 *  @return A list of processed sensor data objects for specified train.
-	 * */
+	 * Gets a list of all processed sensordata objects for the traincoach.
+	 * <p>
+	 * Based on the ID parameter, this method searches and returns the latest
+	 * processedsensordata.
+	 * 
+	 * @param id
+	 *            The ID of the TrainCoach.
+	 * @return A list of processed sensor data objects for specified train.
+	 */
 	public List<ProcessedSensorData> getProcessedSensorDataListByTrainCoachID( int id )
 	{
 		EntityManager em = ems.getEntityManager();

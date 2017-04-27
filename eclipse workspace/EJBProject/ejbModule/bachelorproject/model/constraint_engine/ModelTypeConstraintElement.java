@@ -9,9 +9,10 @@ import javax.validation.constraints.NotNull;
 import bachelorproject.constraint_engine.ConstraintEngine;
 
 /**
- * 	Allows operators to define constraints for specific traincoach models.
- *  @author Anton Danneels
- * */
+ * Allows operators to define constraints for specific traincoach models.
+ * 
+ * @author Anton Danneels
+ */
 @Entity
 public class ModelTypeConstraintElement extends ConstraintElement implements Serializable
 {
@@ -20,7 +21,7 @@ public class ModelTypeConstraintElement extends ConstraintElement implements Ser
 	@NotNull
 	@Lob
 	String modelType;
-	
+
 	public ModelTypeConstraintElement()
 	{
 		super();
@@ -33,8 +34,9 @@ public class ModelTypeConstraintElement extends ConstraintElement implements Ser
 	}
 
 	/**
-	 *  The ConstraintEngine uses a visitor pattern to implemented evaluating ConstraintElements.
-	 * */
+	 * The ConstraintEngine uses a visitor pattern to implemented evaluating
+	 * ConstraintElements.
+	 */
 	public boolean visit( ConstraintEngine ce )
 	{
 		return ce.visit( this );
@@ -49,13 +51,14 @@ public class ModelTypeConstraintElement extends ConstraintElement implements Ser
 	}
 
 	/**
-	 * @param modelType the modelType to set
+	 * @param modelType
+	 *            the modelType to set
 	 */
 	public void setModelType( String modelType )
 	{
 		this.modelType = modelType;
 	}
-	
+
 	public String toString()
 	{
 		return "Model beperking: " + modelType;

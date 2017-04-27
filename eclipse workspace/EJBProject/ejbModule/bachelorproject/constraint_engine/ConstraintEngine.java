@@ -21,17 +21,18 @@ import bachelorproject.model.issue.IssueStatus;
 import bachelorproject.model.sensordata.SensorData;
 
 /**
- * 	This class tests the supplied data for all the constraints and generates new Issues
- *  if the constraint return true.
- *  @author Anton Danneels
- * */
+ * This class tests the supplied data for all the constraints and generates new
+ * Issues if the constraint return true.
+ * 
+ * @author Anton Danneels
+ */
 public class ConstraintEngine
 {
 	private ConstraintEJB constraintEJB;
 	private IssueEJB issueEJB;
 	private IssueAssetEJB assetEJB;
-	
-	//Objects needed for the constraint engine to work
+
+	// Objects needed for the constraint engine to work
 	private final int ID;
 	private ConstraintEngineFactory factoryParent;
 	private ConstraintEngineLocationTester locationTester;
@@ -39,19 +40,23 @@ public class ConstraintEngine
 	private ConstraintEngineData ceData;
 	private String currentIssueDescription;
 	private HashSet<Constraint> usedConstraints;
-	
-	//Objects from persistence context
+
+	// Objects from persistence context
 	private SensorData data;
 	private Issue currentIssue;
 	private List<Issue> issues;
 	private List<Constraint> constraints;
-	
+
 	/**
-	 * 	Initializes a new ConstraintEngine
-	 *  @param parent CE's should not be created on their own, this parameter is a link to a ConstraintEngineFactory
-	 *  @param ID A unique ID for this ConstraintEngine
-	 * */
-	public ConstraintEngine( ConstraintEngineFactory parent, int ID )
+	 * Initializes a new ConstraintEngine
+	 * 
+	 * @param parent
+	 *            CE's should not be created on their own, this parameter is a
+	 *            link to a ConstraintEngineFactory
+	 * @param ID
+	 *            A unique ID for this ConstraintEngine
+	 */
+	public ConstraintEngine(ConstraintEngineFactory parent, int ID)
 	{
 		this.ID = ID;
 		factoryParent = parent;
@@ -64,12 +69,14 @@ public class ConstraintEngine
 		issues = new ArrayList<>();
 		usedConstraints = new HashSet<>();
 	}
-	
+
 	/**
-	 * 	Allows the Constraint Engine to start its work. It resets all data & prepares
-	 *  to test new constraints
-	 *  @param data The SensorData object that needs to be tested.
-	 * */
+	 * Allows the Constraint Engine to start its work. It resets all data &
+	 * prepares to test new constraints
+	 * 
+	 * @param data
+	 *            The SensorData object that needs to be tested.
+	 */
 	@PostConstruct
 	public void start( SensorData data )
 	{
@@ -77,33 +84,33 @@ public class ConstraintEngine
 		constraints = constraintEJB.getAllConstraints();
 		currentIssue = null;
 		currentIssueDescription = "";
-		
+
 		List<Issue> issues = issueEJB.getIssuesBySensorDataID( data.getId() );
-		for( Issue i : issues )
+		for ( Issue i : issues )
 		{
-			for( Constraint c : constraints )
+			for ( Constraint c : constraints )
 			{
-				if( i.getDescr().contains( c.getName() ) )
+				if ( i.getDescr().contains( c.getName() ) )
 				{
 					usedConstraints.add( c );
 				}
 			}
 		}
 	}
-	
+
 	/**
-	 * 	Processes all the constraints on target data
-	 *  <p>
-	 *  This method will test all constraints and generate a
-	 *  new Issue object if needed.
-	 * */
+	 * Processes all the constraints on target data
+	 * <p>
+	 * This method will test all constraints and generate a new Issue object if
+	 * needed.
+	 */
 	public void addData( ConstraintEngineData data )
 	{
 		ceData = data;
 
-		for( Constraint c : constraints )
+		for ( Constraint c : constraints )
 		{
-			if( !usedConstraints.contains( c ) )
+			if ( !usedConstraints.contains( c ) )
 			{
 				boolean isIssue = true;
 				currentIssue = new Issue();
@@ -114,11 +121,11 @@ public class ConstraintEngine
 				currentIssue.setStatus( IssueStatus.ASSIGNED );
 				currentIssue.setOperator( c.getCreator() );
 				currentIssueDescription = c.getName() + System.getProperty( "line.separator" );
-				
-				for( ConstraintElement ce : c.getConstraints() )
+
+				for ( ConstraintElement ce : c.getConstraints() )
 					isIssue = isIssue && ce.visit( this );
-				
-				if( isIssue )
+
+				if ( isIssue )
 				{
 					currentIssue.setDescr( c.getName() );
 					IssueAsset asset = new IssueAsset();
@@ -126,12 +133,12 @@ public class ConstraintEngine
 					asset.setLocation( "" );
 					asset.setTime( new Date() );
 					asset.setUser( c.getCreator() );
-					
+
 					issues.add( currentIssue );
 					issueEJB.createIssue( currentIssue );
 					assetEJB.createIssueAsset( asset );
 					issueEJB.addAsset( asset, currentIssue.getId() );
-					
+
 					System.out.println( "============================================" );
 					System.out.println( currentIssueDescription );
 					System.out.println( "============================================" );
@@ -140,114 +147,127 @@ public class ConstraintEngine
 			}
 		}
 	}
-	
+
 	/**
-	 * 	The ConstraintEngine uses a visitor pattern to evaluate all the Constraints. 
-	 *  This method will test if a LocationConstraintElement if met by testing if a point
-	 *  is in a polygon. @see{LocationTester}
-	 *  @param lce A LocationConstraintElement containing a polygon.
-	 *  @return true if the point is in the polygon, false otherwise
-	 * */
+	 * The ConstraintEngine uses a visitor pattern to evaluate all the
+	 * Constraints. This method will test if a LocationConstraintElement if met
+	 * by testing if a point is in a polygon. @see{LocationTester}
+	 * 
+	 * @param lce
+	 *            A LocationConstraintElement containing a polygon.
+	 * @return true if the point is in the polygon, false otherwise
+	 */
 	public boolean visit( LocationConstraintElement lce )
 	{
-		if( locationTester.isPointInPolygon( lce.getPolygon(), ceData.getLat(), ceData.getLng() ) )
+		if ( locationTester.isPointInPolygon( lce.getPolygon(), ceData.getLat(), ceData.getLng() ) )
 		{
-			currentIssueDescription += "In locatie: " + ceData.getLat() + "," + ceData.getLng() + System.getProperty( "line.separator" );
+			currentIssueDescription += "In locatie: " + ceData.getLat() + "," + ceData.getLng()
+					+ System.getProperty( "line.separator" );
 			currentIssue.setGpsLat( ceData.getLat() );
 			currentIssue.setGpsLon( ceData.getLng() );
 			return true;
 		}
 		return false;
 	}
-	
+
 	/**
-	 * 	The ConstraintEngine uses a visitor pattern to evaluate all the Constraints. 
-	 *  This method will test if a @see{TrainCoach} has a specific type.
-	 *  @param mtce A ModelTypeConstraintElement that contains the type that should be tested.
-	 *  @return true if a model is of a certain type, false otherwise
-	 * */
+	 * The ConstraintEngine uses a visitor pattern to evaluate all the
+	 * Constraints. This method will test if a @see{TrainCoach} has a specific
+	 * type.
+	 * 
+	 * @param mtce
+	 *            A ModelTypeConstraintElement that contains the type that
+	 *            should be tested.
+	 * @return true if a model is of a certain type, false otherwise
+	 */
 	public boolean visit( ModelTypeConstraintElement mtce )
 	{
-		if( mtce.getModelType().equals( data.getTraincoach().getType() ) )
+		if ( mtce.getModelType().equals( data.getTraincoach().getType() ) )
 		{
-			currentIssueDescription += "Voor: " + data.getTraincoach().getType() + "-" + data.getTraincoach().getName() + System.getProperty( "line.separator" );
+			currentIssueDescription += "Voor: " + data.getTraincoach().getType() + "-" + data.getTraincoach().getName()
+					+ System.getProperty( "line.separator" );
 			return true;
 		}
 		return false;
 	}
-	
+
 	/**
-	 * 	The ConstraintEngine uses a visitor pattern to evaluate all the Constraints. 
-	 *  This method will test if a value constraint is met. Currently this method tests:
-	 *  <ul>
-	 *  	<li>Yaw</li>
-	 *  	<li>Roll</li>
-	 *  	<li>Speed</li>
-	 *  	<li>Accel</li>
-	 *  </ul>
-	 *  With the following constraints:
-	 *  <ul>
-	 *  	<li>GREATER_THAN</li>
-	 *  	<li>LESS_THAN</li>  
-	 *  </ul>
-	 *  @param vce A ValueConstraintElement with a type to be tested and the type of test.
-	 *  @return true if the value is correctly evaluated according to the parameters, false otherwise
-	 * */
+	 * The ConstraintEngine uses a visitor pattern to evaluate all the
+	 * Constraints. This method will test if a value constraint is met.
+	 * Currently this method tests:
+	 * <ul>
+	 * <li>Yaw</li>
+	 * <li>Roll</li>
+	 * <li>Speed</li>
+	 * <li>Accel</li>
+	 * </ul>
+	 * With the following constraints:
+	 * <ul>
+	 * <li>GREATER_THAN</li>
+	 * <li>LESS_THAN</li>
+	 * </ul>
+	 * 
+	 * @param vce
+	 *            A ValueConstraintElement with a type to be tested and the type
+	 *            of test.
+	 * @return true if the value is correctly evaluated according to the
+	 *         parameters, false otherwise
+	 */
 	public boolean visit( ValueConstraintElement vce )
 	{
 		switch ( vce.getValueConstraintAttribute() )
 		{
-			case YAW:
-				if( valueTester.testValueConstraint( vce.getValueConstraintType(), vce.getMaxValue(), ceData.getYaw() ) )
-				{
-					currentIssueDescription += "Waarde overschreven voor sensor: gyroscoop-yaw : " + ceData.getYaw();
-					return true;
-				}
-				break;
-			case ROLL:
-				if( valueTester.testValueConstraint( vce.getValueConstraintType(), vce.getMaxValue(), ceData.getRoll() ) )
-				{
-					currentIssueDescription += "Waarde overschreven voor sensor: gyroscoop-roll : " + ceData.getRoll();
-					return true;
-				}
-				break;
-			case SPEED:
-				if( valueTester.testValueConstraint( vce.getValueConstraintType(), vce.getMaxValue(), ceData.getSpeed() ) )
-				{
-					currentIssueDescription += "Waarde overschreven voor sensor: snelheidsmeter : " + ceData.getSpeed();
-					return true;
-				}
-				break;
-			case ACCEL:
-				if( valueTester.testValueConstraint( vce.getValueConstraintType(), vce.getMaxValue(), ceData.getAccel() ) )
-				{
-					currentIssueDescription += "Waarde overschreven voor sensor: versnellingsmeter : " + ceData.getAccel();
-					return true;
-				}
-				break;
+		case YAW:
+			if ( valueTester.testValueConstraint( vce.getValueConstraintType(), vce.getMaxValue(), ceData.getYaw() ) )
+			{
+				currentIssueDescription += "Waarde overschreven voor sensor: gyroscoop-yaw : " + ceData.getYaw();
+				return true;
+			}
+			break;
+		case ROLL:
+			if ( valueTester.testValueConstraint( vce.getValueConstraintType(), vce.getMaxValue(), ceData.getRoll() ) )
+			{
+				currentIssueDescription += "Waarde overschreven voor sensor: gyroscoop-roll : " + ceData.getRoll();
+				return true;
+			}
+			break;
+		case SPEED:
+			if ( valueTester.testValueConstraint( vce.getValueConstraintType(), vce.getMaxValue(), ceData.getSpeed() ) )
+			{
+				currentIssueDescription += "Waarde overschreven voor sensor: snelheidsmeter : " + ceData.getSpeed();
+				return true;
+			}
+			break;
+		case ACCEL:
+			if ( valueTester.testValueConstraint( vce.getValueConstraintType(), vce.getMaxValue(), ceData.getAccel() ) )
+			{
+				currentIssueDescription += "Waarde overschreven voor sensor: versnellingsmeter : " + ceData.getAccel();
+				return true;
+			}
+			break;
 		}
 		return false;
 	}
-	
+
 	/**
-	 * 	Prints all the issues generated by the constraint engine.
-	 *  Note: debug use only.
-	 * */
+	 * Prints all the issues generated by the constraint engine. Note: debug use
+	 * only.
+	 */
 	public void printStatusReport()
 	{
-		for( Issue i : issues )
+		for ( Issue i : issues )
 		{
 			System.out.println( "============================================" );
 			System.out.println( i.getDescr() );
 			System.out.println( "============================================" );
 		}
 	}
-	
+
 	/**
-	 * 	Indicates that an engine is closed. Any call to this object after
-	 *  this method will be undefined behavior. This method will also add
-	 *  any new issue's to the database.
-	 * */
+	 * Indicates that an engine is closed. Any call to this object after this
+	 * method will be undefined behavior. This method will also add any new
+	 * issue's to the database.
+	 */
 	public void stop()
 	{
 		data = null;
@@ -256,7 +276,7 @@ public class ConstraintEngine
 		issues.clear();
 		constraints.clear();
 		usedConstraints.clear();
-		//Reset attributes before this
+		// Reset attributes before this
 		factoryParent.returnConstraintEngine( getID() );
 	}
 
@@ -268,7 +288,9 @@ public class ConstraintEngine
 		return ID;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -281,7 +303,9 @@ public class ConstraintEngine
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

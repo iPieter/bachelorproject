@@ -38,37 +38,43 @@ import matlabcontrol.MatlabProxyFactoryOptions;
 import matlabcontrol.extensions.MatlabNumericArray;
 import matlabcontrol.extensions.MatlabTypeConverter;
 
-/**	Searches the folder /project_televic/matlab_files/ in the users home folder and processes them.
- *  The resulting JSON file is stored in the same folder and entries are added in the database according
- *  to a specific naming structure.
- *  <p> 
- * 	We assume that the .mat files dropped in the above specified folder have a certain filestructure and name.
- *  The name should follow the following format: 
- *  <code>*name workplace*_*name constructor*_*name type*_*name*_*name track*.mat</code><br>
- *	Where:
+/**
+ * Searches the folder /project_televic/matlab_files/ in the users home folder
+ * and processes them. The resulting JSON file is stored in the same folder and
+ * entries are added in the database according to a specific naming structure.
+ * <p>
+ * We assume that the .mat files dropped in the above specified folder have a
+ * certain filestructure and name. The name should follow the following format:
+ * <code>*name workplace*_*name constructor*_*name type*_*name*_*name track*.mat</code><br>
+ * Where:
  * <ul>
- *		<li>Name workplace: the current position of the traincoach where it needs to be inspected</li>
- *		<li>Name constructor: the builder of the traincoach</li>
- *	 	<li>Name type: the type of the traincoach</li>
- *	 	<li>Name: A unique identifier for this specific traincoach</li>
- *	 	<li>Name track: the start and destination of the ride, seperated by a "-" </li>
- *	</ul>
- *  Concrete example: GENTSP_BOMBARDIER_M7_78558_Oostende-GentSP.mat<br>
- *  After the data is processed this class will produce a file with the following data:
- *  <ul>
- *  	<li>The time(yy-mm-dd:hh-mm) of the trip</li>
- *  	<li>An array with the maximum yaw values of the trip</li>
- *  	<li>An array with the maximum roll values of the trip</li>
- *  	<li>An array with the lat values of the trip</li>
- *  	<li>An array with the lng values of the trip</li>
- *      <li>An array with the speed values of the trip</li>
- *      <li>An array with the acceleration values of the trip</li>
- *      <li>Maximum and minimum values of the yaw & roll arrays</li>
- *  </ul>
- *  Because of the naming convention, we are able to wire everything in the database together.
- *  @author: Anton Danneels
- *  @version: 1.0.0
- * */
+ * <li>Name workplace: the current position of the traincoach where it needs to
+ * be inspected</li>
+ * <li>Name constructor: the builder of the traincoach</li>
+ * <li>Name type: the type of the traincoach</li>
+ * <li>Name: A unique identifier for this specific traincoach</li>
+ * <li>Name track: the start and destination of the ride, seperated by a "-"
+ * </li>
+ * </ul>
+ * Concrete example: GENTSP_BOMBARDIER_M7_78558_Oostende-GentSP.mat<br>
+ * After the data is processed this class will produce a file with the following
+ * data:
+ * <ul>
+ * <li>The time(yy-mm-dd:hh-mm) of the trip</li>
+ * <li>An array with the maximum yaw values of the trip</li>
+ * <li>An array with the maximum roll values of the trip</li>
+ * <li>An array with the lat values of the trip</li>
+ * <li>An array with the lng values of the trip</li>
+ * <li>An array with the speed values of the trip</li>
+ * <li>An array with the acceleration values of the trip</li>
+ * <li>Maximum and minimum values of the yaw & roll arrays</li>
+ * </ul>
+ * Because of the naming convention, we are able to wire everything in the
+ * database together.
+ * 
+ * @author: Anton Danneels
+ * @version: 1.0.0
+ */
 @Singleton
 @Startup
 @DependsOn( "ConstraintEngineFactory" )
@@ -76,16 +82,17 @@ public class MatlabProcessor
 {
 	@Inject
 	private ConstraintEngineFactory cef;
-	
+
 	/** Stores the matlab script which will be executed, loaded on startup. */
 	private String script = "";
 	/** Stores the location of the matlab directory files. */
 	private File matlabDirectory = new File( System.getProperty( "user.home" ) + "/project_televic/matlab_files" );
 
 	/**
-	 * 	Loads the script and tests the matlab folder on startup.
-	 *  @see testFolderAndDatabase()
-	 * */
+	 * Loads the script and tests the matlab folder on startup.
+	 * 
+	 * @see testFolderAndDatabase()
+	 */
 	@PostConstruct
 	public void init()
 	{
@@ -94,12 +101,12 @@ public class MatlabProcessor
 	}
 
 	/**
-	 * 	Tests the matlab folder every 5 minutes for new files and processes them.
-	 *  <p>
-	 *  This method compares the content of the processedsensordata table and the files
-	 *  present in the matlab folder. If there are any files not in the table they will get
-	 *  processed. This method executes every 5 minutes.
-	 * */
+	 * Tests the matlab folder every 5 minutes for new files and processes them.
+	 * <p>
+	 * This method compares the content of the processedsensordata table and the
+	 * files present in the matlab folder. If there are any files not in the
+	 * table they will get processed. This method executes every 5 minutes.
+	 */
 	@Schedule( hour = "*", minute = "*/5" )
 	public void testFolderAndDatabase()
 	{
@@ -161,11 +168,11 @@ public class MatlabProcessor
 	}
 
 	/**
-	 * 	Loads the matlabscript stored in the classpath.
-	 *  <p>
-	 *  The script contains the processing functions to convert the .mat file to a more
-	 *  suitable format for displaying on the web.
-	 * */
+	 * Loads the matlabscript stored in the classpath.
+	 * <p>
+	 * The script contains the processing functions to convert the .mat file to
+	 * a more suitable format for displaying on the web.
+	 */
 	private void loadScript()
 	{
 		try
@@ -184,13 +191,19 @@ public class MatlabProcessor
 	}
 
 	/**
-	 * 	Loads the matlab file, executes the script on it and writes an output JSON file.
-	 *  <p>
-	 *  Constructs a connection to MatLab, loads the .mat file with the given path, then executes the script.
-	 *  If no errors occured it will retrieve the data from MatLab and write it to a JSON file.
-	 *  @param name The path to a .mat file with a correct naming convention
-	 *  @param em A valid(open) EntityManager object to write the objects to the database
-	 * */
+	 * Loads the matlab file, executes the script on it and writes an output
+	 * JSON file.
+	 * <p>
+	 * Constructs a connection to MatLab, loads the .mat file with the given
+	 * path, then executes the script. If no errors occured it will retrieve the
+	 * data from MatLab and write it to a JSON file.
+	 * 
+	 * @param name
+	 *            The path to a .mat file with a correct naming convention
+	 * @param em
+	 *            A valid(open) EntityManager object to write the objects to the
+	 *            database
+	 */
 	private void analyseFile( String name, EntityManager em )
 			throws MatlabConnectionException, MatlabInvocationException, IOException
 	{
@@ -212,7 +225,7 @@ public class MatlabProcessor
 		MatlabNumericArray lng_out = processor.getNumericArray( "lng_out" );
 		MatlabNumericArray speed_out = processor.getNumericArray( "speed_out" );
 		MatlabNumericArray accel_out = processor.getNumericArray( "accel_out" );
-		
+
 		double lat_off = ( (double[]) proxy.getVariable( "lat_offset" ) )[0];
 		double lng_off = ( (double[]) proxy.getVariable( "lon_offset" ) )[0];
 		double max_roll = ( (double[]) proxy.getVariable( "max_roll" ) )[0];
@@ -229,7 +242,7 @@ public class MatlabProcessor
 		double hour = time_out.getRealValue( 3 );
 		double minute = time_out.getRealValue( 4 );
 		double second = time_out.getRealValue( 5 );
-		
+
 		try
 		{
 			String outputPath = matlabDirectory + "/" + name.split( "\\." )[0] + ".json";
@@ -242,7 +255,7 @@ public class MatlabProcessor
 			writeLine( writeValue( "hour", hour ), true, writer );
 			writeLine( writeValue( "minute", minute ), true, writer );
 			writeLine( writeValue( "second", second ), true, writer );
-			
+
 			writeLine( writeValue( "lat_off", lat_off ), true, writer );
 			writeLine( writeValue( "lng_off", lng_off ), true, writer );
 
@@ -250,7 +263,7 @@ public class MatlabProcessor
 			writeLine( writeValue( "min_roll", min_roll ), true, writer );
 			writeLine( writeValue( "max_yaw", max_yaw ), true, writer );
 			writeLine( writeValue( "min_yaw", min_yaw ), true, writer );
-			
+
 			writeArray2D( "yaw", yaw, true, writer );
 			writeArray2D( "roll", roll, true, writer );
 
@@ -259,24 +272,28 @@ public class MatlabProcessor
 
 			writeNumericArray( "speed", speed_out, true, writer );
 			writeNumericArray( "accel", accel_out, false, writer );
-			
+
 			writeLine( "}", false, writer );
 
 			writer.flush();
 			writer.close();
 			ProcessedSensorData result = writeToDatabase( name, em );
-			
+
 			ConstraintEngine ce = cef.getConstraintEngine();
 			ce.start( result );
-			for( int i = 0; i < roll.length; i++ )
+			for ( int i = 0; i < roll.length; i++ )
 			{
 				ConstraintEngineData data = new ConstraintEngineData();
 				data.setRoll( roll[i][0] );
 				data.setYaw( yaw[i][0] );
-				data.setAccel( accel_out.getRealValue( (int)Math.floor( (double)i / roll.length * ( accel_out.getLength() - 1 ) ) ) );
-				data.setSpeed( speed_out.getRealValue( (int)Math.floor( (double)i / roll.length * ( speed_out.getLength() - 1 ) ) ) );
-				data.setLat( lat_out.getRealValue( (int)Math.floor( (double)i / roll.length * ( lat_out.getLength() - 1 ) ) ) );
-				data.setLat( lng_out.getRealValue( (int)Math.floor( (double)i / roll.length * ( lng_out.getLength() - 1 ) ) ) );
+				data.setAccel( accel_out
+						.getRealValue( (int) Math.floor( (double) i / roll.length * ( accel_out.getLength() - 1 ) ) ) );
+				data.setSpeed( speed_out
+						.getRealValue( (int) Math.floor( (double) i / roll.length * ( speed_out.getLength() - 1 ) ) ) );
+				data.setLat( lat_out
+						.getRealValue( (int) Math.floor( (double) i / roll.length * ( lat_out.getLength() - 1 ) ) ) );
+				data.setLat( lng_out
+						.getRealValue( (int) Math.floor( (double) i / roll.length * ( lng_out.getLength() - 1 ) ) ) );
 				ce.addData( data );
 			}
 			ce.printStatusReport();
@@ -290,14 +307,17 @@ public class MatlabProcessor
 	}
 
 	/**
-	 * 	Creates objects based on the filename and writes these to the database.
-	 *  <p>
-	 * 	Based on the naming convention described above, this method will write
-	 *  objects to the database. If for example an object already exists (e.g. workplace)
-	 *  it will append to it.
-	 *  @param fileName A correct filename.
-	 *  @param em A valid(open) EntityManager object.
-	 * */
+	 * Creates objects based on the filename and writes these to the database.
+	 * <p>
+	 * Based on the naming convention described above, this method will write
+	 * objects to the database. If for example an object already exists (e.g.
+	 * workplace) it will append to it.
+	 * 
+	 * @param fileName
+	 *            A correct filename.
+	 * @param em
+	 *            A valid(open) EntityManager object.
+	 */
 	private ProcessedSensorData writeToDatabase( String fileName, EntityManager em )
 	{
 		// System.out.println( "WRITING TO DB" );
@@ -343,7 +363,7 @@ public class MatlabProcessor
 			newTrainCoach = true;
 		}
 		else trainCoach = traincoachResult.get( 0 );
-		
+
 		trainCoach.setNeedsReview( true );
 
 		boolean newWorkplace = false;
@@ -366,31 +386,32 @@ public class MatlabProcessor
 		data.setDate( new Date() );
 		data.setTrack( nameSplit[4] );
 		data.setTraincoach( trainCoach );
-		
-		if( newTrainCoach )
-			em.persist( trainCoach );
-		else
-			em.merge( trainCoach );
-		
+
+		if ( newTrainCoach ) em.persist( trainCoach );
+		else em.merge( trainCoach );
+
 		em.persist( data );
-		
-		if( newWorkplace )
-			em.persist( workplace );
-		else
-			em.merge( workplace );
-		
+
+		if ( newWorkplace ) em.persist( workplace );
+		else em.merge( workplace );
+
 		tx.commit();
-		
+
 		return data;
 	}
 
 	/**
-	 * 	Writes a JSON line to an open BufferedWriter.
-	 *  @param line The line to be written
-	 *  @param comma Indicates whether or not the line should be appended with a comma
-	 *  @param writer An open BufferedWriter.
-	 *  @throws IOException
-	 * */
+	 * Writes a JSON line to an open BufferedWriter.
+	 * 
+	 * @param line
+	 *            The line to be written
+	 * @param comma
+	 *            Indicates whether or not the line should be appended with a
+	 *            comma
+	 * @param writer
+	 *            An open BufferedWriter.
+	 * @throws IOException
+	 */
 	private void writeLine( String line, boolean comma, BufferedWriter writer ) throws IOException
 	{
 		if ( comma ) writer.write( line + "," + System.getProperty( "line.separator" ) );
@@ -398,13 +419,19 @@ public class MatlabProcessor
 	}
 
 	/**
-	 * 	Writes a JSON array to an open BufferedWriter.
-	 *  @param name The name of the array that should be written.
-	 *  @param array A 2 dimensional array.
-	 *  @param comma Indicates whether or not the line should be appended with a comma
-	 *  @param writer An open BufferedWriter.
-	 *  @throws IOException
-	 * */
+	 * Writes a JSON array to an open BufferedWriter.
+	 * 
+	 * @param name
+	 *            The name of the array that should be written.
+	 * @param array
+	 *            A 2 dimensional array.
+	 * @param comma
+	 *            Indicates whether or not the line should be appended with a
+	 *            comma
+	 * @param writer
+	 *            An open BufferedWriter.
+	 * @throws IOException
+	 */
 	private void writeArray2D( String name, double[][] array, boolean comma, BufferedWriter writer ) throws IOException
 	{
 		writer.write( "\"" + name + "\": [ " );
@@ -417,13 +444,19 @@ public class MatlabProcessor
 	}
 
 	/**
-	 * 	Writes a MatlabNumericArray in JSON format to an open BufferedWriter.
-	 *  @param name The name of the array that should be written.
-	 *  @param array A numeric MatLab array.
-	 *  @param comma Indicates whether or not the line should be appended with a comma
-	 *  @param writer An open BufferedWriter.
-	 *  @throws IOException
-	 * */
+	 * Writes a MatlabNumericArray in JSON format to an open BufferedWriter.
+	 * 
+	 * @param name
+	 *            The name of the array that should be written.
+	 * @param array
+	 *            A numeric MatLab array.
+	 * @param comma
+	 *            Indicates whether or not the line should be appended with a
+	 *            comma
+	 * @param writer
+	 *            An open BufferedWriter.
+	 * @throws IOException
+	 */
 	private void writeNumericArray( String name, MatlabNumericArray array, boolean comma, BufferedWriter writer )
 			throws IOException
 	{
@@ -437,10 +470,13 @@ public class MatlabProcessor
 	}
 
 	/**
-	 * 	Writes a double value in JSON format to an open BufferedWriter.
-	 *  @param name The name of the value that should be written.
-	 *  @param value The actual value that should be written.
-	 * */
+	 * Writes a double value in JSON format to an open BufferedWriter.
+	 * 
+	 * @param name
+	 *            The name of the value that should be written.
+	 * @param value
+	 *            The actual value that should be written.
+	 */
 	private String writeValue( String name, double value )
 	{
 		return "\"" + name + "\":" + value;

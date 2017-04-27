@@ -28,10 +28,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @NamedQueries(
-{ 
-	@NamedQuery( name = User.FIND_ALL, query = "SELECT u FROM User u" ),
-	@NamedQuery( name = User.FIND_BY_EMAIL, query = "SELECT u FROM User u WHERE u.email = :email" ), 
-	} )
+{ @NamedQuery( name = User.FIND_ALL, query = "SELECT u FROM User u" ),
+		@NamedQuery( name = User.FIND_BY_EMAIL, query = "SELECT u FROM User u WHERE u.email = :email" ), } )
 public class User implements Serializable
 {
 	// Named queries
@@ -53,7 +51,7 @@ public class User implements Serializable
 	@NotNull
 	@Email
 	private String email;
-	
+
 	@Lob
 	@NotNull
 	@Column( length = User.PASS_HASH_LENGTH )
@@ -73,7 +71,7 @@ public class User implements Serializable
 	@Enumerated( EnumType.STRING )
 	@NotNull
 	private UserRole role;
-	
+
 	@Lob
 	private String imageHash;
 
@@ -155,18 +153,17 @@ public class User implements Serializable
 	{
 		this.lastLogin = lastLogin;
 	}
-	
+
 	@JsonIgnore
 	public String getLastPrettyLogin()
 	{
 		PrettyTime p = new PrettyTime();
-		return p.format(this.lastLogin);
+		return p.format( this.lastLogin );
 	}
-	
-	
 
 	/**
 	 * Returns a hash of the profile picture the user uploaded
+	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
 	 * @return the imageHash
@@ -178,11 +175,13 @@ public class User implements Serializable
 
 	/**
 	 * Sets the hash of image the user uploaded as a profile picture.
+	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param imageHash the imageHash to set
+	 * @param imageHash
+	 *            the imageHash to set
 	 */
-	public void setImageHash(String imageHash)
+	public void setImageHash( String imageHash )
 	{
 		this.imageHash = imageHash;
 	}

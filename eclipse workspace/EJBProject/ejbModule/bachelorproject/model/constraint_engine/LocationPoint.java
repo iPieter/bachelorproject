@@ -9,9 +9,10 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 /**
- * 	Defines a point(lat,lng) in the database.
- *  @author Anton Danneels
- * */
+ * Defines a point(lat,lng) in the database.
+ * 
+ * @author Anton Danneels
+ */
 @Entity
 public class LocationPoint implements Serializable
 {
@@ -20,10 +21,10 @@ public class LocationPoint implements Serializable
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private int id;
-	
+
 	@NotNull
 	private double lat;
-	
+
 	@NotNull
 	private double lng;
 
@@ -46,7 +47,8 @@ public class LocationPoint implements Serializable
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId( int id )
 	{
@@ -62,7 +64,8 @@ public class LocationPoint implements Serializable
 	}
 
 	/**
-	 * @param lat the lat to set
+	 * @param lat
+	 *            the lat to set
 	 */
 	public void setLat( double lat )
 	{
@@ -78,13 +81,14 @@ public class LocationPoint implements Serializable
 	}
 
 	/**
-	 * @param lng the lng to set
+	 * @param lng
+	 *            the lng to set
 	 */
 	public void setLng( double lng )
 	{
 		this.lng = lng;
 	}
-	
+
 	public String toString()
 	{
 		return lat + "," + lng;

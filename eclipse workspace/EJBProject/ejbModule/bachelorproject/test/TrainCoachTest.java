@@ -16,28 +16,26 @@ public class TrainCoachTest
 {
 	@Inject
 	private TrainCoachEJB traincoachEJB;
-	
-	//@PostConstruct
+
+	// @PostConstruct
 	public void test()
 	{
 		/*
-		System.out.println("===============================================");
-		
-		TrainCoach traincoach = traincoachEJB.findByData( "7858558", "M7", "Bombardier" );
-		if( traincoach == null )
-			System.out.println( "Traincoach is null" );
-		else
-			System.out.println("Success");
-		
-		List<TrainCoach> traincoaches = traincoachEJB.getAllTraincoaches();
-		for( TrainCoach t : traincoaches )
-		{
-			System.out.println( t.getName().equals( "7858558" ) );
-			System.out.println( t.getType().equals( "M7" ) );
-			System.out.println( t.getConstructor().equals( "Bombardier" ) );
-		}
-		System.out.println("===============================================");
-		*/
+		 * System.out.println("===============================================")
+		 * ;
+		 * 
+		 * TrainCoach traincoach = traincoachEJB.findByData( "7858558", "M7",
+		 * "Bombardier" ); if( traincoach == null ) System.out.println(
+		 * "Traincoach is null" ); else System.out.println("Success");
+		 * 
+		 * List<TrainCoach> traincoaches = traincoachEJB.getAllTraincoaches();
+		 * for( TrainCoach t : traincoaches ) { System.out.println(
+		 * t.getName().equals( "7858558" ) ); System.out.println(
+		 * t.getType().equals( "M7" ) ); System.out.println(
+		 * t.getConstructor().equals( "Bombardier" ) ); }
+		 * System.out.println("===============================================")
+		 * ;
+		 */
 	}
-	
+
 }

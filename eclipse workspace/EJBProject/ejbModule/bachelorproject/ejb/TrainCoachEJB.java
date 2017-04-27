@@ -14,27 +14,29 @@ import javax.persistence.TypedQuery;
 import bachelorproject.model.TrainCoach;
 
 /**
- * 	Defines the Entity Java Bean for the TrainCoach Entity.
- *  <p>
- *  This class allows for the controller to manipulate and fetch specific
- *  TrainCoach instances. It validates new objects and handles 
- *  errors when, for example, no entries in the database exist.
- *  @author Anton Danneels
- *  @version 0.1.0
- * */
+ * Defines the Entity Java Bean for the TrainCoach Entity.
+ * <p>
+ * This class allows for the controller to manipulate and fetch specific
+ * TrainCoach instances. It validates new objects and handles errors when, for
+ * example, no entries in the database exist.
+ * 
+ * @author Anton Danneels
+ * @version 0.1.0
+ */
 @Named
 @Stateless
 public class TrainCoachEJB
 {
 	@Inject
 	private EntityManagerSingleton ems;
-	
+
 	/**
-	 * 	Retrieves ALL TrainCoaches from the database
-	 *  @return A List of TrainCoach objects
-	 *  @see List
-	 *  @see TrainCoach
-	 * */	
+	 * Retrieves ALL TrainCoaches from the database
+	 * 
+	 * @return A List of TrainCoach objects
+	 * @see List
+	 * @see TrainCoach
+	 */
 	public List<TrainCoach> getAllTraincoaches()
 	{
 		EntityManager em = ems.getEntityManager();
@@ -45,18 +47,20 @@ public class TrainCoachEJB
 
 		em.getTransaction().commit();
 		em.close();
-		
+
 		return result;
 	}
-	
+
 	/**
-	 * 	Retrieves ALL TrainCoaches from the database that need a review
-	 *  based on the workplaceID.
-	 *  @param workplaceID The ID of the Workplace that needs the traincoaches.
-	 *  @return A List of TrainCoach objects that need review.
-	 *  @see List
-	 *  @see TrainCoach
-	 * */
+	 * Retrieves ALL TrainCoaches from the database that need a review based on
+	 * the workplaceID.
+	 * 
+	 * @param workplaceID
+	 *            The ID of the Workplace that needs the traincoaches.
+	 * @return A List of TrainCoach objects that need review.
+	 * @see List
+	 * @see TrainCoach
+	 */
 	public List<TrainCoach> getAllTraincoachesNeedReview( int workplaceID )
 	{
 		EntityManager em = ems.getEntityManager();
@@ -65,7 +69,7 @@ public class TrainCoachEJB
 		TypedQuery<TrainCoach> query = em.createNamedQuery( TrainCoach.FIND_ALL_NEEDS_REVIEW, TrainCoach.class );
 		query.setParameter( "id", workplaceID );
 		List<TrainCoach> result = query.getResultList();
-		
+
 		em.getTransaction().commit();
 		em.close();
 
@@ -73,10 +77,11 @@ public class TrainCoachEJB
 	}
 
 	/**
-	 * 	Finds a TrainCoach in the database based on the ID.
-	 *  @return The found TrainCoach object or null if it does not exist
-	 *  @see TrainCoach
-	 * */
+	 * Finds a TrainCoach in the database based on the ID.
+	 * 
+	 * @return The found TrainCoach object or null if it does not exist
+	 * @see TrainCoach
+	 */
 	public TrainCoach findTrainCoachByTraincoachId( int id )
 	{
 		EntityManager em = ems.getEntityManager();
@@ -89,23 +94,25 @@ public class TrainCoachEJB
 
 		return result;
 	}
-	
+
 	/**
-	 * 	Sets the needsReview flag to false in the database.
-	 * 	<p>
-	 * 	Based on the id parameter this method will find the TrainCoach
-	 *  object in the database and set its "needsReview" flag on true.
-	 *  @param id The ID of the TrainCoach object that needs to be changed.
-	 *  @see TrainCoach
-	 * */
+	 * Sets the needsReview flag to false in the database.
+	 * <p>
+	 * Based on the id parameter this method will find the TrainCoach object in
+	 * the database and set its "needsReview" flag on true.
+	 * 
+	 * @param id
+	 *            The ID of the TrainCoach object that needs to be changed.
+	 * @see TrainCoach
+	 */
 	public void setTrainCoachReviewed( int id )
 	{
 		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 
 		TrainCoach result = em.find( TrainCoach.class, id );
-		
-		if( result != null )
+
+		if ( result != null )
 		{
 			result.setNeedsReview( false );
 			em.merge( result );
@@ -113,12 +120,15 @@ public class TrainCoachEJB
 		em.getTransaction().commit();
 		em.close();
 	}
-	
+
 	/**
-	 * 	Gets a traincoach object by the specified name & type
-	 * 	@param name The name of the asked traincoach
-	 *  @param type The type of the traincoach
-	 * */
+	 * Gets a traincoach object by the specified name & type
+	 * 
+	 * @param name
+	 *            The name of the asked traincoach
+	 * @param type
+	 *            The type of the traincoach
+	 */
 	public TrainCoach findByData( String name, String type, String constructor )
 	{
 		EntityManager em = ems.getEntityManager();
@@ -128,27 +138,26 @@ public class TrainCoachEJB
 		query.setParameter( "name", name );
 		query.setParameter( "type", type );
 		query.setParameter( "constructor", constructor );
-		
+
 		List<TrainCoach> result = query.getResultList();
-		
+
 		em.getTransaction().commit();
 		em.close();
-		
-		if( result.size() == 0 )
-			return null;
+
+		if ( result.size() == 0 ) return null;
 		return result.get( 0 );
 	}
-	
+
 	/**
-	 * 	Creates a new traincoach object	
-	 * */
+	 * Creates a new traincoach object
+	 */
 	public void createTrainCoach( TrainCoach t )
 	{
 		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
 
 		em.persist( t );
-		
+
 		em.getTransaction().commit();
 		em.close();
 	}

@@ -15,11 +15,12 @@ import javax.validation.constraints.NotNull;
 import bachelorproject.model.TrainCoach;
 
 /**
- * 	Defines a base class for sensordata
- *  @see LiveSensorData
- *  @see ProcessedSensorData
- *  @author Anton Danneels
- * */
+ * Defines a base class for sensordata
+ * 
+ * @see LiveSensorData
+ * @see ProcessedSensorData
+ * @author Anton Danneels
+ */
 @Entity
 public abstract class SensorData
 {
@@ -30,11 +31,11 @@ public abstract class SensorData
 	@NotNull
 	@Lob
 	protected String track;
-	
+
 	@NotNull
 	@OneToOne
 	protected TrainCoach traincoach;
-	
+
 	@NotNull
 	@Temporal( TemporalType.TIMESTAMP )
 	protected Date date;
@@ -60,7 +61,8 @@ public abstract class SensorData
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId( int id )
 	{
@@ -76,7 +78,8 @@ public abstract class SensorData
 	}
 
 	/**
-	 * @param track the track to set
+	 * @param track
+	 *            the track to set
 	 */
 	public void setTrack( String track )
 	{
@@ -92,7 +95,8 @@ public abstract class SensorData
 	}
 
 	/**
-	 * @param traincoach the traincoach to set
+	 * @param traincoach
+	 *            the traincoach to set
 	 */
 	public void setTraincoach( TrainCoach traincoach )
 	{
@@ -108,7 +112,8 @@ public abstract class SensorData
 	}
 
 	/**
-	 * @param date the date to set
+	 * @param date
+	 *            the date to set
 	 */
 	public void setDate( Date date )
 	{

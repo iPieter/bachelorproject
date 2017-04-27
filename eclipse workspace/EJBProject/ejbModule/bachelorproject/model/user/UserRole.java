@@ -1,7 +1,7 @@
 package bachelorproject.model.user;
 
 /**
- * The UserRole a User can have, like ADMIN. 
+ * The UserRole a User can have, like ADMIN.
  * 
  * @author Pieter Delobelle
  * @version 1.0.0
@@ -9,11 +9,10 @@ package bachelorproject.model.user;
  */
 public enum UserRole
 {
-	ADMIN("Admin"), MECHANIC("Technicus"), OPERATOR("Operator");
+	ADMIN( "Admin" ), MECHANIC( "Technicus" ), OPERATOR( "Operator" );
 
-	
 	private String descr;
-	
+
 	UserRole(String descr)
 	{
 		this.descr = descr;
@@ -34,13 +33,12 @@ public enum UserRole
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param descr the description of the role to set
+	 * @param descr
+	 *            the description of the role to set
 	 */
-	public void setDescr(String descr)
+	public void setDescr( String descr )
 	{
 		this.descr = descr;
 	}
-	
-	
-	
+
 }

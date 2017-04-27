@@ -23,17 +23,15 @@ import bachelorproject.model.user.User;
  */
 @Entity
 @NamedQueries(
-{
-	@NamedQuery( name = IssueAsset.FIND_ALL, query = "SELECT i FROM IssueAsset i" ),
-	@NamedQuery( name = IssueAsset.FIND_BY_ID, query = "SELECT i FROM IssueAsset i WHERE i.id = :id" ),
-	@NamedQuery( name = IssueAsset.FIND_BY_ISSUE_ID, query = "SELECT ia FROM Issue i JOIN i.assets ia WHERE i.id = :id ORDER BY ia.time DESC" )
-})
+{ @NamedQuery( name = IssueAsset.FIND_ALL, query = "SELECT i FROM IssueAsset i" ),
+		@NamedQuery( name = IssueAsset.FIND_BY_ID, query = "SELECT i FROM IssueAsset i WHERE i.id = :id" ),
+		@NamedQuery( name = IssueAsset.FIND_BY_ISSUE_ID, query = "SELECT ia FROM Issue i JOIN i.assets ia WHERE i.id = :id ORDER BY ia.time DESC" ) } )
 
 public class IssueAsset implements Serializable
 {
-	
+
 	private static final long serialVersionUID = 6402270058460444125L;
-	
+
 	public static final String FIND_ALL = "IssueAsset.findAll";
 	public static final String FIND_BY_ID = "IssueAsset.findByID";
 	public static final String FIND_BY_ISSUE_ID = "IssueAsset.findByIssueID";
@@ -44,18 +42,18 @@ public class IssueAsset implements Serializable
 
 	@NotNull
 	private String descr;
-	
+
 	@Temporal( TemporalType.TIMESTAMP )
 	@NotNull
 	private Date time;
-	
+
 	@Lob
 	private String location;
 
 	@NotNull
 	@OneToOne
 	private User user;
-	
+
 	public IssueAsset()
 	{
 	}
@@ -69,7 +67,8 @@ public class IssueAsset implements Serializable
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId( int id )
 	{
@@ -85,7 +84,8 @@ public class IssueAsset implements Serializable
 	}
 
 	/**
-	 * @param descr the descr to set
+	 * @param descr
+	 *            the descr to set
 	 */
 	public void setDescr( String descr )
 	{
@@ -101,7 +101,8 @@ public class IssueAsset implements Serializable
 	}
 
 	/**
-	 * @param location the location to set
+	 * @param location
+	 *            the location to set
 	 */
 	public void setLocation( String location )
 	{
@@ -117,7 +118,8 @@ public class IssueAsset implements Serializable
 	}
 
 	/**
-	 * @param time the time to set
+	 * @param time
+	 *            the time to set
 	 */
 	public void setTime( Date time )
 	{
@@ -133,7 +135,8 @@ public class IssueAsset implements Serializable
 	}
 
 	/**
-	 * @param user the user to set
+	 * @param user
+	 *            the user to set
 	 */
 	public void setUser( User user )
 	{
@@ -141,12 +144,13 @@ public class IssueAsset implements Serializable
 	}
 
 	/**
-	 * 	Returns a String representation of this object
-	 *  @return The String representation	 
-	 * */
+	 * Returns a String representation of this object
+	 * 
+	 * @return The String representation
+	 */
 	public String toString()
 	{
 		return descr + ":" + location;
 	}
-	
+
 }

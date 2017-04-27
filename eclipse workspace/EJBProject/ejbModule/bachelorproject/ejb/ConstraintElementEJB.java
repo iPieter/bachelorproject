@@ -12,9 +12,10 @@ import bachelorproject.model.constraint_engine.ConstraintElement;
 /**
  * Defines the Entity Java Bean for the ConstraintElement Entity.
  * <p>
- * This class allows for the controller to manipulate and fetch specific ConstraintElement
- * instances. It validates new objects and handles errors when, for example, no
- * entries in the database exist.
+ * This class allows for the controller to manipulate and fetch specific
+ * ConstraintElement instances. It validates new objects and handles errors
+ * when, for example, no entries in the database exist.
+ * 
  * @author Anton Danneels
  */
 @Named
@@ -23,22 +24,24 @@ public class ConstraintElementEJB
 {
 	@Inject
 	private EntityManagerSingleton ems;
-	
+
 	/**
-	 * 	Persists a ConstraintElement object to the database
-	 *  @param ce A valid constraintelement object
-	 * */
+	 * Persists a ConstraintElement object to the database
+	 * 
+	 * @param ce
+	 *            A valid constraintelement object
+	 */
 	public void createConstraintElement( ConstraintElement ce )
 	{
 		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
-		
+
 		em.persist( ce );
-		
+
 		em.getTransaction().commit();
 		em.close();
 	}
-	
+
 	/**
 	 * Persisting lists of ConstraintElements
 	 * 
@@ -46,16 +49,16 @@ public class ConstraintElementEJB
 	 * @version 1.0.0
 	 * @param ces
 	 */
-	public void createConstraintElement(List<ConstraintElement> ces)
+	public void createConstraintElement( List<ConstraintElement> ces )
 	{
 		EntityManager em = ems.getEntityManager();
 		em.getTransaction().begin();
-		
-		for (ConstraintElement ce : ces)
+
+		for ( ConstraintElement ce : ces )
 		{
 			em.persist( ce );
 		}
-		
+
 		em.getTransaction().commit();
 		em.close();
 	}

@@ -12,28 +12,30 @@ import javax.persistence.Transient;
 import bachelorproject.constraint_engine.ConstraintEngine;
 
 /**
- * 	A ConstraintElement is a specific constraint that should be tested.
- *  @author Anton Danneels
- * */
+ * A ConstraintElement is a specific constraint that should be tested.
+ * 
+ * @author Anton Danneels
+ */
 @Entity
 @Table( name = "constraintelement_table" )
-public abstract class ConstraintElement  implements Serializable
+public abstract class ConstraintElement implements Serializable
 {
 	private static final long serialVersionUID = -548271107464821551L;
-	
+
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	protected int id;
-	
+
 	/**
-	 *  The ConstraintEngine uses a visitor pattern to implemented evaluating ConstraintElements.
-	 * */
+	 * The ConstraintEngine uses a visitor pattern to implemented evaluating
+	 * ConstraintElements.
+	 */
 	@Transient
 	public abstract boolean visit( ConstraintEngine ceVisitor );
-	
+
 	@Transient
 	public abstract String toString();
-	
+
 	/**
 	 * @return the id
 	 */
@@ -43,7 +45,8 @@ public abstract class ConstraintElement  implements Serializable
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId( int id )
 	{
