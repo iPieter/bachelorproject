@@ -202,15 +202,14 @@ html {
   .fill-height .leaflet-top {
     margin-top: 50px; }
 
-.asset_image {
-	display:block;
-	width: 300px;
-}
-
 .blur {
   -webkit-backdrop-filter: saturate(80%) blur(20px);
   backdrop-filter: saturate(80%) blur(20px);
   background-color: rgba(252, 252, 253, 0.65); }
+
+.asset_image {
+  display: block;
+  width: 300px; }
 
 .userTable > tbody > tr > td:first-child {
   width: 36px; }
