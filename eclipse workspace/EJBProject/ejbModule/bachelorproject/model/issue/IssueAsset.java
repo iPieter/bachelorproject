@@ -15,6 +15,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import bachelorproject.model.user.User;
 
 /**
@@ -152,5 +156,19 @@ public class IssueAsset implements Serializable
 	{
 		return descr + ":" + location;
 	}
-
+	
+	/**
+	 * Returns a string of the current time by the Pretty Time library.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @return A String with the current time.
+	 */
+	@JsonIgnore
+	public String getPrettyTime()
+	{
+		PrettyTime p = new PrettyTime();
+		return p.format(this.time);
+	}
+	
 }
