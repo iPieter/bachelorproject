@@ -48,87 +48,87 @@ public class ConstraintEditorController implements Serializable
 
 	@EJB
 	private LocationPointEJB lpEJB;
-	
+
 	private List<Constraint> constraints;
 	private Constraint currentConstraint = null;
 	private List<ConstraintElement> currentConstraintElements = new LinkedList<>();
 	private HashMap<Integer, List<LocationPoint>> polygons;
 
-	//variables for creating new constraint
+	// variables for creating new constraint
 	private String polygonInput;
 	private String name;
-	
+
 	@PostConstruct
 	public void loadPage()
-	{ 
-		System.out.println("Creating list.");
+	{
+		System.out.println( "Creating list." );
 		constraints = cEJB.getAllConstraints();
 		polygons = new HashMap<>();
-		for (Constraint c : constraints)
+		for ( Constraint c : constraints )
 		{
-			for (ConstraintElement ce : c.getConstraints())
+			for ( ConstraintElement ce : c.getConstraints() )
 			{
-				if (ce instanceof LocationConstraintElement)
-					polygons.put(c.getId(), ((LocationConstraintElement) ce).getPolygon());
+				if ( ce instanceof LocationConstraintElement )
+					polygons.put( c.getId(), ( (LocationConstraintElement) ce ).getPolygon() );
 			}
 		}
 
-		currentConstraintElements.add(new LocationConstraintElement());
+		currentConstraintElements.add( new LocationConstraintElement() );
 
 	}
 
 	/**
 	 * Creates a new constraint object with all the created constraintElements
-	 * in the currentConstraintElement list. After creation, it will be saved to 
-	 * the database. 
+	 * in the currentConstraintElement list. After creation, it will be saved to
+	 * the database.
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
 	 */
 	public void createConstraint()
 	{
-		
-		//Find the locationConstraintElement
-		Optional<ConstraintElement> oce = this.currentConstraintElements
-											.parallelStream()
-											.filter(ce -> ce instanceof LocationConstraintElement)
-											.findFirst();
-		
-		//if there is one, make sure to add polygon to it
-		if (oce.isPresent())
+
+		// Find the locationConstraintElement
+		Optional<ConstraintElement> oce = this.currentConstraintElements.parallelStream()
+				.filter( ce -> ce instanceof LocationConstraintElement ).findFirst();
+
+		// if there is one, make sure to add polygon to it
+		if ( oce.isPresent() )
 		{
-			//Unwrap optional, I think it goes like this ... :/
+			// Unwrap optional, I think it goes like this ... :/
 			LocationConstraintElement lce = (LocationConstraintElement) oce.get();
-			
-			//Extract polygon from input and link it to locationConstraintElement
-			String[] points = polygonInput.split(",");
-			
-			//Create locationPoint array
+
+			// Extract polygon from input and link it to
+			// locationConstraintElement
+			String[] points = polygonInput.split( "," );
+
+			// Create locationPoint array
 			List<LocationPoint> polygon = new ArrayList<>();
-			for (int i = 0; i < points.length; i+=2)
+			for ( int i = 0; i < points.length; i += 2 )
 			{
-				polygon.add(new LocationPoint(Double.parseDouble(points[i]), Double.parseDouble(points[i + 1])));
+				polygon.add(
+						new LocationPoint( Double.parseDouble( points[i] ), Double.parseDouble( points[i + 1] ) ) );
 			}
-			
-			lpEJB.persistLocationPoint(polygon);
-			
-			lce.setPolygon(polygon);
-			
+
+			lpEJB.persistLocationPoint( polygon );
+
+			lce.setPolygon( polygon );
+
 		}
-		
-		//Persist current constraint elements to db
-		ceEJB.createConstraintElement(currentConstraintElements);
-		
-		//Create and persist new constraint
-		Constraint c = new Constraint(name, userService.getUser());
-		
-		constraints.add(c);
-		
+
+		// Persist current constraint elements to db
+		ceEJB.createConstraintElement( currentConstraintElements );
+
+		// Create and persist new constraint
+		Constraint c = new Constraint( name, userService.getUser() );
+
+		constraints.add( c );
+
 		c.constraints = this.currentConstraintElements;
 
-		cEJB.createConstraint(c);
-				
-		//Clear constraintElement list and name
+		cEJB.createConstraint( c );
+
+		// Clear constraintElement list and name
 		currentConstraintElements = new LinkedList<>();
 		name = "";
 	}
@@ -143,9 +143,9 @@ public class ConstraintEditorController implements Serializable
 	 */
 	public void createConstraintElement()
 	{
-		currentConstraintElements
-				.add(new ValueConstraintElement(10, ValueConstraintType.GREATER_THAN, ValueConstraintAttribute.ACCEL));
-		System.out.println("Created new ContraintElement");
+		currentConstraintElements.add(
+				new ValueConstraintElement( 10, ValueConstraintType.GREATER_THAN, ValueConstraintAttribute.ACCEL ) );
+		System.out.println( "Created new ContraintElement" );
 	}
 
 	/**
@@ -158,12 +158,13 @@ public class ConstraintEditorController implements Serializable
 	 *            The contraintElement to be tested
 	 * @return A string with the type of contraintElement, as decribed.
 	 */
-	public String determineContraintElementType(ConstraintElement ce)
+	public String determineContraintElementType( ConstraintElement ce )
 	{
-		if (ce instanceof ValueConstraintElement)
+		if ( ce instanceof ValueConstraintElement )
 		{
-			return ((ValueConstraintElement) ce).getValueConstraintAttribute().getDescr();
-		} else if (ce instanceof ModelTypeConstraintElement)
+			return ( (ValueConstraintElement) ce ).getValueConstraintAttribute().getDescr();
+		}
+		else if ( ce instanceof ModelTypeConstraintElement )
 		{
 			return "model";
 		}
@@ -181,7 +182,7 @@ public class ConstraintEditorController implements Serializable
 	 *            The ConstraintElement object to be tested.
 	 * @return True if it's a ValueContraintElement, false otherwise.
 	 */
-	public boolean isValueContraintElement(ConstraintElement ce)
+	public boolean isValueContraintElement( ConstraintElement ce )
 	{
 		return ce instanceof ValueConstraintElement;
 	}
@@ -196,7 +197,7 @@ public class ConstraintEditorController implements Serializable
 	 *            The ConstraintElement object to be tested.
 	 * @return True if it's a LocationConstraintElement, false otherwise.
 	 */
-	public boolean isLocationConstraintElement(ConstraintElement ce)
+	public boolean isLocationConstraintElement( ConstraintElement ce )
 	{
 		return ce instanceof LocationConstraintElement;
 	}
@@ -211,7 +212,7 @@ public class ConstraintEditorController implements Serializable
 	 *            The ConstraintElement object to be tested.
 	 * @return True if it's a ModelTypeConstraintElement, false otherwise.
 	 */
-	public boolean isModelTypeConstraintElement(ConstraintElement ce)
+	public boolean isModelTypeConstraintElement( ConstraintElement ce )
 	{
 		return ce instanceof ModelTypeConstraintElement;
 	}
@@ -235,14 +236,15 @@ public class ConstraintEditorController implements Serializable
 	 *            ValueConstraintElement
 	 * @see ValueConstraintElement
 	 */
-	public void updateContraintElement(ConstraintElement ce, ValueConstraintAttribute vca)
+	public void updateContraintElement( ConstraintElement ce, ValueConstraintAttribute vca )
 	{
-		int index = currentConstraintElements.indexOf(ce);
+		int index = currentConstraintElements.indexOf( ce );
 
-		if (index != -1)
+		if ( index != -1 )
 		{
-			currentConstraintElements.remove(index);
-			currentConstraintElements.add(index, new ValueConstraintElement(0, ValueConstraintType.GREATER_THAN, vca));
+			currentConstraintElements.remove( index );
+			currentConstraintElements.add( index,
+					new ValueConstraintElement( 0, ValueConstraintType.GREATER_THAN, vca ) );
 		}
 
 	}
@@ -262,21 +264,21 @@ public class ConstraintEditorController implements Serializable
 	 * @param futureConstraintElement
 	 *            A string with the future type of the constraintElement
 	 */
-	public void updateContraintElement(ConstraintElement ce, String futureConstraintElement)
+	public void updateContraintElement( ConstraintElement ce, String futureConstraintElement )
 	{
-		int index = currentConstraintElements.indexOf(ce);
+		int index = currentConstraintElements.indexOf( ce );
 
-		if (index != -1)
+		if ( index != -1 )
 		{
-			currentConstraintElements.remove(index);
-			switch (futureConstraintElement)
+			currentConstraintElements.remove( index );
+			switch ( futureConstraintElement )
 			{
 			case "ModelTypeConstraintElement":
-				currentConstraintElements.add(index, new ModelTypeConstraintElement("M7"));
+				currentConstraintElements.add( index, new ModelTypeConstraintElement( "M7" ) );
 				break;
 
 			case "LocationConstraintElement":
-				currentConstraintElements.add(index, new LocationConstraintElement());
+				currentConstraintElements.add( index, new LocationConstraintElement() );
 				break;
 
 			default:
@@ -284,12 +286,12 @@ public class ConstraintEditorController implements Serializable
 			}
 		}
 	}
-	
-	public void updateValueContraintType(ConstraintElement ce, ValueConstraintType vct)
+
+	public void updateValueContraintType( ConstraintElement ce, ValueConstraintType vct )
 	{
-		
+
 		ValueConstraintElement vce = (ValueConstraintElement) ce;
-		vce.setValueConstraintType(vct);
+		vce.setValueConstraintType( vct );
 	}
 
 	/**
@@ -305,9 +307,9 @@ public class ConstraintEditorController implements Serializable
 	{
 		boolean containsLCE = false;
 
-		for (ConstraintElement ce : this.currentConstraintElements)
+		for ( ConstraintElement ce : this.currentConstraintElements )
 		{
-			containsLCE = containsLCE || isLocationConstraintElement(ce);
+			containsLCE = containsLCE || isLocationConstraintElement( ce );
 		}
 
 		return containsLCE;
@@ -319,9 +321,9 @@ public class ConstraintEditorController implements Serializable
 		return constraints;
 	}
 
-	public List<LocationPoint> getPolygon(int ID)
+	public List<LocationPoint> getPolygon( int ID )
 	{
-		return polygons.get(ID);
+		return polygons.get( ID );
 	}
 
 	/**
@@ -340,7 +342,7 @@ public class ConstraintEditorController implements Serializable
 	 * @param currentConstraintElements
 	 *            the currentConstraintElements to set
 	 */
-	public void setCurrentConstraintElements(List<ConstraintElement> currentConstraintElements)
+	public void setCurrentConstraintElements( List<ConstraintElement> currentConstraintElements )
 	{
 		this.currentConstraintElements = currentConstraintElements;
 	}
@@ -351,7 +353,7 @@ public class ConstraintEditorController implements Serializable
 	 * @param constraints
 	 *            the constraints to set
 	 */
-	public void setConstraints(List<Constraint> constraints)
+	public void setConstraints( List<Constraint> constraints )
 	{
 		this.constraints = constraints;
 	}
@@ -375,7 +377,7 @@ public class ConstraintEditorController implements Serializable
 	{
 		return ValueConstraintAttribute.values();
 	}
-	
+
 	public ValueConstraintType[] getValueConstraintTypes()
 	{
 		return ValueConstraintType.values();
@@ -397,7 +399,7 @@ public class ConstraintEditorController implements Serializable
 	 * @param polygonInput
 	 *            the polygonInput to set
 	 */
-	public void setPolygonInput(String polygonInput)
+	public void setPolygonInput( String polygonInput )
 	{
 		this.polygonInput = polygonInput;
 	}
@@ -415,9 +417,10 @@ public class ConstraintEditorController implements Serializable
 	/**
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
-	public void setName(String name)
+	public void setName( String name )
 	{
 		this.name = name;
 	}
@@ -437,25 +440,26 @@ public class ConstraintEditorController implements Serializable
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param currentConstraint the currentConstraint to set
+	 * @param currentConstraint
+	 *            the currentConstraint to set
 	 */
-	public void setCurrentConstraint(Constraint currentConstraint)
+	public void setCurrentConstraint( Constraint currentConstraint )
 	{
 		this.currentConstraint = currentConstraint;
 		this.currentConstraintElements = currentConstraint.constraints;
 	}
-	
+
 	/**
 	 * Set the currentConstraint variable by providing a constraint id.
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param currentConstraintId the Id of the currentConstraint to set
+	 * @param currentConstraintId
+	 *            the Id of the currentConstraint to set
 	 */
-	public void setCurrentConstraint(int currentConstraintId)
+	public void setCurrentConstraint( int currentConstraintId )
 	{
-		this.currentConstraint = this.constraints.get(currentConstraintId);
+		this.currentConstraint = this.constraints.get( currentConstraintId );
 	}
-	
 
 }

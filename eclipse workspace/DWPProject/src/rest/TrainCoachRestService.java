@@ -16,41 +16,42 @@ import bachelorproject.model.user.UserRole;
 import bachelorproject.model.TrainCoach;
 
 /**
- * 	A REST endpoint to fetch traincoaches.
- *  <p>
- *  @author Anton Danneels
- *  @see Issue
- * */
+ * A REST endpoint to fetch traincoaches.
+ * <p>
+ * 
+ * @author Anton Danneels
+ * @see Issue
+ */
 @Path( "/traincoach" )
-@Secured({UserRole.MECHANIC, UserRole.OPERATOR})
+@Secured(
+{ UserRole.MECHANIC, UserRole.OPERATOR } )
 public class TrainCoachRestService
 {
 	@Inject
 	private TrainCoachEJB traincoachEJB;
-	
+
 	/**
-	 * 	Retrieves a specific TrainCoach object
-	 * */
+	 * Retrieves a specific TrainCoach object
+	 */
 	@GET
 	@Path( "{id}" )
 	@Produces( "text/json" )
 	public Response getByTrainCoachID( @PathParam( "id" ) int id )
 	{
 		TrainCoach traincoach = traincoachEJB.findTrainCoachByTraincoachId( id );
-		
-		if( traincoach == null )
-			return Response.status( Status.NOT_FOUND ).build();
-		
+
+		if ( traincoach == null ) return Response.status( Status.NOT_FOUND ).build();
+
 		return Response.ok( traincoach ).build();
 	}
-	
+
 	/**
-	 * 	Retrieves a list of all traincoaches
-	 * */
+	 * Retrieves a list of all traincoaches
+	 */
 	@GET
 	@Path( "all" )
 	@Produces( "text/json" )
-	public Response getAllTrainCoaches( )
+	public Response getAllTrainCoaches()
 	{
 		List<TrainCoach> traincoaches = traincoachEJB.getAllTraincoaches();
 		return Response.ok( traincoaches ).build();

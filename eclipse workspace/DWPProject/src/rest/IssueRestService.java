@@ -26,8 +26,9 @@ import bachelorproject.model.user.UserRole;;
  * @author Anton Danneels
  * @see Issue
  */
-@Path("/issues")
-@Secured({ UserRole.MECHANIC, UserRole.OPERATOR })
+@Path( "/issues" )
+@Secured(
+{ UserRole.MECHANIC, UserRole.OPERATOR } )
 public class IssueRestService
 {
 	@Inject
@@ -37,16 +38,15 @@ public class IssueRestService
 	 * Retrieves a specific Issue object
 	 */
 	@GET
-	@Path("{id}")
-	@Produces("text/json")
-	public Response getIssueByID(@PathParam("id") int id)
+	@Path( "{id}" )
+	@Produces( "text/json" )
+	public Response getIssueByID( @PathParam( "id" ) int id )
 	{
-		Issue asset = issueEJB.findByID(id);
+		Issue asset = issueEJB.findByID( id );
 
-		if (asset == null)
-			return Response.status(Status.NOT_FOUND).build();
+		if ( asset == null ) return Response.status( Status.NOT_FOUND ).build();
 
-		return Response.ok(asset).build();
+		return Response.ok( asset ).build();
 	}
 
 	/**
@@ -56,15 +56,15 @@ public class IssueRestService
 	 *            The ID of a userID.
 	 */
 	@GET
-	@Path("all_for_user/{userid}")
-	@Produces("text/json")
-	public Response getActiveIssueList(@PathParam("userid") int userID)
+	@Path( "all_for_user/{userid}" )
+	@Produces( "text/json" )
+	public Response getActiveIssueList( @PathParam( "userid" ) int userID )
 	{
-		List<Issue> assignedIssues = issueEJB.findAssignedIssuesByMechanicId(userID);
-		List<Issue> inProgressIssues = issueEJB.findInProgressIssuesByMechanicId(userID);
-		assignedIssues.addAll(inProgressIssues);
+		List<Issue> assignedIssues = issueEJB.findAssignedIssuesByMechanicId( userID );
+		List<Issue> inProgressIssues = issueEJB.findInProgressIssuesByMechanicId( userID );
+		assignedIssues.addAll( inProgressIssues );
 
-		return Response.ok(assignedIssues).build();
+		return Response.ok( assignedIssues ).build();
 	}
 
 	/**
@@ -74,16 +74,16 @@ public class IssueRestService
 	 *            The ID of the TrainCoach
 	 */
 	@GET
-	@Path("get_by_traincoach_id/{traincoachID}")
-	@Produces("text/json")
-	public Response getIssuesByTraincoachID(@PathParam("traincoachID") int traincoachID)
+	@Path( "get_by_traincoach_id/{traincoachID}" )
+	@Produces( "text/json" )
+	public Response getIssuesByTraincoachID( @PathParam( "traincoachID" ) int traincoachID )
 	{
-		List<Issue> issues = issueEJB.findAssignedIssuesByTraincoachId(traincoachID);
-		issues.addAll(issueEJB.findInProgressIssuesByTraincoachId(traincoachID));
+		List<Issue> issues = issueEJB.findAssignedIssuesByTraincoachId( traincoachID );
+		issues.addAll( issueEJB.findInProgressIssuesByTraincoachId( traincoachID ) );
 
-		System.out.println(issues);
+		System.out.println( issues );
 
-		return Response.ok(issues).build();
+		return Response.ok( issues ).build();
 	}
 
 	/**
@@ -99,13 +99,13 @@ public class IssueRestService
 	 * @return A json array with 0 or more issues.
 	 */
 	@GET
-	@Path("get_by_data_id/{dataId}")
-	@Produces("text/json")
-	public Response getIssuesByDataId(@PathParam("dataId") int dataId)
+	@Path( "get_by_data_id/{dataId}" )
+	@Produces( "text/json" )
+	public Response getIssuesByDataId( @PathParam( "dataId" ) int dataId )
 	{
-		List<Issue> issues = issueEJB.findIssuesByDataId(dataId);
+		List<Issue> issues = issueEJB.findIssuesByDataId( dataId );
 
-		return Response.ok(issues).build();
+		return Response.ok( issues ).build();
 	}
 
 	/**
@@ -127,35 +127,39 @@ public class IssueRestService
 	 * @see IssueStatus
 	 */
 	@PUT
-	@Path("{id}/{status}")
-	@Produces("text/json")
-	public Response putIssueStatusByIssueId(@PathParam("id") int id, @PathParam("status") IssueStatus status)
+	@Path( "{id}/{status}" )
+	@Produces( "text/json" )
+	public Response putIssueStatusByIssueId( @PathParam( "id" ) int id, @PathParam( "status" ) IssueStatus status )
 	{
 
-		Issue issue = issueEJB.findByID(id);
+		Issue issue = issueEJB.findByID( id );
 
-		if (issue == null)
+		if ( issue == null )
 		{
-			return Response.status(Status.NOT_FOUND).build();
+			return Response.status( Status.NOT_FOUND ).build();
 		}
-		
-		issue.setStatus(status);
-		
-		//set issue altered timestamp
-		switch (status)
+
+		issue.setStatus( status );
+
+		// set issue altered timestamp
+		switch ( status )
 		{
 		case ASSIGNED:
-			issue.setAssignedTime(new Date()); break;
+			issue.setAssignedTime( new Date() );
+			break;
 		case IN_PROGRESS:
-			issue.setInProgressTime(new Date()); break;
+			issue.setInProgressTime( new Date() );
+			break;
 		case CLOSED:
-			issue.setClosedTime(new Date()); break;
-		default: break;
+			issue.setClosedTime( new Date() );
+			break;
+		default:
+			break;
 		}
-		
-		issueEJB.updateIssue(issue);
 
-		System.out.println("Status updated to " + status.getDescr());
+		issueEJB.updateIssue( issue );
+
+		System.out.println( "Status updated to " + status.getDescr() );
 		return Response.ok( "{ \"status\" : \"OK\" }" ).build();
 
 	}

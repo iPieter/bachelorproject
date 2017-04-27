@@ -13,23 +13,22 @@ import bachelorproject.model.Workplace;
 import bachelorproject.model.user.User;
 import bachelorproject.model.user.UserRole;
 
-
 @Named
 @SessionScoped
 public class AdminWorkplaceController implements Serializable
 {
 	private static final long serialVersionUID = -5824382672006285083L;
-	
+
 	@EJB
 	private WorkplaceEJB workplaceEJB;
 
 	@EJB
 	private UserEJB userEJB;
-	
+
 	private String mechanicId;
-	
+
 	private Workplace currentWorkplace;
-	
+
 	/**
 	 * Provides a list with all the workplaces known to the database.
 	 * 
@@ -42,23 +41,24 @@ public class AdminWorkplaceController implements Serializable
 	{
 		return workplaceEJB.getAllWorkplaces();
 	}
-	
+
 	/**
-	 * When the admin wants to add a mechanic to a workplace, a workplace
-	 * the admin selected is set to the currentWorkplace by it's id.
+	 * When the admin wants to add a mechanic to a workplace, a workplace the
+	 * admin selected is set to the currentWorkplace by it's id.
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 0.9.0
-	 * @param workplaceId The id of the workplace to set as the currentWorkplace
+	 * @param workplaceId
+	 *            The id of the workplace to set as the currentWorkplace
 	 */
-	public void setCurrentWorkplace(int workplaceId)
+	public void setCurrentWorkplace( int workplaceId )
 	{
-		if (workplaceId != 0)
+		if ( workplaceId != 0 )
 		{
-			this.currentWorkplace = workplaceEJB.findWorkplaceByWorkplaceId(workplaceId);
+			this.currentWorkplace = workplaceEJB.findWorkplaceByWorkplaceId( workplaceId );
 		}
 	}
-	
+
 	/**
 	 * Get the current workplace object.
 	 * 
@@ -74,9 +74,10 @@ public class AdminWorkplaceController implements Serializable
 	/**
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param currentWorkplace the currentWorkplace to set
+	 * @param currentWorkplace
+	 *            the currentWorkplace to set
 	 */
-	public void setCurrentWorkplace(Workplace currentWorkplace)
+	public void setCurrentWorkplace( Workplace currentWorkplace )
 	{
 		this.currentWorkplace = currentWorkplace;
 	}
@@ -90,9 +91,9 @@ public class AdminWorkplaceController implements Serializable
 	 */
 	public List<User> getMechanics()
 	{
-		return userEJB.findAllUsersByRole(UserRole.MECHANIC);
+		return userEJB.findAllUsersByRole( UserRole.MECHANIC );
 	}
-	
+
 	/**
 	 * Inserts the mechnanic specified by it's id to the current workplace.
 	 * 
@@ -102,9 +103,9 @@ public class AdminWorkplaceController implements Serializable
 	public void addMechanic()
 	{
 
-		currentWorkplace.getMechanics().add(userEJB.findUserById(Integer.valueOf(mechanicId)));
-		
-		workplaceEJB.updateWorkplace(currentWorkplace);
+		currentWorkplace.getMechanics().add( userEJB.findUserById( Integer.valueOf( mechanicId ) ) );
+
+		workplaceEJB.updateWorkplace( currentWorkplace );
 	}
 
 	/**
@@ -120,13 +121,12 @@ public class AdminWorkplaceController implements Serializable
 	/**
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param mechanicId the mechanicId to set
+	 * @param mechanicId
+	 *            the mechanicId to set
 	 */
-	public void setMechanicId(String mechanicId)
+	public void setMechanicId( String mechanicId )
 	{
 		this.mechanicId = mechanicId;
 	}
-	
-	
-	
+
 }

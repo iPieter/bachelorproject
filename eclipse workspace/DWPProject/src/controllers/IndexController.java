@@ -38,7 +38,7 @@ public class IndexController implements Serializable
 	private Issue currentIssue;
 
 	private User currentIssueMechanic;
-	
+
 	/**
 	 * Returnes a list with all the issue objects for the current user, assuming
 	 * he/she is a operator.
@@ -53,9 +53,9 @@ public class IndexController implements Serializable
 	{
 		List<Issue> issues = new ArrayList<>();
 
-		for (IssueStatus is : IssueStatus.values())
+		for ( IssueStatus is : IssueStatus.values() )
 		{
-			issues.addAll(issueEJB.findOperatorIssues(userService.getUser().getId(), is));
+			issues.addAll( issueEJB.findOperatorIssues( userService.getUser().getId(), is ) );
 		}
 
 		return issues;
@@ -73,7 +73,7 @@ public class IndexController implements Serializable
 	 */
 	public List<Issue> findOperatorClosedIssues()
 	{
-		return issueEJB.findOperatorIssues(userService.getUser().getId(), IssueStatus.CLOSED);
+		return issueEJB.findOperatorIssues( userService.getUser().getId(), IssueStatus.CLOSED );
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class IndexController implements Serializable
 	 */
 	public List<Issue> findOperatorInProgressIssues()
 	{
-		return issueEJB.findOperatorIssues(userService.getUser().getId(), IssueStatus.IN_PROGRESS);
+		return issueEJB.findOperatorIssues( userService.getUser().getId(), IssueStatus.IN_PROGRESS );
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class IndexController implements Serializable
 	 */
 	public List<Issue> findOperatorAssignedIssues()
 	{
-		return issueEJB.findOperatorIssues(userService.getUser().getId(), IssueStatus.ASSIGNED);
+		return issueEJB.findOperatorIssues( userService.getUser().getId(), IssueStatus.ASSIGNED );
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class IndexController implements Serializable
 	public String getAvatar()
 	{
 		User u = userService.getUser();
-		if (u != null)
+		if ( u != null )
 		{
 			return u.getImageHash();
 		}
@@ -140,7 +140,7 @@ public class IndexController implements Serializable
 	 * @param userService
 	 *            the userService to set
 	 */
-	public void setUserService(UserService userService)
+	public void setUserService( UserService userService )
 	{
 		this.userService = userService;
 	}
@@ -160,17 +160,18 @@ public class IndexController implements Serializable
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param currentIssue the currentIssue to set
+	 * @param currentIssue
+	 *            the currentIssue to set
 	 */
-	public void setCurrentIssue(Issue currentIssue)
+	public void setCurrentIssue( Issue currentIssue )
 	{
 		this.currentIssue = currentIssue;
 		List<User> mechanics = getMechanicsOfWorkplaceByCurrentIssue();
-		
-		if (mechanics.size() > 0 ) 
+
+		if ( mechanics.size() > 0 )
 		{
-			this.currentIssueMechanic = getMechanicsOfWorkplaceByCurrentIssue().get(0);
-			
+			this.currentIssueMechanic = getMechanicsOfWorkplaceByCurrentIssue().get( 0 );
+
 		}
 	}
 
@@ -185,21 +186,22 @@ public class IndexController implements Serializable
 	public List<User> getMechanicsOfWorkplaceByCurrentIssue()
 	{
 
-		if (currentIssue != null)
+		if ( currentIssue != null )
 		{
 			try
 			{
-				Workplace w = workplaceEJB.findWorkplaceByTraincoachID(currentIssue.getData().getTraincoach().getId())
-						.get(0);
+				Workplace w = workplaceEJB.findWorkplaceByTraincoachID( currentIssue.getData().getTraincoach().getId() )
+						.get( 0 );
 				return w.getMechanics();
-			} catch (IndexOutOfBoundsException ex)
+			}
+			catch ( IndexOutOfBoundsException ex )
 			{
-				System.out.println("Current issue is null.");
+				System.out.println( "Current issue is null." );
 			}
 		}
 		return new LinkedList<>();
 	}
-	
+
 	/**
 	 * Changes the issue status of the currentIssue.
 	 * 
@@ -208,19 +210,19 @@ public class IndexController implements Serializable
 	 */
 	public void assignIssue()
 	{
-		
-		System.out.println(currentIssue.getMechanic());
-		//set assigned status
-		this.currentIssue.setStatus(IssueStatus.ASSIGNED);
-		
-		//set assigned time to now
-		this.currentIssue.setAssignedTime(new Date());
-		
-		//set the mechanic
-		this.currentIssue.setMechanic(currentIssueMechanic);
-		
-		//persist issue
-		issueEJB.updateIssue(this.currentIssue);
+
+		System.out.println( currentIssue.getMechanic() );
+		// set assigned status
+		this.currentIssue.setStatus( IssueStatus.ASSIGNED );
+
+		// set assigned time to now
+		this.currentIssue.setAssignedTime( new Date() );
+
+		// set the mechanic
+		this.currentIssue.setMechanic( currentIssueMechanic );
+
+		// persist issue
+		issueEJB.updateIssue( this.currentIssue );
 	}
 
 	/**
@@ -236,12 +238,12 @@ public class IndexController implements Serializable
 	/**
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param currentIssueMechanic the currentIssueMechanic to set
+	 * @param currentIssueMechanic
+	 *            the currentIssueMechanic to set
 	 */
-	public void setCurrentIssueMechanic(User currentIssueMechanic)
+	public void setCurrentIssueMechanic( User currentIssueMechanic )
 	{
 		this.currentIssueMechanic = currentIssueMechanic;
 	}
 
-	
 }

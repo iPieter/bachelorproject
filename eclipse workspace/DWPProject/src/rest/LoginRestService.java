@@ -24,66 +24,69 @@ import bachelorproject.services.UserService;
 /**
  * REST endpoint for logging in the user.
  * 
- * Inspired by
- * <a href="http://stackoverflow.com/questions/26777083/best-practice-for-rest-token-based-authentication-with-jax-rs-and-jersey">
+ * Inspired by <a href=
+ * "http://stackoverflow.com/questions/26777083/best-practice-for-rest-token-based-authentication-with-jax-rs-and-jersey">
  * this StackOverflow response</a>.
  * 
  * @author Pieter Delobelle
  * @version 1.0.0
  */
-@Path("/login")
+@Path( "/login" )
 public class LoginRestService
 {
-	
+
 	@EJB
 	private TokenEJB tokenEJB;
 
 	@Inject
 	private UserService userService;
-	
+
 	/**
-	 * 	A REST endpoint for authentication a user. This method creates & returns a token if the user's credentials 
-	 *  are correct.
-	 *  @param email The users email
-	 *  @param password The users plaintext password (use SSL to encrypt requests)
-	 *  @return Unauthorized if the user's credentials are invalid, OK otherwise.
-	 * */
+	 * A REST endpoint for authentication a user. This method creates & returns
+	 * a token if the user's credentials are correct.
+	 * 
+	 * @param email
+	 *            The users email
+	 * @param password
+	 *            The users plaintext password (use SSL to encrypt requests)
+	 * @return Unauthorized if the user's credentials are invalid, OK otherwise.
+	 */
 	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response authenticateUser(@FormParam("email") String email, @FormParam("password") String password)
+	@Produces( MediaType.APPLICATION_JSON )
+	@Consumes( MediaType.APPLICATION_FORM_URLENCODED )
+	public Response authenticateUser( @FormParam( "email" ) String email, @FormParam( "password" ) String password )
 	{
 
 		try
 		{
 
 			// Authenticate the user using the credentials provided
-			authenticate(email, password);
+			authenticate( email, password );
 
 			// Issue a token for the user
-			Token token = UserService.issueToken(userService.getUser());
-			
-			tokenEJB.createToken(token);
-			
-			// Return the token on the response
-			return Response.ok(token).build();
+			Token token = UserService.issueToken( userService.getUser() );
 
-		} catch (Exception e)
+			tokenEJB.createToken( token );
+
+			// Return the token on the response
+			return Response.ok( token ).build();
+
+		}
+		catch ( Exception e )
 		{
-			return Response.status(Response.Status.UNAUTHORIZED).build();
+			return Response.status( Response.Status.UNAUTHORIZED ).build();
 		}
 	}
 
 	/**
-	 * 	Link into the userservice to authenticate users.
-	 * */
-	private void authenticate(String email, String password) throws Exception
+	 * Link into the userservice to authenticate users.
+	 */
+	private void authenticate( String email, String password ) throws Exception
 	{
-		if (!userService.verificateLogin(email, password)) 
+		if ( !userService.verificateLogin( email, password ) )
 		{
-			throw new Exception("Login not mached.");
+			throw new Exception( "Login not mached." );
 		}
 	}
 
-	
 }

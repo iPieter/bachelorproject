@@ -21,24 +21,25 @@ import bachelorproject.model.issue.IssueAsset;
 import bachelorproject.services.UserService;
 
 /**
- * 	The controller for traincoach_issue.xhtml
- *  <p>
- *  This class is responsible for rendering all current and previous
- *  issues of a traincoach. It allows operators to track progress of
- *  active issues and close them.
- *  @author Anton Danneels
- *  @version 0.0.1
- *  @see TrainCoach
- *  @see TrainCoachEJB
- *  @see Issue
- *  @see IssueEJB
- * */
+ * The controller for traincoach_issue.xhtml
+ * <p>
+ * This class is responsible for rendering all current and previous issues of a
+ * traincoach. It allows operators to track progress of active issues and close
+ * them.
+ * 
+ * @author Anton Danneels
+ * @version 0.0.1
+ * @see TrainCoach
+ * @see TrainCoachEJB
+ * @see Issue
+ * @see IssueEJB
+ */
 @Named
 @SessionScoped
 public class TrainCoachIssuesController implements Serializable
 {
 	/**
-	 *  Allows this class to be Serializable.
+	 * Allows this class to be Serializable.
 	 */
 	private static final long serialVersionUID = -8774145827987221620L;
 
@@ -52,87 +53,92 @@ public class TrainCoachIssuesController implements Serializable
 	private IssueAssetEJB issueAssetEJB;
 	@Inject
 	private UserService userService;
-	
+
 	private Workplace currentWorkplace = new Workplace();
 	private TrainCoach currentTrainCoach = new TrainCoach();
 	private List<Issue> currentActiveIssues = new ArrayList<Issue>();
 	private List<Issue> currentCompletedIssues = new ArrayList<>();
-	private HashMap<Integer,List<IssueAsset>> currentIssueAssets = new HashMap<Integer, List<IssueAsset>>();
-	
+	private HashMap<Integer, List<IssueAsset>> currentIssueAssets = new HashMap<Integer, List<IssueAsset>>();
+
 	private int currentTraincoachID = -1;
-	
+
 	private int fieldIssueID = 0;
 	private String fieldIssueAssetDescription = "";
-	
+
 	/**
-	 * 	This method gets called when the page first loads.
-	 *  <p>
-	 *  It extracts the id parameter from the URL requests and uses this
-	 *  to load the correct data from the webpage.
-	 * */
+	 * This method gets called when the page first loads.
+	 * <p>
+	 * It extracts the id parameter from the URL requests and uses this to load
+	 * the correct data from the webpage.
+	 */
 	public void loadPage()
 	{
 		currentTrainCoach = traincoachEJB.findTrainCoachByTraincoachId( currentTraincoachID );
-	
-		//TODO:: proper check
+
+		// TODO:: proper check
 		currentWorkplace = workplaceEJB.findWorkplaceByTraincoachID( currentTraincoachID ).get( 0 );
-		
+
 		currentActiveIssues.clear();
 		currentCompletedIssues.clear();
-		
+
 		currentActiveIssues.addAll( issueEJB.findAssignedIssuesByTraincoachId( currentTraincoachID ) );
 		currentActiveIssues.addAll( issueEJB.findInProgressIssuesByTraincoachId( currentTraincoachID ) );
-		
+
 		currentCompletedIssues.addAll( issueEJB.findClosedIssuesByTraincoachId( currentTraincoachID ) );
-		
+
 		currentIssueAssets.clear();
-		
-		for( Issue i : currentActiveIssues )
+
+		for ( Issue i : currentActiveIssues )
 			currentIssueAssets.put( i.getId(), issueAssetEJB.getAllIssueAssetsByIssueID( i.getId() ) );
-		for( Issue i : currentCompletedIssues )
+		for ( Issue i : currentCompletedIssues )
 			currentIssueAssets.put( i.getId(), issueAssetEJB.getAllIssueAssetsByIssueID( i.getId() ) );
 	}
-	
+
 	/**
-	 * 	Creates a IssueAsset and links it to an issue.
-	 *  @return The resulting URL.
-	 * */
+	 * Creates a IssueAsset and links it to an issue.
+	 * 
+	 * @return The resulting URL.
+	 */
 	public String createIssueAsset()
-	{		
+	{
 		IssueAsset asset = new IssueAsset();
 		asset.setDescr( fieldIssueAssetDescription );
 		asset.setLocation( "" );
 		asset.setTime( new Date() );
 		asset.setUser( userService.getUser() );
-		
+
 		issueAssetEJB.createIssueAsset( asset );
 		issueEJB.addAsset( asset, fieldIssueID );
-		
+
 		return "traincoach_issues.xhtml?faces-redirect=true&id=" + currentTrainCoach.getId();
 	}
-	
+
 	/**
-	 * 	Returns a list of an issue's assets.
-	 *  <p>
-	 *  Looks up the HashMap to find an issue's assets. If found, it will return the list, else and empty one
-	 *  @param issueID The ID of the Issue who's assets are needed.
-	 *  @return A list with the issue's assets.
-	 * */
+	 * Returns a list of an issue's assets.
+	 * <p>
+	 * Looks up the HashMap to find an issue's assets. If found, it will return
+	 * the list, else and empty one
+	 * 
+	 * @param issueID
+	 *            The ID of the Issue who's assets are needed.
+	 * @return A list with the issue's assets.
+	 */
 	public List<IssueAsset> getIssueAssets( int issueID )
 	{
-		if( !currentIssueAssets.containsKey( issueID ) )
-			return new ArrayList<IssueAsset>();
-		
+		if ( !currentIssueAssets.containsKey( issueID ) ) return new ArrayList<IssueAsset>();
+
 		return currentIssueAssets.get( issueID );
 	}
-	
+
 	/**
-	 * 	Closes an issue.
-	 *  @param issueID The ID of an issue that needs to be closed.
-	 * */
-	public String closeIssue( )
+	 * Closes an issue.
+	 * 
+	 * @param issueID
+	 *            The ID of an issue that needs to be closed.
+	 */
+	public String closeIssue()
 	{
-		if( issueEJB.closeIssue( fieldIssueID, currentTraincoachID ) )
+		if ( issueEJB.closeIssue( fieldIssueID, currentTraincoachID ) )
 		{
 			System.out.println( "Issue closed." );
 			return "index.xhtml?faces-redirect=true";
@@ -149,7 +155,8 @@ public class TrainCoachIssuesController implements Serializable
 	}
 
 	/**
-	 * @param currentTrainCoach the currentTrainCoach to set
+	 * @param currentTrainCoach
+	 *            the currentTrainCoach to set
 	 */
 	public void setCurrentTrainCoach( TrainCoach currentTrainCoach )
 	{
@@ -165,7 +172,8 @@ public class TrainCoachIssuesController implements Serializable
 	}
 
 	/**
-	 * @param currentActiveIssues the currentActiveIssues to set
+	 * @param currentActiveIssues
+	 *            the currentActiveIssues to set
 	 */
 	public void setCurrentActiveIssues( List<Issue> currentActiveIssues )
 	{
@@ -181,7 +189,8 @@ public class TrainCoachIssuesController implements Serializable
 	}
 
 	/**
-	 * @param currentCompletedIssues the currentCompletedIssues to set
+	 * @param currentCompletedIssues
+	 *            the currentCompletedIssues to set
 	 */
 	public void setCurrentCompletedIssues( List<Issue> currentCompletedIssues )
 	{
@@ -197,7 +206,8 @@ public class TrainCoachIssuesController implements Serializable
 	}
 
 	/**
-	 * @param currentTraincoachID the currentTraincoachID to set
+	 * @param currentTraincoachID
+	 *            the currentTraincoachID to set
 	 */
 	public void setCurrentTraincoachID( int currentTraincoachID )
 	{
@@ -213,7 +223,8 @@ public class TrainCoachIssuesController implements Serializable
 	}
 
 	/**
-	 * @param currentWorkplace the currentWorkplace to set
+	 * @param currentWorkplace
+	 *            the currentWorkplace to set
 	 */
 	public void setCurrentWorkplace( Workplace currentWorkplace )
 	{
@@ -229,7 +240,8 @@ public class TrainCoachIssuesController implements Serializable
 	}
 
 	/**
-	 * @param currentIssueAssets the currentIssueAssets to set
+	 * @param currentIssueAssets
+	 *            the currentIssueAssets to set
 	 */
 	public void setCurrentIssueAssets( HashMap<Integer, List<IssueAsset>> currentIssueAssets )
 	{
@@ -245,7 +257,8 @@ public class TrainCoachIssuesController implements Serializable
 	}
 
 	/**
-	 * @param fieldIssueID the fieldIssueID to set
+	 * @param fieldIssueID
+	 *            the fieldIssueID to set
 	 */
 	public void setFieldIssueID( int fieldIssueID )
 	{
@@ -261,16 +274,17 @@ public class TrainCoachIssuesController implements Serializable
 	}
 
 	/**
-	 * @param fieldIssueAssetDescription the fieldIssueAssetDescription to set
+	 * @param fieldIssueAssetDescription
+	 *            the fieldIssueAssetDescription to set
 	 */
 	public void setFieldIssueAssetDescription( String fieldIssueAssetDescription )
 	{
 		this.fieldIssueAssetDescription = fieldIssueAssetDescription;
 	}
-	
+
 	/**
-	 * Generates a list with TrainCoach object by using the current
-	 * workplace. If no workplace is set, null is returned.
+	 * Generates a list with TrainCoach object by using the current workplace.
+	 * If no workplace is set, null is returned.
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
@@ -280,5 +294,5 @@ public class TrainCoachIssuesController implements Serializable
 	{
 		return currentWorkplace.getTraincoaches();
 	}
-	
+
 }

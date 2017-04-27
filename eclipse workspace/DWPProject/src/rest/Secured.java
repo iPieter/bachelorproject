@@ -8,9 +8,11 @@ import javax.ws.rs.NameBinding;
 import bachelorproject.model.user.UserRole;
 
 @NameBinding
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE, ElementType.METHOD })
+@Retention( RetentionPolicy.RUNTIME )
+@Target(
+{ ElementType.TYPE, ElementType.METHOD } )
 public @interface Secured
 {
-	UserRole[] value() default {};
+	UserRole[] value() default
+	{};
 }

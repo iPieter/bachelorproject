@@ -31,7 +31,7 @@ public class AdminController implements Serializable
 	private List<User> users;
 	private User workingUser;
 	private String workingUserPassword;
-	
+
 	@PostConstruct
 	public void init()
 	{
@@ -47,9 +47,9 @@ public class AdminController implements Serializable
 	 * @param userId
 	 *            The id of the user to be deleted.
 	 */
-	public void deleteUser(int userId)
+	public void deleteUser( int userId )
 	{
-		userEJB.deleteUserById(userId);
+		userEJB.deleteUserById( userId );
 		this.users = userEJB.findAllUsers();
 
 	}
@@ -63,18 +63,19 @@ public class AdminController implements Serializable
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 0.9.9
-	 * @param userId The id of the user that will be set to workingUser
+	 * @param userId
+	 *            The id of the user that will be set to workingUser
 	 * @see User
 	 */
-	public void updateWorkingUser(int userId)
+	public void updateWorkingUser( int userId )
 	{
-		System.out.println("updated user " + userId);
-		if (userId != 0)
+		System.out.println( "updated user " + userId );
+		if ( userId != 0 )
 		{
-			this.workingUser = userEJB.findUserById(userId);
+			this.workingUser = userEJB.findUserById( userId );
 
 		}
-		
+
 		this.users = userEJB.findAllUsers();
 
 	}
@@ -88,29 +89,29 @@ public class AdminController implements Serializable
 	 * @version 1.0.0
 	 */
 	public void updateUser()
-	{	
-		userEJB.updateUser(this.workingUser);
+	{
+		userEJB.updateUser( this.workingUser );
 		this.users = userEJB.findAllUsers();
-	
+
 	}
-	
-	
+
 	/**
 	 * Generate a new User object to be set as the workingUser. this will be
 	 * populated by JSF.
 	 * <p>
 	 * It also generates a password to be used for the workingUser.
+	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
 	 */
 	public void newWorkingUser()
 	{
 		this.workingUser = new User();
-		
-		//Generate password
-		this.workingUserPassword = Base64.getEncoder().encodeToString(UserService.salt(10)).substring(0, 9);
-		System.out.println("user + '" + this.workingUserPassword + "'");		
-		UserService.populateUser(this.workingUser, this.workingUserPassword, "qwertyui");
+
+		// Generate password
+		this.workingUserPassword = Base64.getEncoder().encodeToString( UserService.salt( 10 ) ).substring( 0, 9 );
+		System.out.println( "user + '" + this.workingUserPassword + "'" );
+		UserService.populateUser( this.workingUser, this.workingUserPassword, "qwertyui" );
 	}
 
 	public User getWorkingUser()
@@ -118,7 +119,7 @@ public class AdminController implements Serializable
 		return workingUser;
 	}
 
-	public void setWorkingUser(User workingUser)
+	public void setWorkingUser( User workingUser )
 	{
 		this.workingUser = workingUser;
 	}
@@ -128,7 +129,7 @@ public class AdminController implements Serializable
 		return users;
 	}
 
-	public void setUsers(List<User> users)
+	public void setUsers( List<User> users )
 	{
 		this.users = users;
 	}
@@ -157,12 +158,12 @@ public class AdminController implements Serializable
 	/**
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @param workingUserPassword the workingUserPassword to set
+	 * @param workingUserPassword
+	 *            the workingUserPassword to set
 	 */
-	public void setWorkingUserPassword(String workingUserPassword)
+	public void setWorkingUserPassword( String workingUserPassword )
 	{
 		this.workingUserPassword = workingUserPassword;
 	}
-	
-	
+
 }

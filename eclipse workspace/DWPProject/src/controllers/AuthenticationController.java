@@ -15,8 +15,8 @@ import bachelorproject.model.user.UserRole;
 import bachelorproject.services.UserService;
 
 /**
- * The authenticationController provides a link between the UserService
- * and the login page. 
+ * The authenticationController provides a link between the UserService and the
+ * login page.
  * <p>
  * The AuthenticationController is used by the authentication.(x)html page.
  * 
@@ -52,12 +52,12 @@ public class AuthenticationController implements Serializable
 	 */
 	public String doLogin()
 	{
-		
-		System.out.println("Login function called" + email + " : " + password);
-		
-		if (userService.verificateLogin(email, password))
+
+		System.out.println( "Login function called" + email + " : " + password );
+
+		if ( userService.verificateLogin( email, password ) )
 		{
-			switch (userService.getUser().getRole())
+			switch ( userService.getUser().getRole() )
 			{
 			case ADMIN:
 				return "admin.xhtml?faces-redirect=true";
@@ -66,11 +66,12 @@ public class AuthenticationController implements Serializable
 			default:
 				return "change_account.xhtml?faces-redirect=true";
 			}
-			
-		} else
+
+		}
+		else
 		{
-			FacesContext.getCurrentInstance().addMessage("inputPassword",  new FacesMessage("Invalid login", 
-					"There seems to be a problem with either the password or the email."));
+			FacesContext.getCurrentInstance().addMessage( "inputPassword", new FacesMessage( "Invalid login",
+					"There seems to be a problem with either the password or the email." ) );
 			return "";
 		}
 	}
@@ -84,10 +85,10 @@ public class AuthenticationController implements Serializable
 	 *            UserRole enum to check
 	 * @return True if the user has the same role, false otherwise.
 	 */
-	public boolean hasAccess(UserRole ur)
+	public boolean hasAccess( UserRole ur )
 	{
 
-		return userService.hasCurrentUserRequiredRole(ur);
+		return userService.hasCurrentUserRequiredRole( ur );
 	}
 
 	/**
@@ -100,7 +101,7 @@ public class AuthenticationController implements Serializable
 	 */
 	public boolean hasOperatorAccess()
 	{
-		return hasAccess(UserRole.OPERATOR);
+		return hasAccess( UserRole.OPERATOR );
 	}
 
 	/**
@@ -113,7 +114,7 @@ public class AuthenticationController implements Serializable
 	 */
 	public boolean hasNoOperatorAccess()
 	{
-		return !hasAccess(UserRole.OPERATOR);
+		return !hasAccess( UserRole.OPERATOR );
 	}
 
 	/**
@@ -126,7 +127,7 @@ public class AuthenticationController implements Serializable
 	 */
 	public boolean hasMechanicAccess()
 	{
-		return hasAccess(UserRole.MECHANIC);
+		return hasAccess( UserRole.MECHANIC );
 	}
 
 	/**
@@ -139,9 +140,9 @@ public class AuthenticationController implements Serializable
 	 */
 	public boolean hasAdminAccess()
 	{
-		return hasAccess(UserRole.ADMIN);
+		return hasAccess( UserRole.ADMIN );
 	}
-	
+
 	/**
 	 * Tells if a user is logged in by returning true and false otherwise.
 	 * 
@@ -177,37 +178,38 @@ public class AuthenticationController implements Serializable
 	public String getName()
 	{
 		User u = userService.getUser();
-		if (u != null)
+		if ( u != null )
 		{
 			return u.getName();
 		}
-		
+
 		return "";
 	}
-	
+
 	/**
 	 * The user avatar is a non-guessable file, this function returns the name
-	 * of the file. Appending it with it's image format (".png", ".jpg") will 
+	 * of the file. Appending it with it's image format (".png", ".jpg") will
 	 * result in the correct file.
 	 * <p>
-	 * The REST api will do this for you. So just call <code>/rest/assets/user/#</code>.
+	 * The REST api will do this for you. So just call
+	 * <code>/rest/assets/user/#</code>.
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
-	 * @return String with the non-guessable location of the user avatar. 
+	 * @return String with the non-guessable location of the user avatar.
 	 */
 	public String getAvatar()
 	{
 		User u = userService.getUser();
-		if (u != null)
+		if ( u != null )
 		{
 			return u.getImageHash();
 		}
-		
-		return "";		
+
+		return "";
 	}
 
-	public void setEmail(String email)
+	public void setEmail( String email )
 	{
 		this.email = email;
 	}
@@ -217,7 +219,7 @@ public class AuthenticationController implements Serializable
 		return this.email;
 	}
 
-	public void setPassword(String password)
+	public void setPassword( String password )
 	{
 		this.password = password;
 	}

@@ -1,6 +1,5 @@
 package rest;
 
-
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -23,20 +22,25 @@ import bachelorproject.model.user.UserRole;
 import bachelorproject.services.UserService;
 
 @Path( "/statistics_data" )
-@Secured({UserRole.MECHANIC, UserRole.OPERATOR})
-public class StatisticsRestService {
-	
+@Secured(
+{ UserRole.MECHANIC, UserRole.OPERATOR } )
+public class StatisticsRestService
+{
+
 	/** Allows access to request info */
 	@Context
 	private UriInfo context;
 
-	/** Every request passes through this EJB object which will validate the request.*/
+	/**
+	 * Every request passes through this EJB object which will validate the
+	 * request.
+	 */
 	@EJB
 	private IssueEJB issueEJB;
-	
+
 	@EJB
 	private TokenEJB tokenEJB;
-	
+
 	/**
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
@@ -45,22 +49,21 @@ public class StatisticsRestService {
 	 */
 	@GET
 	@Produces( "text/json" )
-	public Response getDonutData(@HeaderParam("Authorization") String authorizationHeader )
+	public Response getDonutData( @HeaderParam( "Authorization" ) String authorizationHeader )
 	{
-		String token = authorizationHeader.substring("Bearer".length()).trim();
-		int id = tokenEJB.findTokenByToken(token).getOwner().getId();
-		System.out.println(token);
+		String token = authorizationHeader.substring( "Bearer".length() ).trim();
+		int id = tokenEJB.findTokenByToken( token ).getOwner().getId();
+		System.out.println( token );
 		Map<String, Integer> results = new TreeMap<>();
-		
+
 		final int DAYS_BACK_FROM_NOW = 30;
-		
-		for (IssueStatus is : IssueStatus.values())
+
+		for ( IssueStatus is : IssueStatus.values() )
 		{
-			int count = issueEJB.countOperatorIssues(id, is, DAYS_BACK_FROM_NOW);
-			results.put(is.getDescr(), count);
+			int count = issueEJB.countOperatorIssues( id, is, DAYS_BACK_FROM_NOW );
+			results.put( is.getDescr(), count );
 		}
-		
-		
+
 		return Response.ok( results ).build();
 	}
 }

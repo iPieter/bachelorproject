@@ -17,13 +17,15 @@ import bachelorproject.ejb.TokenEJB;
 import bachelorproject.model.user.Token;
 
 /**
- * 	This class allows us to secure the REST API by using tokens to validate a user's request
- *  @author Pieter Delobelle
- *  @version 1.0.0
- * */
+ * This class allows us to secure the REST API by using tokens to validate a
+ * user's request
+ * 
+ * @author Pieter Delobelle
+ * @version 1.0.0
+ */
 @Secured
 @Provider
-@Priority(Priorities.AUTHENTICATION)
+@Priority( Priorities.AUTHENTICATION )
 public class AuthenticationFilter implements ContainerRequestFilter
 {
 
@@ -31,54 +33,59 @@ public class AuthenticationFilter implements ContainerRequestFilter
 	private TokenEJB tokenEJB;
 
 	/**
-	 * 	Tests if a request has a valid token.
-	 *  @param requestContext The request.
-	 *  @throws NotAuthorizedException
-	 *  @throws IOException
-	 * */
+	 * Tests if a request has a valid token.
+	 * 
+	 * @param requestContext
+	 *            The request.
+	 * @throws NotAuthorizedException
+	 * @throws IOException
+	 */
 	@Override
-	public void filter(ContainerRequestContext requestContext) throws IOException
+	public void filter( ContainerRequestContext requestContext ) throws IOException
 	{
 
 		// Get the HTTP Authorization header from the request
-		String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+		String authorizationHeader = requestContext.getHeaderString( HttpHeaders.AUTHORIZATION );
 
 		// Check if the HTTP Authorization header is present and formatted
 		// correctly
-		if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer "))
+		if ( authorizationHeader == null || !authorizationHeader.startsWith( "Bearer " ) )
 		{
-			throw new NotAuthorizedException("Authorization header must be provided");
+			throw new NotAuthorizedException( "Authorization header must be provided" );
 		}
 
 		// Extract the token from the HTTP Authorization header
-		String token = authorizationHeader.substring("Bearer".length()).trim();
+		String token = authorizationHeader.substring( "Bearer".length() ).trim();
 
 		try
 		{
 
 			// Validate the token
-			validateToken(token);
+			validateToken( token );
 
-		} catch (Exception e)
+		}
+		catch ( Exception e )
 		{
-			requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+			requestContext.abortWith( Response.status( Response.Status.UNAUTHORIZED ).build() );
 		}
 	}
 
 	/**
-	 * 	Validates the token by testing if it exists and is not expired
-	 *  @param token The token to be tested
-	 *  @throws Exception
-	 * */
-	private void validateToken(String token) throws Exception
+	 * Validates the token by testing if it exists and is not expired
+	 * 
+	 * @param token
+	 *            The token to be tested
+	 * @throws Exception
+	 */
+	private void validateToken( String token ) throws Exception
 	{
-		Token t = tokenEJB.findTokenByToken(token);
+		Token t = tokenEJB.findTokenByToken( token );
 
-		if (t == null || t.getExpires().before(new Date()) )
+		if ( t == null || t.getExpires().before( new Date() ) )
 		{
-			throw new Exception("Not a known token.");
-		} 
-		
+			throw new Exception( "Not a known token." );
+		}
+
 	}
 
 }

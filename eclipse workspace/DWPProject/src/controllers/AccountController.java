@@ -15,10 +15,10 @@ import bachelorproject.services.UserService;
 /**
  * Controller for the xhtml page where a user can manage his/her account.
  * <p>
- * At the moment, there's only one function: changing the user image via a 
+ * At the moment, there's only one function: changing the user image via a
  * REST-api. So for this, we need a hidden input with the email.
  * <p>
- * When starting up, 
+ * When starting up,
  * 
  * @author Pieter Delobelle
  * @version 0.1.0
@@ -27,17 +27,17 @@ import bachelorproject.services.UserService;
 @RequestScoped
 public class AccountController implements Serializable
 {
-	
+
 	private static final long serialVersionUID = 1194692178654520754L;
-	
+
 	@Inject
 	private UserService userService;
 	@Inject
 	private AuthenticationController authC;
-	
+
 	@EJB
 	private UserEJB userEJB;
-	
+
 	/**
 	 * Dirty hack to make sure the updates on the database by the REST api are
 	 * represented on the client's view.
@@ -48,9 +48,9 @@ public class AccountController implements Serializable
 	@PostConstruct
 	public void updateUser()
 	{
-		userService.setUser(userEJB.findUserById(userService.getUser().getId()));
+		userService.setUser( userEJB.findUserById( userService.getUser().getId() ) );
 	}
-	
+
 	/**
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
@@ -61,7 +61,7 @@ public class AccountController implements Serializable
 	{
 		return userService.getUser().getEmail();
 	}
-	
+
 	/**
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
@@ -71,22 +71,21 @@ public class AccountController implements Serializable
 	{
 		return userService.getUser().getImageHash();
 	}
-	
-	public String getToken() 
+
+	public String getToken()
 	{
 		return userService.getToken().getToken();
 	}
-	
+
 	/**
 	 * False setter so JSF doesn't complain.
 	 * 
 	 * @author Pieter Delobelle
 	 * @version 1.0.0
 	 */
-	public void setToken(String s)
+	public void setToken( String s )
 	{
-		//Empty
+		// Empty
 	}
 
-	
 }

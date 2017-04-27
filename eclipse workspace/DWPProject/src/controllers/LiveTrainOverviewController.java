@@ -12,31 +12,32 @@ import bachelorproject.ejb.LiveSensorDataEJB;
 import bachelorproject.model.sensordata.LiveSensorData;
 
 /**
- * 	The controller for live_train_overview.xhtml and live_train.xhtml
- *  <p>
- *  This class allows the operator to view all the live trains and follow 
- *  them in more detail.
- *  @author Anton Danneels
- *  @version 0.0.1
- * */
+ * The controller for live_train_overview.xhtml and live_train.xhtml
+ * <p>
+ * This class allows the operator to view all the live trains and follow them in
+ * more detail.
+ * 
+ * @author Anton Danneels
+ * @version 0.0.1
+ */
 @Named
 @RequestScoped
 public class LiveTrainOverviewController
 {
 	@Inject
 	private LiveSensorDataEJB lsdEJB;
-	
+
 	private List<LiveSensorData> liveTrains = new ArrayList<LiveSensorData>();
-	
+
 	private int currentTrainID = 0;
 	private LiveSensorData currentLSD = new LiveSensorData();
-	
+
 	@PostConstruct
 	public void loadPage()
 	{
 		liveTrains.clear();
 		liveTrains = lsdEJB.getAllActiveSensorObjects();
-		
+
 		currentLSD = lsdEJB.findLSDByID( currentTrainID );
 	}
 
@@ -49,7 +50,8 @@ public class LiveTrainOverviewController
 	}
 
 	/**
-	 * @param liveTrains the liveTrains to set
+	 * @param liveTrains
+	 *            the liveTrains to set
 	 */
 	public void setLiveTrains( List<LiveSensorData> liveTrains )
 	{
@@ -65,7 +67,8 @@ public class LiveTrainOverviewController
 	}
 
 	/**
-	 * @param currentTrainID the currentTrainID to set
+	 * @param currentTrainID
+	 *            the currentTrainID to set
 	 */
 	public void setCurrentTrainID( int currentTrainID )
 	{
@@ -81,11 +84,12 @@ public class LiveTrainOverviewController
 	}
 
 	/**
-	 * @param currentLSD the currentLSD to set
+	 * @param currentLSD
+	 *            the currentLSD to set
 	 */
 	public void setCurrentLSD( LiveSensorData currentLSD )
 	{
 		this.currentLSD = currentLSD;
 	}
-	
+
 }

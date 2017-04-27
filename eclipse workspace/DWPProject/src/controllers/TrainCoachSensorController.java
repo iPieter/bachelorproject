@@ -18,17 +18,18 @@ import bachelorproject.model.issue.Issue;
 import bachelorproject.model.sensordata.ProcessedSensorData;
 
 /**
- * 	The controller for traincoach_sensor.xhtml
- *  <p>
- *  When visiting the traincoach_sensor page, operators can see 
- *  an overview of past sensordata.
- *  @author Anton Danneels
- *  @version 0.0.1
- *  @see TrainCoach
- *  @see TrainCoachEJB
- *  @see Issue
- *  @see IssueEJB
- * */
+ * The controller for traincoach_sensor.xhtml
+ * <p>
+ * When visiting the traincoach_sensor page, operators can see an overview of
+ * past sensordata.
+ * 
+ * @author Anton Danneels
+ * @version 0.0.1
+ * @see TrainCoach
+ * @see TrainCoachEJB
+ * @see Issue
+ * @see IssueEJB
+ */
 @Named
 @SessionScoped
 public class TrainCoachSensorController implements Serializable
@@ -41,26 +42,24 @@ public class TrainCoachSensorController implements Serializable
 	private TrainCoachEJB traincoachEJB;
 	@Inject
 	private ProcessedSensorDataEJB psdEJB;
-	
+
 	private int currentTrainCoachID = 0;
 	private TrainCoach currentTrainCoach = null;
 	private Workplace currentWorkplace = null;
-	
+
 	List<ProcessedSensorData> data = new ArrayList<>();
-	
+
 	/**
-	 * 	Loads the page by retrieving the needed assets from the database.
-	 * */
+	 * Loads the page by retrieving the needed assets from the database.
+	 */
 	public void loadPage()
 	{
 		currentTrainCoach = traincoachEJB.findTrainCoachByTraincoachId( currentTrainCoachID );
-		if( currentTrainCoach == null )
-			currentTrainCoach = new TrainCoach();
-		
+		if ( currentTrainCoach == null ) currentTrainCoach = new TrainCoach();
+
 		List<Workplace> workplaces = workplaceEJB.findWorkplaceByTraincoachID( currentTrainCoachID );
-		if( workplaces.size() > 0 )
-			currentWorkplace = workplaces.get( 0 );
-		
+		if ( workplaces.size() > 0 ) currentWorkplace = workplaces.get( 0 );
+
 		data.clear();
 		data.addAll( psdEJB.getProcessedSensorDataListByTrainCoachID( currentTrainCoachID ) );
 	}
@@ -74,7 +73,8 @@ public class TrainCoachSensorController implements Serializable
 	}
 
 	/**
-	 * @param currentTrainCoachID the currentTrainCoachID to set
+	 * @param currentTrainCoachID
+	 *            the currentTrainCoachID to set
 	 */
 	public void setCurrentTrainCoachID( int currentTrainCoachID )
 	{
@@ -90,7 +90,8 @@ public class TrainCoachSensorController implements Serializable
 	}
 
 	/**
-	 * @param currentTrainCoach the currentTrainCoach to set
+	 * @param currentTrainCoach
+	 *            the currentTrainCoach to set
 	 */
 	public void setCurrentTrainCoach( TrainCoach currentTrainCoach )
 	{
@@ -106,7 +107,8 @@ public class TrainCoachSensorController implements Serializable
 	}
 
 	/**
-	 * @param currentWorkplace the currentWorkplace to set
+	 * @param currentWorkplace
+	 *            the currentWorkplace to set
 	 */
 	public void setCurrentWorkplace( Workplace currentWorkplace )
 	{
@@ -122,11 +124,12 @@ public class TrainCoachSensorController implements Serializable
 	}
 
 	/**
-	 * @param data the data to set
+	 * @param data
+	 *            the data to set
 	 */
 	public void setData( List<ProcessedSensorData> data )
 	{
 		this.data = data;
 	}
-	
+
 }
