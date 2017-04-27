@@ -94,56 +94,80 @@
 						<h3 class="panel-title">Actieve wagons</h3>
 					</div>
 
-					<div class="panel-body">
+					<c:choose>
+						<c:when
+							test="#{workplaceController.findActiveTrainCoaches().size() == 0}">
+							<em>Er zijn momenteel geen wagons die inspectie nodig hebben
+								in deze staanplaats.</em>
+						</c:when>
+						<c:otherwise>
+							<!-- WAGONS OVERZICHT -->
+							<c:set var="workplace"
+								value="#{workplaceController.currentWorkplace}" />
+							<c:forEach var="traincoach"
+								items="#{workplaceController.findActiveTrainCoaches()}">
+								<!-- WAGON OVERZICHT -->
+								<div class="table-group">
+									<h3>
+										<img class="icon" src="img/train-100.png"></img>
+										<h:link value="#{traincoach.type} - #{traincoach.name}"
+											outcome="traincoach.xhtml?id=#{traincoach.id}" />
+									</h3>
 
+									<h:dataTable class="table userTable"
+										value="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id)}"
+										var="issue">
+										<h:column>
+											<ui:fragment rendered="#{issue.mechanic ne null}">
+												<div class="avatar">
+													<img src="rest/assets/user/#{issue.mechanic.imageHash}" />
+												</div>
+											</ui:fragment>
 
-						<c:choose>
-							<c:when
-								test="#{workplaceController.findActiveTrainCoaches().size() == 0}">
-								<em>Er zijn momenteel geen wagons die inspectie nodig
-									hebben in deze staanplaats.</em>
-							</c:when>
-							<c:otherwise>
-								<!-- WAGONS OVERZICHT -->
-								<div class="row content">
-									<div class="col-sm-12 pad">
-										<c:set var="workplace"
-											value="#{workplaceController.currentWorkplace}" />
-										<c:forEach var="traincoach"
-											items="#{workplaceController.findActiveTrainCoaches()}">
-											<!-- WAGON OVERZICHT -->
-											<div class="row mainview_traincoach">
-												<div class="col-sm-4 mainview_wagon_header">
-													<h3>
-														<h:link value="#{traincoach.type} - #{traincoach.name}"
-															outcome="traincoach.xhtml?id=#{traincoach.id}" />
-													</h3>
-												</div>
-												<div class="col-sm-8">
-													<h4>Actieve problemen</h4>
-													<ul>
-														<c:forEach var="issue"
-															items="#{workplaceController.findActiveIssuesByTraincoachId(traincoach.id)}">
-															<li><h:outputText value="#{issue.descr}"></h:outputText></li>
-														</c:forEach>
-													</ul>
-													<h4>Afgewerkte problemen</h4>
-													<ul>
-														<c:forEach var="issue"
-															items="#{workplaceController.findClosedIssuesByTraincoachId(traincoach.id)}">
-															<li><h:outputText value="#{issue.descr}"></h:outputText></li>
-														</c:forEach>
-													</ul>
-												</div>
+										</h:column>
+										<h:column>
+											<f:facet name="header">
+												<h:outputText value="Technicus" />
+											</f:facet>
+											<h:outputText value="#{issue.mechanic.name}" />
+										</h:column>
+
+										<h:column>
+											<f:facet name="header">
+												<h:outputText value="Probleem" />
+											</f:facet>
+											<h:outputText value="#{issue.descr}" />
+
+											<div class="label label-${issue.status.color}">#{issue.status.descr}</div>
+
+										</h:column>
+
+										<h:column>
+											<f:facet name="header">
+												<h:outputText value="Acties" />
+											</f:facet>
+
+											<div class="btn-group" role="group"
+												aria-label="action buttons">
+
+												<!-- view issue -->
+												<h:link type="button" class="btn btn-default"
+													outcome="/traincoach_issues.xhtml?id=${issue.data.traincoach.id}"
+													immediate="true">
+													<span class="glyphicon glyphicon-fullscreen"
+														aria-hidden="false" aria-label="View issue"></span>
+												</h:link>
 											</div>
-											<!-- END WAGON OVERZICHT -->
-										</c:forEach>
-										<!-- END WAGONS OVERZICHT -->
-									</div>
+										</h:column>
+
+									</h:dataTable>
 								</div>
-							</c:otherwise>
-						</c:choose>
-					</div>
+
+								<!-- END WAGON OVERZICHT -->
+							</c:forEach>
+							<!-- END WAGONS OVERZICHT -->
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 			<!-- END MAIN PANEL-LARGE-LEFT -->
@@ -156,12 +180,12 @@
 						<h3 class="panel-title">Actuele problemen</h3>
 					</div>
 
-						<input type="hidden"
-							value="#{workplaceController.currentWorkplace.id}"
-							id="current_workplace" />
-						<div id="map_size">
-							<div id="map"></div>
-						</div>
+					<input type="hidden"
+						value="#{workplaceController.currentWorkplace.id}"
+						id="current_workplace" />
+					<div id="map_size">
+						<div id="map"></div>
+					</div>
 				</div>
 
 				<div class="panel panel-default">
@@ -183,9 +207,7 @@
 								<div class="col-sm-8">
 									<c:forEach var="activeIssue"
 										items="#{workplaceController.findActiveIssuesByMechanicId(mechanic.id)}">
-										<li>
-											<h:outputText
-												value="#{activeIssue.descr}" />
+										<li><h:outputText value="#{activeIssue.descr}" />
 											<div class="label label-${activeIssue.status.color}">#{activeIssue.status.descr}</div>
 										</li>
 									</c:forEach>

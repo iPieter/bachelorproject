@@ -209,6 +209,40 @@ html {
     .panel-footer {
         height: 54px;
     }
+    .table-group {
+        text-align: center;
+        h3 a {
+            @include font(300);
+            font-size: 24px;
+            color: $grey-text;
+        }
+        .icon {
+            height: 34px;
+            padding: {
+                right: 6px;
+            }
+        }
+        .table {
+            text-align: left;
+            margin: {
+                bottom: 0px;
+            }
+        }
+        border: {
+            bottom: $border;
+        }
+
+        &:last-child {
+            .table {
+            margin: {
+                bottom: 20px;
+            }
+        }
+        border: {
+            bottom: 0;
+        }
+        }
+    }
 }
 
 .admin-container {
@@ -282,8 +316,8 @@ html {
 }
 
 .asset_image {
-	display:block;
-	width: 300px;
+    display: block;
+    width: 300px;
 }
 
 .userTable>tbody>tr>td:first-child {
