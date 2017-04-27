@@ -194,31 +194,74 @@
 						<h3 class="panel-title">Technici</h3>
 					</div>
 
-					<div class="panel-body">
-						<!-- OVERZICHT TECHNICI CONTENT-->
+					<!-- OVERZICHT TECHNICI CONTENT-->
 
-						<c:forEach var="mechanic"
-							items="#{workplaceController.findMechanicsOfCurrentWorkplace()}">
-							<!-- TECHNICUS -->
-							<div class="mainview_issue row">
-								<div class="col-sm-4 dont-break-out">
-									<b>#{mechanic.name}</b>
-								</div>
-								<div class="col-sm-8">
-									<c:forEach var="activeIssue"
-										items="#{workplaceController.findActiveIssuesByMechanicId(mechanic.id)}">
-										<li><h:outputText value="#{activeIssue.descr}" />
-											<div class="label label-${activeIssue.status.color}">#{activeIssue.status.descr}</div>
-										</li>
-									</c:forEach>
-								</div>
-							</div>
-							<!-- END TECHNICUS -->
-						</c:forEach>
-					</div>
+					<c:forEach var="mechanic"
+						items="#{workplaceController.findMechanicsOfCurrentWorkplace()}">
+
+						<!-- TECHNICUS -->
+						<div class="table-group">
+							<h3>
+								<div class="avatar">
+											<img src="rest/assets/user/#{mechanic.imageHash}" />
+										</div>
+								<h:outputText value="#{mechanic.name}" />
+							</h3>
+
+							<h:dataTable class="table"
+								value="#{workplaceController.findActiveIssuesByMechanicId(mechanic.id)}"
+								var="issue">
+								<h:column>
+									<ui:fragment rendered="#{issue.operator ne null}">
+										<div class="avatar">
+											<img src="rest/assets/user/#{issue.operator.imageHash}" />
+										</div>
+									</ui:fragment>
+
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Toegekend door" />
+									</f:facet>
+									<h:outputText value="#{issue.operator.name}" />
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Probleem" />
+									</f:facet>
+									<h:outputText value="#{issue.descr}" />
+
+									<div class="label label-${issue.status.color}">#{issue.status.descr}</div>
+
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Acties" />
+									</f:facet>
+
+									<div class="btn-group" role="group" aria-label="action buttons">
+
+										<!-- view issue -->
+										<h:link type="button" class="btn btn-default"
+											outcome="/traincoach_issues.xhtml?id=${issue.data.traincoach.id}"
+											immediate="true">
+											<span class="glyphicon glyphicon-fullscreen"
+												aria-hidden="false" aria-label="View issue"></span>
+										</h:link>
+									</div>
+								</h:column>
+
+							</h:dataTable>
+						</div>
+
+
+						<!-- END TECHNICUS -->
+					</c:forEach>
 				</div>
-				<!-- END OVERZICHT TECHNICI -->
 			</div>
+			<!-- END OVERZICHT TECHNICI -->
 		</div>
 		<!-- MAINVIEW PANEL RIGHT SIDE END-->
 		<!-- END MAIN ROW -->

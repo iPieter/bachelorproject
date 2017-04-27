@@ -211,10 +211,13 @@ html {
     }
     .table-group {
         text-align: center;
-        h3 a {
+        h3 {
             @include font(300);
             font-size: 24px;
             color: $grey-text;
+            a {
+                color: $grey-text;
+            }
         }
         .icon {
             height: 34px;
@@ -231,16 +234,15 @@ html {
         border: {
             bottom: $border;
         }
-
         &:last-child {
             .table {
-            margin: {
-                bottom: 20px;
+                margin: {
+                    bottom: 20px;
+                }
             }
-        }
-        border: {
-            bottom: 0;
-        }
+            border: {
+                bottom: 0;
+            }
         }
     }
 }
