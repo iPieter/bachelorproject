@@ -281,6 +281,11 @@ html {
     background-color: transparentize( $white, 0.35);
 }
 
+.asset_image {
+	display:block;
+	width: 300px;
+}
+
 .userTable>tbody>tr>td:first-child {
     width: 36px;
 }
