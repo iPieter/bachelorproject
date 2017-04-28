@@ -166,7 +166,7 @@ html {
     padding-right: 6px; }
   .panel .table-group .table {
     text-align: left;
-    margin-bottom: 0px; }
+    margin-bottom: 0; }
   .panel .table-group:last-child {
     border-bottom: 0; }
     .panel .table-group:last-child .table {
