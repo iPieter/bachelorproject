@@ -209,6 +209,13 @@
 							</div>
 
 						</c:when>
+						<c:when test="#{trainCoachController.mechanics.size() == 0}">
+							<div class="panel-body">
+
+								<p>Er zijn geen technici gestationeerd in #{trainCoachController.currentWorkplace.name}.</p>
+							</div>
+
+						</c:when>
 						<c:otherwise>
 							<div class="mainview_issue row">
 								<div class="col-sm-12 issue_bar"></div>
