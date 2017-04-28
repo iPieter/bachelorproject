@@ -132,22 +132,29 @@
 
 
 			</div>
-			<div class="col-sm-3">
-				<h:form class="issue_bar ">
-					<div class="btn-group pull-right">
-						<button id="create_issue_button" type="button" name="button"
-							class="btn btn-danger" data-toggle="modal"
-							data-target="#assignModal" onclick="setModal()">
-							<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
-						</button>
-						<h:commandLink name="buttonApprove" class="btn btn-success"
-							action="#{trainCoachController.setTrainCoachReviewed()}"
-							type="submit">
-							<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-						</h:commandLink>
+			<c:choose>
+
+				<c:when test="#{trainCoachController.currentpsdID == 0}">
+
+					<div class="col-sm-3">
+						<h:form class="issue_bar ">
+							<div class="btn-group pull-right">
+								<button id="create_issue_button" type="button" name="button"
+									class="btn btn-danger" data-toggle="modal"
+									data-target="#assignModal" onclick="setModal()">
+									<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+								</button>
+								<h:commandLink name="buttonApprove" class="btn btn-success"
+									action="#{trainCoachController.setTrainCoachReviewed()}"
+									type="submit">
+									<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+								</h:commandLink>
+							</div>
+						</h:form>
 					</div>
-				</h:form>
-			</div>
+
+				</c:when>
+			</c:choose>
 		</div>
 		<div class="row">
 			<!-- MAIN PANEL-LARGE-LEFT (descr=oplijsten wagons, incl. Actieve & afgewerkte problemen -->
