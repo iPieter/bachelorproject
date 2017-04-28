@@ -245,20 +245,17 @@
 									<f:facet name="header">
 										<h:outputText value="Actieve problemen" />
 									</f:facet>
-									<h:outputText
-										value="#{trainCoachController.findActiveIssuesByMechanicId(mechanic.id).size()}" />
-
-								</h:column>
-
-								<h:column>
-									<f:facet name="header">
-										<h:outputText value="Bij deze wagon" />
-									</f:facet>
+									<b>
 									<h:outputText
 										value="#{trainCoachController.findActiveIssuesByMechanicId(mechanic.id, trainCoachController.currentTrainCoachID).size()}" />
-
+									</b> 
+									aan deze wagon, 
+									<b>
+									<h:outputText
+										value="#{trainCoachController.findActiveIssuesByMechanicId(mechanic.id).size()}" />
+									</b>
+									in totaal.
 								</h:column>
-
 
 							</h:dataTable>
 
