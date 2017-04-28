@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -53,7 +54,7 @@ public class TrainCoachController implements Serializable
 	private int currentpsdID;
 
 	@NotNull
-	@Size( min = 10, max = 1000, message = "De beschrijving van het probleem moet minimaal {min} tekens bevatten en maximaal {max}." )
+	@Size(min = 10, max = 1000, message = "De beschrijving van het probleem moet minimaal {min} tekens bevatten en maximaal {max}.")
 	private String description = "";
 
 	@NotNull
@@ -73,7 +74,8 @@ public class TrainCoachController implements Serializable
 	public void loadPage()
 	{
 		currentTrainCoach = traincoachEJB.findTrainCoachByTraincoachId( currentTrainCoachID );
-		if ( currentTrainCoach == null ) currentTrainCoach = new TrainCoach();
+		if ( currentTrainCoach == null )
+			currentTrainCoach = new TrainCoach();
 		List<Workplace> result = workplaceEJB.findWorkplaceByTraincoachID( currentTrainCoach.getId() );
 		if ( result.size() > 0 )
 		{
@@ -81,8 +83,10 @@ public class TrainCoachController implements Serializable
 		}
 		if ( currentpsdID == 0 )
 			currentSensorData = psdEJB.getProcessedSensorDataByTrainCoachID( currentTrainCoach.getId() );
-		else currentSensorData = psdEJB.getProcessedSensorDataByID( currentpsdID );
-		if ( currentSensorData == null ) System.out.println( "Failed to locate sensordata" );
+		else
+			currentSensorData = psdEJB.getProcessedSensorDataByID( currentpsdID );
+		if ( currentSensorData == null )
+			System.out.println( "Failed to locate sensordata" );
 
 		mechanics.clear();
 		for ( User u : workplaceEJB.findMechanicsByWorkplaceId( currentWorkplace.getId() ) )
@@ -138,7 +142,8 @@ public class TrainCoachController implements Serializable
 		User m = new User();
 		for ( User mm : mechanics )
 		{
-			if ( mm.getId() == Integer.parseInt( mechanicID ) ) m = mm;
+			if ( mm.getId() == Integer.parseInt( mechanicID ) )
+				m = mm;
 		}
 
 		issue.setMechanic( m );
@@ -175,6 +180,32 @@ public class TrainCoachController implements Serializable
 		List<Issue> result = new ArrayList<Issue>();
 		result.addAll( findInProgressIssuesByMechanicId( mechanicId ) );
 		result.addAll( findAssignedIssuesByMechanicId( mechanicId ) );
+		return result;
+	}
+
+	/**
+	 * Returns a list of Issue objects for a given mechanic id, filtered by the
+	 * provided traincoach id. All queried issues have an IssueState IN_PROGRESS
+	 * or ASSIGNED.
+	 * 
+	 * @author Pieter Delobelle
+	 * @version 1.0.0
+	 * @param mechanicId
+	 *            The user id of the mechanic
+	 * @param traincoachId
+	 *            The traincoach id
+	 * @return A list object with all issues
+	 * @see #findActiveIssuesByMechanicId(int)
+	 */
+	public List<Issue> findActiveIssuesByMechanicId( int mechanicId, int traincoachId )
+	{
+		List<Issue> result = findInProgressIssuesByMechanicId( mechanicId );
+		result.addAll( findAssignedIssuesByMechanicId( mechanicId ) );
+
+		// filter
+		result = result.stream().filter( issue -> issue.getData().getTraincoach().getId() == traincoachId )
+				.collect( Collectors.toList() );
+
 		return result;
 	}
 
