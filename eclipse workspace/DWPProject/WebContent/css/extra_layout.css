@@ -231,8 +231,10 @@ html {
   display: block;
   width: 300px; }
 
-.userTable > tbody > tr > td:first-child {
-  width: 36px; }
+.table > tbody > tr > td {
+  vertical-align: middle; }
+  .table > tbody > tr > td:first-child {
+    width: 36px; }
 
 .label-created {
   background-color: #8e44ad; }
