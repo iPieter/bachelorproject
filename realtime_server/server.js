@@ -4,9 +4,13 @@ var request = require( 'request' );
 var data    = JSON.parse( fs.readFileSync( 'test.json', 'utf8' ) );
 
 var index   = 700;
-var baseURL = "http://10.108.0.121:8080/DWPProject-0.0.1-SNAPSHOT/rest";
+var end = 100 + index;
+var baseURL = "http://ec2-54-202-94-106.us-west-2.compute.amazonaws.com:8080/DWPProject/rest";
 
-request( baseURL + '/live_data/register/M8/15921/Bombardier/Luik-Oostende', function( error, response, body )
+var beginStation = "Oostende";
+var endStation = "Luik";
+
+request( baseURL + '/live_data/register/M8/15921/Bombardier/' + beginStation + "-" + endStation, function( error, response, body )
 {
     if( error !== null )
         console.log( error );
@@ -33,7 +37,7 @@ request( baseURL + '/live_data/register/M8/15921/Bombardier/Luik-Oostende', func
         {
         });
 
-        if( index >= 750 || index > data.yaw.length )
+        if( index >= end || index > data.yaw.length )
         {
             request( baseURL + '/live_data/stop/' + lsdID, function( error, response, body )
             {
