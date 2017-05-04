@@ -231,9 +231,9 @@ html {
   display: block;
   width: 300px; }
 
-.table > tbody > tr > td {
+.userTable > tbody > tr > td {
   vertical-align: middle; }
-  .table > tbody > tr > td:first-child {
+  .userTable > tbody > tr > td:first-child {
     width: 36px; }
 
 .label-created {
