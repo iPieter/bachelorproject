@@ -3,14 +3,14 @@ var request = require( 'request' );
 
 var data    = JSON.parse( fs.readFileSync( 'test.json', 'utf8' ) );
 
-var index   = 700;
-var end = 100 + index;
+var index   = 0;
+var end     = data.yaw.length - 10;
 var baseURL = "http://ec2-54-202-94-106.us-west-2.compute.amazonaws.com:8080/DWPProject/rest";
 
-var beginStation = "Oostende";
-var endStation = "Luik";
+var beginStation = "Flobecq";
+var endStation = "Gent-Sint-Pieters";
 
-request( baseURL + '/live_data/register/M8/15921/Bombardier/' + beginStation + "-" + endStation, function( error, response, body )
+request( baseURL + '/live_data/register/M9/75346/Bombardier/' + beginStation + "-" + endStation, function( error, response, body )
 {
     if( error !== null )
         console.log( error );

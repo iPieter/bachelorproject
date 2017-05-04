@@ -118,7 +118,7 @@ public class ConstraintEngine
 				currentIssue.setGpsLon( 0 );
 				currentIssue.setAssignedTime( new Date() );
 				currentIssue.setData( this.data );
-				currentIssue.setStatus( IssueStatus.ASSIGNED );
+				currentIssue.setStatus( IssueStatus.CREATED );
 				currentIssue.setOperator( c.getCreator() );
 				currentIssueDescription = c.getName() + System.getProperty( "line.separator" );
 
