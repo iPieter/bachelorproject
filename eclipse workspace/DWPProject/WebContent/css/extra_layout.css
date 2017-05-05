@@ -228,13 +228,14 @@ html {
   background-color: rgba(252, 252, 253, 0.65); }
 
 .asset_image {
-  display: block;
+  display: block; 
   width: 300px; }
 
 .userTable > tbody > tr > td {
   vertical-align: middle; }
   .userTable > tbody > tr > td:first-child {
-    width: 36px; }
+    width: 36px;     
+ }
 
 .label-created {
   background-color: #8e44ad; }

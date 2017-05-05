@@ -172,30 +172,33 @@ public class LiveSensorDataEJB
 			data.setTraincoach( sensordata.getTraincoach() );
 
 			boolean newWorkplace = false;
-			List<Workplace> workplaces = workplaceEJB.getAllWorkplaces();
+			//List<Workplace> workplaces = workplaceEJB.getAllWorkplaces();
 			Workplace workplace = null;
 
 			String split[] = sensordata.getTrack().split( "-" );
 			String workplaceName = split[1];
 
 			TrainCoach trainCoach = sensordata.getTraincoach();
-
-			// Note(Anton): this can be optimized
-			for ( Workplace p : workplaces )
+			
+			List<Workplace> workplaces = workplaceEJB.findWorkplaceByTraincoachID( trainCoach.getId() );
+			
+			if( !workplaces.isEmpty() )
 			{
-				if ( p.getName().toLowerCase().equals( workplaceName.toLowerCase() ) ) workplace = p;
-
-				Iterator<TrainCoach> iterator = p.getTraincoaches().iterator();
-				while ( iterator.hasNext() )
+				workplace = workplaces.get( 0 );
+				List<TrainCoach> traincoaches = workplace.getTraincoaches();
+				int index = 0;
+				for( int i = 0; i < traincoaches.size(); i++ )
 				{
-					TrainCoach t = iterator.next();
-					if ( t.getId() == trainCoach.getId() )
-					{
-						iterator.remove();
-						em.merge( p );
-					}
+					if( traincoaches.get( i ).getId() == trainCoach.getId() )
+						index = i;
 				}
+				System.out.println( "Removing: "+ index + " ,size before: " + traincoaches.size() );
+				workplace.getTraincoaches().remove( index );
+				em.merge( workplace );
+				System.out.print( "After: " + workplace.getTraincoaches().size() );
 			}
+			
+			
 			if ( workplace == null )
 			{
 				workplace = new Workplace();
