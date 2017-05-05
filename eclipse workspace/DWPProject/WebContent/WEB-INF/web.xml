@@ -22,4 +22,16 @@
     <exception-type>javax.faces.application.ViewExpiredException</exception-type>
     <location>/login.xhtml</location>
 </error-page>
+<security-constraint>
+    <web-resource-collection>
+        <web-resource-name>ssl</web-resource-name>
+        <url-pattern>*</url-pattern>
+        <http-method>GET</http-method>
+        <http-method>POST</http-method>
+        <http-method>PUT</http-method>
+    </web-resource-collection>
+    <user-data-constraint>
+        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+</security-constraint>
 </web-app>
