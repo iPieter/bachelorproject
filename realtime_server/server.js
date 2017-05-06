@@ -10,7 +10,7 @@ var baseURL = "http://ec2-54-202-94-106.us-west-2.compute.amazonaws.com:8080/DWP
 var beginStation = "Luik";
 var endStation = "Oostende";
 
-request( baseURL + '/live_data/register/M9/75346/Bombardier/' + beginStation + "-" + endStation, function( error, response, body )
+request( baseURL + '/live_data/register/M9/75346/Bombardier/' + beginStation + "--" + endStation, function( error, response, body )
 {
     if( error !== null )
         console.log( error );
