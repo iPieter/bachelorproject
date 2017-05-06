@@ -163,4 +163,22 @@ public class WorkplaceEJB
 		em.close();
 
 	}
+	
+	/**
+	 * 	Finds a workplace by its name.
+	 *  
+	 * */
+	public Workplace findByName( String name )
+	{
+		EntityManager em = ems.getEntityManager();
+		TypedQuery<Workplace> query = em.createNamedQuery( Workplace.FIND_BY_DATA, Workplace.class );
+		query.setParameter( "name", name );
+		
+		List<Workplace> result = query.getResultList();
+		
+		if( result.isEmpty() ) 
+			return null;
+		
+		return result.get( 0 );
+	}
 }

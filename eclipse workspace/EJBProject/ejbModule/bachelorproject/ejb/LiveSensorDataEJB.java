@@ -175,17 +175,18 @@ public class LiveSensorDataEJB
 			//List<Workplace> workplaces = workplaceEJB.getAllWorkplaces();
 			Workplace workplace = null;
 
-			String split[] = sensordata.getTrack().split( "-" );
+			String split[] = sensordata.getTrack().split( "--" );
 			String workplaceName = split[1];
 
 			TrainCoach trainCoach = sensordata.getTraincoach();
 			
-			List<Workplace> workplaces = workplaceEJB.findWorkplaceByTraincoachID( trainCoach.getId() );
+			List<Workplace> oldWorkplaces = workplaceEJB.findWorkplaceByTraincoachID( trainCoach.getId() );
+			workplace = workplaceEJB.findByName( workplaceName );
 			
-			if( !workplaces.isEmpty() )
+			if( !oldWorkplaces.isEmpty() )
 			{
-				workplace = workplaces.get( 0 );
-				List<TrainCoach> traincoaches = workplace.getTraincoaches();
+				Workplace oldWorkplace = oldWorkplaces.get( 0 );
+				List<TrainCoach> traincoaches = oldWorkplace.getTraincoaches();
 				int index = 0;
 				for( int i = 0; i < traincoaches.size(); i++ )
 				{
@@ -193,9 +194,9 @@ public class LiveSensorDataEJB
 						index = i;
 				}
 				System.out.println( "Removing: "+ index + " ,size before: " + traincoaches.size() );
-				workplace.getTraincoaches().remove( index );
-				em.merge( workplace );
-				System.out.print( "After: " + workplace.getTraincoaches().size() );
+				oldWorkplace.getTraincoaches().remove( index );
+				em.merge( oldWorkplace );
+				System.out.print( "After: " + oldWorkplace.getTraincoaches().size() );
 			}
 			
 			
