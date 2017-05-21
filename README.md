@@ -1,7 +1,42 @@
 # Bachelorproject: Televic
 Deze repository bevat de code voor het bachelorproject.
 
-## Deel Anton
+## Onderdelen
+
+### Dashboard
+Een overzicht met alle problemen en een heatmap.
+
+![Dashboard](img/index_1.png)
+![Dashboard, met gedetecteerd probleem](img/index_2.png)
+
+### Stelplaatsoverzicht
+Een overzicht van alle wagons op een stelplaats.
+
+![Stelplaats](img/workplace.png)
+![Stelplaats](img/workplace_2.png)
+
+### Wagonoverzicht
+Sensordata per wagon, alsook technici die aan de wagon werken of op diezelfde stelplaats staan. Daarnaast kan een probleem opgevolgd worden en commentaar vanuit de app toegevoegd worden.
+
+![Wagon](img/traincoach.png)
+![Commentaar vanuit app](img/comment.png)
+
+### Live tracking
+Een overzichtspagina en een pagina om wagons live te volgen, waar ook gedetecteerde problemen (door de Constraint Engine) opkomen.
+
+![Overview](img/live_overview.png)
+![Live](img/live_1.png)
+![Live met probleem](img/live_2.png)
+
+### Constraint Engine 
+Automatische detectie van problemen via Constraints, welke door de operator zijn aangemaakt.
+
+![Constraint Engine](img/constraint_engine.png)
+
+
+## Taakverdeling
+
+### Deel Anton
 Ik heb de volgende onderdelen gemaakt:
   - De basis van traincoach.xhtml : maken van nieuwe Issues & tonen van alle data. Later hebben Matthias en Pieter dit dan uitgebreid
   - De geschiedenis bekijken van wagons
@@ -13,10 +48,10 @@ Ik heb de volgende onderdelen gemaakt:
   - REST interface voor alle objecten
 
 
-### Extra commentaar
+#### Extra commentaar
 Ik ben zeer tevreden over de medewerking in groep. Iedereen communiceerde goed & gaf goede feedback qua code. We hebben regelmatig code herschreven toen we vonden dat het beter kon. Iedereen heeft er ongeveer even veel tijd in gestoken.
     
-## Deel Matthias
+### Deel Matthias
   - Index Pagina:
     - Welcome tabs: dynamisch opvragen overzich van issues op status
     - Heatmap: (REST, Back-end, javascript) Geeft overzicht weer waar de activiteit van de issues zich bevindt
@@ -30,7 +65,7 @@ Ik ben zeer tevreden over de medewerking in groep. Iedereen communiceerde goed &
  - Traincoach pagina: Javascript gedeelte waarbij geselecteerde punt in de grafiek wordt doorgegeven aan de modal voor een nieuwe herstelling
  - Layout fixing, afgewerkt door Pieter
   
-## Deel Pieter
+### Deel Pieter
 Ik heb de volgende onderdelen gemaakt:
   - Initieel ontwerp van database
   - Authorisatie: Controleren of een gebruiker de juiste rol (```ADMIN```, ```MECHANIC```, ```OPERATOR```) heeft voor een pagina.
